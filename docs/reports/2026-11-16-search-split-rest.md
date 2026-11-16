@@ -60,7 +60,20 @@ cd amtp_code
     --out ../baselines/results/search_split/graphs
 ```
 
+## เพิ่มเติม: ex4 Global-MT(v) รอบ prune (เครื่อง 5)
+
+- เสร็จ 17 พ.ย. 01:07 ดึงมาไว้ที่ `baselines/results/runs/cloud/prune_w5/` · ตรวจแล้ว: 1,674 batch, commit `767289c`, `git_dirty: false`, ไม่มี FAIL
+- plot ใหม่: `baselines/results/new_purn/graphs/paper/ex4_split_merge/` (θ 64 และรูปเทียบ θ มีเส้น Global-MT(v) แล้ว) และ `story/main/` 2 รูป · `new_purn/README.md` อัปเดตแล้ว
+
+| θ = 64 (median ต่อ batch) | update | query server | query ตรวจ | partition ใหญ่สุด |
+|---|---|---|---|---|
+| AMTP | **1.05 s** | 5.3 ms | 12.3 ms | 64 |
+| Static-MT | 13.5 s | 5.0 ms | 10.2 ms | — |
+| Global-MT(v) | 29.4 s | **3.1 ms** | **3.2 ms** | 132,600 |
+
+AMTP update เร็วกว่า Global-MT(v) 28× แต่ query ช้ากว่า เพราะ Global-MT(v) มี partition เดียว (ต้องเขียนใน paper เหมือนรอบ fill)
+
 ## สถานะ
 
 - เพิ่มผล กราฟ และฟังก์ชัน plot ใน `bench_split/` เท่านั้น ไม่มีโค้ดของ AMTP, benchmark หรือ baseline เปลี่ยน
-- ex4 Global-MT(v) รอบ prune (เครื่อง 5) ยังรัน คาดว่าเสร็จ 17 พ.ย. ~02:30 จะตามมาใน PR ถัดไป
+- ทุกเครื่องของรอบ prune และรอบ search อย่างเดียวเสร็จครบแล้ว

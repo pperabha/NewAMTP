@@ -1,0 +1,21 @@
+  PASS  t_boolean[kw00001]
+  PASS  t_boolean[kw00001 AND kw00002]
+  PASS  t_boolean[kw00001 OR kw00007]
+  PASS  t_boolean[(kw00001 OR kw00002) AND (kw00003 OR kw00004)]
+  PASS  t_boolean[(kw00001 AND kw00002) OR (kw00003 AND kw00004)]
+  PASS  t_boolean[kw00001 AND NOT kw00002]
+  PASS  t_boolean[NOT kw00000]
+  PASS  t_boolean[kw00001 AND doesnotexist]
+  PASS  t_boolean[kw00001 OR doesnotexist]
+  PASS  t_multiproof_mode
+  PASS  t_trapdoor_size_constant
+  PASS  t_tamper_detected
+  PASS  t_omission_not_detected
+invalid return output for 'decrypt'
+  PASS  t_unauthorised_user
+  PASS  t_forged_signature
+  PASS  t_incremental_merkle
+  PASS  t_phrase_keywords
+invalid return output for 'decrypt'
+  PASS  t_revocation
+18/18 passed

@@ -1,0 +1,7 @@
+D1 initial 125000 pool 12500
+D2 initial 125000 pool 12500
+D3 initial 125000 pool 12500
+D4 initial 125000 pool 12500
+1 single space
+4 conjunctive prove AND exist AND integer AND geq
+4 disjunctive prove OR exist OR integer OR geq
