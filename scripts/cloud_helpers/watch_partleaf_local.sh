@@ -1,7 +1,7 @@
 #!/bin/bash
 # Mac watcher for the "part leaf" round: every 3 min report new done / FAIL lines of ~/partleaf.log on each machine;
 # when a machine's job has ended, copy its runs/paper_partleaf* folders and the log to runs/cloud/partleaf_w<N>/
-# (before it powers itself off).   IPS="<ip worker 1> <ip worker 2>" REPO=<repo> bash watch_partleaf_local.sh
+# (before it powers itself off).   IPS="<ip worker 1> <ip worker 2> <ip worker 3>" REPO=<repo> bash watch_partleaf_local.sh
 K=${KEY:-$HOME/Downloads/amtp-key.pem}
 DEST=${REPO:?set REPO}/baselines/results/runs/cloud
 read -r -a IPS <<< "${IPS:?set IPS}"
