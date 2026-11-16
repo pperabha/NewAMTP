@@ -5,6 +5,7 @@ There is no attack code here. The demo and the tests load the adversary plug-in
 """
 import bisect
 import math
+import operator
 import time
 
 from .core import boolean
@@ -312,12 +313,20 @@ def lookup(state, hb: bytes):
     return state.postings.get(hb)
 
 
+def _pids(posting):
+    """The partitions of a posting list: kept in the Search Tree leaf (PartPosting), else read from the list."""
+    if posting is None:
+        return set()
+    pids = getattr(posting, "pids", None)
+    return pids if pids is not None else {pid for pid, _ in posting}
+
+
 def _and_plan(state, b_q, postings):
     """AND pruning: which present keywords may be sent as focus evidence, and the focus set F.
     Every keyword in a chosen 'full' set is sent in full; for an AND node the child with the fewest
     partitions is chosen, an OR node needs all its children. F = boolean.focus over the full keywords
     (the rule the user applies). Returns (pruned keys, F); nothing is pruned if every key must be full."""
-    sel = {h: ({pid for pid, _ in p} if p is not None else set()) for h, p in postings.items()}
+    sel = {h: _pids(p) for h, p in postings.items()}
     size = {h: (state.post_count(bytes.fromhex(h)) if p is not None else 0) for h, p in postings.items()}
 
     def data_key(s):
@@ -410,21 +419,26 @@ def _grow_full(b_q, postings, sel, size, full, data_key):
     return full
 
 
+_PID = operator.itemgetter(0)
+
+
 def _focus_evidence(state, hb: bytes, posting, focus_set):
     """Focus evidence of one present keyword for the partitions F: its component in every partition of F it
     has (segs), and for every partition of F it lacks the two adjacent γ leaves around that PID (nb, as
     preimages PID, v, H(Enc(L))), opened together in its R^post tree. ρ = H(h ‖ |Sel| ‖ R^post) as usual."""
-    pids = [pid for pid, _ in posting]
-    at = {pid: j for j, pid in enumerate(pids)}
+    at = getattr(posting, "at", None)                 # kept in the Search Tree leaf (PartPosting)
+    if at is None:
+        at = {pid: j for j, (pid, _) in enumerate(posting)}
+    n = len(posting)
     seg_pos, nb_pos = set(), set()
     for t in focus_set:
         if t in at:
             seg_pos.add(at[t])
         else:
-            k = bisect.bisect_left(pids, t)                 # pids[k-1] < t < pids[k]
+            k = bisect.bisect_left(posting, t, key=_PID)     # posting[k-1] < t < posting[k] by PID
             if k > 0:
                 nb_pos.add(k - 1)
-            if k < len(pids):
+            if k < n:
                 nb_pos.add(k)
     nb_pos -= seg_pos
     segs, comps = [], []
@@ -438,7 +452,7 @@ def _focus_evidence(state, hb: bytes, posting, focus_set):
           for j in sorted(nb_pos)]
     tree = state.post_tree(hb)
     opened = sorted(seg_pos | nb_pos)
-    ent = {"mode": "focus", "n_sel": len(pids), "R_post": tree.root.hex(), "segs": segs, "nb": nb,
+    ent = {"mode": "focus", "n_sel": n, "R_post": tree.root.hex(), "segs": segs, "nb": nb,
            "post_proof": [x.hex() for x in tree.multiproof(opened)] if opened else []}
     return ent, comps
 
