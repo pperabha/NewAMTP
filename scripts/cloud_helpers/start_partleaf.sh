@@ -27,8 +27,10 @@ echo "w$w: commit $head dirty=$dirty cpus=$(nproc) mem=$(free -g | awk '/Mem/{pr
 [ "$dirty" = 0 ] || { echo "w$w: tracked files changed, not starting"; exit 1; }
 for d in paper_partleaf paper_partleaf_v; do
   [ -e baselines/results/runs/$d ] && { echo "w$w: runs/$d already exists, not overwriting"; exit 1; }; done
-(cd amtp_code && ../.venv/bin/python -m pytest -q 2>&1 | tail -1)
-(cd amtp_code && AMTP_PART_LEAF=1 AMTP_AND_PRUNE=1 AMTP_PART_RESULTS=1 AMTP_AND_GREEDY=1 ../.venv/bin/python -m pytest -q 2>&1 | tail -1)
+t=$(cd amtp_code && ../.venv/bin/python -m pytest -q 2>&1 | tail -1); echo "w$w: pytest, flags off: $t"
+case "$t" in *failed*|*error*) echo "w$w: pytest failed, not starting"; exit 1 ;; *passed*) ;; *) echo "w$w: pytest gave no result, not starting"; exit 1 ;; esac
+t=$(cd amtp_code && AMTP_PART_LEAF=1 AMTP_AND_PRUNE=1 AMTP_PART_RESULTS=1 AMTP_AND_GREEDY=1 ../.venv/bin/python -m pytest -q 2>&1 | tail -1); echo "w$w: pytest, every flag on: $t"
+case "$t" in *failed*|*error*) echo "w$w: pytest failed, not starting"; exit 1 ;; *passed*) ;; *) echo "w$w: pytest gave no result, not starting"; exit 1 ;; esac
 [ -n "$check_only" ] && exit 0
 if [ "$w" = 1 ]; then
 cat > ~/partleaf_cloud_worker.sh <<'JOB'
