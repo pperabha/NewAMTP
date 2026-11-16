@@ -1,0 +1,14 @@
+  PASS  t_fig1
+  PASS  t_search
+  PASS  t_unknown
+  PASS  t_updates
+  PASS  t_aggregation
+  PASS  t_long_chain
+  PASS  t_reject_missing
+  PASS  t_reject_dropped
+  PASS  t_reject_dropped_keyword
+  PASS  t_reject_forged
+  PASS  t_forward
+  PASS  t_multi_user
+  PASS  t_sqlite
+13/13 passed

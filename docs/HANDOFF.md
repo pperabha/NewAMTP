@@ -279,4 +279,5 @@ Global-MT(v) ที่ θ = 64 (ครบ 1,674 batch, w3 commit `089726d`, เ�
 | #26 | demo_v2: นับหลักฐานแบบ focus ในหน้า Evidence |
 | #28 | ผล ex4 รอบ prune θ 64 / 128 + สคริปต์ cloud + ข้อตกลงเรื่องวัด search |
 | #29 | ผล ex4 θ 256 รอบ prune · เลือกแบบ partition ก่อน · สรุปรวมทุกการแก้ (`2026-11-16-summary-all-changes.md`) |
-| (PR ถัดไป) | ผล search อย่างเดียวบน cloud: search1, xsearch + กราฟ `baselines/results/search_split/` (`2026-11-16-search-split-partial.md`) |
+| #30 | ผล search อย่างเดียวบน cloud: search1, xsearch + กราฟ `baselines/results/search_split/` + กราฟ ex4 รอบ prune (`2026-11-16-search-split-partial.md`) |
+| (PR ถัดไป) | ผล search อย่างเดียว: xdomains, exp5 + กราฟ Search 2.2, Exp5 (`2026-11-16-search-split-rest.md`) |

@@ -114,6 +114,20 @@ def search22(amtp_dir, base_dir, out):
            fixed, "Number of domains D", YLABEL, log_x=True, ticks=ds)
 
 
+def exp5(amtp_dir, base_dir, out):
+    """Exp. 5: one domain queried while the system holds D domains (search only, query rows)."""
+    amtp = [r for r in rows_of(amtp_dir, "amtp", "exp5_domains") if r.get("op") == "query"]
+    if not amtp or "server_search_fetch_ms_median" not in amtp[0]:
+        return
+    se = [r for r in rows_of(os.path.join(base_dir, "secollab"), "secollab", "exp5_domains") if r.get("op") == "query"]
+    ds = sorted({int(r["domains"]) for r in amtp})
+    f, ax = P.fig()
+    draw("E5_search_only", ax, amtp, {"secollab": se} if se else {}, lambda r: int(r["domains"]))
+    P.save(f, ax, os.path.join(out, "Exp5", "search_only_vs_domains"), "Exp 5 · query one domain · vary domains",
+           f"{P.one([int(r['N_target']) for r in amtp], 'N')} files in the queried domain · exp5 workload",
+           "Domains in the system D", YLABEL, log_x=True, ticks=ds)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--amtp", required=True, help="folder with amtp_search_single.csv etc. of a bench_split run")
@@ -124,6 +138,7 @@ def main():
     search1(a.amtp, a.base, a.out)
     search21(a.amtp, a.base, a.out)
     search22(a.amtp, a.base, a.out)
+    exp5(a.amtp, a.base, a.out)
     os.makedirs(a.out, exist_ok=True)
     path = os.path.join(a.out, "figure_points.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
