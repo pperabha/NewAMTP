@@ -4,8 +4,9 @@
 #   git bundle create newamtp_partleaf.bundle 767289c..feat/search-tree-part-leaf
 #   WANT=<short commit> BUNDLE=newamtp_partleaf.bundle bash scripts/cloud_helpers/start_partleaf.sh <1|2> <ip>
 #   (CHECK_ONLY=1: copy, check out, pytest; no start)
-# worker 1: bench_split search1, xsearch, xdomains (run_cloud.sh) + exp5, then Chen search1 on the same machine
-#           (Chen's code unchanged; re-measured next to AMTP)            -> runs/paper_partleaf/{amtp,chen}
+# worker 1: bench_split search1, xsearch, xdomains (run_cloud.sh) + exp5, then search1 of Chen, SE-COLLAB and Du on the
+#           same machine, one after the other (their code and commands unchanged; re-measured next to AMTP)
+#                                                                        -> runs/paper_partleaf/{amtp,chen,secollab,du}
 # worker 2: verify1, tamper, xverify of AMTP (scripts/aws_run_all.sh)    -> runs/paper_partleaf_v/
 # The job runs inside ~/partleaf_cloud_worker.sh so that scripts/watch_stop.sh keeps the machine on while it runs and
 # powers it off 10 min after it ends. Log: ~/partleaf.log, last line "partleaf finished rc=<rc>".
@@ -18,7 +19,7 @@ scp -q -i $K -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=acce
 ssh -i $K -o BatchMode=yes -o ConnectTimeout=10 ubuntu@${ip} bash -s -- "$w" "$WANT" "$BRANCH" "${CHECK_ONLY:-}" <<'REMOTE'
 set -u; w=$1; want=$2; branch=$3; check_only=${4:-}
 cd ~/NewAMTP || { echo "w$w: no ~/NewAMTP"; exit 1; }
-if pgrep -f '[c]loud_worker[.]sh|[b]ench[.]ablation|[b]ench[.]experiments|[b]ench_split|[c]hen_et_al_sim' > /dev/null; then
+if pgrep -f '[c]loud_worker[.]sh|[b]ench[.]ablation|[b]ench[.]experiments|[b]ench_split|[c]hen_et_al_sim|[d]u_et_al_sim|[s]e_collab_sim' > /dev/null; then
   echo "w$w: a job is already running, not touching it"; exit 1; fi
 git fetch -q origin 2>&1 && git checkout -q -B partleaf "origin/$branch" || { echo "w$w: git update failed"; exit 1; }
 head=$(git rev-parse --short HEAD); dirty=$(git status --porcelain --untracked-files=no | wc -l)
@@ -49,13 +50,19 @@ if [ $rc -eq 0 ]; then
     echo "[$(date -u '+%F %T')] FAIL  exp5 (see logs/exp5.log)"; rc=1
   fi
 fi
-cd ~/NewAMTP/baselines; t0=$SECONDS
-echo "[$(date -u '+%F %T')] start chen_search1"
-if ../.venv/bin/python chen_et_al_sim.py search1 --reps 15 --warmup 3 --scope full --edb memory --out $R/chen > $R/logs/chen_search1.log 2>&1; then
-  echo "[$(date -u '+%F %T')] done  chen_search1 ($((SECONDS - t0)) s)"
-else
-  echo "[$(date -u '+%F %T')] FAIL  chen_search1 (see logs/chen_search1.log)"; rc=1
-fi
+cd ~/NewAMTP/baselines
+base() {    # one baseline's search1, its original command (baselines/results/new_amtp_result/gamma_with_v manifests)
+  local name=$1; shift; local t0=$SECONDS
+  echo "[$(date -u '+%F %T')] start ${name}_search1"
+  if ../.venv/bin/python "$@" > $R/logs/${name}_search1.log 2>&1; then
+    echo "[$(date -u '+%F %T')] done  ${name}_search1 ($((SECONDS - t0)) s)"
+  else
+    echo "[$(date -u '+%F %T')] FAIL  ${name}_search1 (see logs/${name}_search1.log)"; rc=1
+  fi
+}
+base chen     chen_et_al_sim.py search1 --reps 15 --warmup 3 --scope full --edb memory --out $R/chen
+base secollab se_collab_sim.py  search1 --reps 15 --warmup 3 --proof-mode paths --out $R/secollab
+base du       du_et_al_sim.py   search1 --reps 15 --warmup 3 --out $R/du
 echo "partleaf finished rc=$rc"
 JOB
 else
