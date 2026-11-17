@@ -66,7 +66,18 @@ byte-identical with and without it), the ablation variants, and a Phase 5 fuzzer
 
 ## 3. Run
 
-**Interactive demo** (two domains, four users, a malicious-server switch):
+**Live demo** ([`demo_v2/`](demo_v2/README.md)): Root Anchor, Cloud Server, network path and client as four
+separate processes on the real dataset (unpack it first, Section 1), with a "How it works" panel and attacks on
+the network path that the client's verifier must reject:
+
+```bash
+.venv/bin/pip install -r demo_v2/requirements.txt                    # first time only
+lsof -ti :8101,8102,8103,8104 | xargs kill                           # free the demo ports if a demo is still running
+./demo_v2/run_demo.sh --files-per-domain 5000                        # opens http://127.0.0.1:8102
+.venv/bin/python -m pytest demo_v2/tests -q                          # demo tests (four real processes)
+```
+
+**Small demo without the dataset** (two domains, four users, a malicious-server switch):
 
 ```bash
 cd amtp_code && ../.venv/bin/python run.py         # then open http://127.0.0.1:5000

@@ -20,7 +20,7 @@ the page shows the progress. For a rehearsal:
 
 Other flags: `--domains D1,D2`, `--base-port 8101`, `--no-browser`. Stop with Ctrl-C.
 
-First time only (already done in this checkout's `.venv`):
+First time only (the demo's web packages; the dataset must be unpacked, see the main README):
 
 ```bash
 .venv/bin/python -m pip install -r demo_v2/requirements.txt

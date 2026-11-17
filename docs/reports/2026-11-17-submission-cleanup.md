@@ -50,3 +50,18 @@
 
 ตรวจแล้ว: pytest ค่าเริ่มต้น 543 passed, 4 skipped · ปิดทุก flag 545 passed, 2 skipped · `paper_env.sh` 542 passed
 · `demo_v2/tests` error 34 ข้อเหมือนกันทั้งก่อนและหลังแก้ (process ของ demo เปิดไม่ขึ้นบนเครื่องนี้ ไม่เกี่ยวกับรอบนี้)
+
+## รอบ 4: demo ใหม่ของเพื่อน + smoke ของโค้ดสุดท้าย
+
+- merge `origin/main` (e528855 "demo: how it works panel" ของเพื่อน) เข้ามา: `demo_v2/static/index.html`
+- README ส่วนที่ 3: demo หลักคือ `demo_v2` (ติดตั้ง, kill พอร์ต 8101-8104, `./demo_v2/run_demo.sh --files-per-domain 5000`,
+  test) ส่วน `run.py` เหลือเป็น demo เล็กที่ไม่ต้องใช้ dataset
+- `demo_v2/requirements.txt` pin version ที่ทดสอบ: fastapi 0.163.1, uvicorn 0.54.0, websockets 17.4
+- `demo_v2/README.md`: ตัดประโยค "ติดตั้งใน `.venv` แล้ว" ที่ไม่จริง
+- `scripts/aws_run_all.sh`: ขั้น splitmerge ใช้ `${var[@]+"${var[@]}"}` เพราะ bash 3.2 ของ macOS ถือว่า array ว่าง
+  เป็น unbound variable ภายใต้ `set -u` (บน AWS bash 5 ไม่เจอ ผลของ paper ไม่เกี่ยว)
+
+สาเหตุที่ `demo_v2/tests` error 34 ข้อในรอบ 3: venv ไม่มี fastapi และ worktree ไม่มี dataset ไม่ใช่โค้ดผิด
+
+ตรวจแล้ว: `smoke_all.sh` ทุกขั้นทุก scheme ผ่าน (manifest บันทึก flag ทั้ง 4 เปิด, tamper 24/24 ตรวจเจอ, 0/1 false alarm)
+· venv ใหม่ + `AMTP_DATA` → `demo_v2/tests` 34 passed · demo 5,000 ไฟล์ต่อ domain โหลดเสร็จใน ~25 วินาที
