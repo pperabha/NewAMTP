@@ -44,11 +44,36 @@ Chen ไม่ส่งไฟล์กลับ (ส่งแค่ bitmap ท�
 
 ไม่มี scheme ไหนนับงานสร้าง proof ในตัวเลขเหล่านี้ ยกเว้น Chen ที่ XOR tag ต่อ entry อยู่ในลูปค้นหาเดียวกัน (แยกไม่ได้ถ้าไม่แก้โค้ด Chen และทำให้ Chen ช้าลงเพียงเล็กน้อย)
 
+## กราฟ search ล้วน: ทุก scheme ไม่ดึงไฟล์ (`graphs/search_no_fetch/`)
+
+ทุกเส้นวัดเฉพาะการค้นหา ไม่มี proof และไม่ดึงไฟล์ AMTP มีเส้นเดียว
+
+| scheme | คอลัมน์ | มาจาก |
+|---|---|---|
+| AMTP | `server_search_pf` | `data/amtp` (w1, w2) |
+| Chen | `server_total` (ไม่ดึงไฟล์อยู่แล้ว) | `data/chen` (w1) |
+| SE-COLLAB | `search_no_fetch` = `bpl_retrieval` + `boolean_eval` (timer ใหม่ของมันเอง) | `data_no_fetch/secollab` (w4, commit `0ada140`) |
+| Du | `search_no_fetch` = Algorithm 2 ส่งกลับแค่ slot ที่ตรง (cloud ที่ช้าสุด) | `data_no_fetch/du` (w5, commit `331d608`) |
+
+- โค้ดเดิมของ SE-COLLAB และ Du ไม่เปลี่ยน แค่เพิ่มคอลัมน์ · Du ตรวจทุก query ว่า slot ที่ได้ตรงกับ search ปกติ
+- เครื่องต่างกัน: SE-COLLAB บน w4 ช้ากว่าบน w1 1–3% (`search_core`), Du บน w5 เร็วกว่าบน w1 2–7% (`server_total`) · ส่วนต่างนี้เข้าทาง Du ไม่ใช่ทาง AMTP
+
+| กราฟ | ผล |
+|---|---|
+| Search 1.1 (kQ 1–20, 100k files) | ✅ ชนะทั้ง 3 baseline ทุกจุด (kQ 20: AMTP 0.103 · Chen 0.129 · SE-COLLAB 0.452 · Du 1.352 ms) |
+| Search 1.2 (10k–125k files, kQ 5) | ✅ ชนะทุกจุด · 10k เกือบเสมอ Chen (0.0219 vs 0.0220) |
+| Search 2.1 AND, AND-of-OR, OR-of-AND | ✅ ชนะ SE-COLLAB ทุกจุด |
+| Search 2.1 OR | ❌ แพ้ที่ kQ ≥ 4 (kQ 16: 4.28 vs 1.80) · ไม่ใช่เพราะ fetch: OR ต้องรวม file set จากทุก partition ที่มีคำใดคำหนึ่ง |
+| Search 2.2 (D 1–32) | ✅ ชนะถึง D = 8 · ❌ แพ้ที่ D 16, 32 (ค้นแยกทีละโดเมน) |
+| Exp 5 | ✅ ชนะทุก D (≈ 0.033 vs 0.066 ms) |
+
 ## ทำซ้ำ
 
 ```
 D=$PWD/baselines/results/part_leaf/data; M=<repo>/baselines/results
 cd amtp_code && ../.venv/bin/python -m bench_split.plot_search --amtp $D/amtp --base $D --out ../baselines/results/part_leaf/graphs/search_only
+# search ล้วน ทุก scheme ไม่ดึงไฟล์ (SE-COLLAB / Du จากรอบ w4 / w5)
+../.venv/bin/python -m bench_split.plot_search --amtp $D/amtp --base $D --no-fetch $D/../data_no_fetch --out ../baselines/results/part_leaf/graphs/search_no_fetch
 # paper: โฟลเดอร์ชั่วคราวที่มี data/* + amtp_exp3 (new_new/data/fill) + chen_exp3 (gamma_with_v/chen) + splitmerge_* (runs/cloud/prune_w2..w5)
 .venv/bin/python baselines/plot_paper.py <tmp> --out baselines/results/part_leaf/graphs/paper
 ```

@@ -10,6 +10,7 @@ y = server search time without any proof (ms), per scheme:
     SE-COLLAB            search_core                BPL retrieval + Boolean evaluation + result fetch (its own split)
     Chen, Du             server_total               their server does only the search (Du: the slowest cloud)
 Single-domain figures: *_no_fetch (AMTP vs Chen) and *_with_fetch (AMTP vs SE-COLLAB, Du); see NO_FETCH / WITH_FETCH.
+--no-fetch DIR draws instead one figure per suite where no scheme fetches files (see NF_COL).
 One more figure per suite shows AMTP's server time split: search only vs the whole server time (search + proof).
 Uses the drawing helpers of baselines/plot_paper.py (unchanged). Every plotted number goes to figure_points.csv.
 """
@@ -35,6 +36,12 @@ BASE_COL = {"secollab": "search_core", "chen": "server_total", "du": "server_tot
 ALL_LINES = (("server_search_pf", "AMTP, no fetch (vs Chen)", "-"),
              ("server_search_pf_fetch", "AMTP + fetch (vs SE-COLLAB, Du)", "--"))
 YLABEL = "Server search time, without proof (ms)"
+# --no-fetch DIR: every scheme without fetch, one AMTP line. DIR holds the re-run SE-COLLAB / Du results whose CSVs
+# carry search_no_fetch (SE-COLLAB: BPL retrieval + Boolean evaluation; Du: Algorithm 2 returning only the matching
+# slots, slowest cloud). Chen (no fetch already) comes from --base.
+NF_COL = {"secollab": "search_no_fetch", "chen": "server_total", "du": "search_no_fetch"}
+NF_FROM_DIR = ("secollab", "du")
+NF_YLABEL = "Server search time, no proof, no fetch (ms)"
 
 
 def rows_of(folder, scheme, suite):
@@ -169,17 +176,98 @@ def exp5(amtp_dir, base_dir, out):
            "Domains in the system D", YLABEL, log_x=True, ticks=ds)
 
 
+def draw_nf(fig_id, ax, amtp, base, key):
+    color, marker = P.STYLE["amtp"]
+    P.line(ax, fig_id, P.agg(amtp, key, "server_search_pf_ms_median"), "AMTP", color, marker)
+    for s, rs in base.items():
+        if rs:
+            P.scheme_line(ax, fig_id, s, P.agg(rs, key, NF_COL[s] + "_ms_median"))
+
+
+def no_fetch(amtp_dir, base_dir, nf_dir, out):
+    """Every scheme without fetch: AMTP server_search_pf, Chen server_total, SE-COLLAB / Du search_no_fetch."""
+    def base(suite, schemes, op=None):
+        got = {}
+        for s in schemes:
+            rs = rows_of(os.path.join(nf_dir if s in NF_FROM_DIR else base_dir, s), s, suite)
+            if rs and NF_COL[s] + "_ms_median" not in rs[0]:
+                raise SystemExit(f"{s}_{suite}: no {NF_COL[s]} column (not a re-run with the no-fetch timers)")
+            got[s] = [r for r in rs if op is None or r.get("op") == op]
+        return got
+    amtp = rows_of(amtp_dir, "amtp", "search_single")
+    if amtp:
+        b = base("search_single", ("chen", "secollab", "du"))
+        ns = sorted({int(r["N"]) for r in amtp})
+        by_n = {n: {int(r["kQ"]) for r in amtp if int(r["N"]) == n} for n in ns}
+        n_fix = max(ns, key=lambda n: (len(by_n[n]), n))
+        kq_fix = max(sorted({int(r["kQ"]) for r in amtp}), key=lambda k: (sum(1 for n in ns if k in by_n[n]), -k))
+        doms = P.one([r["domain"] for r in amtp], "domain")
+        at_n = lambda rs: [r for r in rs if int(r["N"]) == n_fix]                         # noqa: E731
+        at_k = lambda rs: [r for r in rs if int(r["kQ"]) == kq_fix]                       # noqa: E731
+        f, ax = P.fig()
+        draw_nf("S1.1_no_fetch", ax, at_n(amtp), {s: at_n(r) for s, r in b.items()}, lambda r: int(r["kQ"]))
+        P.save(f, ax, os.path.join(out, "Search_1.1", "search_vs_kQ"),
+               "Search 1.1 · single domain · vary keywords",
+               f"{n_fix:,} files per domain · AND · median over {doms} · no scheme fetches files",
+               "Keywords in the AND query $k_Q$", NF_YLABEL, ticks=sorted(by_n[n_fix]))
+        if len(ns) > 1:
+            f, ax = P.fig()
+            draw_nf("S1.2_no_fetch", ax, at_k(amtp), {s: at_k(r) for s, r in b.items()}, lambda r: int(r["N"]))
+            P.save(f, ax, os.path.join(out, "Search_1.2", "search_vs_files"),
+                   "Search 1.2 · single domain · vary files",
+                   f"$k_Q$ = {kq_fix} · AND · median over {doms} · no scheme fetches files", "Files in the domain",
+                   NF_YLABEL, log_x=True, ticks=ns)
+    amtp = rows_of(amtp_dir, "amtp", "search_multi")
+    if amtp:
+        se = base("search_multi", ("secollab",))["secollab"]
+        nfix = P.one([int(r["N_per_domain"]) for r in amtp], "N")
+        dcount = P.one([int(r["domains"]) for r in amtp], "D")
+        for shape in [s for s in P.SHAPES if any(r["shape"] == s for r in amtp)]:
+            a = [r for r in amtp if r["shape"] == shape]
+            f, ax = P.fig()
+            draw_nf(f"S2.1_{shape}_no_fetch", ax, a, {"secollab": [r for r in se if r["shape"] == shape]},
+                    lambda r: int(r["kQ"]))
+            P.save(f, ax, os.path.join(out, "Search_2.1", f"search_vs_kQ_{shape}"),
+                   f"Search 2.1 · multi-domain · {P.SHAPES[shape]}",
+                   f"{dcount} domains · {nfix} files per domain · shape {shape} · no fetch",
+                   "Keywords in the query $k_Q$", NF_YLABEL, ticks=sorted({int(r["kQ"]) for r in a}))
+    amtp = rows_of(amtp_dir, "amtp", "domains_scaling")
+    if amtp:
+        ds = sorted({int(r["domains"]) for r in amtp})
+        f, ax = P.fig()
+        draw_nf("S2.2_no_fetch", ax, amtp, base("domains_scaling", ("secollab",)), lambda r: int(r["domains"]))
+        P.save(f, ax, os.path.join(out, "Search_2.2", "search_vs_domains"), "Search 2.2 · multi-domain · vary domains",
+               f"{P.one([int(r['N_total']) for r in amtp], 'N')} files in total · "
+               f"$k_Q$ = {P.one([int(r['kQ']) for r in amtp], 'kQ')} · shape "
+               f"{P.one([r['shape'] for r in amtp], 's')} · no fetch", "Number of domains D", NF_YLABEL,
+               log_x=True, ticks=ds)
+    amtp = [r for r in rows_of(amtp_dir, "amtp", "exp5_domains") if r.get("op") == "query"]
+    if amtp:
+        ds = sorted({int(r["domains"]) for r in amtp})
+        f, ax = P.fig()
+        draw_nf("E5_no_fetch", ax, amtp, base("exp5_domains", ("secollab",), op="query"), lambda r: int(r["domains"]))
+        P.save(f, ax, os.path.join(out, "Exp5", "search_vs_domains"), "Exp 5 · query one domain · vary domains",
+               f"{P.one([int(r['N_target']) for r in amtp], 'N')} files in the queried domain · no fetch",
+               "Domains in the system D", NF_YLABEL, log_x=True, ticks=ds)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--amtp", required=True, help="folder with amtp_search_single.csv etc. of a bench_split run")
     ap.add_argument("--base", default=os.path.join(BASELINES, "results", "new_amtp_result", "gamma_with_v"),
                     help="folder with secollab/, chen/, du/ results (default: gamma_with_v, not re-run)")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--no-fetch", metavar="DIR",
+                    help="only the figures where no scheme fetches files; DIR = re-run secollab/, du/ with "
+                         "search_no_fetch (Chen from --base)")
     a = ap.parse_args()
-    search1(a.amtp, a.base, a.out)
-    search21(a.amtp, a.base, a.out)
-    search22(a.amtp, a.base, a.out)
-    exp5(a.amtp, a.base, a.out)
+    if a.no_fetch:
+        no_fetch(a.amtp, a.base, a.no_fetch, a.out)
+    else:
+        search1(a.amtp, a.base, a.out)
+        search21(a.amtp, a.base, a.out)
+        search22(a.amtp, a.base, a.out)
+        exp5(a.amtp, a.base, a.out)
     os.makedirs(a.out, exist_ok=True)
     path = os.path.join(a.out, "figure_points.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:

@@ -1,0 +1,13 @@
+worker 4  commit 0ada140, uncommitted changes: 0
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf_se
+commit 0ada140, uncommitted changes: 0
+[2026-11-17 00:09:00] start search1_secollab
+[2026-11-17 00:22:03] done  search1_secollab (783 s)
+[2026-11-17 00:22:03] start xsearch_secollab
+[2026-11-17 00:26:19] done  xsearch_secollab (256 s)
+[2026-11-17 00:26:19] start xdomains_secollab
+[2026-11-17 00:31:39] done  xdomains_secollab (320 s)
+[2026-11-17 00:31:39] start exp5_secollab
+[2026-11-17 00:33:21] done  exp5_secollab (102 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf_se
+partleaf finished rc=0

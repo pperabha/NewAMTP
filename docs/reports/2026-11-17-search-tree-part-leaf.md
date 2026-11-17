@@ -30,6 +30,10 @@
 
 `se_collab_sim.py` จับเวลา `bpl_retrieval`, `boolean_eval`, `result_fetch` แยกไว้อยู่แล้ว แต่เขียนแค่ผลรวม `search_core` แก้ให้เขียนทั้ง 3 ตัวและ `search_no_fetch` = `bpl_retrieval + boolean_eval` (แก้แค่ส่วนเขียนผล ไม่แตะการทำงาน)
 
+### 2b. Du: คอลัมน์ `search_no_fetch` (เพิ่ม ไม่แก้ของเดิม)
+
+`du_et_al_sim.py` เพิ่ม `CloudServer.match_slots` (DFS เดิมด้วย `_match` แต่เก็บแค่ `node.slot` ไม่ส่งไฟล์ ไม่ทำ proof) และ `DuScheme.search_no_fetch` · `run_query` เรียกหลัง query ปกติจบ (ไม่กระทบตัวเลขเดิม) และ assert ว่า slot ตรงกับผล search ปกติทุก query · เขียน `search_no_fetch` (cloud ที่ช้าสุด) และ `search_no_fetch_sum`
+
 ### 3. กราฟ search อย่างเดียว (`bench_split/plot_search.py`)
 
 Chen ไม่ส่งไฟล์กลับ ส่วน SE-COLLAB และ Du ส่ง กราฟโดเมนเดียวจึงมี 3 แบบ: `_no_fetch` (AMTP vs Chen), `_with_fetch` (AMTP vs SE-COLLAB, Du), `_all` (ทุก scheme, AMTP 2 เส้นที่บอกว่าเทียบกับใคร) · กราฟ exp5 search อย่างเดียว
@@ -100,11 +104,39 @@ AMTP เปิดทุก flag เหมือนรอบ prune + `AMTP_PART_L
 - end-to-end ชนะ SE-COLLAB ทุกจุด ชนะ Chen ที่ kQ ≥ 2 (kQ 1 เกือบเท่ากัน) **ยังแพ้ Du ที่ kQ ≥ 2** (งานตรวจของผู้ใช้ ซึ่งแบบ ก ไม่ได้แตะ)
 - server รวม proof ของ Search 2.2 ชนะทุก D แต่ที่ 32 โดเมนเฉียดมาก
 
+## search ล้วน ทุก scheme ไม่ดึงไฟล์ (เครื่อง 4 SE-COLLAB `0ada140`, เครื่อง 5 Du `331d608`)
+
+ทั้ง 2 เครื่องจบ `rc=0`, clean, ไม่มี FAIL · SE-COLLAB 4 ชุด, Du 880/880 แถว ok · กราฟ `baselines/results/part_leaf/graphs/search_no_fetch/` (AMTP เส้นเดียว `server_search_pf`, Chen `server_total`, SE-COLLAB / Du `search_no_fetch`)
+
+เครื่องต่างกันเล็กน้อย: SE-COLLAB `search_core` บน w4 ช้ากว่าบน w1 1–3% · Du `server_total` บน w5 เร็วกว่าบน w1 2–7% (เข้าทาง Du) · Du `search_no_fetch` ≈ `server_total` (ต่างไม่ถึง 2%) เพราะ Du ส่งแค่ slot
+
+| Search 1.1 (100k files, ms) | kQ 1 | 2 | 5 | 10 | 15 | 20 |
+|---|---|---|---|---|---|---|
+| **AMTP** | **0.0072** | **0.0131** | **0.0245** | **0.0511** | **0.0767** | **0.1034** |
+| Chen | 0.0082 | 0.0158 | 0.0352 | 0.0665 | 0.0980 | 0.1293 |
+| SE-COLLAB | 0.1991 | 0.2202 | 0.2613 | 0.3244 | 0.3922 | 0.4515 |
+| Du | 0.2152 | 0.1866 | 0.3640 | 0.6929 | 1.0290 | 1.3523 |
+
+| Search 1.2 (kQ 5, ms) | 10k | 25k | 50k | 75k | 100k | 125k |
+|---|---|---|---|---|---|---|
+| **AMTP** | **0.0219** | **0.0225** | **0.0234** | **0.0244** | **0.0245** | **0.0254** |
+| Chen | 0.0220 | 0.0244 | 0.0281 | 0.0314 | 0.0352 | 0.0387 |
+| SE-COLLAB | 0.0756 | 0.0988 | 0.1380 | 0.2152 | 0.2613 | 0.3135 |
+| Du | 0.2879 | 0.3134 | 0.3370 | 0.3476 | 0.3640 | 0.3637 |
+
+- **โดเมนเดียว: ชนะทั้ง 3 baseline ทุกจุด** (10k ไฟล์เกือบเสมอ Chen)
+- Search 2.1 AND, AND-of-OR, OR-of-AND: ชนะ SE-COLLAB ทุกจุด
+- **Search 2.1 OR: ยังแพ้ที่ kQ ≥ 4 แม้ไม่ดึงไฟล์** (kQ 4: 1.089 vs 1.062, kQ 16: 4.28 vs 1.80) · สาเหตุไม่ใช่ fetch แต่ OR ต้องรวม file set ของทุก partition ที่มีคำใดคำหนึ่ง
+- Search 2.2: ชนะถึง D = 8 แพ้ที่ D 16, 32 (0.313 vs 0.143, 0.633 vs 0.192)
+- Exp 5: ชนะทุก D (≈ 0.033 vs 0.066 ms)
+
 ## ผลและกราฟอยู่ที่ไหน
 
 | อะไร | ที่ |
 |---|---|
-| ผลดิบจาก cloud | `baselines/results/runs/cloud/partleaf_w1..w3/` |
+| ผลดิบจาก cloud | `baselines/results/runs/cloud/partleaf_w1..w5/` (w4 SE-COLLAB, w5 Du: รอบไม่ดึงไฟล์) |
+| ผล SE-COLLAB / Du ไม่ดึงไฟล์ | `baselines/results/part_leaf/data_no_fetch/{secollab,du}/` |
+| กราฟ search ล้วน ทุก scheme ไม่ดึงไฟล์ | `baselines/results/part_leaf/graphs/search_no_fetch/` |
 | ผลรวม 3 เครื่อง | `baselines/results/part_leaf/data/{amtp,chen,secollab,du}/` |
 | กราฟ search อย่างเดียว | `baselines/results/part_leaf/graphs/search_only/` (README บอกว่ารูปไหนเทียบกับใคร) |
 | กราฟ ex1–ex5 | `baselines/results/part_leaf/graphs/paper/` (ex3 จากรอบ fill, ex4 จากรอบ prune) |
@@ -133,4 +165,4 @@ IPS="<ip1> <ip2> <ip3>" REPO=$PWD bash scripts/cloud_helpers/watch_partleaf_loca
 ## สถานะ
 
 - โค้ด, ผล 3 เครื่อง, กราฟ: เสร็จ
-- **กำลังรัน (เครื่อง 4, `0ada140`):** SE-COLLAB search1, xsearch, xdomains, exp5 อีกรอบ เพื่อได้ `search_no_fetch` (search ล้วนไม่มี fetch) environment ตรงกับรอบนี้ (r7i.4xlarge, Xeon 8488C, Python 3.12.3, kernel เดียวกัน) แต่เป็นคนละ instance · จะทำกราฟ search ล้วนทุก scheme ในรูปเดียว (AMTP เส้นเดียว) ใน PR ถัดไป
+- เครื่อง 4 (SE-COLLAB) และ 5 (Du) รอบไม่ดึงไฟล์: เสร็จ ดึงผลแล้ว ทำกราฟ `search_no_fetch/` แล้ว (`plot_search.py --no-fetch`) · pytest 545 passed
