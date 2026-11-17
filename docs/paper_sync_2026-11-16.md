@@ -3,6 +3,14 @@
 Code changes since `00f9d42` that touch the paper: only PR #32 (Search Tree leaf by partition, `AMTP_PART_LEAF`):
 items 1.13, 3.4, 3.6, 3.6b were updated on 17 Nov. Nothing else in `amtp/` changed.
 
+Re-checked against the code and the runs on 17 Nov (after PR #33): items 1.4, 3.4, 3.5, 3.6, 3.6b and 3.7 corrected
+(report `docs/reports/2026-11-17-paper-sync-fixes.md`).
+
+Code flags: AND pruning, the greedy planner, result-only partition proofs and the Search Tree partition sets are
+study flags that are **off by default in the library** (`AMTP_AND_PRUNE`, `AMTP_AND_GREEDY`, `AMTP_PART_RESULTS`,
+`AMTP_PART_LEAF`); every paper run sets them on (plus `AMTP_PLACEMENT=fill`). The verifier accepts both response
+forms whatever the flags are. The paper describes the flags-on form as the design.
+
 Scope: System Process (III-C), Security Analysis (IV), Evaluation (V: cost model and set-up only).
 Each item: where in the paper, what the code does, the new wording (plain text), and LaTeX.
 Notation: the paper's Table II calls the PAPC `ρ_w`, but eqs. (19), (42), (68) print `σ_w`, which is also the
@@ -99,7 +107,8 @@ produced by a merge is not merged again in the same transition.
 
 ### 1.4 [B] Phase 2 Step 1: placement rule and position reuse
 
-Code (`variants.py` `place`, placement `fill`, the default; `engine.py` `insert`): the new file goes to the
+Code (`variants.py` `place`, placement `fill`, used in every experiment (the benchmark default; the library class
+default is `least`); `engine.py` `insert`): the new file goes to the
 fullest partition of its group that still has fewer than θ_max live entries (ties: smaller PID); if every
 partition of the group is full, to the fullest one, and the split at commit repairs it. Inside the partition it
 takes a freed (tombstone) position if one exists, otherwise it is appended. Partitions created by a merge serve
@@ -695,7 +704,8 @@ reported separately. The Root Anchor is simulated in-process with the same prede
 ledger latency is not included. Ciphertexts are stored in an in-process consistent-hashing DHT with 6 nodes and
 replication factor 3. Network latency is excluded for all schemes. AMTP uses θ_max = 64, θ_min = 16, G = 16
 placement groups (arXiv primary categories), fill-first placement, AND pruning, result-only partition proofs and
-partition sets in the Search Tree leaves.
+partition sets in the Search Tree leaves. Exp. 3 and 4 were run before the Search Tree partition sets were added;
+these sets change neither the update procedure nor any proof or response, only the server's search time.
 The initial N documents are loaded in bulk and anchored by the owner; every later update runs the full protocol
 (signed requests, CS preparation, DO validation, anchoring). Each query is run 15 times after 3 unrecorded
 warm-up runs with garbage collection disabled; we report the median of the 15 runs per query and the median
@@ -717,8 +727,9 @@ of 3. Network latency is excluded for all schemes.
 
 AMTP uses $\theta_{\max} = 64$, $\theta_{\min} = 16$, $G = 16$ placement groups (arXiv primary
 categories), fill-first placement, AND pruning, result-only partition proofs, and partition sets in the
-Search Tree leaves. The initial documents
-are loaded in bulk and anchored by the owner; every later update runs the full protocol (signed
+Search Tree leaves. Experiments~3 and~4 were run before the Search Tree partition sets were added;
+these sets change neither the update procedure nor any proof or response, only the server's search time.
+The initial documents are loaded in bulk and anchored by the owner; every later update runs the full protocol (signed
 requests, CS preparation, DO validation, and anchoring). Each query is run 15 times after 3 unrecorded
 warm-up runs with garbage collection disabled; we report the median of the 15 runs per query and the
 median over queries per data point. Server time is split into search, proof generation, and ciphertext
@@ -729,9 +740,12 @@ counted in binary encoding with the same rules for every scheme (1\,KB = 1000 by
 ### 3.5 [A] Dataset paragraph (replace)
 
 Text: "The evaluation uses the arXiv metadata snapshot from Kaggle (Cornell University; latest record dated
-2026-10-30; 3,233,620 papers), organized into four domains: D1 = cs, D2 = math, D3 = astro-ph and hep,
-D4 = cond-mat and quant-ph. Each domain has 125,000 initial documents in chronological order and a disjoint
-pool of 12,500 documents for insertions (seed 42). Each document is a paper's title and abstract. Keywords W(d)
+2026-10-30; 3,233,620 papers), organized into four domains by the primary (first) arXiv category: D1 = cs, D2 = math, D3 = astrophysics,
+gravitation, high-energy and nuclear physics (astro-ph, gr-qc, hep-*, nucl-*), D4 = condensed matter, quantum and
+other physics (cond-mat, quant-ph, physics, math-ph, nlin), each with the archives' former names. Papers whose
+abstract has fewer than 30 words or that are withdrawn are skipped. Each domain has 125,000 initial documents in
+chronological order and a disjoint pool of 12,500 documents for insertions (seed 42). Each document is a paper's
+title and abstract. Keywords W(d)
 are extracted once with the Phase 1 procedure (RAKE, at most κ = 20 phrases of 1–3 words per document) and are
 used as they are by every scheme; AMTP's extraction time is reported separately. A domain of n documents is the
 first n documents of that domain, n ∈ {10, 25, 50, 75, 100, 125} × 10^3; no synthetic replication is used.
@@ -740,10 +754,12 @@ reported; multi-domain experiments query several domains with one domain-bound q
 
 ```latex
 The evaluation uses the arXiv metadata snapshot from Kaggle (Cornell University; latest record dated
-2026-10-30; 3{,}233{,}620 papers), organized into four domains: $D_1$ = cs, $D_2$ = math,
-$D_3$ = astro-ph and hep, and $D_4$ = cond-mat and quant-ph. Each domain has 125{,}000 initial documents
-in chronological order and a disjoint pool of 12{,}500 documents for insertions (seed 42). Each document
-is a paper's title and abstract. Keywords $W(d)$ are extracted once with the Phase~1 procedure (RAKE, at
+2026-10-30; 3{,}233{,}620 papers), organized into four domains by the primary arXiv category: $D_1$ = cs, $D_2$ = math,
+$D_3$ = astrophysics, gravitation, high-energy and nuclear physics (astro-ph, gr-qc, hep-*, nucl-*), and
+$D_4$ = condensed matter, quantum and other physics (cond-mat, quant-ph, physics, math-ph, nlin).
+Papers with abstracts shorter than 30 words and withdrawn papers are skipped. Each domain has
+125{,}000 initial documents in chronological order and a disjoint pool of 12{,}500 documents for
+insertions (seed 42). Each document is a paper's title and abstract. Keywords $W(d)$ are extracted once with the Phase~1 procedure (RAKE, at
 most $\kappa = 20$ phrases of 1--3 words per document) and are used as they are by every scheme; AMTP's
 extraction time is reported separately. A domain of $n$ documents is the first $n$ documents of that
 domain, $n \in \{10, 25, 50, 75, 100, 125\} \times 10^{3}$; no synthetic replication is used.
@@ -752,13 +768,19 @@ multi-domain experiments send one domain-bound query to each queried domain.
 ```
 
 Delete: "Experiments 1–3 place all N documents in a single AMTP domain" and "N ∈ {10^4, 5×10^4, 10^5, 2×10^5}".
-Confirm the exact arXiv categories of D3 and D4 with `datasets/arxiv/select_files_v4.py` before writing them.
+D3 and D4 categories checked on 17 Nov against `datasets/arxiv/select_files_v4.py` (`GROUPS`; former archive names
+such as cmp-lg, alg-geom, supr-con are folded into the same domains) and `datasets/arxiv/data_v4/download_info.txt`.
 
 ### 3.6 [C] Baselines paragraph
 
 Keep, with two changes. (1) In the part-leaf round (17 Nov, `d25616b`) every baseline was re-measured on the
 same machine as the AMTP suite it is plotted with: "All schemes run on the same instance, documents, keywords and
-query files; each baseline is measured on the instance of the AMTP suite it is compared with." (2) Add the timing
+query files; each baseline is measured on an instance of the same type (AWS r7i.4xlarge), in most figures the
+instance of the AMTP suite it is compared with." Exception: in the no-fetch search figures
+(`baselines/results/part_leaf/graphs/search_no_fetch/`) SE-COLLAB and Du come from separate re-runs on two other
+instances of the same type (`runs/cloud/partleaf_w4`, `partleaf_w5`). Re-measured on those instances, SE-COLLAB's
+`search_core` was 1–3% slower and Du's server time 2–7% faster than on the AMTP instance, so the difference
+favours Du. If the paper states it: "Instances of the same type differed by at most 7% on the same workload." (2) Add the timing
 definitions used for the search-only comparison (updated 17 Nov: SE-COLLAB and Du now record search without
 fetch, PR #32):
 
@@ -791,11 +813,12 @@ Update 17 Nov (PR #32): the main numbers now come from the "part leaf" cloud rou
 partition-first search reads the partition sets kept in the Search Tree leaf (item 1.13). Results:
 `baselines/results/part_leaf/`, report `docs/reports/2026-11-17-search-tree-part-leaf.md`. Replace "No structure
 beyond those of Phase 2 is used" by "It uses only the Cuckoo filter and the Search Tree of Phase 2, whose
-leaves keep the partition set of each key".
+leaves keep the partition set of every key in at least three partitions". (Not "of each key": a key in one or two
+partitions has no stored set; its set is read from its short posting list.)
 
 Text: "Search time is the time the CS needs to find the matching files, without building any proof: it looks up
 every query key in the Cuckoo filter and the B+ Search Tree, derives the focus set F_Q from the partition sets
-of the keys kept in the Search Tree leaves, builds each key's file set inside F_Q only, and evaluates B_Q. We also
+of the keys (kept in the Search Tree leaf for keys in at least three partitions), builds each key's file set inside F_Q only, and evaluates B_Q. We also
 report the search without the focus set, where each file set is built from the complete posting list. It uses
 only the Cuckoo filter and the Search Tree of Phase 2. Proof-generation time is the remaining server time: IMT paths, posting evidence, and partition
 and domain multiproofs. Every search-only result is compared with the result of the full verified query, and a
@@ -804,7 +827,8 @@ difference aborts the run."
 ```latex
 \textbf{Search-only time.} Search time is the time the CS needs to find the matching files, without
 building any proof: it looks up every query key in the Cuckoo filter and the B+ Search Tree, derives
-the focus set $F_Q$ from the partition sets of the keys kept in the Search Tree leaves, builds each
+the focus set $F_Q$ from the partition sets of the keys (kept in the Search Tree leaf for keys in at
+least three partitions), builds each
 key's file set inside $F_Q$ only, and evaluates $B_Q$. We also report the search without the focus set,
 where each file set is built from the complete posting list. It uses only the Cuckoo filter and the
 Search Tree of Phase~2. Proof-generation time is the
@@ -813,7 +837,12 @@ search-only result is compared with the result of the full verified query, and a
 run.
 ```
 
-Figure legend: "AMTP (search)" = partition-first, "AMTP (search, no focus set)" = full.
+Figures for the paper (17 Nov): use `baselines/results/part_leaf/graphs/search_no_fetch/` — every scheme
+without proof and without fetch, one AMTP line: AMTP `server_search_pf`, Chen `server_total`, SE-COLLAB and Du
+`search_no_fetch` (their own timers; definitions in 3.6). Its legend says just "AMTP". The older folder
+`part_leaf/graphs/search_only/` pairs AMTP with or without fetch against each baseline and is no longer needed
+for the paper. Numbers: `search_no_fetch/figure_points.csv`; table in `docs/reports/2026-11-17-search-tree-part-leaf.md`.
+If the full form is ever drawn: "AMTP" = partition-first, "AMTP (no focus set)" = full.
 `bench_split/plot_search.py` (main `1d7e4fc`) already draws partition-first as the AMTP line and no longer
 plots the fast form; the full form is not drawn (optional reference line, plot code only).
 
@@ -848,7 +877,7 @@ are rewritten:
 | Exp. 1: N ∈ {10^4 … 2×10^5}, kQ ∈ {1,2,4,8,16}, "kQ = 16 always empty" | Search 1.1 / 1.2: files per domain 10k–125k, kQ up to 20; with κ = 20 a 16-key AND is not always empty |
 | Exp. 2: marker keyword, three placements | Verify 1.1 / 2.1: five real keywords whose result size is closest to 10 / 100 / 1,000 / 10,000; a separate tamper experiment (modify, hide, inject, old version) |
 | Exp. 3: "DO transition validation is not included in the update latency" | update time = request + CS + **DO validation** + anchoring |
-| Exp. 4: N = 20,000, 20 batches of 100, Global-MT | 100,000 files, 1,000 batches of 100, skew 0.95; variants AMTP, Static-MT, Global-MT(v) (Global-MT with partition versions), θ_max ∈ {64, 128, 256} |
+| Exp. 4: N = 20,000, 20 batches of 100, Global-MT | 100,000 initial files (one domain, 4 categories); phase 1: 1,000 insert batches of 100 (b = 100), 95% of them into one hot group; phase 2: delete 65% of the hot group's live files, 100 per batch (≈ 1,674 batches in all); 3 runs; queries measured every 100 batches; variants AMTP, Static-MT, Global-MT(v) (Global-MT with partition versions), θ_max ∈ {64, 128, 256} |
 | Exp. 5: SE-COLLAB only | unchanged in structure; target domain 5,000 files, D ∈ {1 … 32} |
 
 ---
