@@ -25,3 +25,16 @@
 
 สร้างจาก branch นี้เป็น commit เดียว โดยไม่ใส่เอกสารภายในทีม: `CLAUDE.md`, `docs/HANDOFF.md`, `docs/reports/`,
 `docs/paper_*`, `README_TH.md`, `scripts/cloud_helpers/`
+
+## รอบ 2: แปลคอมเมนต์เป็นอังกฤษ + pin version
+
+- แปลคอมเมนต์ docstring ข้อความ help และข้อความ error ภาษาไทยเป็นอังกฤษใน 8 ไฟล์: `chen_et_al_sim.py`,
+  `du_et_al_sim.py`, `se_collab_sim.py`, `amtp_dataset.py`, `plot_results.py`, `amtp/nlp.py`,
+  `bench/extraction.py`, `datasets/arxiv/dataset_forAMTP.py` (รวม 1,581 token)
+- แก้ทีละ token (comment / string) แล้วตรวจด้วย tokenize ว่า token ที่เป็นโค้ดทุกตัวเหมือนเดิม และไฟล์ parse ได้
+- ไม่แตะ `"ไทย"` ใน `tests/test_fast_hash_paths.py` เพราะเป็นข้อมูลทดสอบ UTF-8
+- `amtp_code/requirements.txt` pin version ที่ทดสอบจาก clone ใหม่ (Python 3.12): flask 3.1.3, cryptography 50.0.2,
+  pytest 9.2.0, numpy 2.5.5, pycryptodome 4.5.0, matplotlib 3.11.2 · Charm 0.62 (ไม่บังคับ)
+
+ตรวจแล้ว: Chen selftest 13/13 · Du demo ผ่าน · SE-COLLAB selftest 18/18 · pytest 545 / 542 · venv ใหม่จาก requirements
+ที่ pin แล้ว pytest 545 passed · `make_paper_figures.sh` ครบ

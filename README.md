@@ -45,7 +45,7 @@ How the dataset was built from the Kaggle arXiv snapshot: [`datasets/arxiv/READM
 
 ```bash
 brew install gmp pbc                     # macOS; on Ubuntu: apt install libgmp-dev libpbc-dev
-.venv/bin/pip install charm-crypto-framework
+.venv/bin/pip install charm-crypto-framework==0.62
 ```
 
 Details and troubleshooting: [`baselines/README.md`](baselines/README.md). Everything else runs without Charm.

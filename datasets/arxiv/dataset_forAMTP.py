@@ -2,21 +2,21 @@
 """
 build_amtp_file_db.py
 =====================
-สร้าง plaintext database สำหรับ AMTP: 4 domain x 50,000 ไฟล์ (.txt) พร้อม keyword ของทุกไฟล์
-ข้อมูลจริงจาก arXiv dataset บน Kaggle (1 ไฟล์ = 1 เอกสาร: title + abstract)
+Build the plaintext database for AMTP: 4 domains x 50,000 files (.txt) with the keywords of every file,
+real data from the arXiv dataset on Kaggle (1 file = 1 document: title + abstract).
 
-วิธีใช้ (ต้องมี Python 3.8+ เท่านั้น ไม่ต้องติดตั้งอะไรเพิ่ม):
-    1) ดาวน์โหลดจาก https://www.kaggle.com/datasets/Cornell-University/arxiv
-       แล้วแตกไฟล์ จะได้ arxiv-metadata-oai-snapshot.json
-    2) วางไฟล์นั้นไว้โฟลเดอร์เดียวกับสคริปต์นี้
-    3) รัน:   python build_amtp_file_db.py arxiv-metadata-oai-snapshot.json
+Usage (Python 3.8+ only, nothing else to install):
+    1) download https://www.kaggle.com/datasets/Cornell-University/arxiv
+       and extract it to get arxiv-metadata-oai-snapshot.json
+    2) put that file in the same folder as this script
+    3) run:   python build_amtp_file_db.py arxiv-metadata-oai-snapshot.json
 
-ผลลัพธ์: โฟลเดอร์ amtp_file_db/
-    files/D1_cs/D1_000001.txt ...        50,000 ไฟล์ต่อ domain (ชุดเริ่มต้น)
-    insert_pool/D1_cs/D1_I00001.txt ...   ไฟล์สำรองสำหรับทดลอง insert (ไม่นับใน 50,000)
-    amtp_plaintext.db                     SQLite: documents, keywords, postings (ยังไม่เข้ารหัส)
-    documents.csv                         doc_id, domain, path, keywords (เปิดใน Excel ได้)
-    domain_keywords.csv                   keyword กับจำนวนไฟล์ที่มีคำนั้น แยกตาม domain
+Output: folder amtp_file_db/
+    files/D1_cs/D1_000001.txt ...        50,000 files per domain (initial set)
+    insert_pool/D1_cs/D1_I00001.txt ...   spare files for insert experiments (not counted in the 50,000)
+    amtp_plaintext.db                     SQLite: documents, keywords, postings (not encrypted)
+    documents.csv                         doc_id, domain, path, keywords (opens in Excel)
+    domain_keywords.csv                   keyword and number of files containing it, per domain
     summary.json, README.txt
 
 Mapping to the paper:
