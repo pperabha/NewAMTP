@@ -877,7 +877,7 @@ are rewritten:
 | Exp. 1: N ∈ {10^4 … 2×10^5}, kQ ∈ {1,2,4,8,16}, "kQ = 16 always empty" | Search 1.1 / 1.2: files per domain 10k–125k, kQ up to 20; with κ = 20 a 16-key AND is not always empty |
 | Exp. 2: marker keyword, three placements | Verify 1.1 / 2.1: five real keywords whose result size is closest to 10 / 100 / 1,000 / 10,000; a separate tamper experiment (modify, hide, inject, old version) |
 | Exp. 3: "DO transition validation is not included in the update latency" | update time = request + CS + **DO validation** + anchoring |
-| Exp. 4: N = 20,000, 20 batches of 100, Global-MT | 100,000 initial files (one domain, 4 categories); phase 1: 1,000 insert batches of 100 (b = 100), 95% of them into one hot group; phase 2: delete 65% of the hot group's live files, 100 per batch (≈ 1,674 batches in all); 3 runs; queries measured every 100 batches; variants AMTP, Static-MT, Global-MT(v) (Global-MT with partition versions), θ_max ∈ {64, 128, 256} |
+| Exp. 4: N = 20,000, 20 batches of 100, Global-MT | 100,000 initial files (one domain, 4 categories); phase 1: 1,000 insert batches of 100 (b = 100), 95% of them into one hot group; phase 2: delete 65% of the hot group's live files, 100 per batch (≈ 1,674 batches in all); one run per variant and θ_max (manifest `runs: 1`); queries measured every 100 batches; variants AMTP, Static-MT, Global-MT(v) (Global-MT with partition versions), θ_max ∈ {64, 128, 256} |
 | Exp. 5: SE-COLLAB only | unchanged in structure; target domain 5,000 files, D ∈ {1 … 32} |
 
 ---

@@ -1,78 +1,182 @@
-# NewAMTP
+# AMTP: Adaptive Multi-Domain Merkle Tree Partitioning
 
-**Adaptive Multi-Domain Merkle Tree Partitioning for dynamic verifiable Boolean search over encrypted cloud data**
+Prototype and experiments for the paper **"AMTP: Adaptive Multi-Domain Merkle Tree Partitioning for Dynamic
+Verifiable Search over Encrypted Cloud Data"** (Roiampaeng, Korcharoenkiat, Wenk, Saengbundit, Fugkeaw; SIIT,
+Thammasat University).
 
-NewAMTP is the clean rebuild of the AMTP research prototype. It reorganises the implementation into independent
-engines, one per function, removes duplicated code paths, and is the codebase for the revised experiments of the paper.
+AMTP is a Python 3.12 prototype of the full protocol (Phases 1-5 of the paper): adaptive Merkle partitions with
+split / merge, the B+ Search Tree and Cuckoo filter, Partition-Aware Posting Commitments (PAPCs) under an Index
+Merkle Tree, Authenticated Selective Proof Assembly (ASPA), owner validation of every update, and a simulated Root
+Anchor. The three baselines of the paper (Chen et al. [40], Du et al. [7], SE-COLLAB [37]) are re-implemented in
+`baselines/`.
 
-## Status
+- [1. Install](#1-install)
+- [2. Test](#2-test)
+- [3. Run](#3-run)
+- [4. Reproduce the paper's figures](#4-reproduce-the-papers-figures)
+- [5. Re-run the experiments](#5-re-run-the-experiments)
+- [6. Code map](#6-code-map)
+- [7. Implementation notes](#7-implementation-notes)
 
-| Stage | Scope | Status |
-|---|---|---|
-| 1 | Current AMTP code, cleaned; previous experiment results removed | Done |
-| 2 | Engine layout and one shared benchmark harness for AMTP and all baselines | Planned |
+## 1. Install
 
-Before stage 2, `amtp_code` was brought in line with the paper's protocol flow: binary encodings and
-`cid = H(CT bytes)`, B+ Search Tree and Cuckoo filter for lookup, the Phase 2 update protocol with the owner's
-Validator, one code path for demo and benchmarks (attacks in an adversary plug-in), and one binary size rule for
-every scheme. See `docs/ENGINE_REDESIGN.md` section 3.
-| 3 | Implementation-level performance fixes and multiprocessing | Planned |
-| 4 | Protocol revisions, after supervisor approval | Planned |
-
-## Schemes compared
-
-| Scheme | Role |
-|---|---|
-| AMTP | Proposed scheme |
-| Chen et al. [40] | Baseline |
-| Du et al. [7] | Baseline |
-| SE-COLLAB [37] | Baseline |
-
-All schemes use the same arXiv dataset (dataset-v4: 4 domains × 125,000 files, κ = 20 keywords per file) and the
-same keyword sets W(d) from `documents.csv`. Experiments run on the project's cloud machine.
-
-## Repository
-
-| Folder | Contents |
-|---|---|
-| `amtp_code/` | AMTP implementation, user-side demo (`run.py`), benchmarks (`bench/`), tests |
-| `baselines/` | Chen et al., Du et al., SE-COLLAB, shared dataset loader `amtp_dataset.py`, plotting |
-| `datasets/arxiv/` | dataset-v4 parts (`data_v4/`), build and unpack scripts |
-| `docs/` | paper summary and design notes |
-| `scripts/` | `aws_run_all.sh`: the full experiment plan on one machine |
-
-Planned layout after stage 2:
-
-```
-amtp/core/        hashing, Merkle trees, encoding, cryptography, Boolean queries
-amtp/engines/     ingest, storage, partition, commitment, anchor,
-                  query, router, proof, verify, access
-amtp/plugins/     adversary scenarios (demo and tests only)
-harness/          shared dataset loader, query sets, measurement, plots
-schemes/          AMTP, Chen et al., Du et al., SE-COLLAB
-datasets/arxiv/   shared arXiv dataset: build scripts and compressed parts
-tests/            unit tests and the full-rebuild reference for R_D
-```
-
-## Quick start
+Requirements: Python 3.12, about 5 GB of free disk for the unpacked dataset. Tested on macOS (Apple silicon) and
+Ubuntu 24.04 (AWS `r7i.4xlarge`).
 
 ```bash
-git clone https://github.com/pperabha/NewAMTP.git && cd NewAMTP
-python3 -m venv .venv && .venv/bin/pip install -r amtp_code/requirements.txt
-.venv/bin/python datasets/arxiv/unpack.py         # dataset-v4 -> data/amtp_file_db_v4/ (once, a few minutes)
-.venv/bin/python baselines/amtp_dataset.py        # check: D1..D4 initial 125000 pool 12500
-bash scripts/aws_run_all.sh check                 # dataset present, unit tests, self-tests
+git clone https://github.com/pperabha/NewAMTP.git
+cd NewAMTP
+python3 -m venv .venv
+.venv/bin/pip install -r amtp_code/requirements.txt
 ```
 
-Every scheme reads the same documents and keywords from `data/amtp_file_db_v4/documents.csv` through
-`baselines/amtp_dataset.py`. Details: [`datasets/arxiv/README.md`](datasets/arxiv/README.md).
+**Dataset** (needed for the experiments, not for the tests or the demo). The arXiv dataset used in the paper
+(dataset-v4: 4 domains x 125,000 papers + 12,500 insertion pool, RAKE keywords, seed 42) is stored compressed in
+`datasets/arxiv/data_v4/`. Unpack it once (a few minutes, standard library only; every part is checked by SHA-256):
 
-## Contributing
+```bash
+.venv/bin/python datasets/arxiv/unpack.py          # -> data/amtp_file_db_v4/
+.venv/bin/python baselines/amtp_dataset.py         # check: D1..D4 initial 125000 pool 12500
+```
 
-Work on a branch and open a pull request into `main`. Keep generated experiment results and raw data out of the
-repository; only the compressed dataset parts under `datasets/arxiv/data_v4/` are versioned.
+How the dataset was built from the Kaggle arXiv snapshot: [`datasets/arxiv/README.md`](datasets/arxiv/README.md).
 
-## Authors
+**SE-COLLAB only (optional).** Its pairing operations need Charm-Crypto with the GMP and PBC libraries:
 
-Perabha Roiampaeng, Apisara Korcharoenkiat, Vanessa Nattacha Wenk, Wanitcha Saengbundit, Somchart Fugkeaw
-(SIIT, Thammasat University)
+```bash
+brew install gmp pbc                     # macOS; on Ubuntu: apt install libgmp-dev libpbc-dev
+.venv/bin/pip install charm-crypto-framework
+```
+
+Details and troubleshooting: [`baselines/README.md`](baselines/README.md). Everything else runs without Charm.
+
+## 2. Test
+
+```bash
+cd amtp_code
+../.venv/bin/python -m pytest -q                                            # default configuration
+(source ../scripts/paper_env.sh && ../.venv/bin/python -m pytest -q)        # the paper's configuration
+```
+
+The tests cover the Merkle and IMT structures, the B+ tree and Cuckoo filter, encodings, the Phase 2 update
+protocol and the owner's validator, AND pruning and focus evidence, the Search Tree auxiliary data (responses must be
+byte-identical with and without it), the ablation variants, and a Phase 5 fuzzer with a malicious server
+(`amtp/adversary.py`) that must be rejected.
+
+## 3. Run
+
+**Interactive demo** (two domains, four users, a malicious-server switch):
+
+```bash
+cd amtp_code && ../.venv/bin/python run.py         # then open http://127.0.0.1:5000
+```
+
+**Paper configuration.** The code's default is the plain construction. Every AMTP result in the paper uses the
+configuration in [`scripts/paper_env.sh`](scripts/paper_env.sh): fill-first placement, γ with the partition version,
+AND pruning with greedy expansion of H_full, result-only partition proofs, and the auxiliary Search Tree data
+Aux_i(h_w) (Eq. 17). Source it before running AMTP:
+
+```bash
+source scripts/paper_env.sh
+```
+
+**Smoke run of every experiment** (small sizes, one repetition; the numbers are not results):
+
+```bash
+source scripts/paper_env.sh && bash scripts/smoke_all.sh
+```
+
+## 4. Reproduce the paper's figures
+
+All raw results behind the paper are in this repository. One command rebuilds Figs. 3-10 from them:
+
+```bash
+bash scripts/make_paper_figures.sh                 # -> baselines/results/paper_figures/paper/fig03.pdf ... fig10.pdf
+```
+
+Each plotting script also writes `figure_points.csv` with every plotted number.
+
+| Paper | Figure | Data (in `baselines/results/`) | Commit of the run | Plot script |
+|---|---|---|---|---|
+| Exp. 1 | Fig. 3 single-domain search | `part_leaf/data/{amtp,chen}`, `part_leaf/data_no_fetch/{secollab,du}` | `d25616b`; SE-COLLAB `0ada140`, Du `331d608` | `baselines/plot_exp1.py` |
+| Exp. 1 | Figs. 4-5 multi-domain search | `part_leaf/data/amtp`, `part_leaf/data_no_fetch/secollab` | `d25616b`; SE-COLLAB `0ada140` | `baselines/plot_exp1.py` |
+| Exp. 2 | Fig. 6 tamper detection | `part_leaf/data/*/..._tamper_detection.csv` | `d25616b` | `baselines/plot_exp2.py` |
+| Exp. 2 | Figs. 7-8 user verification | `part_leaf/data/*/..._verify_{single,multi}.csv` | `d25616b` | `baselines/plot_exp2.py` |
+| Exp. 3 | Fig. 9 ablation (update cost) | `runs/cloud/prune_w2` (AMTP, Static-MT), `runs/cloud/prune_w5` (Global-MT(v)) | `767289c` | `baselines/plot_exp4.py` |
+| Exp. 4 | Fig. 10 multi-domain scalability | `part_leaf/data/amtp/amtp_exp5_domains.csv`, `part_leaf/data_no_fetch/secollab` | `d25616b`; SE-COLLAB `0ada140` | `baselines/plot_exp5.py` |
+
+Every CSV has a `.manifest.json` next to it with the exact command, git commit, `git_dirty`, dataset and machine.
+Script names `plot_exp4.py` / `plot_exp5.py` and suite name `exp5` predate the paper's final numbering: they
+produce the paper's Experiments 3 and 4.
+
+The runs come from four commits. Between them only search-side code and benchmark bookkeeping changed: the update
+path measured in Experiment 3 (`amtp/engine.py`, `merkle.py`, `variants.py`, `core/`) is identical, and the
+auxiliary Search Tree data added after Experiment 3 is off in that run and changes only the server's search time.
+
+## 5. Re-run the experiments
+
+All runs in the paper used AWS `r7i.4xlarge` (16 vCPU, 128 GiB RAM), one job per machine, 15 repetitions after
+3 warm-up runs. Full-size runs are long (Experiment 3 with Global-MT(v) took about 14 h).
+
+```bash
+source scripts/paper_env.sh
+OUT=$PWD/baselines/results/runs/my_run            # run from the repository root
+cd amtp_code
+# Experiment 1: server search time (search-only timers, checked against the full verified response)
+../.venv/bin/python bench_split/run.py search1 --reps 15 --warmup 3 --out $OUT/amtp
+../.venv/bin/python bench_split/run.py xsearch --reps 15 --warmup 3 --out $OUT/amtp
+# Experiment 2: tamper detection and user verification
+../.venv/bin/python bench/experiments.py tamper  --reps 15 --warmup 3 --out $OUT/amtp
+../.venv/bin/python bench/experiments.py verify1 --reps 15 --warmup 3 --out $OUT/amtp
+../.venv/bin/python bench/experiments.py xverify --reps 15 --warmup 3 --out $OUT/amtp
+# Experiment 3: ablation (one variant per machine; Global-MT(v) with --variants "Global-MT(v)")
+../.venv/bin/python -m bench.ablation --source arxiv --n 100000 --theta-max 64 --theta-min 16 --placement fill \
+    --batches 1000 --batch-size 100 --skews 0.95 --hot 1 --delete-frac 0 --fresh-source initial \
+    --hot-delete-frac 0.65 --query-every 100 --runs 1 --seed 1 --variants AMTP,Static-MT \
+    --out $OUT/amtp/splitmerge_n100000_t64
+# Experiment 4: multi-domain scalability
+../.venv/bin/python bench_split/run.py exp5 --reps 15 --warmup 3 --out $OUT/amtp
+```
+
+Baselines (run from `baselines/`, same query files and sizes):
+
+```bash
+cd baselines
+../.venv/bin/python chen_et_al_sim.py search1 --reps 15 --warmup 3 --scope full --edb memory --out $OUT/chen
+../.venv/bin/python du_et_al_sim.py  search1 --reps 15 --warmup 3 --out $OUT/du        # also verify1, tamper
+../.venv/bin/python se_collab_sim.py search1 --reps 15 --warmup 3 --proof-mode paths --out $OUT/secollab
+#   SE-COLLAB also: verify1, tamper, xsearch, xverify, exp5;  Chen also: verify1, tamper
+```
+
+`scripts/aws_run_all.sh` runs every step for every scheme on one machine (`DRY_RUN=1` prints the commands).
+Then plot a run with the scripts of Section 4 (`--data $OUT`).
+
+## 6. Code map
+
+| Paper | Code (`amtp_code/amtp/`) |
+|---|---|
+| Phase 1: encryption, keyword extraction, protected keys | `owner.py`, `nlp.py`, `core/crypto.py`, `core/hashing.py` |
+| Phase 2: partitions, Search Tree, postings, PAPC, IMT, update protocol | `engine.py`, `index.py`, `bptree.py`, `cuckoo.py`, `update.py`, `server.py` |
+| Phase 2, Step 5: owner validation and anchoring | `validator.py`, `anchor.py` |
+| Phase 3: split / merge and posting repair | `engine.py`, `variants.py` (AMTP, Static-MT, Global-MT policies) |
+| Phase 4: search, focus set, ASPA proofs | `server.py`, `core/boolean.py`, `core/merkle.py`, `dht.py` |
+| Phase 5: verification and decryption | `user.py` |
+| Malicious server for tests and demo | `adversary.py` |
+
+Benchmarks: `amtp_code/bench/` (Experiments 2-3), `amtp_code/bench_split/` (search-only timing, Experiments 1 and 4).
+Baselines and plotting: `baselines/`. Shared size rule for every scheme: `baselines/wire_sizes.py`.
+
+## 7. Implementation notes
+
+As stated in the paper's experimental setup:
+
+- Ed25519 signatures stand in for ABS, and an attribute-policy key wrap stands in for CP-ABE (not
+  collusion-resistant; it affects only decryption, which is reported separately).
+- The Root Anchor is simulated in-process with the same predecessor and epoch checks; ledger latency is not included.
+- Ciphertexts live in an in-process consistent-hashing DHT (6 nodes, replication factor 3). Network latency is
+  excluded for every scheme.
+- Parameters: θ_max = 64, θ_min = 16, G = 16 placement groups, B+ tree order 64.
+- Every AMTP query in the experiments must pass all Phase 5 checks and return exactly the plaintext ground truth,
+  otherwise the run aborts.
+
+Design notes and baseline notes: `docs/` (`AMTP_PAPER.md`, `CHEN_NOTES.md`, `DU_NOTES.md`, `SE_COLLAB_NOTES.md`).

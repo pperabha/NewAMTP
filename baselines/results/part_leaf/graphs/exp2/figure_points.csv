@@ -1,0 +1,151 @@
+figure,series,x,y,err_down,err_up
+Exp2_a_modify,AMTP,5,100.0,0,0
+Exp2_a_modify,AMTP,10,100.0,0,0
+Exp2_a_modify,AMTP,20,100.0,0,0
+Exp2_a_modify,AMTP,40,100.0,0,0
+Exp2_a_modify,AMTP,100,100.0,0,0
+Exp2_a_modify,AMTP,1000,100.0,0,0
+Exp2_a_modify,SE-COLLAB [37],5,100.0,0,0
+Exp2_a_modify,SE-COLLAB [37],10,100.0,0,0
+Exp2_a_modify,SE-COLLAB [37],20,100.0,0,0
+Exp2_a_modify,SE-COLLAB [37],40,100.0,0,0
+Exp2_a_modify,SE-COLLAB [37],100,100.0,0,0
+Exp2_a_modify,SE-COLLAB [37],1000,100.0,0,0
+Exp2_a_modify,Du [7],5,100.0,0,0
+Exp2_a_modify,Du [7],10,100.0,0,0
+Exp2_a_modify,Du [7],20,100.0,0,0
+Exp2_a_modify,Du [7],40,100.0,0,0
+Exp2_a_modify,Du [7],100,100.0,0,0
+Exp2_a_modify,Du [7],1000,100.0,0,0
+Exp2_a_hide,AMTP,5,100.0,0,0
+Exp2_a_hide,AMTP,10,100.0,0,0
+Exp2_a_hide,AMTP,20,100.0,0,0
+Exp2_a_hide,AMTP,40,100.0,0,0
+Exp2_a_hide,AMTP,100,100.0,0,0
+Exp2_a_hide,AMTP,1000,100.0,0,0
+Exp2_a_hide,Chen [40],5,100.0,0,0
+Exp2_a_hide,Chen [40],10,100.0,0,0
+Exp2_a_hide,Chen [40],20,100.0,0,0
+Exp2_a_hide,Chen [40],40,100.0,0,0
+Exp2_a_hide,Chen [40],100,100.0,0,0
+Exp2_a_hide,Chen [40],1000,100.0,0,0
+Exp2_a_hide,SE-COLLAB [37],5,0.0,0,0
+Exp2_a_hide,SE-COLLAB [37],10,0.0,0,0
+Exp2_a_hide,SE-COLLAB [37],20,0.0,0,0
+Exp2_a_hide,SE-COLLAB [37],40,0.0,0,0
+Exp2_a_hide,SE-COLLAB [37],100,0.0,0,0
+Exp2_a_hide,SE-COLLAB [37],1000,0.0,0,0
+Exp2_a_hide,Du [7],5,100.0,0,0
+Exp2_a_hide,Du [7],10,100.0,0,0
+Exp2_a_hide,Du [7],20,100.0,0,0
+Exp2_a_hide,Du [7],40,100.0,0,0
+Exp2_a_hide,Du [7],100,100.0,0,0
+Exp2_a_hide,Du [7],1000,100.0,0,0
+Exp2_a_inject,AMTP,5,100.0,0,0
+Exp2_a_inject,AMTP,10,100.0,0,0
+Exp2_a_inject,AMTP,20,100.0,0,0
+Exp2_a_inject,AMTP,40,100.0,0,0
+Exp2_a_inject,AMTP,100,100.0,0,0
+Exp2_a_inject,AMTP,1000,100.0,0,0
+Exp2_a_inject,Chen [40],5,100.0,0,0
+Exp2_a_inject,Chen [40],10,100.0,0,0
+Exp2_a_inject,Chen [40],20,100.0,0,0
+Exp2_a_inject,Chen [40],40,100.0,0,0
+Exp2_a_inject,Chen [40],100,100.0,0,0
+Exp2_a_inject,Chen [40],1000,100.0,0,0
+Exp2_a_inject,SE-COLLAB [37],5,0.0,0,0
+Exp2_a_inject,SE-COLLAB [37],10,0.0,0,0
+Exp2_a_inject,SE-COLLAB [37],20,0.0,0,0
+Exp2_a_inject,SE-COLLAB [37],40,0.0,0,0
+Exp2_a_inject,SE-COLLAB [37],100,0.0,0,0
+Exp2_a_inject,SE-COLLAB [37],1000,0.0,0,0
+Exp2_a_inject,Du [7],5,0.0,0,0
+Exp2_a_inject,Du [7],10,0.0,0,0
+Exp2_a_inject,Du [7],20,0.0,0,0
+Exp2_a_inject,Du [7],40,0.0,0,0
+Exp2_a_inject,Du [7],100,0.0,0,0
+Exp2_a_inject,Du [7],1000,0.0,0,0
+Exp2_a_old_version,AMTP,5,100.0,0,0
+Exp2_a_old_version,AMTP,10,100.0,0,0
+Exp2_a_old_version,AMTP,20,100.0,0,0
+Exp2_a_old_version,AMTP,40,100.0,0,0
+Exp2_a_old_version,AMTP,100,100.0,0,0
+Exp2_a_old_version,AMTP,1000,100.0,0,0
+Exp2_a_old_version,SE-COLLAB [37],5,100.0,0,0
+Exp2_a_old_version,SE-COLLAB [37],10,100.0,0,0
+Exp2_a_old_version,SE-COLLAB [37],20,100.0,0,0
+Exp2_a_old_version,SE-COLLAB [37],40,100.0,0,0
+Exp2_a_old_version,SE-COLLAB [37],100,100.0,0,0
+Exp2_a_old_version,SE-COLLAB [37],1000,100.0,0,0
+Exp2_a_old_version,Du [7],5,100.0,0,0
+Exp2_a_old_version,Du [7],10,100.0,0,0
+Exp2_a_old_version,Du [7],20,100.0,0,0
+Exp2_a_old_version,Du [7],40,100.0,0,0
+Exp2_a_old_version,Du [7],100,100.0,0,0
+Exp2_a_old_version,Du [7],1000,100.0,0,0
+Exp2_bars,AMTP,modify,100.0,0,0
+Exp2_bars,AMTP,hide,100.0,0,0
+Exp2_bars,AMTP,inject,100.0,0,0
+Exp2_bars,AMTP,old_version,100.0,0,0
+Exp2_bars,AMTP,none,0.0,0,0
+Exp2_bars,Chen [40],hide,100.0,0,0
+Exp2_bars,Chen [40],inject,100.0,0,0
+Exp2_bars,Chen [40],none,0.0,0,0
+Exp2_bars,SE-COLLAB [37],modify,100.0,0,0
+Exp2_bars,SE-COLLAB [37],hide,0.0,0,0
+Exp2_bars,SE-COLLAB [37],inject,0.0,0,0
+Exp2_bars,SE-COLLAB [37],old_version,100.0,0,0
+Exp2_bars,SE-COLLAB [37],none,0.0,0,0
+Exp2_bars,Du [7],modify,100.0,0,0
+Exp2_bars,Du [7],hide,100.0,0,0
+Exp2_bars,Du [7],inject,0.0,0,0
+Exp2_bars,Du [7],old_version,100.0,0,0
+Exp2_bars,Du [7],none,0.0,0,0
+Exp2_attack_types,AMTP,5,4,0,0
+Exp2_attack_types,AMTP,10,4,0,0
+Exp2_attack_types,AMTP,20,4,0,0
+Exp2_attack_types,AMTP,40,4,0,0
+Exp2_attack_types,AMTP,100,4,0,0
+Exp2_attack_types,AMTP,1000,4,0,0
+Exp2_attack_types,Chen [40],5,2,0,0
+Exp2_attack_types,Chen [40],10,2,0,0
+Exp2_attack_types,Chen [40],20,2,0,0
+Exp2_attack_types,Chen [40],40,2,0,0
+Exp2_attack_types,Chen [40],100,2,0,0
+Exp2_attack_types,Chen [40],1000,2,0,0
+Exp2_attack_types,SE-COLLAB [37],5,2,0,0
+Exp2_attack_types,SE-COLLAB [37],10,2,0,0
+Exp2_attack_types,SE-COLLAB [37],20,2,0,0
+Exp2_attack_types,SE-COLLAB [37],40,2,0,0
+Exp2_attack_types,SE-COLLAB [37],100,2,0,0
+Exp2_attack_types,SE-COLLAB [37],1000,2,0,0
+Exp2_attack_types,Du [7],5,3,0,0
+Exp2_attack_types,Du [7],10,3,0,0
+Exp2_attack_types,Du [7],20,3,0,0
+Exp2_attack_types,Du [7],40,3,0,0
+Exp2_attack_types,Du [7],100,3,0,0
+Exp2_attack_types,Du [7],1000,3,0,0
+Exp2_b,AMTP,10.0,0.464913,0.008169,0.003044
+Exp2_b,AMTP,100.0,3.390328,0.061192,0.053049
+Exp2_b,AMTP,990.0,26.280413,0.386209,0.680156
+Exp2_b,AMTP,2550.5,59.507788,6.194374,36.677655
+Exp2_b,Chen [40],10.0,0.269832,0.025485,0.02038
+Exp2_b,Chen [40],100.0,0.560543,0.004629,0.00367
+Exp2_b,Chen [40],990.0,3.188788,0.034825,0.054283
+Exp2_b,Chen [40],2550.5,7.742594,0.627209,6.514231
+Exp2_b,SE-COLLAB [37],10.0,1.022216,0.002763,0.001911
+Exp2_b,SE-COLLAB [37],100.0,2.025769,0.038647,0.028376
+Exp2_b,SE-COLLAB [37],990.0,11.9015,0.260048,0.297474
+Exp2_b,SE-COLLAB [37],2550.5,28.969561,2.99712,24.378395
+Exp2_b,Du [7],10.0,0.724938,0.016144,0.019703
+Exp2_b,Du [7],100.0,6.820346,0.016158,0.042117
+Exp2_b,Du [7],990.0,68.686049,0.581486,1.036945
+Exp2_b,Du [7],2550.5,180.961817,16.895165,158.98625
+Exp2_c,AMTP,10,0.781197,0.005272,0.00802
+Exp2_c,AMTP,100,4.044887,0.043196,0.009823
+Exp2_c,AMTP,1002,31.081592,0.465361,0.553279
+Exp2_c,AMTP,9448,238.191996,29.62031,5.016973
+Exp2_c,SE-COLLAB [37],10,1.096754,0.007457,0.00011
+Exp2_c,SE-COLLAB [37],100,2.184791,0.002061,0.02103
+Exp2_c,SE-COLLAB [37],1002,12.830934,0.136273,0.348417
+Exp2_c,SE-COLLAB [37],9448,120.27408,10.426698,4.741463

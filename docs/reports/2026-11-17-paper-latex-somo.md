@@ -49,3 +49,9 @@ part leaf ไม่มีสมการ lemma หรือ theorem ใหม่
 
 - เอกสารอย่างเดียว ไม่มีโค้ดเปลี่ยน ไม่ต้องรัน pytest
 - ยังค้าง (จากรายการเดิม): compile กับ .tex จริง, อาจารย์ตรวจ Lemma / Theorem 1 และอนุมัติการเปลี่ยน design, เวอร์ชัน `cryptography`, citation OXT
+
+## แก้เพิ่ม (รอบ 3)
+
+- Exp. 4 รันรอบเดียวต่อ variant และ θ_max (`manifest.json`: `runs: 1`) ไม่ใช่ 3 รอบตามที่ PR #34 เขียน (ค่า `SM_RUNS=3` ใน `aws_run_all.sh` ไม่ได้ถูกใช้ในรอบ prune) · แก้ข้อ 3.7 ใน `paper_sync_2026-11-16.md` และ `.tex` แล้ว
+- รูป Exp. 1, 2, 4 สำหรับ paper: `baselines/results/part_leaf/graphs/exp1/`, `exp2/`, `exp4/` (สคริปต์ `baselines/plot_exp1.py`, `plot_exp2.py`, `plot_exp4.py`)
+- end-to-end ของทุก scheme = query gen + server + verify (ไม่รวมการถอดรหัสไฟล์; Chen รวมการถอด bitmap + AND เพราะเป็นขั้นที่ได้ผลลัพธ์) · caption ที่เคยเขียน "and decryption" ผิด
