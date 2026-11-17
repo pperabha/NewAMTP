@@ -7,9 +7,10 @@
 %
 % Our changes are marked   % >>> [SOMO 17 Nov]   (search for "SOMO"):
 %   1.4   comment only (fill = every experiment; library default least)
-%   1.12  NEW LaTeX for the CS / DU sentences (ASPA omits only for conjunctions, with evidence)
-%   1.13  part leaf: "response is the same with or without it" + optional cost sentence
-%   2.1   NEW sentence: Cuckoo filter and Search Tree (incl. partition sets) are untrusted lookup structures
+%   1.12  NEW LaTeX for the CS sentence (ASPA omits only for conjunctions, with evidence); DU = friend's
+%   1.13  part leaf as an equation: Aux_i(h_w) = (Sel_i(h_w), pos_w) \label{eq:part-leaf}, Table II row,
+%         Phase 4 Step 2 sentence, cost sentence
+%   2.1   NEW sentence: Cuckoo filter and Search Tree (incl. Aux_i) are untrusted lookup structures
 %   2.3   LaTeX of the friend's Lemma 1 sentence
 %   2.7   LaTeX of the friend's Theorem 2 sentence
 %   3.4   Exp. 3-4 ran before the part leaf
@@ -17,9 +18,11 @@
 %   3.6   NEW LaTeX: instances (SE-COLLAB / Du search-only re-runs on two more instances, <= 7%)
 %   3.6b  partition sets "for keys in at least three partitions"; figures = part_leaf/graphs/search_no_fetch
 %
-% Part leaf (Search Tree leaf by partition) has NO new equation, lemma or theorem: the leaf is lookup data,
-% never sent, and responses are identical byte for byte. It appears in 1.13 (Phase 2), 2.1 (security
-% sentence), 3.4 (set-up) and 3.6b (search-only time).
+% Part leaf (Search Tree leaf by partition): one new equation (Aux_i, 1.13); the posting state and the PAPC do
+% not change, and there is no new lemma or theorem (lookup data, never sent, responses identical byte for byte).
+% It appears in 1.13 (Table II, Phase 2, Phase 4), 2.1, 3.4 and 3.6b.
+%
+% Find / delete / paste instructions per page of AMTP (21).pdf: docs/paper_paste_guide_2026-11-17_somo.md
 %
 % Lines starting with "%" are notes (code references, what to delete); everything else is paper text.
 % =================================================================================================
@@ -410,9 +413,7 @@ component inside them was withheld.
 % It returns ciphertexts and authenticated posting, membership, or non-membership evidence, using ASPA to
 % share Merkle paths and, for conjunctions, to omit posting components that provably cannot contain a match.
 
-% Where: Section III-A, Data User paragraph; replace "It verifies every component posting state ..."
-It verifies every component posting state needed for the query, or authenticated absence, against the
-anchored roots before it accepts the result.
+% DU bullet: use the friend's version (item 1.12 / 5.4); no change from us.
 
 %--------------------------------------------------------------------------------------------------
 % 1.13 [B] Phase 2 Step 2: Search Tree leaf by partition (added 17 Nov, PR #32 `AMTP_PART_LEAF`)
@@ -425,17 +426,37 @@ anchored roots before it accepts the result.
 % never sent and never trusted; responses are identical byte for byte (25 tests); no equation changes.
 % Measured cost (Mac, 100k files): snapshot memory +6% (1,279 → 1,359 MB), build time +1.5%.
 
-% Where: Phase 2 Step 2, add after "The Search Tree is a B+ tree of order B ..."
-% >>> [SOMO 17 Nov] added the last clause ("and the response is the same with or without it") and the optional
-%     cost sentence. There is no new equation, lemma or theorem for the part leaf: it is not evidence.
-%     Its security sentence is in 2.1 below; its search-time wording is in 3.6b.
-For a key with postings in at least three partitions, the leaf also stores $\mathsf{Sel}_i(h_w)$ and the
-position of each component in $L_w$, so the CS reads the partition set of a key without scanning its
-posting state. The leaf is lookup data, not evidence: it is never sent to the DU, and the response is the
-same with or without it.
-% optional (cost, Mac, 100k documents):
-On $100{,}000$ documents, the stored partition sets add 6\% to the snapshot memory and 1.5\% to its
-build time.
+% Where: Phase 2 Step 2 (page 7 of AMTP (21)), after "... the commitments below authenticate the returned
+%        posting state."
+% >>> [SOMO 17 Nov] part leaf written as an equation. The posting state (13)-(15) and the PAPC (16)-(18) do NOT
+%     change; the leaf keeps auxiliary lookup data next to L_w. No new lemma or theorem (not evidence).
+%     The full part-leaf set in the paper: Table II row (below), this block, 1.7 sentence, 2.1, 3.4, 3.6b.
+%     Step-by-step find / delete / paste: docs/paper_paste_guide_2026-11-17_somo.md
+For a key in at least three partitions, the leaf of $h_w$ also keeps auxiliary lookup data
+next to $L_w$:
+\begin{equation}
+\mathsf{Aux}_i(h_w) =
+\begin{cases}
+\big(\mathsf{Sel}_i(h_w),\, \mathsf{pos}_w\big), & |\mathsf{Sel}_i(h_w)| \ge 3,\\
+\bot, & \text{otherwise},
+\end{cases}
+\label{eq:part-leaf}
+\end{equation}
+where $\mathsf{pos}_w(PID_{i,j}) = j$ when $(PID_{i,j}, L_{w,j})$ is the $j$-th component of
+$L_w$. Both are derived from $L_w$ when the snapshot is built, so the CS obtains
+$\mathsf{Sel}_i(h_w)$ and any single component without scanning $L_w$. $\mathsf{Aux}_i$ is
+lookup data, not evidence: it is never sent to the DU, the posting state and the PAPC are
+unchanged, and every response is the same with or without it. On 100{,}000 documents it adds
+6\% to the snapshot memory and 1.5\% to its build time.
+
+% Table II, new row after "Sel_i(h_w) & Partitions containing postings for h_w":
+$\mathsf{Aux}_i(h_w)$ & Partition set and component positions kept in the Search Tree leaf \\
+
+% Phase 4 Step 2 (page 10): replace "For every h in H_Q, the CS resolves the Search Tree and obtains Sel_i(h)." by
+For every $h \in H_Q$, the CS resolves the Search Tree and obtains $\mathsf{Sel}_i(h)$ from
+$\mathsf{Aux}_i(h)$ in \eqref{eq:part-leaf} when it is stored, and from $L_h$ otherwise; for
+focus evidence it takes the components of $\mathsf{Seg}_h$ through $\mathsf{pos}_h$ without
+scanning $L_h$.
 
 %==================================================================================================
 % 2. Security Analysis
@@ -453,8 +474,8 @@ pointers of the finalized IMT form one strictly increasing chain over exactly th
 leaves of every $R^{post}$ tree are in strictly increasing $PID$ order.
 
 % >>> [SOMO 17 Nov] NEW sentence (part leaf / lookup structures). Where: end of the IV-A assumptions paragraph.
-The Cuckoo filter and the Search Tree, including the partition sets stored in its leaves, are untrusted
-lookup structures of the CS; the DU never uses them, and every accept decision rests on the IMT, PAPC,
+The Cuckoo filter and the Search Tree, including the auxiliary data $\mathsf{Aux}_i$ in its leaves,
+are untrusted lookup structures of the CS; the DU never uses them, and every accept decision rests on the IMT, PAPC,
 and Merkle checks of Phase~5.
 
 %--------------------------------------------------------------------------------------------------
@@ -686,7 +707,7 @@ AMTP uses $\theta_{\max} = 64$, $\theta_{\min} = 16$, $G = 16$ placement groups 
 categories), fill-first placement, AND pruning, result-only partition proofs, and partition sets in the
 Search Tree leaves.
 % >>> [SOMO 17 Nov] next two lines added: Exp. 3-4 ran before the part leaf.
-Experiments~3 and~4 were run before the Search Tree partition sets were added;
+Experiments~3 and~4 were run before the auxiliary Search Tree data was added;
 these sets change neither the update procedure nor any proof or response, only the server's search time.
 % <<< [SOMO] end
 The initial documents are loaded in bulk and anchored by the owner; every later update runs the full protocol (signed
