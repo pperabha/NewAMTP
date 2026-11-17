@@ -1,0 +1,20 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_prune_v
+commit 767289c, uncommitted changes: 0
+[2026-11-16 04:06:05] start check_dataset
+[2026-11-16 04:06:15] done  check_dataset (10 s)
+[2026-11-16 04:06:15] start check_pytest
+[2026-11-16 04:07:02] done  check_pytest (47 s)
+[2026-11-16 04:07:02] start check_chen
+[2026-11-16 04:07:02] done  check_chen (0 s)
+[2026-11-16 04:07:02] start check_secollab
+[2026-11-16 04:07:03] done  check_secollab (1 s)
+[2026-11-16 04:07:03] start check_du
+[2026-11-16 04:07:05] done  check_du (2 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_prune_v
+=== job prune-gmtv -> run paper_prune_v: AMTP_PLACEMENT=fill AMTP_AND_PRUNE=1 AMTP_PART_RESULTS=1 AMTP_AND_GREEDY=1 SM_RUNS=1 SM_THETAS=64 SM_VARIANTS="Global-MT(v)" SM_TAG=_gmtv steps: splitmerge
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_prune_v
+commit 767289c, uncommitted changes: 0
+[2026-11-16 04:07:05] start splitmerge_t64_gmtv
+[2026-11-16 18:04:51] done  splitmerge_t64_gmtv (50266 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_prune_v
+worker done: prune-gmtv

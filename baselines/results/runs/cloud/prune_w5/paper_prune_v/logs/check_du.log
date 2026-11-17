@@ -1,0 +1,8 @@
+query=['kw000000', 'kw000001']  ground truth=207 files
+all honest             verified=207 (gt=207, fp=0) reconstructed_ok=207 filtered={} malicious={}
+cloud1 empty           verified=207 (gt=207, fp=0) reconstructed_ok=207 filtered={} malicious={1: ['incomplete: missing 207']}
+cloud2 drop            verified=207 (gt=207, fp=0) reconstructed_ok=207 filtered={} malicious={2: ['incomplete: missing 1']}
+cloud3 tamper          verified=207 (gt=207, fp=0) reconstructed_ok=207 filtered={} malicious={3: ['ID/slice verification failed', 'incomplete: missing 1']}
+cloud4 forge           verified=207 (gt=207, fp=0) reconstructed_ok=207 filtered={} malicious={4: ['ID/slice verification failed', 'incomplete: missing 1']}
+cloud0 irrelevant      verified=207 (gt=207, fp=0) reconstructed_ok=207 filtered={0: 1} malicious={}
+ALL collude drop       verified=206 (gt=207, fp=0) reconstructed_ok=206 filtered={} malicious={}

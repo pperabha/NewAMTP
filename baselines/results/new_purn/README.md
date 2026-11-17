@@ -12,7 +12,7 @@
 | เส้น AMTP ใน ex3 (update) | รอบ fill (`new_new/data/fill/`, commit `869cf73`) · ไม่รันใหม่ เพราะโค้ด update ไม่เปลี่ยน | – |
 | เส้น baseline (SE-COLLAB, Chen, Du) ทุกรูป | `new_amtp_result/gamma_with_v/` · ไม่รันใหม่ เพราะโค้ด baseline ไม่เปลี่ยน | – |
 | ex4 (split / merge) AMTP + Static-MT | **รอบ prune** เครื่อง 2 / 3 / 4 (θ 64 / 128 / 256) · `runs/cloud/prune_w{2,3,4}/` | ✅ |
-| ex4 Global-MT(v) | **ยังไม่มี** รอเครื่อง 5 ของรอบ prune (คาดว่าเสร็จ 17 พ.ย. ~03:00) จึงยังไม่มีเส้นนี้ในรูป ex4 | – |
+| ex4 Global-MT(v) (θ 64) | **รอบ prune** เครื่อง 5 · `runs/cloud/prune_w5/` (เสร็จ 17 พ.ย. 01:07) | ✅ |
 
 ```
 new_purn/graphs/
@@ -33,7 +33,7 @@ new_purn/graphs/
 R=baselines/results/new_amtp_result; T=$(mktemp -d); mkdir $T/amtp
 for f in baselines/results/runs/cloud/prune_w1/paper_prune_v/amtp/*; do ln -s $PWD/$f $T/amtp/; done
 for f in baselines/results/new_new/data/fill/amtp_exp3_dynamic_update.*; do ln -s $PWD/$f $T/amtp/; done
-for w in 2 3 4; do for f in baselines/results/runs/cloud/prune_w$w/paper_prune_v/amtp/splitmerge_*; do ln -s $PWD/$f $T/amtp/; done; done
+for w in 2 3 4 5; do for f in baselines/results/runs/cloud/prune_w$w/paper_prune_v/amtp/splitmerge_*; do ln -s $PWD/$f $T/amtp/; done; done
 for s in secollab chen du; do ln -s $PWD/$R/gamma_with_v/$s $T/$s; done
 .venv/bin/python baselines/plot_paper.py $T --out baselines/results/new_purn/graphs/paper
 .venv/bin/python baselines/plot_story.py --run $T --out baselines/results/new_purn/graphs/story   # หยุดที่รูป e2e_vs_files (ดูข้างบน)
