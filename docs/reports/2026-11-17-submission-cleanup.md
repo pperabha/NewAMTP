@@ -65,3 +65,12 @@
 
 ตรวจแล้ว: `smoke_all.sh` ทุกขั้นทุก scheme ผ่าน (manifest บันทึก flag ทั้ง 4 เปิด, tamper 24/24 ตรวจเจอ, 0/1 false alarm)
 · venv ใหม่ + `AMTP_DATA` → `demo_v2/tests` 34 passed · demo 5,000 ไฟล์ต่อ domain โหลดเสร็จใน ~25 วินาที
+
+## รอบ 5: ลบ demo เก่า
+
+- ลบ `amtp_code/run.py`, `amtp_code/web/` (demo Flask เดิม) และ `demo_v2/static/index_old.html` (UI เก่าของ demo_v2)
+- ตัด `flask` ออกจาก `amtp_code/requirements.txt` (ไม่มีโค้ดอื่นใช้)
+- เก็บ `amtp/scenario.py` ไว้ เพราะ test ใน `amtp_code/tests/` ใช้สร้างข้อมูลทดสอบ
+- README (ส่วน dataset และส่วน run), `amtp_code/README_TH.md`, `demo_v2/CODE_MAP.md` ไม่อ้างถึง demo เก่าแล้ว
+
+ตรวจแล้ว: pytest 543 passed · `demo_v2/tests` 34 passed (หลัง commit) · clone repo public ใหม่ผ่าน

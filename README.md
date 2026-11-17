@@ -30,7 +30,7 @@ python3.12 -m venv .venv          # Python 3.12 (the version every result was pr
 .venv/bin/pip install -r amtp_code/requirements.txt
 ```
 
-**Dataset** (needed for the experiments, not for the tests or the demo). The arXiv dataset used in the paper
+**Dataset** (needed for the experiments and the demo, not for `amtp_code` tests). The arXiv dataset used in the paper
 (dataset-v4: 4 domains x 125,000 papers + 12,500 insertion pool, RAKE keywords, seed 42) is stored compressed in
 `datasets/arxiv/data_v4/`. Unpack it once (a few minutes, standard library only; every part is checked by SHA-256):
 
@@ -76,15 +76,6 @@ lsof -ti :8101,8102,8103,8104 | xargs kill                           # free the 
 ./demo_v2/run_demo.sh --files-per-domain 5000                        # opens http://127.0.0.1:8102
 .venv/bin/python -m pytest demo_v2/tests -q                          # demo tests (four real processes)
 ```
-
-**Small demo without the dataset** (two domains, four users, a malicious-server switch):
-
-```bash
-cd amtp_code && ../.venv/bin/python run.py         # then open http://127.0.0.1:5000
-```
-
-On macOS, port 5000 may be taken by AirPlay Receiver (the page answers 403); use another port:
-`PORT=5077 ../.venv/bin/python run.py`, then open http://127.0.0.1:5077.
 
 **Paper configuration.** The code's defaults are the configuration of every AMTP result in the paper: fill-first
 placement, γ with the partition version, AND pruning with greedy expansion of H_full, result-only partition proofs,
