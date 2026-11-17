@@ -5,6 +5,7 @@
   HMAC-SHA256      query authentication tag tau_Q               (real)
   Ed25519          owner signature on root transitions          (stand-in for ABS)
   Policy key wrap  hides K_d behind an attribute policy         (stand-in for CP-ABE)
+  BSW07 CP-ABE     real CP-ABE for K_d, core/cpabe.py           (AMTP_CPABE=bsw07)
 
 About the two stand-ins (be explicit about this when presenting):
   * ABS is replaced by an ordinary Ed25519 signature: it proves "the Data Owner
@@ -156,9 +157,26 @@ class AttributeAuthority:
         return {"t": "and", "k": [self._wrap(s, c) for s, c in zip(shares, node[1])]}
 
 
-def unwrap(blob: dict, user_keys: dict):
+def make_authority(kind: str = None):
+    """The Domain Authority's CP-ABE: AMTP_CPABE=bsw07 -> real BSW07 (core/cpabe.py, needs Charm);
+    unset or 'wrap' -> the policy key wrap above (the stand-in used for the paper's experiments)."""
+    kind = (kind or os.environ.get("AMTP_CPABE", "wrap")).lower()
+    if kind == "wrap":
+        return AttributeAuthority()
+    if kind == "bsw07":
+        from .cpabe import CpAbeAuthority
+        return CpAbeAuthority()
+    raise ValueError(f"unknown AMTP_CPABE={kind!r} (use 'wrap' or 'bsw07')")
+
+
+def unwrap(blob: dict, user_keys):
     """Return K_d, or None if the user's attributes do not satisfy the policy."""
-    t = blob["t"]
+    t = blob.get("t")
+    if t == "bsw07":
+        from .cpabe import unwrap as abe_unwrap
+        return abe_unwrap(blob, user_keys)
+    if not isinstance(user_keys, dict):
+        return None
     if t == "attr":
         key = user_keys.get(blob["a"])
         if key is None:
@@ -181,5 +199,5 @@ def unwrap(blob: dict, user_keys: dict):
 __all__ = [
     "aes_gcm_encrypt", "aes_gcm_decrypt", "make_ct", "pack_ct", "unpack_ct", "CT_MAGIC",
     "keyword_cipher", "hmac_tag", "hmac_ok",
-    "Signer", "sig_ok", "AttributeAuthority", "unwrap", "InvalidTag",
+    "Signer", "sig_ok", "AttributeAuthority", "make_authority", "unwrap", "InvalidTag",
 ]
