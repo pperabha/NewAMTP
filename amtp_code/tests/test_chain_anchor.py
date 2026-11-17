@@ -65,6 +65,26 @@ def test_global_root_matches_python(chain):
     assert chain.latest("D2") == (2, r32(21)) and chain.latest("D1") == (0, r32(1))
 
 
+def test_global_root_tree_matches_python_as_domains_grow(chain):
+    """The contract keeps the R_G tree and rehashes one path per transition; after every registration (the tree
+    grows past 1, 2, 4, 8, 16 leaves, names land in the middle) and every transition it must equal Python's."""
+    import random
+    rnd = random.Random(7)
+    names = [f"D{i}" for i in range(1, 18)]
+    rnd.shuffle(names)
+    regs, subs = [], []
+    for name in names:
+        r0 = bytes(rnd.randrange(256) for _ in range(32))
+        chain.register_domain(name, chain.root_signer(name).public, r0)
+        regs.append((name, r0))
+        assert chain.R_G == python_twin(regs, subs).R_G, f"after registering {name}"
+        d = rnd.choice([n for n, _ in regs])
+        r = bytes(rnd.randrange(256) for _ in range(32))
+        step(chain, d, r)
+        subs.append((d, chain.latest(d)[0], r, NO_DELTA))
+        assert chain.R_G == python_twin(regs, subs).R_G, f"after a transition of {d}"
+
+
 def test_signed_digest_matches_python(chain):
     args = ("D1", 7, r32(1), r32(2), r32(3))
     on_chain = chain.contract.functions.transitionDigest(b"D1", 7, r32(1), r32(2), r32(3)).call()

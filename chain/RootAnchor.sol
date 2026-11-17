@@ -7,7 +7,9 @@ pragma solidity 0.8.28;
 ///   * the predecessor is the current anchored root,
 ///   * the epoch is exactly e* + 1, and
 ///   * the domain's root-update key signed the transition (σ_root).
-/// R*_G is then recomputed over all current Domain Roots. Only roots go on-chain.
+/// R*_G is then updated: the contract keeps the Merkle tree over the Domain Roots (sorted by domain name, as
+/// anchor.py), so a transition rehashes only its own leaf-to-root path (log2 D nodes), not every domain.
+/// Only roots go on-chain.
 ///
 /// Hashes match amtp_code/amtp/core/hashing.py and core/merkle.py byte for byte:
 ///   H(p1, p2, ...) = SHA-256(len(p1) ‖ p1 ‖ len(p2) ‖ p2 ...), 4-byte big-endian lengths,
@@ -20,8 +22,9 @@ contract RootAnchor {
     struct Domain {
         address owner;    // root-update key of the domain (Setup, eq. 1)
         uint64 epoch;     // e*
-        bytes32 root;     // R*_D
         bool registered;
+        uint32 pos;       // leaf position in the Global Root tree (rank of the name)
+        bytes32 root;     // R*_D
     }
 
     bytes constant TAG_TRANSITION = "AMTP/transition/v1";
@@ -32,6 +35,8 @@ contract RootAnchor {
     address public immutable admin;
     mapping(bytes32 => Domain) private domains;   // keccak256(domain name) -> state
     bytes[] private names;                         // registered domain names, sorted (bytes order)
+    bytes32[] private tree;                        // heap layout: tree[1] = R*_G, leaves at size .. 2 size - 1
+    uint256 private size;                          // number of leaves: the power of two >= max(D, 1)
     bytes32 public globalRoot;                     // R*_G
 
     event Registered(bytes domain, address owner, bytes32 root, bytes32 globalRoot);
@@ -39,7 +44,7 @@ contract RootAnchor {
 
     constructor() {
         admin = msg.sender;
-        globalRoot = _merkleRoot(new bytes32[](0));
+        _rebuild();
     }
 
     /// Setup: record the root-update key and the genesis root (R^(0), e* = 0).
@@ -49,7 +54,7 @@ contract RootAnchor {
         bytes32 k = keccak256(domain);
         require(!domains[k].registered, "domain already registered");
         require(names.length < MAX_DOMAINS, "too many domains");
-        domains[k] = Domain(owner, 0, r0, true);
+        domains[k] = Domain(owner, 0, true, 0, r0);
         // insert keeping the names sorted, as Python's sorted() over the domain names
         names.push(domain);
         for (uint256 i = names.length - 1; i > 0 && _less(names[i], names[i - 1]); i--) {
@@ -57,7 +62,7 @@ contract RootAnchor {
             names[i] = names[i - 1];
             names[i - 1] = tmp;
         }
-        globalRoot = _globalRoot();
+        _rebuild();                                // positions shift: rebuild the tree (setup only)
         emit Registered(domain, owner, r0, globalRoot);
     }
 
@@ -72,7 +77,7 @@ contract RootAnchor {
                 "owner signature invalid");
         d.epoch = epoch;
         d.root = root;
-        globalRoot = _globalRoot();
+        _setLeaf(d.pos, _leaf(domain, epoch, root));
         emit Anchored(domain, epoch, prev, root, delta, globalRoot);
     }
 
@@ -120,35 +125,46 @@ contract RootAnchor {
         return a;
     }
 
-    function _globalRoot() internal view returns (bytes32) {
-        bytes32[] memory leaves = new bytes32[](names.length);
-        for (uint256 i = 0; i < names.length; i++) {
-            Domain storage d = domains[keccak256(names[i])];
-            // H(i, e, R_D) as in anchor.py RootAnchor._global
-            leaves[i] = sha256(abi.encodePacked(uint32(names[i].length), names[i],
-                                                uint32(8), d.epoch, uint32(32), d.root));
-        }
-        return _merkleRoot(leaves);
+    /// Merkle leaf of a domain: leaf_hash(H(i, e, R_D)), as anchor.py RootAnchor._global and core/merkle.py.
+    function _leaf(bytes memory name, uint64 epoch, bytes32 root) internal pure returns (bytes32) {
+        bytes32 v = sha256(abi.encodePacked(uint32(name.length), name, uint32(8), epoch, uint32(32), root));
+        return sha256(abi.encodePacked(uint32(1), bytes1(0x00), uint32(32), v));
     }
 
-    function _merkleRoot(bytes32[] memory values) internal pure returns (bytes32) {
-        uint256 size = 1;
-        while (size < values.length) size *= 2;
+    function _node(bytes32 l, bytes32 r) internal pure returns (bytes32) {
+        return sha256(abi.encodePacked(uint32(1), bytes1(0x01), uint32(32), l, uint32(32), r));
+    }
+
+    /// Whole tree from the sorted names (constructor and register only).
+    function _rebuild() internal {
+        uint256 n = names.length;
+        uint256 s = 1;
+        while (s < n) s *= 2;
         bytes32 pad = sha256(abi.encodePacked(uint32(1), bytes1(0x02)));
-        bytes32[] memory level = new bytes32[](size);
-        for (uint256 i = 0; i < size; i++) {
-            level[i] = i < values.length
-                ? sha256(abi.encodePacked(uint32(1), bytes1(0x00), uint32(32), values[i]))
-                : pad;
-        }
-        while (size > 1) {
-            size /= 2;
-            for (uint256 i = 0; i < size; i++) {
-                level[i] = sha256(abi.encodePacked(uint32(1), bytes1(0x01), uint32(32), level[2 * i],
-                                                   uint32(32), level[2 * i + 1]));
+        while (tree.length < 2 * s) tree.push();
+        for (uint256 i = 0; i < s; i++) {
+            if (i < n) {
+                Domain storage d = domains[keccak256(names[i])];
+                d.pos = uint32(i);
+                tree[s + i] = _leaf(names[i], d.epoch, d.root);
+            } else {
+                tree[s + i] = pad;
             }
         }
-        return level[0];
+        for (uint256 i = s - 1; i >= 1; i--) tree[i] = _node(tree[2 * i], tree[2 * i + 1]);
+        size = s;
+        globalRoot = tree[1];
+    }
+
+    /// One leaf changed: rehash its path only (log2 size nodes).
+    function _setLeaf(uint256 pos, bytes32 leaf) internal {
+        uint256 i = size + pos;
+        tree[i] = leaf;
+        while (i > 1) {
+            i /= 2;
+            tree[i] = _node(tree[2 * i], tree[2 * i + 1]);
+        }
+        globalRoot = tree[1];                      // one leaf (size 1): the root is the leaf, as merkle.py
     }
 
     function _less(bytes memory a, bytes memory b) internal pure returns (bool) {

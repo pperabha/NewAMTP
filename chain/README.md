@@ -38,6 +38,19 @@ Without web3 installed these tests are skipped and everything else runs as befor
 4. **Deploy**: `.venv/bin/python chain/sepolia.py deploy` (writes `AMTP_ANCHOR_ADDR` to `.env`), then
    `.venv/bin/python chain/sepolia.py status`.
 
+**Runs on Sepolia:**
+
+```bash
+.venv/bin/python chain/sepolia_run.py                          # small two-domain world: updates, queries, attacks
+AMTP_DATA=/path/to/amtp_file_db_v4 .venv/bin/python chain/sepolia_bench.py --n 10000 --b 100 --epochs 8
+```
+
+`sepolia_bench.py` runs the Phase 2 update protocol of `bench/experiments.py exp3` (same Corpus, Engine,
+`prepare_update`, Validator) on the real dataset, D1-D4 round robin, with every transition sent to the contract, and
+records per epoch: the protocol time (request + server + validate), the anchor time (send -> receipt), the time until
+the block is finalized, gas, and the time to read the root back. Add `--local` to check the script on the in-process
+chain first. Results: `chain/runs/sepolia_bench_<time>.csv` and `.json`.
+
 In code: `ChainAnchor.from_env()` reads `.env`'s variables from the environment (`set -a; source .env; set +a`).
 `AMTP_CONFIRMATIONS` (default 1) is how many blocks a transition waits for; `AMTP_READ_BLOCK` (`latest` or
 `finalized`) is the block the Data User reads roots at.

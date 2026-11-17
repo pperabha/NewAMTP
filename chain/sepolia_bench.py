@@ -2,11 +2,13 @@
 (same Corpus, Engine, CloudServer.prepare_update, Validator) on the real dataset, with every transition sent
 to the RootAnchor contract (AMTP_ANCHOR_ADDR in <repo>/.env).
 
-    AMTP_DATA=/path/to/amtp_file_db_v4 .venv/bin/python chain/sepolia_bench.py --n 10000 --b 100 --epochs 8
+    AMTP_DATA=/path/to/amtp_file_db_v4 .venv/bin/python chain/sepolia_bench.py --n 100000 --b 1 10 100 1000 \
+        --warmup 3 --reps 15 --deploy
 
 For each domain (D1..D4, each its own dataset domain): bulk-load n files, register the genesis root, anchor
-epoch 1, then `epochs` epochs alternating insert / delete of b fresh files (insert pool), round robin over the
-domains, so the Global Root on the contract changes with every domain. Per epoch it times
+epoch 1. Then for every b: warmup + reps rounds; a round inserts b fresh files (insert pool) as one epoch and
+deletes them again as the next epoch, on one domain, the domains taking turns (the Global Root on the contract
+changes with every domain). Per epoch it times
   request   owner builds b signed requests (tokens + σ_op, Ed25519)
   server    CS prepare_update
   validate  owner Validator replays the update and signs σ_root (secp256k1, the domain's chain key)
@@ -38,8 +40,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--domains", nargs="+", default=["D1", "D2", "D3", "D4"])
     ap.add_argument("--n", type=int, default=10_000, help="files bulk-loaded per domain")
-    ap.add_argument("--b", type=int, default=100, help="signed requests per epoch")
-    ap.add_argument("--epochs", type=int, default=8, help="measured epochs per domain (insert, delete, ...)")
+    ap.add_argument("--b", type=int, nargs="+", default=[100], help="signed requests per epoch (one or more)")
+    ap.add_argument("--warmup", type=int, default=0, help="unmeasured rounds per b (still anchored)")
+    ap.add_argument("--reps", type=int, default=4, help="measured rounds per b (a round = insert + delete epoch)")
+    ap.add_argument("--policy", choices=["adaptive", "static"], default="adaptive",
+                    help="adaptive = AMTP (split / merge); static = partitions frozen, as bench exp3")
+    ap.add_argument("--deploy", action="store_true", help="deploy a fresh RootAnchor for this run")
     ap.add_argument("--data", default=None)
     ap.add_argument("--poll", type=float, default=4.0, help="seconds between finalized-block polls")
     ap.add_argument("--out", default=os.path.join(HERE, "runs"))
@@ -52,7 +58,7 @@ def main():
     from amtp.engine import Engine
     from amtp.server import CloudServer
     from amtp.validator import Validator
-    from amtp.variants import AdaptivePolicy
+    from amtp.variants import AdaptivePolicy, StaticPolicy
     from bench.experiments import Corpus
 
     if a.local:
@@ -63,10 +69,11 @@ def main():
         env = read_env()
         w3 = Web3(Web3.HTTPProvider(env["AMTP_RPC"], request_kwargs={"timeout": 60}))
         cid = w3.eth.chain_id
-        if cid not in EXPLORERS or not env.get("AMTP_ANCHOR_ADDR"):
+        if cid not in EXPLORERS or not (a.deploy or env.get("AMTP_ANCHOR_ADDR")):
             raise SystemExit("needs a known test network and AMTP_ANCHOR_ADDR (chain/sepolia.py deploy)")
         owners = {d: Account.from_key(env[f"AMTP_OWNER_KEY_{d}"]) for d in a.domains}
-        chain = ChainAnchor(w3, Account.from_key(env["AMTP_ADMIN_KEY"]), address=env["AMTP_ANCHOR_ADDR"],
+        chain = ChainAnchor(w3, Account.from_key(env["AMTP_ADMIN_KEY"]),
+                            address=None if a.deploy else env["AMTP_ANCHOR_ADDR"],
                             owner_keys=owners, confirmations=int(env.get("AMTP_CONFIRMATIONS", "1")))
         explorer = f"{EXPLORERS[cid]}/address/{chain.address}"
     already = [d for d in a.domains if chain.contract.functions.ownerOf(d.encode()).call() != "0x" + "0" * 40]
@@ -100,16 +107,23 @@ def main():
         server.store_state(eng.snapshot())
         docs = dict(zip([x.doc_id for x in src], cids))
         server.engines[d], server.owner_keys[d], server.docs[d] = eng, [signer.public], dict(docs)
+        if a.policy == "static":                         # as bench Protocol for exp3: partitions frozen
+            eng.policy = StaticPolicy(cfg.buckets, cfg.theta_min, cfg.theta_max, cfg.placement)
         val = Validator.bootstrap(d, root, eng.policy, eng, docs, [signer.public])
         doms[d] = SimpleNamespace(eng=eng, signer=signer, val=val, pool=corpus.D.insert_pool([d], a.data), cursor=0)
         print(f" {d}: n={a.n} partitions={eng.layout()['partitions']} genesis + epoch 1 anchored "
               f"({time.perf_counter() - t0:.0f} s)", flush=True)
 
     rows, pending = [], []                                 # pending: (row, send time) waiting for finality
-    for k in range(a.epochs):
-        op = "insert" if k % 2 == 0 else "delete"
-        for d, dom in doms.items():
-            eng, b = dom.eng, a.b
+    names = list(doms)
+    turn = 0
+    for b, rnd, op in ((b, rnd, op) for b in a.b for rnd in range(a.warmup + a.reps) for op in ("insert", "delete")):
+        if True:
+            d = names[turn % len(names)]
+            if op == "delete":
+                turn += 1
+            dom = doms[d]
+            eng = dom.eng
             eng.ops_per_epoch = b
             if op == "insert":
                 dom.batch = [dom.pool[(dom.cursor + i) % len(dom.pool)] for i in range(b)]
@@ -137,14 +151,14 @@ def main():
             read_ms = (time.perf_counter() - tq) * 1e3
             if (e_read, r_read) != (eng.epoch, eng.R_D):
                 raise SystemExit(f"CORRECTNESS GATE FAILED: chain has ({e_read}, {r_read.hex()[:12]}) for {d}")
-            row = {"domain": d, "epoch": eng.epoch, "op": op, "b": b,
+            row = {"domain": d, "epoch": eng.epoch, "op": op, "b": b, "round": rnd, "warmup": rnd < a.warmup,
                    "request_ms": (t0 - tr) * 1e3, "server_ms": (t1 - t0) * 1e3, "validate_ms": (t2 - t1) * 1e3,
                    "anchor_ms": (t3 - t2) * 1e3, "update_ms": (t3 - tr) * 1e3,
                    "update_without_anchor_ms": (t2 - tr) * 1e3, "read_latest_ms": read_ms,
                    "gas": tx.gas, "block": tx.block, "tx": tx.tx, "final_s": None}
             rows.append(row)
             pending.append((row, sent_wall))
-            print(f"  {d} epoch {eng.epoch:>2} {op:<6} protocol {row['update_without_anchor_ms']:7.0f} ms + "
+            print(f"  b={b:<4} {d} epoch {eng.epoch:>3} {op:<6}{' (warm-up)' if rnd < a.warmup else ''} protocol {row['update_without_anchor_ms']:7.0f} ms + "
                   f"anchor {row['anchor_ms'] / 1e3:5.1f} s  gas {tx.gas}  block {tx.block}", flush=True)
             _poll_final(w3, pending, a.local)
 
@@ -160,12 +174,19 @@ def main():
         if (e_f, r_f) != (doms[d].eng.epoch, doms[d].eng.R_D):
             raise SystemExit(f"CORRECTNESS GATE FAILED: finalized root of {d} differs")
 
-    def med(k):
-        return st.median(r[k] for r in rows)
-    summary = {k: med(k) for k in ("request_ms", "server_ms", "validate_ms", "update_without_anchor_ms",
-                                   "anchor_ms", "update_ms", "read_latest_ms", "gas", "final_s")}
-    summary.update(anchor_ms_max=max(r["anchor_ms"] for r in rows), final_s_max=max(r["final_s"] for r in rows),
-                   read_finalized_ms=st.median(final_reads), epochs=len(rows))
+    keys = ("request_ms", "server_ms", "validate_ms", "update_without_anchor_ms", "anchor_ms", "update_ms",
+            "read_latest_ms", "gas", "final_s")
+    meas = [r for r in rows if not r["warmup"]]
+    by = {}
+    for b in a.b:
+        for op in ("insert", "delete"):
+            g = [r for r in meas if r["b"] == b and r["op"] == op]
+            by[f"b{b}_{op}"] = {**{k: st.median(r[k] for r in g) for k in keys},
+                               "anchor_ms_max": max(r["anchor_ms"] for r in g),
+                               "final_s_max": max(r["final_s"] for r in g), "epochs": len(g)}
+    summary = {k: st.median(r[k] for r in meas) for k in ("anchor_ms", "final_s", "gas", "read_latest_ms")}
+    summary.update(anchor_ms_max=max(r["anchor_ms"] for r in meas), final_s_max=max(r["final_s"] for r in meas),
+                   read_finalized_ms=st.median(final_reads), epochs=len(meas), by_b_op=by)
     stamp = time.strftime("%Y%m%d_%H%M%S") + ("_local" if a.local else "")
     os.makedirs(a.out, exist_ok=True)
     base = os.path.join(a.out, f"sepolia_bench_{stamp}")
@@ -178,16 +199,19 @@ def main():
                                 capture_output=True, text=True).stdout.strip())
     meta = {"command": " ".join(sys.argv), "git_commit": commit, "git_dirty": dirty, "chain_id": cid,
             "contract": chain.address, "explorer": explorer, "confirmations": chain.confirmations,
-            "domains": a.domains, "n_per_domain": a.n, "b": a.b, "epochs_per_domain": a.epochs,
+            "domains": a.domains, "n_per_domain": a.n, "b": a.b, "warmup": a.warmup, "reps": a.reps,
+            "policy": a.policy,
             "theta": [cfg.theta_min, cfg.theta_max], "placement": cfg.placement,
             "machine": platform.platform(), "python": platform.python_version(),
             "setup_txs": [t.__dict__ for t in chain.txs if t.tx not in {r["tx"] for r in rows}],
             "summary_median": summary}
     with open(base + ".json", "w", encoding="utf-8") as f:
         json.dump(meta, f, indent=1)
-    print("median: protocol {update_without_anchor_ms:.0f} ms, anchor {anchor_ms:.0f} ms (max {anchor_ms_max:.0f}), "
-          "finalized after {final_s:.0f} s (max {final_s_max:.0f}), gas {gas:.0f}, read latest {read_latest_ms:.0f} ms, "
-          "read finalized {read_finalized_ms:.0f} ms".format(**summary))
+    for key, v in by.items():
+        print(f"  {key:<14} protocol {v['update_without_anchor_ms']:8.0f} ms  anchor {v['anchor_ms'] / 1e3:5.1f} s "
+              f"(max {v['anchor_ms_max'] / 1e3:5.1f})  finalized {v['final_s']:5.0f} s  gas {v['gas']:.0f}")
+    print("all: anchor median {anchor_ms:.0f} ms (max {anchor_ms_max:.0f}), finalized {final_s:.0f} s (max {final_s_max:.0f}), "
+          "gas {gas:.0f}, read latest {read_latest_ms:.0f} ms, read finalized {read_finalized_ms:.0f} ms".format(**summary))
     print(f"-> {base}.csv / .json")
 
 
