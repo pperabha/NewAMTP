@@ -1,26 +1,28 @@
-"""วัดเวลาสกัด keyword ของ AMTP (Phase 1, Step 3: W(d) = {Norm(w) : w in Extract(d)}) แยกจากการทดลองอื่น
+"""Time AMTP's keyword extraction (Phase 1, Step 3: W(d) = {Norm(w) : w in Extract(d)}) apart from the other experiments.
 
-ทำไมต้องแยก: ตอนทดลอง Search / Update ทุก scheme (AMTP, Chen, Du, SE-COLLAB) ใช้ keyword ชุดเดียวกัน
-จาก documents.csv (ไม่มีใครสกัดเอง) ผลที่เทียบกันจึงไม่รวมเวลาสกัด keyword ; ต้นทุนนี้รายงานแยกด้วยสคริปต์นี้
-(เป็นงานของ DO ฝั่ง local ก่อนอัปโหลด ทำครั้งเดียวต่อเอกสาร)
+Why apart: in the Search / Update experiments every scheme (AMTP, Chen, Du, SE-COLLAB) uses the same keywords
+from documents.csv (no scheme extracts them itself), so the compared results exclude keyword extraction; this script
+reports that cost separately (it is the DO's local work before upload, done once per document).
 
-วิธีวัด
-  - เอกสาร = amtp_dataset.sample(N) ชุดเดียวกับการทดลองอื่น (+ insert pool ถ้าใส่ --pool)
-  - อ่านไฟล์ .txt ก่อน (ไม่นับเวลา I/O) แล้วจับเวลาเฉพาะ extract_keywords() = tokenise + Norm + RAKE (+ chunking ถ้ายาว)
-  - ปิด garbage collector ระหว่างจับเวลา, รอบ warm-up ไม่บันทึก, --repeats > 1 ใช้ค่ามัธยฐานของแต่ละเอกสาร
-  - ตรวจด้วยว่า keyword ที่สกัดได้ตรงกับคอลัมน์ keywords ใน documents.csv (match_csv) — ต้องได้ 100%
-  - เวลารวมของแต่ละ N ใน --sizes คิดจากเอกสารชุดเดียวกับ sample(N) (N/4 ไฟล์แรกของแต่ละ domain)
+Method
+  - documents = amtp_dataset.sample(N), the same set as the other experiments (+ the insert pool with --pool)
+  - read the .txt files first (I/O not timed), then time only extract_keywords() = tokenise + Norm + RAKE
+    (+ chunking for long documents)
+  - garbage collector off while timing, warm-up runs not recorded, --repeats > 1 takes each document's median
+  - check that the extracted keywords equal the keywords column of documents.csv (match_csv): must be 100%
+  - the total time of each N in --sizes uses the same documents as sample(N) (the first N/4 files of each domain)
 
-ผลลัพธ์ (โฟลเดอร์ --out)
-  amtp_extraction_raw.csv      1 แถว = 1 เอกสาร
-  amtp_extraction_summary.csv  ต่อ domain และรวม: ms ต่อเอกสาร (mean/median/std/p95/min/max), docs/s, คำต่อเอกสาร
-  amtp_extraction_by_n.csv     เวลาสกัดรวมของทั้งชุดเอกสารสำหรับแต่ละ N
-  amtp_extraction_meta.json    สเปกเครื่อง + พารามิเตอร์ (ใส่ใน Experimental Setup)
+Output (folder --out)
+  amtp_extraction_raw.csv      one row per document
+  amtp_extraction_summary.csv  per domain and overall: ms per document (mean/median/std/p95/min/max), docs/s,
+                               words per document
+  amtp_extraction_by_n.csv     total extraction time of the whole document set for each N
+  amtp_extraction_meta.json    machine spec + parameters (for the Experimental Setup)
 
-ตัวอย่าง (รันจากโฟลเดอร์ amtp_code/)
+Examples (run from amtp_code/)
   python -m bench.extraction --n 200000 --pool --sizes 10000 50000 100000 200000
-  python -m bench.extraction --n 4000 --repeats 3                 # ลองเร็ว ๆ
-  python -m bench.extraction --data ~/amtp_file_db                # dataset อยู่ที่อื่น
+  python -m bench.extraction --n 4000 --repeats 3                 # quick try
+  python -m bench.extraction --data ~/amtp_file_db                # dataset elsewhere
 """
 import argparse
 import csv
@@ -41,7 +43,7 @@ from bench.workload import arxiv_loader  # noqa: E402
 
 
 def read_text(data_dir, file_path):
-    """อ่าน .txt แบบเดียวกับตอนสร้าง dataset (utf-8, ข้ามไบต์ที่อ่านไม่ได้) ; ไม่นับเวลา"""
+    """Read a .txt file the same way as when the dataset was built (utf-8, undecodable bytes skipped); not timed."""
     with open(os.path.join(data_dir, file_path), "rb") as f:
         return f.read().decode("utf-8", "ignore")
 
@@ -56,20 +58,20 @@ def stats(ms):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--n", type=int, default=200_000, help="จำนวนเอกสารเริ่มต้นที่วัด (สูงสุด 500,000 = 4 domain x 125,000)")
-    ap.add_argument("--sizes", type=int, nargs="*", default=None, help="N ที่ต้องการเวลารวม (ต้อง <= --n)")
+    ap.add_argument("--n", type=int, default=200_000, help="initial number of documents to measure (at most 500,000 = 4 domains x 125,000)")
+    ap.add_argument("--sizes", type=int, nargs="*", default=None, help="N values that get a total time (each <= --n)")
     ap.add_argument("--domains", nargs="+", default=None)
-    ap.add_argument("--pool", action="store_true", help="วัด insert pool ด้วย (เอกสารใหม่ของ Experiment 3)")
-    ap.add_argument("--repeats", type=int, default=1, help="จับเวลาเอกสารละกี่รอบ (ใช้มัธยฐาน)")
-    ap.add_argument("--warmup", type=int, default=200, help="จำนวนเอกสารที่รันก่อนเพื่ออุ่นเครื่อง (ไม่บันทึก)")
-    ap.add_argument("--data", default=None, help="โฟลเดอร์ amtp_file_db")
+    ap.add_argument("--pool", action="store_true", help="also measure the insert pool (the new documents of the update experiment)")
+    ap.add_argument("--repeats", type=int, default=1, help="timed runs per document (median used)")
+    ap.add_argument("--warmup", type=int, default=200, help="documents run first to warm up (not recorded)")
+    ap.add_argument("--data", default=None, help="amtp_file_db folder")
     ap.add_argument("--out", default="results")
     a = ap.parse_args()
 
     ds = arxiv_loader()
     data_dir = os.path.abspath(os.path.expanduser(a.data or ds.DEFAULT_DATA))
     domains = a.domains or ds.DOMAINS
-    args = (nlp.THETA_DOC, nlp.L_CH, nlp.L_OV, nlp.KAPPA, nlp.MAX_WORDS)   # ค่าเดียวกับที่ใช้สร้าง dataset-v4
+    args = (nlp.THETA_DOC, nlp.L_CH, nlp.L_OV, nlp.KAPPA, nlp.MAX_WORDS)   # the same values used to build dataset-v4
 
     docs = list(ds.sample(a.n, domains, data_dir))
     if a.pool:
@@ -77,7 +79,7 @@ def main():
     print(f"dataset: {data_dir}\n  {len(docs)} documents, params theta_doc={args[0]} L_ch={args[1]} L_ov={args[2]} "
           f"kappa={args[3]} max_words={args[4]}, repeats={a.repeats}")
 
-    texts = [read_text(data_dir, d.file_path) for d in docs]      # I/O ไม่นับเวลา
+    texts = [read_text(data_dir, d.file_path) for d in docs]      # I/O not timed
     for t in texts[:a.warmup]:                                     # warm-up
         extract_keywords(t, *args)
 

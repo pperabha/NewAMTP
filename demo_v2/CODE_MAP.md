@@ -7,8 +7,8 @@ with every search going through the network-path process).
 Read from `main` at `0a539cb`. γ keeps the partition version v: `γ = H(PID ‖ v ‖ H(Enc(L)))`
 (`amtp/index.py:65`, default `AMTP_GAMMA_V=1`). The demo will refuse to start if `gamma_has_v()` is false.
 
-Not read and not used: `amtp_code/run.py`, `amtp_code/web/`, `amtp_code/amtp/scenario.py`,
-`amtp_code/tests/test_demo.py` (the old demo and its world builder).
+Not read and not used: `amtp_code/amtp/scenario.py` and `amtp_code/tests/test_demo.py` (the world builder of the
+old Flask demo, removed before submission; the tests still use it).
 
 All paths below are relative to `amtp_code/`.
 

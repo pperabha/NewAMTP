@@ -979,31 +979,31 @@ def main():
                     help="γ = H(PID ‖ H(Enc(L))) without the partition version v (study B4; same as AMTP_GAMMA_V=0)")
     ap.add_argument("--and-prune", action="store_true",
                     help="AND pruning: full list of one keyword, other keywords only in its partitions "
-                         "(study; same as AMTP_AND_PRUNE=1; default off = the paper's ASPA)")
+                         "(on by default; AMTP_AND_PRUNE=0 turns it off)")
     ap.add_argument("--and-greedy", action="store_true",
                     help="AND pruning planner: send more keywords in full when that lowers the proof "
-                         "(study; same as AMTP_AND_GREEDY=1; needs --and-prune)")
+                         "(on by default; AMTP_AND_GREEDY=0 turns it off)")
     ap.add_argument("--part-results", action="store_true",
                     help="result-only partition check: open partition slots only for the returned files "
-                         "(study; same as AMTP_PART_RESULTS=1; default off = the paper's ASPA)")
+                         "(on by default; AMTP_PART_RESULTS=0 turns it off)")
     ap.add_argument("--part-leaf", action="store_true",
                     help="Search Tree leaf keeps each keyword's partition set and component positions "
-                         "(study; same as AMTP_PART_LEAF=1; same answers and proof bytes)")
+                         "(on by default; AMTP_PART_LEAF=0 turns it off; same answers and proof bytes)")
     a = ap.parse_args()
     os.environ["AMTP_PLACEMENT"] = a.placement           # recorded in every manifest
     if a.gamma_no_v or os.environ.get("AMTP_GAMMA_V", "1") == "0":
         os.environ["AMTP_GAMMA_V"] = "0"                  # recorded in every manifest
         set_gamma_v(False)
-    if a.and_prune or os.environ.get("AMTP_AND_PRUNE", "0") == "1":
+    if a.and_prune or os.environ.get("AMTP_AND_PRUNE", "1") != "0":
         os.environ["AMTP_AND_PRUNE"] = "1"                # recorded in every manifest
         set_and_prune(True)
-    if a.and_greedy or os.environ.get("AMTP_AND_GREEDY", "0") == "1":
+    if a.and_greedy or os.environ.get("AMTP_AND_GREEDY", "1") != "0":
         os.environ["AMTP_AND_GREEDY"] = "1"               # recorded in every manifest
         set_and_plan_greedy(True)
-    if a.part_results or os.environ.get("AMTP_PART_RESULTS", "0") == "1":
+    if a.part_results or os.environ.get("AMTP_PART_RESULTS", "1") != "0":
         os.environ["AMTP_PART_RESULTS"] = "1"             # recorded in every manifest
         set_part_results(True)
-    if a.part_leaf or os.environ.get("AMTP_PART_LEAF", "0") == "1":
+    if a.part_leaf or os.environ.get("AMTP_PART_LEAF", "1") != "0":
         os.environ["AMTP_PART_LEAF"] = "1"                # recorded in every manifest
         set_part_leaf(True)
     run = {"exp1": suite_exp1, "exp2-layouts": suite_exp2_layouts, "exp2": suite_exp2, "exp3": suite_exp3, "exp5": suite_exp5,

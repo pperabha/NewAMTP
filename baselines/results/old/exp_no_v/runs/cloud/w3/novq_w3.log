@@ -1,6 +1,0 @@
-results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_nov_q
-commit 7485556, uncommitted changes: 0
-[2026-11-14 14:48:34] start search1_amtp
-[2026-11-14 16:15:45] done  search1_amtp (5231 s)
-all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_nov_q
-worker done: nov-q search1

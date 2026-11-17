@@ -187,7 +187,7 @@ Schemes that cannot take part are named in the note under the figure (N/A). Size
 | 4 | `compare_exp4*_update_vs_skew`, `compare_exp4*_verify_vs_skew` (AMTP vs Static-MT / Global-MT / Global-MT(v)) |
 | 5 | `compare_exp5_query_vs_domains` (AMTP, SE-COLLAB), `compare_exp5_update_vs_domains` (AMTP; SE-COLLAB N/A) |
 
-Same style for every scheme (palette of `amtp_code/bench/old/plot.py`): median of `--reps` runs, error bars ±1 std,
+Same style for every scheme (one palette in `baselines/plot_results.py`): median of `--reps` runs, error bars ±1 std,
 PNG for slides and PDF for the paper. Figures: `exp1_search_vs_N` (AND, one line per k_Q), `exp1_shapes_vs_N`
 (all Boolean shapes at k_Q = 4, schemes with OR support), `exp1_breakdown_maxN` (stacked phases at the largest N),
 `exp2_verify_vs_rQ` (clustered / dispersed), `exp3_insert_vs_batch` (insert time per file, one line per N) and, for
