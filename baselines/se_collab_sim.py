@@ -1337,6 +1337,10 @@ def run_query(s, ds, du, q, proof_mode="paths"):
                          ("revocation_check", "verify_signature", "verify_zkp")),
         "transform": srv["transform"],            # Algorithm 1
         "search_core": srv["search_core"],        # ค้นหาล้วน (Algorithm 2) = Fig. 4/5
+        "bpl_retrieval": srv["bpl_retrieval"],    # ส่วนของ search_core (เขียนลง CSV เพื่อเทียบ search ไม่รวม fetch)
+        "boolean_eval": srv["boolean_eval"],
+        "result_fetch": srv["result_fetch"],
+        "search_no_fetch": srv["bpl_retrieval"] + srv["boolean_eval"],   # search_core ไม่รวม result_fetch
         "proof_gen": srv["proof_gen"],
         "merkle_verify": ver["merkle_verify"],    # = Fig. 6
         "result_proof_verify": ver.get("result_proof_verify", 0.0),
@@ -1709,6 +1713,8 @@ def run_xquery(s, dss, du, q, proof_mode):
         "end_to_end": (t3 - t0) * 1e3, "trapdoor": tq_t["trapdoor"],
         "admission": sum(srv.get(k, 0) for k in ("revocation_check", "verify_signature", "verify_zkp")),
         "transform": srv["transform"], "search_core": srv["search_core"], "proof_gen": srv["proof_gen"],
+        "bpl_retrieval": srv["bpl_retrieval"], "boolean_eval": srv["boolean_eval"], "result_fetch": srv["result_fetch"],
+        "search_no_fetch": srv["bpl_retrieval"] + srv["boolean_eval"],                  # search_core ไม่รวม result_fetch
         "merkle_verify": ver.get("merkle_verify", 0.0), "result_proof_verify": ver.get("result_proof_verify", 0.0),
     }
     proof = sum(r.proof_size_bytes() for r in mresp.responses)

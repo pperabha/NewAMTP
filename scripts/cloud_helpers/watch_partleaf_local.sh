@@ -2,6 +2,7 @@
 # Mac watcher for the "part leaf" round: every 3 min report new done / FAIL lines of ~/partleaf.log on each machine;
 # when a machine's job has ended, copy its runs/paper_partleaf* folders and the log to runs/cloud/partleaf_w<N>/
 # (before it powers itself off).   IPS="<ip worker 1> <ip worker 2> <ip worker 3>" REPO=<repo> bash watch_partleaf_local.sh
+# FIRST=<n>: the first IP is worker n (e.g. FIRST=4 IPS="<ip>" for the SE-COLLAB re-run)
 K=${KEY:-$HOME/Downloads/amtp-key.pem}
 DEST=${REPO:?set REPO}/baselines/results/runs/cloud
 read -r -a IPS <<< "${IPS:?set IPS}"
@@ -9,7 +10,7 @@ seen=(); done_=(); unr=()     # indexed by worker number (bash 3.2 on macOS: no 
 while true; do
   left=0
   for i in "${!IPS[@]}"; do
-    w=$((i + 1)); ip=${IPS[$i]}
+    w=$((i + 1 + ${FIRST:-1} - 1)); ip=${IPS[$i]}
     [ -n "${done_[$w]:-}" ] && continue
     left=$((left + 1))
     out=$(ssh -n -i $K -o BatchMode=yes -o ConnectTimeout=8 ubuntu@${ip} \

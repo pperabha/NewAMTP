@@ -8,7 +8,9 @@
 # worker 1: AMTP search1, xsearch, exp5 (bench_split)  then  Chen, SE-COLLAB, Du search1; SE-COLLAB xsearch, exp5
 # worker 2: AMTP xdomains (bench_split), xverify         then  SE-COLLAB xverify, xdomains
 # worker 3: AMTP verify1, tamper                         with  Chen, SE-COLLAB, Du verify1, tamper
-# Results: runs/paper_partleaf/{amtp,chen,secollab,du,logs} on each machine. Not re-run: ex3 and ex4 (update code unchanged).
+# worker 4: SE-COLLAB search1, xsearch, xdomains, exp5 only (its own timers bpl_retrieval / boolean_eval / result_fetch
+#           written to the CSV, for search without fetch)   -> runs/paper_partleaf_se/
+# Results: runs/paper_partleaf/{amtp,chen,secollab,du,logs} on each machine (worker 4: paper_partleaf_se). Not re-run: ex3 and ex4 (update code unchanged).
 # The job runs inside ~/partleaf_cloud_worker.sh so that scripts/watch_stop.sh keeps the machine on while it runs and
 # powers it off 10 min after it ends. Log: ~/partleaf.log, last line "partleaf finished rc=<rc>".
 set -u
@@ -27,24 +29,25 @@ head=$(git rev-parse --short HEAD); dirty=$(git status --porcelain --untracked-f
 echo "w$w: commit $head dirty=$dirty cpus=$(nproc) mem=$(free -g | awk '/Mem/{print $2}')G disk_free=$(df -h ~ | awk 'NR==2{print $4}') data=$(ls data 2>/dev/null | tr '\n' ' ')"
 [ "$head" = "$want" ] || { echo "w$w: expected $want"; exit 1; }
 [ "$dirty" = 0 ] || { echo "w$w: tracked files changed, not starting"; exit 1; }
-for d in paper_partleaf; do
-  [ -e baselines/results/runs/$d ] && { echo "w$w: runs/$d already exists, not overwriting"; exit 1; }; done
+d=paper_partleaf; [ "$w" = 4 ] && d=paper_partleaf_se
+[ -e baselines/results/runs/$d ] && { echo "w$w: runs/$d already exists, not overwriting"; exit 1; }
 t=$(cd amtp_code && ../.venv/bin/python -m pytest -q 2>&1 | tail -1); echo "w$w: pytest, flags off: $t"
 case "$t" in *failed*|*error*) echo "w$w: pytest failed, not starting"; exit 1 ;; *passed*) ;; *) echo "w$w: pytest gave no result, not starting"; exit 1 ;; esac
 t=$(cd amtp_code && AMTP_PART_LEAF=1 AMTP_AND_PRUNE=1 AMTP_PART_RESULTS=1 AMTP_AND_GREEDY=1 ../.venv/bin/python -m pytest -q 2>&1 | tail -1); echo "w$w: pytest, every flag on: $t"
 case "$t" in *failed*|*error*) echo "w$w: pytest failed, not starting"; exit 1 ;; *passed*) ;; *) echo "w$w: pytest gave no result, not starting"; exit 1 ;; esac
 [ -n "$check_only" ] && exit 0
-case "$w" in 1|2|3) ;; *) echo "w$w: worker must be 1, 2 or 3"; exit 1 ;; esac
+case "$w" in 1|2|3|4) ;; *) echo "w$w: worker must be 1, 2, 3 or 4"; exit 1 ;; esac
 cat > ~/partleaf_cloud_worker.sh <<'JOB'
 #!/bin/bash
 # $1 = worker. Every job runs alone, one after the other; a baseline runs on the machine of the AMTP suite it is
 # plotted with. Baselines: their unchanged code through scripts/aws_run_all.sh (the commands of the main round).
 cd ~/NewAMTP
 export AMTP_PLACEMENT=fill AMTP_AND_PRUNE=1 AMTP_PART_RESULTS=1 AMTP_AND_GREEDY=1 AMTP_PART_LEAF=1
-R=~/NewAMTP/baselines/results/runs/paper_partleaf; mkdir -p $R/amtp $R/logs; rc=0
+RUN=paper_partleaf; [ "$1" = 4 ] && RUN=paper_partleaf_se
+R=~/NewAMTP/baselines/results/runs/$RUN; mkdir -p $R/logs; rc=0
 echo "worker $1  commit $(git rev-parse --short HEAD), uncommitted changes: $(git status --porcelain --untracked-files=no | wc -l)"
 split() {     # AMTP suite through bench_split (search-only columns + the full query), reps 15 / warmup 3
-  local name=$1 t0=$SECONDS; shift
+  local name=$1 t0=$SECONDS; shift; mkdir -p $R/amtp
   echo "[$(date -u '+%F %T')] start ${name}_amtp"
   if (cd amtp_code && ../.venv/bin/python -m bench_split.run "$@" --reps 15 --warmup 3 --out $R/amtp) > $R/logs/${name}_amtp.log 2>&1; then
     echo "[$(date -u '+%F %T')] done  ${name}_amtp ($((SECONDS - t0)) s)"
@@ -54,7 +57,7 @@ split() {     # AMTP suite through bench_split (search-only columns + the full q
 }
 rest() {      # rest "<schemes>" <steps...>: scripts/aws_run_all.sh into the same run folder
   local schemes=$1; shift
-  SCHEMES="$schemes" RUN_ID=paper_partleaf bash scripts/aws_run_all.sh "$@" || rc=1
+  SCHEMES="$schemes" RUN_ID=$RUN bash scripts/aws_run_all.sh "$@" || rc=1
 }
 case $1 in
   1) split search1 search1; split xsearch xsearch; split exp5 exp5
@@ -63,6 +66,7 @@ case $1 in
      rest "amtp secollab" xverify
      rest "secollab" xdomains ;;
   3) rest "amtp chen secollab du" verify1 tamper ;;
+  4) rest "secollab" search1 xsearch xdomains exp5 ;;     # SE-COLLAB again, now writing its search split
 esac
 echo "partleaf finished rc=$rc"
 JOB
