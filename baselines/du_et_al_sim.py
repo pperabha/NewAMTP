@@ -375,6 +375,15 @@ class CloudServer:
             self.secure_search(node.pl, Q, out)   # บรรทัด 3: ลูกซ้าย
             self.secure_search(node.pr, Q, out)   # [FIX] บรรทัด 4: paper พิมพ์ T.pl ซ้ำ -> ต้องเป็น T.pr
 
+    def match_slots(self, node: Node, Q, out):    # Algorithm 2 แบบเดียวกัน แต่คืนแค่ slot ของ leaf ที่ match
+        if not self._match(node, Q):              # (ไม่หยิบ E, ID', e และ slice ของไฟล์) ใช้วัด search ไม่รวม fetch
+            return                                # เท่านั้น ไม่ได้ใช้ตอบ query จริง
+        if node.is_leaf():
+            out.append(node.slot)
+        else:
+            self.match_slots(node.pl, Q, out)
+            self.match_slots(node.pr, Q, out)
+
     def answer(self, Q, rng: random.Random):      # ตอบ query (รวมพฤติกรรมโกงไว้ทดสอบ verification)
         out = []                                  # ผลลัพธ์
         self.secure_search(self.root, Q, out)     # ค้นหาตาม Algorithm 2
@@ -545,6 +554,18 @@ class DuScheme:
             responses[cl.j] = cl.answer(Q, self.rng)  # Algorithm 2
             times.append(time.perf_counter() - t0)  # เวลาของ cloud นี้
         return responses, times                   # คืนทั้งสองอย่าง
+
+    def search_no_fetch(self, Q):
+        """Algorithm 2 ทุก cloud แต่คืนแค่ slot ที่ match (ไม่หยิบข้อมูลของไฟล์): เวลาของแต่ละ cloud และ slot ที่ได้
+        ใช้วัดเวลา search ไม่รวม fetch เท่านั้น วัดหลัง query เต็มจบแล้ว จึงไม่กระทบคอลัมน์เดิม"""
+        slots, times = {}, []
+        for cl in self.clouds:
+            out = []
+            t0 = time.perf_counter()
+            cl.match_slots(cl.root, Q, out)
+            times.append(time.perf_counter() - t0)
+            slots[cl.j] = out
+        return slots, times
 
     # ------------------------------------------------------------------ Verification
     def verify(self, Q, responses) -> VerifyResult:
@@ -745,6 +766,12 @@ def run_query(sch, terms):
     # end_to_end = until the DU holds the verified result set (shared definition, baselines/README.md);
     # recovering the files (du_decrypt) is reported separately. No network time.
     times["end_to_end"] = times["query_gen"] + server_max + times["verify_total"]
+    # search ไม่รวม fetch (คอลัมน์เพิ่ม ไม่เปลี่ยนคอลัมน์เดิม): Algorithm 2 เดิมแต่คืนแค่ slot ที่ match วัดหลังทุกขั้นข้างบน
+    nf_slots, t_nf = sch.search_no_fetch(Q)
+    for j, items in responses.items():            # ต้องได้ leaf ชุดเดียวกับ query เต็ม
+        assert sorted(nf_slots[j]) == sorted(it["slot"] for it in items), "search_no_fetch != search"
+    times["search_no_fetch"] = max(t_nf) * 1e3    # ขนาน = cloud ที่ช้าที่สุด (เหมือน server_total)
+    times["search_no_fetch_sum"] = sum(t_nf) * 1e3
     ops = dict(hash_qgen=c_q["hash"], hash_search=c_s["hash"], visited=c_s["visited"],  # จำนวน op
                hmac_verify=c_v["hmac"], hash_verify=c_v["hash"], dec_verify=c_v["dec"])
     R = [len(v) for v in responses.values()]      # |R| ของแต่ละ cloud
