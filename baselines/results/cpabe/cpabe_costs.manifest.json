@@ -1,0 +1,13 @@
+{
+  "command": "/Users/chen/Documents/NewAMTP/amtp_code/bench/cpabe_bench.py --out ../baselines/results/cpabe",
+  "git_commit": "e5288558fffdea7710c7e2404cfce43ed2211e6e",
+  "git_dirty": true,
+  "reps": 15,
+  "warmup": 3,
+  "curve": "SS512",
+  "charm": "unknown",
+  "python": "3.12.10",
+  "platform": "macOS-14.3.1-x86_64-i386-64bit",
+  "processor": "i386",
+  "started": "2026-11-17 21:07:41"
+}

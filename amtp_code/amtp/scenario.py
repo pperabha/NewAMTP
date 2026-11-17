@@ -5,7 +5,7 @@ the shared arXiv dataset-v4 (datasets/arxiv/) instead.
 """
 from .adversary import Adversary
 from .anchor import RootAnchor
-from .core.crypto import AttributeAuthority
+from .core.crypto import make_authority
 from .owner import DataOwner, DomainKeys
 from .server import CloudServer
 from .user import DataUser
@@ -88,7 +88,7 @@ def _doc(t):
 
 class World:
     def __init__(self, theta_min=1, theta_max=4):
-        self.authority = AttributeAuthority()
+        self.authority = make_authority()
         self.anchor = RootAnchor()
         self.server = CloudServer()
         self.adversary = Adversary(self.server)     # demo and tests only

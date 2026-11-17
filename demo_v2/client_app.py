@@ -23,7 +23,7 @@ import amtp_dataset as DS
 import wire_sizes as W
 from amtp.anchor import NO_DELTA, RootAnchor, transition_message
 from amtp.core import boolean
-from amtp.core.crypto import AttributeAuthority
+from amtp.core.crypto import make_authority
 from amtp.core.hashing import H, HashCounter
 from amtp.engine import Engine
 from amtp.index import domain_root, gamma_has_v
@@ -124,7 +124,7 @@ class Client:
             raise SystemExit("this demo runs the paper's γ = H(PID ‖ v ‖ H(Enc(L))); unset AMTP_GAMMA_V=0")
         self.cfg = cfg
         self.anchor, self.rserver = RemoteAnchor(cfg.anchor), RemoteServer(cfg.server)
-        self.authority = AttributeAuthority()
+        self.authority = make_authority()
         self.keys, self.owners, self.pool, self.df, self.stats = {}, {}, {}, {}, {}
         self.user = DataUser("u1", "Demo user", POLICY, [POLICY], self.authority.user_keys([POLICY]), self.keys)
         self.lock = threading.RLock()

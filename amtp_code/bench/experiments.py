@@ -63,7 +63,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from amtp.core import boolean                                    # noqa: E402
 from amtp.anchor import RootAnchor, transition_message           # noqa: E402
-from amtp.core.crypto import AttributeAuthority, Signer, make_ct          # noqa: E402
+from amtp.core.crypto import Signer, make_authority, make_ct          # noqa: E402
 from amtp.dht import ciphertext_id                               # noqa: E402
 from amtp.engine import Engine
 from amtp.index import (set_and_plan_greedy, set_and_prune, set_gamma_v, set_part_leaf,  # noqa: E402
@@ -98,7 +98,7 @@ class Corpus:
         self.D = arxiv_loader()
         self.data = a.data
         self.keys = {}                                  # domain -> DomainKeys (K_s, K_a), one pair per domain
-        self.authority = AttributeAuthority()
+        self.authority = make_authority()
         cat = _primary_categories(self.D.load(a.data)["dir"])
         groups = sorted(set(cat.values()) | set(self.D.DOMAINS))
         self.bucket_of = {g: i % a.buckets for i, g in enumerate(groups)}
