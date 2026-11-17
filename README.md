@@ -26,7 +26,7 @@ Ubuntu 24.04 (AWS `r7i.4xlarge`).
 ```bash
 git clone https://github.com/pperabha/NewAMTP.git
 cd NewAMTP
-python3 -m venv .venv
+python3.12 -m venv .venv          # Python 3.12 (the version every result was produced with)
 .venv/bin/pip install -r amtp_code/requirements.txt
 ```
 
@@ -70,6 +70,9 @@ byte-identical with and without it), the ablation variants, and a Phase 5 fuzzer
 ```bash
 cd amtp_code && ../.venv/bin/python run.py         # then open http://127.0.0.1:5000
 ```
+
+On macOS, port 5000 may be taken by AirPlay Receiver (the page answers 403); use another port:
+`PORT=5077 ../.venv/bin/python run.py`, then open http://127.0.0.1:5077.
 
 **Paper configuration.** The code's default is the plain construction. Every AMTP result in the paper uses the
 configuration in [`scripts/paper_env.sh`](scripts/paper_env.sh): fill-first placement, γ with the partition version,
