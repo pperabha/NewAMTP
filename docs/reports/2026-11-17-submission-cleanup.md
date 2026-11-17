@@ -74,3 +74,11 @@
 - README (ส่วน dataset และส่วน run), `amtp_code/README_TH.md`, `demo_v2/CODE_MAP.md` ไม่อ้างถึง demo เก่าแล้ว
 
 ตรวจแล้ว: pytest 543 passed · `demo_v2/tests` 34 passed (หลัง commit) · clone repo public ใหม่ผ่าน
+
+## รอบ 6: README บอกวิธีเปิด demo ทีละขั้น
+
+- README ส่วนที่ 3 เปลี่ยนเป็น "Run the demo": ติดตั้งครั้งเดียว (requirements ของ demo + unpack dataset), คำสั่งเปิด,
+  เปิด http://127.0.0.1:8102, ลองอะไรบนหน้าเว็บ, ปิดด้วย Ctrl-C, option (`--files-per-domain 500`, `--base-port`,
+  `AMTP_DATA`) และวิธีแก้เมื่อเปิดไม่ขึ้น
+- ส่วน paper configuration และ smoke run ย้ายไปอยู่ต้นส่วนที่ 5 (Re-run the experiments)
+- `demo_v2/README.md`: เวลาโหลด "about 30 s to 1.5 minutes, depending on the machine" (Mac เครื่องนี้ ~25 วินาที)

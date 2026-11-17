@@ -12,7 +12,7 @@ Anchor. The three baselines of the paper (Chen et al. [40], Du et al. [7], SE-CO
 
 - [1. Install](#1-install)
 - [2. Test](#2-test)
-- [3. Run](#3-run)
+- [3. Run the demo](#3-run-the-demo)
 - [4. Reproduce the paper's figures](#4-reproduce-the-papers-figures)
 - [5. Re-run the experiments](#5-re-run-the-experiments)
 - [6. Code map](#6-code-map)
@@ -64,36 +64,44 @@ protocol and the owner's validator, AND pruning and focus evidence, the Search T
 byte-identical with and without it), the ablation variants, and a Phase 5 fuzzer with a malicious server
 (`amtp/adversary.py`) that must be rejected.
 
-## 3. Run
+## 3. Run the demo
 
-**Live demo** ([`demo_v2/`](demo_v2/README.md)): Root Anchor, Cloud Server, network path and client as four
-separate processes on the real dataset (unpack it first, Section 1), with a "How it works" panel and attacks on
-the network path that the client's verifier must reject:
+The live demo is in [`demo_v2/`](demo_v2/README.md): the Root Anchor, the Cloud Server, a network path and the
+Data User's client run as four separate processes on the real dataset, and the page shows each of them, with a
+"How it works" panel and switches that make the server (or the network) cheat. The client's verifier must reject
+every cheat.
 
-```bash
-.venv/bin/pip install -r demo_v2/requirements.txt                    # first time only
-lsof -ti :8101,8102,8103,8104 | xargs kill                           # free the demo ports if a demo is still running
-./demo_v2/run_demo.sh --files-per-domain 5000                        # opens http://127.0.0.1:8102
-.venv/bin/python -m pytest demo_v2/tests -q                          # demo tests (four real processes)
-```
-
-**Paper configuration.** The code's defaults are the configuration of every AMTP result in the paper: fill-first
-placement, γ with the partition version, AND pruning with greedy expansion of H_full, result-only partition proofs,
-and the auxiliary Search Tree data Aux_i(h_w) (Eq. 17). Each part can be switched off with an environment variable,
-e.g. for the plain construction (responses verify the same way in both modes):
+**Once** (after Section 1; the demo needs the unpacked dataset):
 
 ```bash
-export AMTP_AND_PRUNE=0 AMTP_AND_GREEDY=0 AMTP_PART_RESULTS=0 AMTP_PART_LEAF=0
+.venv/bin/pip install -r demo_v2/requirements.txt            # the demo's web packages (FastAPI, uvicorn, websockets)
+.venv/bin/python datasets/arxiv/unpack.py                    # skip if data/amtp_file_db_v4/ already exists
 ```
 
-[`scripts/paper_env.sh`](scripts/paper_env.sh) sets the paper's values explicitly (useful in a shell where any of
-these variables was changed).
-
-**Smoke run of every experiment** (small sizes, one repetition; the numbers are not results):
+**Start** (from the repository root):
 
 ```bash
-bash scripts/smoke_all.sh
+lsof -ti :8101,8102,8103,8104 | xargs kill                   # stop a demo that is still running (no output if none)
+./demo_v2/run_demo.sh --files-per-domain 5000
 ```
+
+1. The browser opens **http://127.0.0.1:8102** (open it by hand if it does not).
+2. The page shows the loading progress of 4 domains x 5,000 real files (about 30 s to 1.5 min, depending on the
+   machine). Search when it says ready.
+3. Try the example buttons (left), then a cheat from "Server behaviour" (middle) and search again: the verdict turns
+   REJECTED and the right panel names the check that failed. The full list of scenarios is in
+   [`demo_v2/README.md`](demo_v2/README.md#scenarios).
+4. Stop with **Ctrl-C** in the terminal.
+
+Options: `--files-per-domain 500` (faster start for a rehearsal), `--base-port 8201` (if ports 8101-8104 are taken;
+the page is then on 8202), `--domains D1,D2`, `--no-browser`. A dataset in another folder:
+`AMTP_DATA=/path/to/amtp_file_db_v4 ./demo_v2/run_demo.sh`.
+
+If it does not start: `No module named 'fastapi'` -> run the first "Once" command; "a demo process stopped during
+start-up" -> the dataset is not unpacked or a port is still in use (run the `lsof` line).
+
+Demo tests (four real processes on 300 files of two domains, about 10 s):
+`.venv/bin/python -m pytest demo_v2/tests -q`.
 
 ## 4. Reproduce the paper's figures
 
@@ -130,6 +138,26 @@ same type, as stated in the paper.
 
 All runs in the paper used AWS `r7i.4xlarge` (16 vCPU, 128 GiB RAM), one job per machine, 15 repetitions after
 3 warm-up runs. Full-size runs are long (Experiment 3 with Global-MT(v) took about 14 h).
+
+**Paper configuration.** The code's defaults are the configuration of every AMTP result in the paper: fill-first
+placement, γ with the partition version, AND pruning with greedy expansion of H_full, result-only partition proofs,
+and the auxiliary Search Tree data Aux_i(h_w) (Eq. 17). Each part can be switched off with an environment variable,
+e.g. for the plain construction (responses verify the same way in both modes):
+
+```bash
+export AMTP_AND_PRUNE=0 AMTP_AND_GREEDY=0 AMTP_PART_RESULTS=0 AMTP_PART_LEAF=0
+```
+
+[`scripts/paper_env.sh`](scripts/paper_env.sh) sets the paper's values explicitly (useful in a shell where any of
+these variables was changed).
+
+**Smoke run of every experiment** (small sizes, one repetition; the numbers are not results):
+
+```bash
+bash scripts/smoke_all.sh
+```
+
+**Full-size runs:**
 
 ```bash
 source scripts/paper_env.sh
