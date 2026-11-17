@@ -111,6 +111,34 @@ def part_results_on() -> bool:
     return _PART_RESULTS
 
 
+# Search Tree leaf by partition (study, default off): the leaf of a keyword in at least KEEP_MIN_PARTS partitions
+# also keeps the set of its partitions and where each partition's component sits in the list (PartPosting), so
+# a query reads them instead of rebuilding them from the list. Same list, same answers, same proof bytes; the
+# Search Tree is not evidence. AMTP_PART_LEAF=1 or set_part_leaf(True) before the snapshots are built.
+_PART_LEAF = os.environ.get("AMTP_PART_LEAF", "0") == "1"
+
+
+def set_part_leaf(on: bool) -> None:
+    global _PART_LEAF
+    _PART_LEAF = bool(on)
+
+
+def part_leaf_on() -> bool:
+    return _PART_LEAF
+
+
+class PartPosting(list):
+    """A Search Tree leaf: the same list [(PID, [(cid, ℓ), ...]), ...] in PID order, plus
+    pids = frozenset of its PIDs and at = {PID: position of that PID's component in the list}.
+    Built once with the snapshot; never sent and never trusted by the user."""
+    __slots__ = ("pids", "at")
+
+    def __init__(self, entries):
+        super().__init__(entries)
+        self.at = {pid: j for j, (pid, _) in enumerate(self)}
+        self.pids = frozenset(self.at)
+
+
 _U64_MAX = (1 << 64) - 1
 _LEN8 = (8).to_bytes(4, "big")
 _LEN32 = (32).to_bytes(4, "big")
@@ -225,9 +253,12 @@ class DomainState:
             for h in keys:
                 groups.setdefault(h, {}).setdefault(pid, []).append((cid, slot))
         # B+ Search Tree T^S_i over the protected keys, plus the Cuckoo filter in front of it
-        self.postings = BPlusTree.from_sorted(
-            (h, [(pid, sorted(entries, key=lambda e: e[1])) for pid, entries in sorted(groups[h].items())])
-            for h in sorted(groups))
+        by_part = part_leaf_on()
+
+        def leaf(h):
+            L = [(pid, sorted(entries, key=lambda e: e[1])) for pid, entries in sorted(groups[h].items())]
+            return PartPosting(L) if by_part and len(L) >= KEEP_MIN_PARTS else L
+        self.postings = BPlusTree.from_sorted((h, leaf(h)) for h in sorted(groups))
         self.cuckoo = CuckooFilter.from_keys(self.postings.keys())
 
         # PAPC per keyword, then the indexed IMT: leaf H(h ‖ ρ ‖ next(h)) at its position

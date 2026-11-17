@@ -1,0 +1,506 @@
+[
+ {
+  "domain": "1:G01",
+  "epoch": 1,
+  "keywords_indexed": 306558,
+  "keywords_total": 3080769,
+  "build_ms": 32014.457,
+  "approx_mb": 410.58
+ },
+ {
+  "domain": "2:G01",
+  "epoch": 1,
+  "keywords_indexed": 166887,
+  "keywords_total": 1815372,
+  "build_ms": 23409.52,
+  "approx_mb": 197.54
+ },
+ {
+  "domain": "2:G02",
+  "epoch": 1,
+  "keywords_indexed": 149789,
+  "keywords_total": 1452871,
+  "build_ms": 1046.954,
+  "approx_mb": 201.73
+ },
+ {
+  "domain": "4:G01",
+  "epoch": 1,
+  "keywords_indexed": 82995,
+  "keywords_total": 1082038,
+  "build_ms": 22015.851,
+  "approx_mb": 88.94
+ },
+ {
+  "domain": "4:G02",
+  "epoch": 1,
+  "keywords_indexed": 71686,
+  "keywords_total": 621808,
+  "build_ms": 517.015,
+  "approx_mb": 100.41
+ },
+ {
+  "domain": "4:G03",
+  "epoch": 1,
+  "keywords_indexed": 86753,
+  "keywords_total": 782937,
+  "build_ms": 557.697,
+  "approx_mb": 106.35
+ },
+ {
+  "domain": "4:G04",
+  "epoch": 1,
+  "keywords_indexed": 82615,
+  "keywords_total": 906656,
+  "build_ms": 563.571,
+  "approx_mb": 97.83
+ },
+ {
+  "domain": "8:G01",
+  "epoch": 1,
+  "keywords_indexed": 40231,
+  "keywords_total": 587391,
+  "build_ms": 18979.516,
+  "approx_mb": 39.1
+ },
+ {
+  "domain": "8:G02",
+  "epoch": 1,
+  "keywords_indexed": 43340,
+  "keywords_total": 583043,
+  "build_ms": 288.644,
+  "approx_mb": 43.35
+ },
+ {
+  "domain": "8:G03",
+  "epoch": 1,
+  "keywords_indexed": 38748,
+  "keywords_total": 368907,
+  "build_ms": 237.174,
+  "approx_mb": 46.87
+ },
+ {
+  "domain": "8:G04",
+  "epoch": 1,
+  "keywords_indexed": 36675,
+  "keywords_total": 312270,
+  "build_ms": 230.668,
+  "approx_mb": 48.69
+ },
+ {
+  "domain": "8:G05",
+  "epoch": 1,
+  "keywords_indexed": 43688,
+  "keywords_total": 414689,
+  "build_ms": 270.765,
+  "approx_mb": 49.65
+ },
+ {
+  "domain": "8:G06",
+  "epoch": 1,
+  "keywords_indexed": 46981,
+  "keywords_total": 452661,
+  "build_ms": 287.601,
+  "approx_mb": 52.52
+ },
+ {
+  "domain": "8:G07",
+  "epoch": 1,
+  "keywords_indexed": 42610,
+  "keywords_total": 466065,
+  "build_ms": 271.68,
+  "approx_mb": 47.76
+ },
+ {
+  "domain": "8:G08",
+  "epoch": 1,
+  "keywords_indexed": 42884,
+  "keywords_total": 524682,
+  "build_ms": 279.758,
+  "approx_mb": 44.94
+ },
+ {
+  "domain": "16:G01",
+  "epoch": 1,
+  "keywords_indexed": 20414,
+  "keywords_total": 315895,
+  "build_ms": 1424.193,
+  "approx_mb": 19.03
+ },
+ {
+  "domain": "16:G02",
+  "epoch": 1,
+  "keywords_indexed": 20847,
+  "keywords_total": 308655,
+  "build_ms": 17594.885,
+  "approx_mb": 19.35
+ },
+ {
+  "domain": "16:G03",
+  "epoch": 1,
+  "keywords_indexed": 22643,
+  "keywords_total": 314684,
+  "build_ms": 147.797,
+  "approx_mb": 21.56
+ },
+ {
+  "domain": "16:G04",
+  "epoch": 1,
+  "keywords_indexed": 18666,
+  "keywords_total": 311687,
+  "build_ms": 127.245,
+  "approx_mb": 16.24
+ },
+ {
+  "domain": "16:G05",
+  "epoch": 1,
+  "keywords_indexed": 19974,
+  "keywords_total": 181868,
+  "build_ms": 116.964,
+  "approx_mb": 23.41
+ },
+ {
+  "domain": "16:G06",
+  "epoch": 1,
+  "keywords_indexed": 18782,
+  "keywords_total": 164744,
+  "build_ms": 112.297,
+  "approx_mb": 23.23
+ },
+ {
+  "domain": "16:G07",
+  "epoch": 1,
+  "keywords_indexed": 20728,
+  "keywords_total": 198752,
+  "build_ms": 121.12,
+  "approx_mb": 23.29
+ },
+ {
+  "domain": "16:G08",
+  "epoch": 1,
+  "keywords_indexed": 19894,
+  "keywords_total": 199891,
+  "build_ms": 120.206,
+  "approx_mb": 22.63
+ },
+ {
+  "domain": "16:G09",
+  "epoch": 1,
+  "keywords_indexed": 23503,
+  "keywords_total": 193916,
+  "build_ms": 133.709,
+  "approx_mb": 28.07
+ },
+ {
+  "domain": "16:G10",
+  "epoch": 1,
+  "keywords_indexed": 21715,
+  "keywords_total": 210280,
+  "build_ms": 122.18,
+  "approx_mb": 22.41
+ },
+ {
+  "domain": "16:G11",
+  "epoch": 1,
+  "keywords_indexed": 26000,
+  "keywords_total": 285381,
+  "build_ms": 149.311,
+  "approx_mb": 25.36
+ },
+ {
+  "domain": "16:G12",
+  "epoch": 1,
+  "keywords_indexed": 21876,
+  "keywords_total": 228565,
+  "build_ms": 124.366,
+  "approx_mb": 22.43
+ },
+ {
+  "domain": "16:G13",
+  "epoch": 1,
+  "keywords_indexed": 20298,
+  "keywords_total": 243452,
+  "build_ms": 121.224,
+  "approx_mb": 20.49
+ },
+ {
+  "domain": "16:G14",
+  "epoch": 1,
+  "keywords_indexed": 22072,
+  "keywords_total": 275893,
+  "build_ms": 134.452,
+  "approx_mb": 22.1
+ },
+ {
+  "domain": "16:G15",
+  "epoch": 1,
+  "keywords_indexed": 21472,
+  "keywords_total": 287110,
+  "build_ms": 130.574,
+  "approx_mb": 20.54
+ },
+ {
+  "domain": "16:G16",
+  "epoch": 1,
+  "keywords_indexed": 23175,
+  "keywords_total": 268654,
+  "build_ms": 137.835,
+  "approx_mb": 24.11
+ },
+ {
+  "domain": "32:G01",
+  "epoch": 1,
+  "keywords_indexed": 16047,
+  "keywords_total": 242170,
+  "build_ms": 1710.24,
+  "approx_mb": 15.17
+ },
+ {
+  "domain": "32:G02",
+  "epoch": 1,
+  "keywords_indexed": 14774,
+  "keywords_total": 215074,
+  "build_ms": 17089.805,
+  "approx_mb": 13.86
+ },
+ {
+  "domain": "32:G03",
+  "epoch": 1,
+  "keywords_indexed": 8642,
+  "keywords_total": 137928,
+  "build_ms": 56.289,
+  "approx_mb": 7.55
+ },
+ {
+  "domain": "32:G04",
+  "epoch": 1,
+  "keywords_indexed": 6726,
+  "keywords_total": 131664,
+  "build_ms": 46.266,
+  "approx_mb": 5.44
+ },
+ {
+  "domain": "32:G05",
+  "epoch": 1,
+  "keywords_indexed": 7464,
+  "keywords_total": 145816,
+  "build_ms": 53.166,
+  "approx_mb": 5.92
+ },
+ {
+  "domain": "32:G06",
+  "epoch": 1,
+  "keywords_indexed": 10399,
+  "keywords_total": 144489,
+  "build_ms": 62.381,
+  "approx_mb": 8.97
+ },
+ {
+  "domain": "32:G07",
+  "epoch": 1,
+  "keywords_indexed": 8778,
+  "keywords_total": 150512,
+  "build_ms": 56.785,
+  "approx_mb": 7.19
+ },
+ {
+  "domain": "32:G08",
+  "epoch": 1,
+  "keywords_indexed": 7740,
+  "keywords_total": 147373,
+  "build_ms": 53.682,
+  "approx_mb": 6.13
+ },
+ {
+  "domain": "32:G09",
+  "epoch": 1,
+  "keywords_indexed": 10339,
+  "keywords_total": 91225,
+  "build_ms": 53.373,
+  "approx_mb": 11.42
+ },
+ {
+  "domain": "32:G10",
+  "epoch": 1,
+  "keywords_indexed": 9878,
+  "keywords_total": 91461,
+  "build_ms": 54.786,
+  "approx_mb": 11.22
+ },
+ {
+  "domain": "32:G11",
+  "epoch": 1,
+  "keywords_indexed": 10874,
+  "keywords_total": 102823,
+  "build_ms": 58.521,
+  "approx_mb": 11.47
+ },
+ {
+  "domain": "32:G12",
+  "epoch": 1,
+  "keywords_indexed": 10421,
+  "keywords_total": 115041,
+  "build_ms": 55.89,
+  "approx_mb": 10.04
+ },
+ {
+  "domain": "32:G13",
+  "epoch": 1,
+  "keywords_indexed": 10440,
+  "keywords_total": 90548,
+  "build_ms": 58.55,
+  "approx_mb": 11.6
+ },
+ {
+  "domain": "32:G14",
+  "epoch": 1,
+  "keywords_indexed": 11165,
+  "keywords_total": 120924,
+  "build_ms": 60.927,
+  "approx_mb": 10.92
+ },
+ {
+  "domain": "32:G15",
+  "epoch": 1,
+  "keywords_indexed": 9932,
+  "keywords_total": 88014,
+  "build_ms": 53.221,
+  "approx_mb": 10.95
+ },
+ {
+  "domain": "32:G16",
+  "epoch": 1,
+  "keywords_indexed": 10377,
+  "keywords_total": 103153,
+  "build_ms": 55.213,
+  "approx_mb": 11.16
+ },
+ {
+  "domain": "32:G17",
+  "epoch": 1,
+  "keywords_indexed": 17703,
+  "keywords_total": 145479,
+  "build_ms": 97.16,
+  "approx_mb": 20.68
+ },
+ {
+  "domain": "32:G18",
+  "epoch": 1,
+  "keywords_indexed": 13951,
+  "keywords_total": 128865,
+  "build_ms": 74.272,
+  "approx_mb": 14.94
+ },
+ {
+  "domain": "32:G19",
+  "epoch": 1,
+  "keywords_indexed": 15442,
+  "keywords_total": 163565,
+  "build_ms": 81.504,
+  "approx_mb": 14.48
+ },
+ {
+  "domain": "32:G20",
+  "epoch": 1,
+  "keywords_indexed": 10668,
+  "keywords_total": 103655,
+  "build_ms": 55.824,
+  "approx_mb": 10.85
+ },
+ {
+  "domain": "32:G21",
+  "epoch": 1,
+  "keywords_indexed": 7619,
+  "keywords_total": 109557,
+  "build_ms": 42.994,
+  "approx_mb": 6.29
+ },
+ {
+  "domain": "32:G22",
+  "epoch": 1,
+  "keywords_indexed": 10327,
+  "keywords_total": 117710,
+  "build_ms": 51.607,
+  "approx_mb": 9.19
+ },
+ {
+  "domain": "32:G23",
+  "epoch": 1,
+  "keywords_indexed": 7844,
+  "keywords_total": 103685,
+  "build_ms": 40.008,
+  "approx_mb": 6.47
+ },
+ {
+  "domain": "32:G24",
+  "epoch": 1,
+  "keywords_indexed": 10405,
+  "keywords_total": 114983,
+  "build_ms": 56.462,
+  "approx_mb": 9.36
+ },
+ {
+  "domain": "32:G25",
+  "epoch": 1,
+  "keywords_indexed": 14513,
+  "keywords_total": 160741,
+  "build_ms": 77.558,
+  "approx_mb": 14.63
+ },
+ {
+  "domain": "32:G26",
+  "epoch": 1,
+  "keywords_indexed": 9700,
+  "keywords_total": 140631,
+  "build_ms": 57.307,
+  "approx_mb": 8.58
+ },
+ {
+  "domain": "32:G27",
+  "epoch": 1,
+  "keywords_indexed": 10939,
+  "keywords_total": 143472,
+  "build_ms": 61.982,
+  "approx_mb": 10.29
+ },
+ {
+  "domain": "32:G28",
+  "epoch": 1,
+  "keywords_indexed": 10671,
+  "keywords_total": 140094,
+  "build_ms": 57.663,
+  "approx_mb": 9.57
+ },
+ {
+  "domain": "32:G29",
+  "epoch": 1,
+  "keywords_indexed": 11511,
+  "keywords_total": 136808,
+  "build_ms": 63.437,
+  "approx_mb": 10.82
+ },
+ {
+  "domain": "32:G30",
+  "epoch": 1,
+  "keywords_indexed": 9514,
+  "keywords_total": 146713,
+  "build_ms": 56.359,
+  "approx_mb": 8.08
+ },
+ {
+  "domain": "32:G31",
+  "epoch": 1,
+  "keywords_indexed": 10569,
+  "keywords_total": 143152,
+  "build_ms": 61.024,
+  "approx_mb": 9.35
+ },
+ {
+  "domain": "32:G32",
+  "epoch": 1,
+  "keywords_indexed": 10637,
+  "keywords_total": 140321,
+  "build_ms": 59.72,
+  "approx_mb": 9.78
+ }
+]

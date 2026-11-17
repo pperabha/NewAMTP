@@ -42,11 +42,9 @@ def search_only(state, b_q, dht, timing=None, partition_first=False):
     postings = {h: lookup(state, bytes.fromhex(h)) for h in boolean.leaves(b_q)}
     t1 = time.perf_counter()
     if partition_first:
-        F = boolean.focus(b_q, {h: ({pid for pid, _ in p} if p is not None else set())
-                                for h, p in postings.items()})
+        F = _focus(b_q, {h: _leaf_pids(p) for h, p in postings.items()})
         tf = time.perf_counter()
-        sets = {h: ({(cid, pid, slot) for pid, comp in p if pid in F for cid, slot in comp} if p is not None
-                    else set()) for h, p in postings.items()}
+        sets = {h: _sets_in(p, F) for h, p in postings.items()}
     else:
         tf = t1
         sets = {h: ({(cid, pid, slot) for pid, comp in p for cid, slot in comp} if p is not None else set())
@@ -61,6 +59,29 @@ def search_only(state, b_q, dht, timing=None, partition_first=False):
                       fetch=(t4 - t3) * 1e3)
     assert len(cts) == len(match)
     return {cid.hex() for cid, _, _ in match}
+
+
+_EMPTY = frozenset()
+
+
+def _leaf_pids(p):
+    """A keyword's partitions: kept in the Search Tree leaf when it is a PartPosting (AMTP_PART_LEAF),
+    else read from the list (the leaf of a keyword in one or two partitions, or the flag off)."""
+    if p is None:
+        return _EMPTY
+    pids = getattr(p, "pids", None)
+    return pids if pids is not None else frozenset(pid for pid, _ in p)
+
+
+def _sets_in(p, F):
+    """The keyword's files in the partitions F. With a PartPosting leaf and F smaller than the list, read only
+    the components of F (at: PID -> position); else scan the list."""
+    if p is None:
+        return set()
+    at = getattr(p, "at", None)
+    if at is not None and len(F) <= len(p):
+        return {(cid, pid, slot) for pid in F if pid in at for cid, slot in p[at[pid]][1]}
+    return {(cid, pid, slot) for pid, comp in p if pid in F for cid, slot in comp}
 
 
 class SearchIndex:

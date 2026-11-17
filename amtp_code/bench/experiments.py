@@ -66,7 +66,8 @@ from amtp.anchor import RootAnchor, transition_message           # noqa: E402
 from amtp.core.crypto import AttributeAuthority, Signer, make_ct          # noqa: E402
 from amtp.dht import ciphertext_id                               # noqa: E402
 from amtp.engine import Engine
-from amtp.index import set_and_plan_greedy, set_and_prune, set_gamma_v, set_part_results  # noqa: E402
+from amtp.index import (set_and_plan_greedy, set_and_prune, set_gamma_v, set_part_leaf,  # noqa: E402
+                        set_part_results)
 from amtp.core.hashing import HashCounter, enc                   # noqa: E402
 from amtp.core.crypto import keyword_cipher                      # noqa: E402
 from amtp.nlp import norm                                         # noqa: E402
@@ -985,6 +986,9 @@ def main():
     ap.add_argument("--part-results", action="store_true",
                     help="result-only partition check: open partition slots only for the returned files "
                          "(study; same as AMTP_PART_RESULTS=1; default off = the paper's ASPA)")
+    ap.add_argument("--part-leaf", action="store_true",
+                    help="Search Tree leaf keeps each keyword's partition set and component positions "
+                         "(study; same as AMTP_PART_LEAF=1; same answers and proof bytes)")
     a = ap.parse_args()
     os.environ["AMTP_PLACEMENT"] = a.placement           # recorded in every manifest
     if a.gamma_no_v or os.environ.get("AMTP_GAMMA_V", "1") == "0":
@@ -999,6 +1003,9 @@ def main():
     if a.part_results or os.environ.get("AMTP_PART_RESULTS", "0") == "1":
         os.environ["AMTP_PART_RESULTS"] = "1"             # recorded in every manifest
         set_part_results(True)
+    if a.part_leaf or os.environ.get("AMTP_PART_LEAF", "0") == "1":
+        os.environ["AMTP_PART_LEAF"] = "1"                # recorded in every manifest
+        set_part_leaf(True)
     run = {"exp1": suite_exp1, "exp2-layouts": suite_exp2_layouts, "exp2": suite_exp2, "exp3": suite_exp3, "exp5": suite_exp5,
            "theta": suite_theta, "search1": suite_search1, "verify1": suite_verify1, "tamper": suite_tamper,
            "xsearch": suite_xsearch, "xverify": suite_xverify, "xdomains": suite_xdomains}

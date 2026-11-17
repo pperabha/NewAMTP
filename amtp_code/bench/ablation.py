@@ -37,7 +37,7 @@ from amtp.core import boolean                                    # noqa: E402
 from amtp.core.hashing import HashCounter                        # noqa: E402
 from amtp.dht import DHT                                          # noqa: E402
 from amtp.engine import Engine                                    # noqa: E402
-from amtp.index import and_plan_greedy_on, and_prune_on, part_results_on, set_gamma_v   # noqa: E402
+from amtp.index import and_plan_greedy_on, and_prune_on, part_leaf_on, part_results_on, set_gamma_v   # noqa: E402
 from amtp.server import build_response                            # noqa: E402
 from amtp.user import DataUser                                    # noqa: E402
 from amtp.variants import PLACEMENTS, AdaptivePolicy, GlobalPolicy, StaticPolicy   # noqa: E402
@@ -153,7 +153,7 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     manifest = {"args": vars(a), "b": a.batch_size, "placement": a.placement, "gamma_v": os.environ.get("AMTP_GAMMA_V", "1") != "0",
                 # query flags (read from the environment by amtp/index.py; they change only the per-batch queries)
-                "and_prune": and_prune_on(), "part_results": part_results_on(), "and_greedy": and_plan_greedy_on(),
+                "and_prune": and_prune_on(), "part_results": part_results_on(), "and_greedy": and_plan_greedy_on(), "part_leaf": part_leaf_on(),
                 "python": sys.version, "platform": platform.platform(),
                 "machine": platform.machine(), "processor": platform.processor(),
                 "cpus": os.cpu_count(), "started": time.strftime("%Y-%m-%d %H:%M:%S")}

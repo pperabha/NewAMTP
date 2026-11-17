@@ -1,0 +1,26 @@
+[
+ {
+  "domain": "D1",
+  "epoch": 1,
+  "keywords_indexed": 7990,
+  "keywords_total": 127788,
+  "build_ms": 20.813,
+  "approx_mb": 6.88
+ },
+ {
+  "domain": "D1",
+  "epoch": 1,
+  "keywords_indexed": 42366,
+  "keywords_total": 563581,
+  "build_ms": 132.918,
+  "approx_mb": 42.75
+ },
+ {
+  "domain": "D1",
+  "epoch": 1,
+  "keywords_indexed": 82995,
+  "keywords_total": 1082038,
+  "build_ms": 348.94,
+  "approx_mb": 88.94
+ }
+]

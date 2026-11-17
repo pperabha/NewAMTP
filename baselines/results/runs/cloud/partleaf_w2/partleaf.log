@@ -1,0 +1,16 @@
+worker 2  commit d25616b, uncommitted changes: 0
+[2026-11-16 18:52:08] start xdomains_amtp
+[2026-11-16 20:38:56] done  xdomains_amtp (6408 s)
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf
+commit d25616b, uncommitted changes: 0
+[2026-11-16 20:38:56] start xverify_amtp
+[2026-11-16 20:57:58] done  xverify_amtp (1142 s)
+[2026-11-16 20:57:58] start xverify_secollab
+[2026-11-16 20:59:13] done  xverify_secollab (75 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf
+commit d25616b, uncommitted changes: 0
+[2026-11-16 20:59:13] start xdomains_secollab
+[2026-11-16 21:04:31] done  xdomains_secollab (318 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf
+partleaf finished rc=0
