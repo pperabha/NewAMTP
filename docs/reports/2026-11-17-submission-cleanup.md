@@ -1,0 +1,27 @@
+# จัด repo ให้เหลือเฉพาะผลของ paper และเปลี่ยนชื่อให้ตรง paper
+
+วันที่ 17 พ.ย. 2026 · branch `release/submission-cleanup` (ต่อจาก `release/submission`)
+
+## ทำอะไร
+
+| อะไร | ก่อน | หลัง |
+|---|---|---|
+| ข้อมูลของ paper | `results/part_leaf/data`, `data_no_fetch`, `runs/cloud/prune_w2`, `prune_w5` | `results/paper/data`, `data_no_fetch`, `ablation/amtp_static_t64`, `ablation/global_mt_v_t64` |
+| ไฟล์ที่ paper ไม่ใช้ใน data | `*_domains_scaling.*`, `search_index_*.json` | ลบ |
+| ผลรอบเก่า | `results/old`, `new_new`, `new_purn`, `new_amtp_result`, `search_split`, `runs/` ทั้งหมด, `part_leaf/graphs` | ลบ (ยังอยู่ใน branch `archive/results-2026-11-17`) |
+| สคริปต์ plot | `plot_exp4.py` (Exp. 3), `plot_exp5.py` (Exp. 4) | `plot_exp3.py`, `plot_exp4.py` · ชื่อไฟล์รูป `exp3_*`, `exp4_*` |
+| รูปของ paper | หลายโฟลเดอร์ | `results/paper/figures/fig03` … `fig10` (pdf + png) · ผลกลางทางอยู่ `figures/build/` (git-ignore) |
+| โค้ดเก่า | `amtp_code/bench/old`, `baselines/old`, `baselines/plot_story.py` | ลบ |
+
+ไม่เปลี่ยนโค้ดของ AMTP หรือ baseline ชื่อ suite `exp5` ในโค้ดยังเหมือนเดิม (README บอกว่าเป็น Experiment 4)
+
+## ตรวจแล้ว
+
+- `figure_points.csv` ของทุกรูปเทียบกับก่อนย้าย: Exp. 1 328 จุด, Exp. 2 150, Exp. 3 15,117, Exp. 4 12 · เหมือนกันทุกค่า
+- pytest: ค่าเริ่มต้น 545 passed · `scripts/paper_env.sh` 542 passed
+- `bash scripts/make_paper_figures.sh` สร้าง fig03 … fig10 ครบ
+
+## repo ที่ส่ง (AMTP-submission)
+
+สร้างจาก branch นี้เป็น commit เดียว โดยไม่ใส่เอกสารภายในทีม: `CLAUDE.md`, `docs/HANDOFF.md`, `docs/reports/`,
+`docs/paper_*`, `README_TH.md`, `scripts/cloud_helpers/`

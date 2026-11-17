@@ -2,7 +2,7 @@
 plot_results.py
 ============================================================================
 วาดกราฟจากผลของ baseline (results/<scheme>/<scheme>_<suite>.csv) สไตล์เดียวกับกราฟของ Chen [40]
-และชุดสีเดียวกับ amtp_code/bench/old/plot.py -> ทุก scheme ดูเป็นงานเดียวกัน
+และชุดสีเดียวกับ the original AMTP plot palette -> ทุก scheme ดูเป็นงานเดียวกัน
 ทุกจุด = median ของ --reps รอบ, error bar = ±1 std  (คอลัมน์ _ms_median / _ms_std)
 Exp. 3 (update) and Exp. 4 (AMTP ablation, results/amtp/exp4*/ from bench.ablation) are drawn too.
 Exp. 1 / Exp. 5 have several queries per (N, k_Q, shape) (results/exp1_queries.json): each point is the median over
@@ -30,7 +30,7 @@ from matplotlib.ticker import FixedLocator, FuncFormatter, NullFormatter  # noqa
 
 HERE = os.path.dirname(os.path.abspath(__file__))  # โฟลเดอร์ baselines/
 
-# ---- สีและ marker (ชุดเดียวกับ amtp_code/bench/old/plot.py + สีที่ 5 ของกราฟ Chen) ----
+# ---- สีและ marker (ชุดเดียวกับ the original AMTP plot palette + สีที่ 5 ของกราฟ Chen) ----
 COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]  # น้ำเงิน ส้ม เขียว เหลือง ชมพู
 MARKERS = ["o", "s", "^", "D", "v"]
 SURFACE, INK, INK2, GRID, AXIS = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df", "#8a8985"

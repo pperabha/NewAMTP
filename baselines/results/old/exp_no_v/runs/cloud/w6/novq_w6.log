@@ -1,6 +1,0 @@
-results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_nov_q
-commit 7485556, uncommitted changes: 0
-[2026-11-14 14:48:45] start verify1_amtp
-[2026-11-14 15:14:57] done  verify1_amtp (1572 s)
-all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_nov_q
-worker done: nov-q verify1

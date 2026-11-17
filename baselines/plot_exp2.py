@@ -3,7 +3,7 @@ plot_exp2.py
 ============================================================================
 Exp. 2 (verification) figures for the paper, no title (the caption is in LaTeX), same style as plot_exp1.py.
 
-  python3 baselines/plot_exp2.py --data baselines/results/part_leaf/data --out baselines/results/part_leaf/graphs/exp2
+  python3 baselines/plot_exp2.py --data baselines/results/paper/data --out <folder>
 
   exp2_a_tamper_detection         detection rate (%) vs tampered files t, one panel per attack, every scheme
                                   (a scheme that cannot express an attack is left out of that panel and named in it)
@@ -97,7 +97,7 @@ SHORT = {"modify": "modified", "hide": "hidden", "inject": "injected", "old_vers
 
 def tamper_summary(out, data):
     """One panel: how many of the 4 attack types each scheme detects in every run, vs tampered files t
-    (same figure as plot_story.detection_vs_tampered, without the title; equal lines drawn slightly apart)."""
+    (equal lines drawn slightly apart)."""
     f, ax = plt.subplots(figsize=(7.6, 4.4), dpi=200)
     f.patch.set_facecolor(SURFACE)
     style(ax)

@@ -91,30 +91,34 @@ source scripts/paper_env.sh && bash scripts/smoke_all.sh
 
 ## 4. Reproduce the paper's figures
 
-All raw results behind the paper are in this repository. One command rebuilds Figs. 3-10 from them:
+All raw results behind the paper are in [`baselines/results/paper/`](baselines/results/paper/). One command rebuilds
+Figs. 3-10 from them:
 
 ```bash
-bash scripts/make_paper_figures.sh                 # -> baselines/results/paper_figures/paper/fig03.pdf ... fig10.pdf
+bash scripts/make_paper_figures.sh                 # -> baselines/results/paper/figures/fig03.pdf ... fig10.pdf
 ```
 
-Each plotting script also writes `figure_points.csv` with every plotted number.
+The committed `fig03` ... `fig10` are the figures of the paper. Each plotting script also writes
+`figure_points.csv` (every plotted number) into `baselines/results/paper/figures/build/`.
 
-| Paper | Figure | Data (in `baselines/results/`) | Commit of the run | Plot script |
+| Paper | Figure | Data (in `baselines/results/paper/`) | Commit of the run | Plot script |
 |---|---|---|---|---|
-| Exp. 1 | Fig. 3 single-domain search | `part_leaf/data/{amtp,chen}`, `part_leaf/data_no_fetch/{secollab,du}` | `d25616b`; SE-COLLAB `0ada140`, Du `331d608` | `baselines/plot_exp1.py` |
-| Exp. 1 | Figs. 4-5 multi-domain search | `part_leaf/data/amtp`, `part_leaf/data_no_fetch/secollab` | `d25616b`; SE-COLLAB `0ada140` | `baselines/plot_exp1.py` |
-| Exp. 2 | Fig. 6 tamper detection | `part_leaf/data/*/..._tamper_detection.csv` | `d25616b` | `baselines/plot_exp2.py` |
-| Exp. 2 | Figs. 7-8 user verification | `part_leaf/data/*/..._verify_{single,multi}.csv` | `d25616b` | `baselines/plot_exp2.py` |
-| Exp. 3 | Fig. 9 ablation (update cost) | `runs/cloud/prune_w2` (AMTP, Static-MT), `runs/cloud/prune_w5` (Global-MT(v)) | `767289c` | `baselines/plot_exp4.py` |
-| Exp. 4 | Fig. 10 multi-domain scalability | `part_leaf/data/amtp/amtp_exp5_domains.csv`, `part_leaf/data_no_fetch/secollab` | `d25616b`; SE-COLLAB `0ada140` | `baselines/plot_exp5.py` |
+| Exp. 1 | Fig. 3 single-domain search | `data/{amtp,chen}/*_search_single.csv`, `data_no_fetch/{secollab,du}/*_search_single.csv` | `d25616b`; SE-COLLAB `0ada140`, Du `331d608` | `baselines/plot_exp1.py` |
+| Exp. 1 | Figs. 4-5 multi-domain search | `data/amtp/amtp_search_multi.csv`, `data_no_fetch/secollab/secollab_search_multi.csv` | `d25616b`; SE-COLLAB `0ada140` | `baselines/plot_exp1.py` |
+| Exp. 2 | Fig. 6 tamper detection | `data/*/*_tamper_detection.csv` | `d25616b` | `baselines/plot_exp2.py` |
+| Exp. 2 | Figs. 7-8 user verification | `data/*/*_verify_{single,multi}.csv` | `d25616b` | `baselines/plot_exp2.py` |
+| Exp. 3 | Fig. 9 ablation (update cost) | `ablation/amtp_static_t64/` (AMTP, Static-MT), `ablation/global_mt_v_t64/` (Global-MT(v)) | `767289c` | `baselines/plot_exp3.py` |
+| Exp. 4 | Fig. 10 multi-domain scalability | `data/amtp/amtp_exp5_domains.csv`, `data_no_fetch/secollab/secollab_exp5_domains.csv` | `d25616b`; SE-COLLAB `0ada140` | `baselines/plot_exp4.py` |
 
-Every CSV has a `.manifest.json` next to it with the exact command, git commit, `git_dirty`, dataset and machine.
-Script names `plot_exp4.py` / `plot_exp5.py` and suite name `exp5` predate the paper's final numbering: they
-produce the paper's Experiments 3 and 4.
+Every CSV has a `.manifest.json` next to it with the exact command, git commit, `git_dirty`, dataset and machine
+(`ablation/*/manifest.json` for Experiment 3). The benchmark suite behind Experiment 4 is still called `exp5`
+(its name before the paper's final numbering).
 
 The runs come from four commits. Between them only search-side code and benchmark bookkeeping changed: the update
 path measured in Experiment 3 (`amtp/engine.py`, `merkle.py`, `variants.py`, `core/`) is identical, and the
 auxiliary Search Tree data added after Experiment 3 is off in that run and changes only the server's search time.
+The search-only timings of SE-COLLAB and Du et al. (`data_no_fetch/`) were repeated on two further instances of the
+same type, as stated in the paper.
 
 ## 5. Re-run the experiments
 
@@ -152,7 +156,8 @@ cd baselines
 ```
 
 `scripts/aws_run_all.sh` runs every step for every scheme on one machine (`DRY_RUN=1` prints the commands).
-Then plot a run with the scripts of Section 4 (`--data $OUT`).
+Then plot a run with the scripts of Section 4 (`--data $OUT`; for Experiment 3, a folder holding
+`amtp_static_t64/` and `global_mt_v_t64/`).
 
 ## 6. Code map
 

@@ -1,7 +1,0 @@
-| skew | variant | median update_ms | median hash_calls | median hash_bytes | median server_ms | median verify_ms | median proof_bytes | median max_partition |
-|---|---|---|---|---|---|---|---|---|
-| 0.95 | AMTP | 8883.423 | 3814764 | 282116427 | 16.915 | 43.270 | 415128 | 128 |
-| 0.95 | Static-MT | 37322.417 | 16404524 | 1224042786 | 16.613 | 41.435 | 404568 | 397 |
-| 0.95 | Global-MT | 454.774 | 66809 | 14641969 | 11.425 | 27.635 | 347904 | 132600 |
-
-Medians only. Use the raw CSVs for confidence intervals and plots.

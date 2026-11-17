@@ -6,8 +6,8 @@ Exp. 1 figures for the paper: one figure = two panels side by side, no title (th
   (a) server search time without proof generation and without ciphertext retrieval
   (b) end-to-end search time (query generation + server + verification + decryption)
 
-  python3 baselines/plot_exp1.py --data baselines/results/part_leaf/data \
-      --no-fetch baselines/results/part_leaf/data_no_fetch --out baselines/results/part_leaf/graphs/exp1
+  python3 baselines/plot_exp1.py --data baselines/results/paper/data \
+      --no-fetch baselines/results/paper/data_no_fetch --out <folder>
 
 Sources (every scheme of a panel from the same round):
   (a) AMTP server_search_pf, Chen server_total               <data>/{amtp,chen}
