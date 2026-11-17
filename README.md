@@ -54,8 +54,9 @@ Details and troubleshooting: [`baselines/README.md`](baselines/README.md). Every
 
 ```bash
 cd amtp_code
-../.venv/bin/python -m pytest -q                                            # default configuration
-(source ../scripts/paper_env.sh && ../.venv/bin/python -m pytest -q)        # the paper's configuration
+../.venv/bin/python -m pytest -q                                            # default = the paper's configuration
+AMTP_AND_PRUNE=0 AMTP_AND_GREEDY=0 AMTP_PART_RESULTS=0 AMTP_PART_LEAF=0 \
+    ../.venv/bin/python -m pytest -q                                        # plain construction
 ```
 
 The tests cover the Merkle and IMT structures, the B+ tree and Cuckoo filter, encodings, the Phase 2 update
@@ -74,19 +75,22 @@ cd amtp_code && ../.venv/bin/python run.py         # then open http://127.0.0.1:
 On macOS, port 5000 may be taken by AirPlay Receiver (the page answers 403); use another port:
 `PORT=5077 ../.venv/bin/python run.py`, then open http://127.0.0.1:5077.
 
-**Paper configuration.** The code's default is the plain construction. Every AMTP result in the paper uses the
-configuration in [`scripts/paper_env.sh`](scripts/paper_env.sh): fill-first placement, γ with the partition version,
-AND pruning with greedy expansion of H_full, result-only partition proofs, and the auxiliary Search Tree data
-Aux_i(h_w) (Eq. 17). Source it before running AMTP:
+**Paper configuration.** The code's defaults are the configuration of every AMTP result in the paper: fill-first
+placement, γ with the partition version, AND pruning with greedy expansion of H_full, result-only partition proofs,
+and the auxiliary Search Tree data Aux_i(h_w) (Eq. 17). Each part can be switched off with an environment variable,
+e.g. for the plain construction (responses verify the same way in both modes):
 
 ```bash
-source scripts/paper_env.sh
+export AMTP_AND_PRUNE=0 AMTP_AND_GREEDY=0 AMTP_PART_RESULTS=0 AMTP_PART_LEAF=0
 ```
+
+[`scripts/paper_env.sh`](scripts/paper_env.sh) sets the paper's values explicitly (useful in a shell where any of
+these variables was changed).
 
 **Smoke run of every experiment** (small sizes, one repetition; the numbers are not results):
 
 ```bash
-source scripts/paper_env.sh && bash scripts/smoke_all.sh
+bash scripts/smoke_all.sh
 ```
 
 ## 4. Reproduce the paper's figures

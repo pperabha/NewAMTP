@@ -1,4 +1,4 @@
-"""Search Tree leaf by partition (AMTP_PART_LEAF, default off): the leaf of a keyword in at least KEEP_MIN_PARTS
+"""Search Tree leaf by partition (AMTP_PART_LEAF, on by default): the leaf of a keyword in at least KEEP_MIN_PARTS
 partitions also keeps its partition set and component positions (PartPosting). It is server-side lookup data
 only, so every response must be byte-for-byte the response without it, under every query-flag combination, and
 the search-only forms of bench_split must still return the response's files."""
@@ -81,8 +81,8 @@ def _snapshot(eng, by_part):
 
 def test_default_is_off():
     import os
-    if os.environ.get("AMTP_PART_LEAF", "0") == "1":
-        pytest.skip("AMTP_PART_LEAF=1 in the environment")
+    if os.environ.get("AMTP_PART_LEAF", "1") != "0":
+        pytest.skip("part leaf is on (default); run with AMTP_PART_LEAF=0")
     assert not part_leaf_on()
 
 

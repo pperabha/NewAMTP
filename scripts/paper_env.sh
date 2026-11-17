@@ -2,8 +2,8 @@
 #
 #   source scripts/paper_env.sh
 #
-# Without these variables the code runs the plain construction (no AND pruning, proofs for every covered
-# partition, no auxiliary Search Tree data). Responses verify the same way in both modes.
+# These are also the code's defaults; the script sets them explicitly, e.g. after an AMTP_*=0 experiment in the
+# same shell. AMTP_*=0 gives the plain construction; responses verify the same way in both modes.
 export AMTP_PLACEMENT=fill        # fill-first placement (Phase 2, Step 1)
 export AMTP_GAMMA_V=1             # gamma includes the partition version v (Eq. 18)
 export AMTP_AND_PRUNE=1           # ASPA: focus evidence for conjunctions (Phase 4, Step 2)

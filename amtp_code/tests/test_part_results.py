@@ -45,7 +45,7 @@ def _ask(w, user, text):
     return ctx, json.loads(json.dumps(out["response"]))
 
 
-@pytest.mark.skipif(os.environ.get("AMTP_PART_RESULTS", "0") == "1", reason="suite run with AMTP_PART_RESULTS=1")
+@pytest.mark.skipif(os.environ.get("AMTP_PART_RESULTS", "1") != "0", reason="result-only proofs are on (default); run with AMTP_PART_RESULTS=0")
 def test_default_is_off():
     assert not part_results_on()
     w = World()

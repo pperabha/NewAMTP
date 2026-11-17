@@ -120,7 +120,7 @@ def test_tie_break_does_not_depend_on_keyword_order():
     assert picks == {(frozenset({a, c}), frozenset({"p1", "p7"}))}      # smallest PID list wins the tie
 
 
-@pytest.mark.skipif(os.environ.get("AMTP_AND_PRUNE", "0") == "1", reason="suite run with AMTP_AND_PRUNE=1")
+@pytest.mark.skipif(os.environ.get("AMTP_AND_PRUNE", "1") != "0", reason="AND pruning is on (default); run with AMTP_AND_PRUNE=0")
 def test_default_is_off():
     assert not and_prune_on()
     w = World()

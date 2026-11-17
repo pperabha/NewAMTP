@@ -38,3 +38,15 @@
 
 ตรวจแล้ว: Chen selftest 13/13 · Du demo ผ่าน · SE-COLLAB selftest 18/18 · pytest 545 / 542 · venv ใหม่จาก requirements
 ที่ pin แล้ว pytest 545 passed · `make_paper_figures.sh` ครบ
+
+## รอบ 3: ค่าเริ่มต้นของโค้ด = ค่าที่ paper ใช้
+
+- `amtp/index.py`: AND pruning, greedy, result-only partition proofs และ part leaf เปิดเป็นค่าเริ่มต้น
+  (ปิดได้ด้วย `AMTP_AND_PRUNE=0`, `AMTP_AND_GREEDY=0`, `AMTP_PART_RESULTS=0`, `AMTP_PART_LEAF=0`)
+- `bench/experiments.py` (help และการบันทึกลง manifest), `baselines/amtp_dataset.py` (ค่าที่บันทึกใน manifest) ใช้ค่าเริ่มต้นเดียวกัน
+- test ที่ตรวจโหมดปิด (`test_default_is_off` 3 ไฟล์ และ demo_v2) skip เมื่อ flag เปิด และรันเมื่อตั้งค่าเป็น 0
+- test ใหม่ `tests/test_paper_defaults.py`: ไม่มีตัวแปร AMTP_* -> ทั้ง 5 ค่าเป็นแบบ paper
+- README และ `scripts/paper_env.sh` อธิบายตามค่าใหม่ (สคริปต์ยังใช้ได้ ตั้งค่าแบบ paper ให้ชัด)
+
+ตรวจแล้ว: pytest ค่าเริ่มต้น 543 passed, 4 skipped · ปิดทุก flag 545 passed, 2 skipped · `paper_env.sh` 542 passed
+· `demo_v2/tests` error 34 ข้อเหมือนกันทั้งก่อนและหลังแก้ (process ของ demo เปิดไม่ขึ้นบนเครื่องนี้ ไม่เกี่ยวกับรอบนี้)
