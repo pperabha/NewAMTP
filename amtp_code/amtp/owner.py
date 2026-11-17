@@ -46,12 +46,14 @@ class DataOwner:
         self.domain, self.name = domain, name
         self.keys, self.authority = keys, authority
         self.anchor, self.server = anchor, server
-        self.signer = Signer()                    # ABS stand-in: signs σ_op and σ_root
+        self.signer = Signer()                    # ABS stand-in: signs σ_op (and σ_root, in-process anchor)
+        # σ_root key: an anchor on a chain supplies the key its contract checks (chain_anchor.py)
+        root_signer = anchor.root_signer(domain) if hasattr(anchor, "root_signer") else self.signer
         self.policy = policy or AdaptivePolicy(1, theta_min, theta_max)
         self.ops_per_epoch = ops_per_epoch
         genesis = server.create_domain(domain, self.policy, [self.signer.public], ops_per_epoch)
-        self.validator = Validator(domain, self.signer, self.policy, genesis, [self.signer.public])
-        anchor.register_domain(domain, self.signer.public, genesis_root(domain, genesis))
+        self.validator = Validator(domain, root_signer, self.policy, genesis, [self.signer.public])
+        anchor.register_domain(domain, root_signer.public, genesis_root(domain, genesis))
         self.structure_log = []                   # split / merge records, for the demo
 
     # trusted metadata (Doc_i, Loc_i, Fwd_i) lives in the validator

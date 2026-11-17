@@ -1,0 +1,14 @@
+# Root Anchor on Ethereum (optional). Python 3.12. Everything AMTP needs plus the chain client, in one venv:
+#   .venv/bin/pip install -r chain/requirements.txt
+# web3 needs pycryptodome < 4, so this set uses 3.24.1 instead of amtp_code's 4.5.0 (only SE-COLLAB uses it;
+# its AES / padding API is the same in both).
+cryptography==50.0.2
+pytest==9.2.0
+numpy==2.5.5
+matplotlib==3.11.2
+pycryptodome==3.24.1
+web3==7.16.0
+eth-account==0.14.0
+eth-tester[py-evm]==0.14.0b1
+py-evm==0.12.1b1
+py-solc-x==2.1.0          # only to rebuild RootAnchor.json (chain/build.py)

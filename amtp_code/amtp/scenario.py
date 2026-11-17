@@ -87,9 +87,9 @@ def _doc(t):
 
 
 class World:
-    def __init__(self, theta_min=1, theta_max=4):
+    def __init__(self, theta_min=1, theta_max=4, anchor=None):
         self.authority = AttributeAuthority()
-        self.anchor = RootAnchor()
+        self.anchor = anchor if anchor is not None else RootAnchor()    # or a chain_anchor.ChainAnchor
         self.server = CloudServer()
         self.adversary = Adversary(self.server)     # demo and tests only
         self.keys = {d: DomainKeys() for d in DOMAINS}
