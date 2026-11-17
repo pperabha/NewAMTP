@@ -1,7 +1,7 @@
 """Search-only figures (line charts) from a bench_split run, next to the baselines' own search time.
 
     python -m bench_split.plot_search --amtp <run>/amtp --out ../baselines/results/search_split/graphs
-        [--base ../baselines/results/new_amtp_result/gamma_with_v]   # SE-COLLAB, Chen, Du (not re-run)
+        [--base ../baselines/results/paper/data]   # SE-COLLAB, Chen, Du (not re-run)
 
 y = server search time without any proof (ms), per scheme:
     AMTP                 server_search_pf(_fetch)   lookup + boolean.focus (partitions that can match) + file sets in
@@ -254,7 +254,7 @@ def no_fetch(amtp_dir, base_dir, nf_dir, out):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--amtp", required=True, help="folder with amtp_search_single.csv etc. of a bench_split run")
-    ap.add_argument("--base", default=os.path.join(BASELINES, "results", "new_amtp_result", "gamma_with_v"),
+    ap.add_argument("--base", default=os.path.join(BASELINES, "results", "paper", "data"),
                     help="folder with secollab/, chen/, du/ results (default: gamma_with_v, not re-run)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--no-fetch", metavar="DIR",

@@ -1,7 +1,0 @@
-worker 5  commit 331d608, uncommitted changes: 0
-results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf_du
-commit 331d608, uncommitted changes: 0
-[2026-11-17 00:21:59] start search1_du
-[2026-11-17 01:05:31] done  search1_du (2612 s)
-all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_partleaf_du
-partleaf finished rc=0

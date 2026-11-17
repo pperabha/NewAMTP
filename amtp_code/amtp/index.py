@@ -64,11 +64,11 @@ def gamma_has_v() -> bool:
     return _GAMMA_V
 
 
-# AND pruning (study, default off): the server answers an AND with the full posting list of one keyword
+# AND pruning (ASPA focus evidence, on by default = the paper's configuration; AMTP_AND_PRUNE=0 turns it off): the server answers an AND with the full posting list of one keyword
 # and, for every other keyword, only its components in the partitions that list covers (amtp/server.py).
-# AMTP_AND_PRUNE=1 in the environment, or set_and_prune(True) before the snapshots are built. The user
+# AMTP_AND_PRUNE=0 in the environment, or set_and_prune(False) before the snapshots are built. The user
 # accepts both answer forms whatever this setting is (amtp/user.py).
-_AND_PRUNE = os.environ.get("AMTP_AND_PRUNE", "0") == "1"
+_AND_PRUNE = os.environ.get("AMTP_AND_PRUNE", "1") != "0"
 
 
 def set_and_prune(on: bool) -> None:
@@ -80,10 +80,10 @@ def and_prune_on() -> bool:
     return _AND_PRUNE
 
 
-# AND pruning planner (study, default off): besides the keyword with the fewest partitions, send more
+# AND pruning planner (on by default = the paper's configuration; AMTP_AND_GREEDY=0 turns it off): besides the keyword with the fewest partitions, send more
 # keywords in full when that shrinks the focus set enough to lower the proof (amtp/server.py _grow_full).
-# Server choice only; the user's check is the same. AMTP_AND_GREEDY=1 or set_and_plan_greedy(True).
-_AND_GREEDY = os.environ.get("AMTP_AND_GREEDY", "0") == "1"
+# Server choice only; the user's check is the same. AMTP_AND_GREEDY=0 or set_and_plan_greedy(False).
+_AND_GREEDY = os.environ.get("AMTP_AND_GREEDY", "1") != "0"
 
 
 def set_and_plan_greedy(on: bool) -> None:
@@ -95,11 +95,11 @@ def and_plan_greedy_on() -> bool:
     return _AND_GREEDY
 
 
-# Result-only partition check (study, default off): the server opens partition slots and domain-tree leaves
+# Result-only partition check (on by default = the paper's configuration; AMTP_PART_RESULTS=0 turns it off): the server opens partition slots and domain-tree leaves
 # only for the returned files; the versions v of the other covered partitions travel as a plain list and are
-# bound by γ = H(PID ‖ v ‖ H(Enc(L))). AMTP_PART_RESULTS=1 or set_part_results(True). The user accepts both
+# bound by γ = H(PID ‖ v ‖ H(Enc(L))). AMTP_PART_RESULTS=0 or set_part_results(False). The user accepts both
 # answer forms whatever this setting is (amtp/user.py).
-_PART_RESULTS = os.environ.get("AMTP_PART_RESULTS", "0") == "1"
+_PART_RESULTS = os.environ.get("AMTP_PART_RESULTS", "1") != "0"
 
 
 def set_part_results(on: bool) -> None:
@@ -111,11 +111,11 @@ def part_results_on() -> bool:
     return _PART_RESULTS
 
 
-# Search Tree leaf by partition (study, default off): the leaf of a keyword in at least KEEP_MIN_PARTS partitions
+# Search Tree leaf by partition (Aux_i, Eq. 17; on by default = the paper's configuration; AMTP_PART_LEAF=0 turns it off): the leaf of a keyword in at least KEEP_MIN_PARTS partitions
 # also keeps the set of its partitions and where each partition's component sits in the list (PartPosting), so
 # a query reads them instead of rebuilding them from the list. Same list, same answers, same proof bytes; the
-# Search Tree is not evidence. AMTP_PART_LEAF=1 or set_part_leaf(True) before the snapshots are built.
-_PART_LEAF = os.environ.get("AMTP_PART_LEAF", "0") == "1"
+# Search Tree is not evidence. AMTP_PART_LEAF=0 or set_part_leaf(False) before the snapshots are built.
+_PART_LEAF = os.environ.get("AMTP_PART_LEAF", "1") != "0"
 
 
 def set_part_leaf(on: bool) -> None:

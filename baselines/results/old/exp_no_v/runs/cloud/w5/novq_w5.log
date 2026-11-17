@@ -1,8 +1,0 @@
-results -> /home/ubuntu/NewAMTP/baselines/results/runs/paper_nov_q
-commit 7485556, uncommitted changes: 0
-[2026-11-14 14:48:40] start xsearch_amtp
-[2026-11-14 15:28:43] done  xsearch_amtp (2403 s)
-[2026-11-14 15:28:43] start xverify_amtp
-[2026-11-14 15:47:31] done  xverify_amtp (1128 s)
-all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/paper_nov_q
-worker done: nov-q xsearch xverify

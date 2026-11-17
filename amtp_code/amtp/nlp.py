@@ -6,15 +6,15 @@ W(d) from documents.csv instead of re-extracting; the cost of this step is measu
 separately by bench/extraction.py. (index.extract_keywords is the tiny single-word
 extractor used only by the interactive demo.)
 
-ขั้นตอน
- 1) normalise: ตัด token, lowercase, lemmatise แบบเบา (กฎลงท้าย -ies/-s)
- 2) length test: |f| < Θ_doc  -> RAKE ทั้งเอกสาร
-                 |f| >= Θ_doc -> แบ่ง chunk ยาว L_ch คำ เลื่อนทีละ (L_ch - L_ov) คำ
- 3) RAKE ในแต่ละ chunk: แยก candidate phrase ด้วย stop-word / เครื่องหมายวรรคตอน
+Steps
+ 1) normalise: tokenise, lowercase, light lemmatisation (suffix rules -ies/-s)
+ 2) length test: |f| < Θ_doc  -> RAKE over the whole document
+                 |f| >= Θ_doc -> chunks of L_ch words, sliding by (L_ch - L_ov) words
+ 3) RAKE in each chunk: split candidate phrases at stop words / punctuation
     score(p) = Σ_{w∈p} deg(w) / freq(w)
- 4) เก็บ top-κ ต่อ chunk -> union + de-duplicate + re-rank -> W_f (ไม่เกิน κ คำ)
+ 4) keep the top-κ per chunk -> union + de-duplicate + re-rank -> W_f (at most κ phrases)
 
-หมายเหตุ: รองรับข้อความภาษาอังกฤษ (ภาษาไทยต้องใช้ตัวตัดคำ เช่น PyThaiNLP)
+Note: English text only (Thai would need a word segmenter such as PyThaiNLP).
 """
 import re
 from collections import defaultdict
@@ -44,7 +44,7 @@ wherever whether which while whither who whoever whole whom whose why will with 
 yours yourself yourselves
 """.split())
 
-# กริยาทั่วไปที่ใช้เป็นตัวคั่น phrase (custom stoplist ของ RAKE)
+# common verbs used as phrase delimiters (custom RAKE stoplist)
 STOPWORDS |= set("""
 was were is are be been being has have had will shall can may also new old within using used use make makes made
 show shows showed shown include includes included including report reported reports reporting detect detected detects
@@ -56,7 +56,7 @@ admitted prescribed assigned recommended confirmed indicated raised opened close
 attempted occurred identified updated
 """.split())
 
-# คำที่เป็น "หัวข้อ/ป้ายกำกับ" ในเอกสารแบบฟอร์ม (domain-specific stoplist) — ไม่ควรเป็น keyword
+# words that are "headings / labels" in form-like documents (domain-specific stoplist): never keywords
 STOPWORDS |= set("""
 affected host attending physician counterparty amount reference request type course item risk category
 action diagnosis medication chief complaint history comment customer transaction student patient lab
@@ -74,7 +74,7 @@ statistics sales sports glasses credentials diagnostics ethics politics aids sta
 
 
 def lemmatise(w: str) -> str:
-    """lemmatiser แบบเบา (rule-based) — แทน lemmatiser เต็มรูปแบบเพื่อลด dependency"""
+    """Light rule-based lemmatiser, used instead of a full lemmatiser to avoid a dependency."""
     if w in _NO_LEMMA:
         return w
     if len(w) > 4 and w.endswith("ies"):
@@ -85,7 +85,7 @@ def lemmatise(w: str) -> str:
 
 
 def tokenize(text: str):
-    """คืน list ของ token (คำ หรือ delimiter=None)"""
+    """Return the list of tokens (words, or None for a delimiter)."""
     out = []
     for t in _TOKEN_RE.findall(text):
         if t in _DELIM:
@@ -96,9 +96,10 @@ def tokenize(text: str):
 
 
 def normalise_token(t: str) -> str:
-    """Norm ของคำเดียว: lowercase -> ตัด possessive 's -> ตัด ' และ - ที่หัว/ท้าย -> lemmatise
-    ต้อง idempotent (Norm(Norm(w)) = Norm(w)) เพราะ keyword ที่เก็บใน documents.csv ถูกส่งเข้า Norm อีกรอบตอน query
-    (เดิม "government's" -> "government'" แต่ query "government'" -> "government" จึงค้นไม่เจอ)"""
+    """Norm of one word: lowercase -> drop possessive 's -> strip ' and - at both ends -> lemmatise.
+    Must be idempotent (Norm(Norm(w)) = Norm(w)): keywords stored in documents.csv go through Norm again at
+    query time (before the fix, "government's" -> "government'" but the query "government'" -> "government", so it
+    was not found)."""
     w = t.lower()
     if w.endswith("'s"):
         w = w[:-2]
@@ -111,7 +112,7 @@ def word_count(tokens) -> int:
 
 
 def chunk_tokens(tokens, L_ch: int, L_ov: int):
-    """แบ่งเป็น chunk ละ L_ch คำ เลื่อน stride = L_ch - L_ov คำ (overlap L_ov คำ)"""
+    """Split into chunks of L_ch words with stride L_ch - L_ov words (overlap of L_ov words)."""
     word_pos = [i for i, t in enumerate(tokens) if t is not None]
     n = len(word_pos)
     stride = L_ch - L_ov
@@ -153,7 +154,7 @@ def rake(tokens, max_words=3):
     for p in phrases:
         for w in p:
             freq[w] += 1
-            deg[w] += len(p)       # deg(w) นับตัวมันเองด้วย (= co-occurrence degree + freq)
+            deg[w] += len(p)       # deg(w) counts the word itself (= co-occurrence degree + freq)
     word_score = {w: deg[w] / freq[w] for w in freq}
     scores = {}
     for p in set(phrases):
@@ -163,7 +164,7 @@ def rake(tokens, max_words=3):
 
 
 def extract_keywords(text: str, theta_doc: int, L_ch: int, L_ov: int, kappa: int, max_words=3):
-    """คืน (W_f, trace) — trace ใช้แสดงใน UI ทุกขั้นตอน"""
+    """Return (W_f, trace); the trace shows every step in the UI."""
     tokens = tokenize(text)
     n_words = word_count(tokens)
     trace = {

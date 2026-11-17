@@ -1,9 +1,0 @@
-run 0 skew 0.95 AMTP         partitions=1097  max=128    splits=63 merges=18
-run 0 skew 0.95 Static-MT    partitions=1052  max=128    splits=0 merges=0
-run 0 skew 0.95 Global-MT    partitions=1     max=96517  splits=0 merges=0
-
-| skew | variant | median update_ms | median hash_calls | median hash_bytes | median server_ms | median verify_ms | median proof_bytes | median max_partition |
-|---|---|---|---|---|---|---|---|---|
-| 0.95 | AMTP | 963.235 | 225786 | 14905692 | 9.423 | 27.125 | 297740 | 128 |
-| 0.95 | Static-MT | 923.948 | 203566 | 13522162 | 9.837 | 26.945 | 298388 | 128 |
-| 0.95 | Global-MT | 813.755 | 61575 | 11848086 | 6.695 | 17.965 | 245088 | 96517 |

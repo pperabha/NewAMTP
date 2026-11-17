@@ -1,45 +1,45 @@
 """
 plot_results.py
 ============================================================================
-วาดกราฟจากผลของ baseline (results/<scheme>/<scheme>_<suite>.csv) สไตล์เดียวกับกราฟของ Chen [40]
-และชุดสีเดียวกับ amtp_code/bench/old/plot.py -> ทุก scheme ดูเป็นงานเดียวกัน
-ทุกจุด = median ของ --reps รอบ, error bar = ±1 std  (คอลัมน์ _ms_median / _ms_std)
+Plot the baselines' results (results/<scheme>/<scheme>_<suite>.csv) in the style of Chen [40]'s figures
+and with the original AMTP plot palette, so every scheme looks like one piece of work.
+Every point = median of --reps runs, error bar = ±1 std  (columns _ms_median / _ms_std).
 Exp. 3 (update) and Exp. 4 (AMTP ablation, results/amtp/exp4*/ from bench.ablation) are drawn too.
 Exp. 1 / Exp. 5 have several queries per (N, k_Q, shape) (results/exp1_queries.json): each point is the median over
 those queries of their per-query medians, and the error bar spans the fastest to the slowest query (min–max).
 
-วิธีรัน (pip install matplotlib):
-  python3 plot_results.py secollab            # กราฟของ SE-COLLAB
-  python3 plot_results.py chen du secollab    # หลาย scheme + กราฟเทียบกัน (compare_*)
-ไฟล์ออกที่ results/<scheme>/figures/<scheme>_<ชื่อกราฟ>.png และ .pdf (PNG ใส่สไลด์, PDF ใส่ paper)
-กราฟเทียบหลาย scheme (compare_*) ออกที่ results/compare/
+Run (pip install matplotlib):
+  python3 plot_results.py secollab            # SE-COLLAB's figures
+  python3 plot_results.py chen du secollab    # several schemes + comparison figures (compare_*)
+Output: results/<scheme>/figures/<scheme>_<figure>.png and .pdf (PNG for slides, PDF for the paper);
+comparison figures (compare_*) go to results/compare/
 ============================================================================
 """
 
-import argparse                                   # อ่าน argument จาก command line
-import csv                                        # อ่านไฟล์ผล
+import argparse                                   # command-line arguments
+import csv                                        # read the result files
 import glob                                       # Exp. 4 result folders
-import os                                         # จัดการ path
+import os                                         # paths
 import statistics                                 # median / std across queries
 
-import matplotlib                                 # วาดกราฟ
+import matplotlib                                 # plotting
 
-matplotlib.use("Agg")                             # วาดลงไฟล์ ไม่ต้องเปิดหน้าต่าง
+matplotlib.use("Agg")                             # draw to files, no window
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.ticker import FixedLocator, FuncFormatter, NullFormatter  # noqa: E402
 
-HERE = os.path.dirname(os.path.abspath(__file__))  # โฟลเดอร์ baselines/
+HERE = os.path.dirname(os.path.abspath(__file__))  # baselines/ folder
 
-# ---- สีและ marker (ชุดเดียวกับ amtp_code/bench/old/plot.py + สีที่ 5 ของกราฟ Chen) ----
-COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]  # น้ำเงิน ส้ม เขียว เหลือง ชมพู
+# ---- colours and markers (the original AMTP plot palette + the 5th colour of Chen's figures) ----
+COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]  # blue orange green yellow pink
 MARKERS = ["o", "s", "^", "D", "v"]
 SURFACE, INK, INK2, GRID, AXIS = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df", "#8a8985"
 
-NAME = {"amtp": "AMTP", "chen": "Chen [40]", "du": "Du [7]", "secollab": "SE-COLLAB [37]"}  # ชื่อในหัวกราฟ
-AND_SHAPES = ("single", "conjunctive")            # รูปแบบที่ทุก scheme รองรับ
+NAME = {"amtp": "AMTP", "chen": "Chen [40]", "du": "Du [7]", "secollab": "SE-COLLAB [37]"}  # names in figure titles
+AND_SHAPES = ("single", "conjunctive")            # shapes every scheme supports
 SHAPE_LABEL = {"conjunctive": "A ∧ B ∧ …", "disjunctive": "A ∨ B ∨ …",
                "or_and_or": "(A ∨ B) ∧ (C ∨ D)", "and_or_and": "(A ∧ B) ∨ (C ∧ D)"}
-# ส่วนประกอบของเวลา end-to-end (คอลัมน์, ชื่อใน legend) — ใช้ใน breakdown
+# parts of the end-to-end time (column, legend name), used in the breakdown
 PARTS = {
     "amtp": [("query_gen", "Trapdoor (DU)"), ("server_total", "Search + ASPA proof (CS)"),
              ("verify_total", "Verification, 7 checks (DU)")],
@@ -53,13 +53,13 @@ PARTS = {
 
 
 # ============================================================================
-# 1) อ่านข้อมูล
+# 1) read the data
 # ============================================================================
 
 DATASET = "dataset-v4 (arXiv)"    # caption label; --dataset overrides it
 
 def load(scheme, suite, folder):
-    """อ่าน results/<scheme>/<scheme>_<suite>.csv  (ไม่มีไฟล์ -> None)"""
+    """Read results/<scheme>/<scheme>_<suite>.csv  (missing file -> None)."""
     path = os.path.join(folder, scheme, f"{scheme}_{suite}.csv")
     if not os.path.exists(path):
         return None
@@ -68,7 +68,7 @@ def load(scheme, suite, folder):
 
 
 def ok(rows):
-    """เฉพาะแถวที่วัดจริง (ตัดแถว N/A)"""
+    """Only the rows that were measured (N/A rows dropped)."""
     return [r for r in rows if r.get("status", "ok") == "ok"]
 
 
@@ -121,31 +121,31 @@ def is_empty(r):
 
 
 # ============================================================================
-# 2) สไตล์กราฟ (เหมือนกราฟ Chen)
+# 2) figure style (as in Chen's figures)
 # ============================================================================
 def new_fig(width=7.0, height=4.2):
     fig, ax = plt.subplots(figsize=(width, height), dpi=200)
-    fig.patch.set_facecolor(SURFACE)              # พื้นหลังทั้งภาพ
-    ax.set_facecolor(SURFACE)                     # พื้นหลังกราฟ
-    for side in ("top", "right"):                 # ไม่มีกรอบบน/ขวา
+    fig.patch.set_facecolor(SURFACE)              # figure background
+    ax.set_facecolor(SURFACE)                     # axes background
+    for side in ("top", "right"):                 # no top/right frame
         ax.spines[side].set_visible(False)
     for side in ("left", "bottom"):
         ax.spines[side].set_color(AXIS)
     ax.tick_params(colors=INK2, labelsize=10)
-    ax.grid(True, color=GRID, linewidth=0.8)      # เส้น grid จาง ๆ
+    ax.grid(True, color=GRID, linewidth=0.8)      # light grid lines
     ax.set_axisbelow(True)
     return fig, ax
 
 
 def finish(fig, ax, title, xlabel, ylabel, note, path, legend_title=None, legend_out=True):
-    """ใส่หัวกราฟ / ชื่อแกน / legend / หมายเหตุท้ายภาพ แล้วบันทึกเป็น PNG + PDF"""
+    """Add title / axis labels / legend / footnote, then save as PNG + PDF."""
     ax.set_title(title, loc="left", fontsize=12.5, color=INK, fontweight="bold")
     ax.set_xlabel(xlabel, color=INK2, fontsize=11)
     ax.set_ylabel(ylabel, color=INK2, fontsize=11)
     if ax.get_legend_handles_labels()[0]:
         kw = dict(loc="upper left", bbox_to_anchor=(1.02, 1.0)) if legend_out else dict(loc="upper left")
         ax.legend(frameon=False, fontsize=10, title=legend_title, title_fontsize=10, **kw)
-    fig.text(0.01, 0.015, note, color=AXIS, fontsize=7.5 if len(note) < 110 else 6.8)  # หมายเหตุท้ายภาพ
+    fig.text(0.01, 0.015, note, color=AXIS, fontsize=7.5 if len(note) < 110 else 6.8)  # footnote
     fig.tight_layout(rect=(0, 0.04, 1, 1))
     for ext in ("png", "pdf"):
         fig.savefig(f"{path}.{ext}", facecolor=SURFACE)
@@ -154,7 +154,7 @@ def finish(fig, ax, title, xlabel, ylabel, note, path, legend_title=None, legend
 
 
 def line(ax, xs, ys, es, i, label, dashed=False):
-    """เส้น + marker ขอบขาว + error bar: ±e, or (down, up) per point"""
+    """Line + white-edged markers + error bars: ±e, or (down, up) per point."""
     if any(isinstance(e, tuple) for e in es):     # asymmetric (min–max across queries)
         es = [[e[0] if isinstance(e, tuple) else e for e in es], [e[1] if isinstance(e, tuple) else e for e in es]]
     ax.errorbar(xs, ys, yerr=es, color=COLORS[i % 5], marker=MARKERS[i % 5], markersize=7,
@@ -163,7 +163,7 @@ def line(ax, xs, ys, es, i, label, dashed=False):
 
 
 def n_axis(ax, ns):
-    """แกน N แบบ log พร้อม label 10k / 50k / ..."""
+    """Log N axis labelled 10k / 50k / ..."""
     ax.set_xscale("log")
     ax.xaxis.set_major_locator(FixedLocator(ns))
     ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v / 1000:g}k"))
@@ -171,10 +171,10 @@ def n_axis(ax, ns):
 
 
 # ============================================================================
-# 3) กราฟของแต่ละ scheme
+# 3) per-scheme figures
 # ============================================================================
 def exp1_search_vs_n(scheme, rows, out, note):
-    """end-to-end ของ query แบบ AND เทียบกับ N แยกเส้นตาม k_Q (เหมือนกราฟ Chen)"""
+    """End-to-end time of AND queries vs N, one line per k_Q (as in Chen's figures)."""
     rows = [r for r in ok(rows) if r["shape"] in AND_SHAPES]
     fig, ax = new_fig()
     ns = sorted({int(r["N"]) for r in rows})
@@ -192,10 +192,10 @@ def exp1_search_vs_n(scheme, rows, out, note):
 
 
 def exp1_shapes_vs_n(scheme, rows, out, note, kq=4):
-    """end-to-end เทียบกับ N แยกเส้นตามรูปแบบ Boolean ที่ k_Q คงที่ (scheme ที่รองรับ OR / nested)"""
+    """End-to-end time vs N, one line per Boolean shape at a fixed k_Q (schemes that support OR / nesting)."""
     rows = [r for r in ok(rows) if int(r["kQ"]) == kq]
     shapes = [s for s in SHAPE_LABEL if any(r["shape"] == s for r in rows)]
-    if len(shapes) < 2:                           # รองรับแค่ AND -> ไม่มีอะไรให้เทียบ
+    if len(shapes) < 2:                           # AND only -> nothing to compare
         return
     fig, ax = new_fig()
     for i, s in enumerate(shapes):
@@ -209,7 +209,7 @@ def exp1_shapes_vs_n(scheme, rows, out, note, kq=4):
 
 
 def exp1_breakdown(scheme, rows, out, note):
-    """แท่งซ้อน: เวลาแต่ละขั้นที่ N สูงสุด แยกตาม k_Q (query แบบ AND)"""
+    """Stacked bars: time of each phase at the largest N, per k_Q (AND queries)."""
     rows = [r for r in ok(rows) if r["shape"] in AND_SHAPES]
     n = max(int(r["N"]) for r in rows)
     rows = sorted((r for r in rows if int(r["N"]) == n), key=lambda r: int(r["kQ"]))
@@ -221,7 +221,7 @@ def exp1_breakdown(scheme, rows, out, note):
         ax.bar(xs, h, 0.6, bottom=bottom, color=COLORS[i], edgecolor="white", linewidth=1.2, label=label)
         bottom = [b + v for b, v in zip(bottom, h)]
     top = max(bottom)
-    for x, b in zip(xs, bottom):                  # ตัวเลขรวมบนแท่ง
+    for x, b in zip(xs, bottom):                  # total on top of each bar
         ax.text(x, b + top * 0.01, f"{b:.2f}", ha="center", va="bottom", color=INK2, fontsize=10)
     ax.set_xticks(list(xs), [f"$k_Q$ = {r['kQ']}\n$r_Q$ = {r['rQ']}" for r in rows])
     ax.grid(axis="x", visible=False)
@@ -231,7 +231,7 @@ def exp1_breakdown(scheme, rows, out, note):
 
 
 def exp2_verify_vs_rq(scheme, rows, out, note):
-    """เวลา verify ของ DU เทียบกับ r_Q (log-log) แยก clustered / dispersed (+ proof_mode ถ้ามี)"""
+    """DU verification time vs r_Q (log-log), clustered / dispersed (+ proof_mode if present)."""
     rows = ok(rows)
     n = int(rows[0]["N"])
     keys = sorted({(r["layout"], r.get("proof_mode") or "") for r in rows},
@@ -250,7 +250,7 @@ def exp2_verify_vs_rq(scheme, rows, out, note):
 
 
 def clouds_axis(ax, cs):
-    """แกนจำนวน cloud แบบ log2 พร้อม label 4 / 8 / 16 / 32"""
+    """Log2 axis of the number of clouds labelled 4 / 8 / 16 / 32."""
     ax.set_xscale("log", base=2)
     ax.xaxis.set_major_locator(FixedLocator(cs))
     ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
@@ -258,8 +258,9 @@ def clouds_axis(ax, cs):
 
 
 def exp5_cost_vs_clouds(scheme, rows, out, note, kq=4):
-    """Exp.5: ที่ N และ k_Q คงที่ เวลาแต่ละส่วนเทียบกับจำนวน cloud (แกน y แบบ log เพราะแต่ละเส้นห่างกันหลายเท่า)
-    end-to-end = latency ที่ผู้ใช้รอ (cloud ค้นขนานกัน), server_sum = งานรวมของทุก cloud, verify = งานของ DU"""
+    """Exp.5: at fixed N and k_Q, the time of each part vs the number of clouds (log y: the lines are far apart).
+    end-to-end = latency the user waits (clouds search in parallel), server_sum = total work of all clouds,
+    verify = the DU's work"""
     rows = sorted((r for r in ok(rows) if int(r["kQ"]) == kq), key=lambda r: int(r["n_clouds"]))
     if not rows:
         return
@@ -281,7 +282,7 @@ def exp5_cost_vs_clouds(scheme, rows, out, note, kq=4):
 
 
 def exp5_verify_vs_clouds(scheme, rows, out, note):
-    """Exp.5: เวลา verify ของ DU เทียบกับจำนวน cloud แยกเส้นตาม k_Q (O(n_c·|R|) ตาม Table IV)"""
+    """Exp.5: DU verification time vs the number of clouds, one line per k_Q (O(n_c·|R|) as in Table IV)."""
     rows = ok(rows)
     if not rows:
         return
@@ -300,7 +301,7 @@ def exp5_verify_vs_clouds(scheme, rows, out, note):
 
 
 def exp5_domains(scheme, rows, out, note):
-    """Exp.5 (AMTP, SE-COLLAB): query ของ domain เป้าหมาย และการ update domain เดียว เทียบกับจำนวน domain D"""
+    """Exp.5 (AMTP, SE-COLLAB): queries of the target domain and the update of one domain vs the number of domains D."""
     rows = ok(rows)
     q = [r for r in rows if r.get("op") == "query" and str(r.get("kQ")) == "4"]   # k_Q = 4 as before
     u = sorted((r for r in rows if r.get("op") == "update_one_domain"), key=lambda r: int(r["domains"]))
@@ -331,7 +332,7 @@ def exp5_domains(scheme, rows, out, note):
 
 
 # ============================================================================
-# 4) อื่น ๆ ของแต่ละ scheme (Exp. 1 p_Q, Exp. 3, Exp. 4)
+# 4) other per-scheme figures (Exp. 1 p_Q, Exp. 3, Exp. 4)
 # ============================================================================
 def exp1_time_vs_pq(scheme, raw, out, note):
     """one point per query: end-to-end time vs pQ (postings the proof opens), one colour per N"""
@@ -688,23 +689,23 @@ def figs_exp5(data, out, note, note_u, kq=4):
 def main():
     global DATASET
     ap = argparse.ArgumentParser(description="plot baseline results")
-    ap.add_argument("schemes", nargs="+", choices=list(NAME), help="scheme ที่จะวาด")
-    ap.add_argument("--results", default=os.path.join(HERE, "results"), help="โฟลเดอร์ผล (มี <scheme>/ อยู่ข้างใน)")
-    ap.add_argument("--out", default=None, help="โฟลเดอร์รูปเดียวสำหรับทุกกราฟ (ค่าเริ่มต้น <results>/<scheme>/figures และ <results>/compare)")
-    ap.add_argument("--reps", type=int, default=30, help="จำนวนรอบที่วัด (เขียนในหมายเหตุท้ายภาพ)")
-    ap.add_argument("--note", default="test machine (not final numbers)", help="หมายเหตุท้ายภาพ")
-    ap.add_argument("--dataset", default="dataset-v4 (arXiv)", help="ชื่อ dataset ที่เขียนในหมายเหตุท้ายภาพ")
+    ap.add_argument("schemes", nargs="+", choices=list(NAME), help="schemes to plot")
+    ap.add_argument("--results", default=os.path.join(HERE, "results"), help="results folder (holding <scheme>/)")
+    ap.add_argument("--out", default=None, help="one output folder for every figure (default <results>/<scheme>/figures and <results>/compare)")
+    ap.add_argument("--reps", type=int, default=30, help="number of measured runs (written in the footnote)")
+    ap.add_argument("--note", default="test machine (not final numbers)", help="footnote text")
+    ap.add_argument("--dataset", default="dataset-v4 (arXiv)", help="dataset name written in the footnote")
     a = ap.parse_args()
     DATASET = a.dataset
     base = f"{DATASET} · median of {a.reps} runs, error bars ±1 std · {a.note}"
     perq = f"{DATASET} · median over queries (each: median of {a.reps} runs), error bars: fastest–slowest query · {a.note}"
     one = f"{DATASET} · one point per query (median of {a.reps} runs), every shape · {a.note}"
-    cmp_out = a.out or os.path.join(a.results, "compare")    # กราฟรวมทุก scheme
+    cmp_out = a.out or os.path.join(a.results, "compare")    # figures with every scheme
     os.makedirs(cmp_out, exist_ok=True)
     every = {suite: {} for suite in ("exp1_boolean_scalability", "exp2_selective_proof", "exp3_dynamic_update",
                                      "exp5_domains")}
     for s in a.schemes:
-        out = a.out or os.path.join(a.results, s, "figures")  # รูปของ scheme นี้
+        out = a.out or os.path.join(a.results, s, "figures")  # this scheme's figures
         os.makedirs(out, exist_ok=True)
         rows = load(s, "exp1_boolean_scalability", a.results)
         if rows:

@@ -156,7 +156,7 @@ step_splitmerge() {
     run "splitmerge_t$t$SM_TAG" amtp_code "$PY" -m bench.ablation --source arxiv --n "$SM_N" \
       --theta-max "$t" --theta-min $((t / 4)) --batches "$SM_BATCHES" --batch-size "$SM_B" --delete-frac 0 \
       --fresh-source initial --skews "$SM_SKEWS" --runs "$SM_RUNS" --hot-delete-frac "$SM_HOT_DELETE" \
-      --query-every "$SM_QUERY_EVERY" "${var[@]}" \
+      --query-every "$SM_QUERY_EVERY" ${var[@]+"${var[@]}"} \
       --out "$RUN_DIR/amtp/splitmerge_n${SM_N}_t${t}${SM_TAG}"
   done
 }

@@ -7,10 +7,9 @@ Demo นี้แสดงว่าผู้ใช้ (DU) จะเจออะ
 
 ```bash
 pip install -r requirements.txt
-python run.py
 ```
 
-จากนั้นเปิด http://127.0.0.1:5000 ในเบราว์เซอร์
+demo: `../demo_v2/run_demo.sh` (ดู `demo_v2/README.md`)
 
 ถ้าจะรันเทส: `python -m pytest -q` จากโฟลเดอร์ `amtp_code/` (ต้องผ่านทุกข้อ)
 
@@ -88,7 +87,6 @@ amtp/
   adversary.py   โหมดโกงต่างๆ ของ server (ใช้ในเดโมและเทสเท่านั้น)
   user.py        Phase 4 Step 1 (trapdoor) + Phase 5 (7 checks, ถอดรหัส)
   scenario.py    domain, user, เอกสารสมมติ
-web/             หน้าเว็บ (Flask)
 tests/           เทส correctness gate
 bench/           ชุดการทดลอง (experiments.py, ablation.py, extraction.py)
 ```

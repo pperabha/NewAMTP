@@ -1,149 +1,152 @@
 """
 amtp_dataset.py
 ============================================================================
-ตัวโหลด dataset กลางของ AMTP (arXiv, 4 domain) — ให้ทุก baseline ใช้ข้อมูลและ query ชุดเดียวกัน
+Shared AMTP dataset loader (arXiv, 4 domains): every baseline uses the same data and queries.
 
-Dataset: dataset-v4 (parts in datasets/arxiv/data_v4/, แตกด้วย python3 datasets/arxiv/unpack.py)
+Dataset: dataset-v4 (parts in datasets/arxiv/data_v4/, unpack with python3 datasets/arxiv/unpack.py)
   D1 = cs, D2 = math, D3 = astro-hep, D4 = condmat-quant
-  - เอกสารเริ่มต้น 125,000 ไฟล์ต่อ domain (is_initial = 1) เรียงตามเวลา (doc_id) รวม 500,000
-  - insert pool 12,500 ไฟล์ต่อ domain (is_initial = 0) สำหรับ Experiment 3 / split-merge
-  - keyword W(d) สกัดไว้แล้วด้วยโค้ด Phase 1 ของ AMTP (amtp/nlp.py: RAKE, kappa = 20 วลีต่อไฟล์, Norm แบบ idempotent)
-    อยู่ในคอลัมน์ keywords ของ documents.csv
-  ทุก scheme รวมถึง AMTP เอง (amtp_code/bench/) ใช้ keyword ชุดนี้ตรง ๆ ไม่สกัดเอง -> W(d) เหมือนกันทุก scheme
-  เวลาสกัด keyword ของ AMTP รายงานแยกด้วย amtp_code/bench/extraction.py
+  - 125,000 initial documents per domain (is_initial = 1) in time order (doc_id), 500,000 in total
+  - an insert pool of 12,500 documents per domain (is_initial = 0) for the update and split/merge experiments
+  - keywords W(d) already extracted with AMTP's Phase 1 code (amtp/nlp.py: RAKE, kappa = 20 phrases per file,
+    idempotent Norm), in the keywords column of documents.csv
+  Every scheme, AMTP included (amtp_code/bench/), uses these keywords as they are and never extracts its own,
+  so W(d) is the same for every scheme. AMTP's extraction time is reported separately by
+  amtp_code/bench/extraction.py.
 
-วางข้อมูล: unpack.py แตกไว้ที่ <repo>/data/amtp_file_db_v4/  (หรือส่ง path ผ่าน --data / ตัวแปร AMTP_DATA)
-  dataset-v3 เดิม (4 x 50,000, kappa = 10) ไม่มีใน NewAMTP แล้ว: ถ้ามีไฟล์ parts ของ v3 ใน datasets/arxiv/data/
-  ใช้ python3 datasets/arxiv/unpack.py --v3 -> data/amtp_file_db/ แล้วใส่ --data data/amtp_file_db
+Data location: unpack.py writes <repo>/data/amtp_file_db_v4/  (or pass a path with --data / the AMTP_DATA variable)
+  The older dataset-v3 (4 x 50,000, kappa = 10) is no longer in NewAMTP: with v3 parts in datasets/arxiv/data/,
+  run python3 datasets/arxiv/unpack.py --v3 -> data/amtp_file_db/ and then pass --data data/amtp_file_db
 
-การเลือก N เอกสาร (sample):
-  เอา N / (จำนวน domain) ไฟล์แรกของแต่ละ domain ตามลำดับ doc_id (ไม่มีการสุ่ม)
-  -> N เท่ากัน = เอกสารชุดเดียวกันเสมอ ทุก scheme ทุกเครื่อง
+Choosing N documents (sample):
+  the first N / (number of domains) files of each domain in doc_id order (no randomness)
+  -> the same N always gives the same documents, for every scheme on every machine
 
-การสร้าง query (make_queries):
-  สุ่มเอกสาร 1 ไฟล์ด้วย seed แล้วเอา k keyword ของไฟล์นั้น (เรียง doc_freq มากไปน้อย)
-  -> query แบบ AND ได้ผลอย่างน้อย 1 ไฟล์เสมอ (ถ้า k <= จำนวน keyword ในไฟล์)
-  รูปแบบ 4 แบบตาม AMTP Exp.1: single / conjunctive / disjunctive / or_and_or / and_or_and
-  ไฟล์ query ที่บันทึกออก (results/exp1_queries.json) มี key N, kQ, shape, query, terms, domain, source_doc
-  keyword เป็นวลีหลายคำได้ และเขียนใน query โดยไม่ใส่เครื่องหมายคำพูด เช่น "general method AND possible description"
+Building queries (make_queries):
+  pick one document with a seed and take k of its keywords (in decreasing doc_freq)
+  -> an AND query always has at least one result (when k <= the number of keywords in the file)
+  shapes as in AMTP Exp. 1: single / conjunctive / disjunctive / or_and_or / and_or_and
+  the saved query file (results/exp1_queries.json) has keys N, kQ, shape, query, terms, domain, source_doc
+  keywords can be multi-word phrases and are written in a query without quotes,
+  e.g. "general method AND possible description"
 
-ใช้จากโค้ดอื่น:
+Use from other code:
   import sys; sys.path.insert(0, "<repo>/baselines")
   from amtp_dataset import load, sample, read_bytes, insert_pool, make_queries, ground_truth
 ============================================================================
 """
 
-import csv                                        # อ่าน documents.csv
-import json                                       # อ่าน summary.json / เขียนไฟล์ query
-import os                                         # จัดการ path
-import random                                     # สุ่มเอกสารต้นแบบของ query (มี seed)
-from collections import Counter, defaultdict      # นับ doc_freq / จัดกลุ่มตาม domain
-from dataclasses import dataclass                 # โครงสร้างข้อมูลแบบสั้น
+import csv                                        # read documents.csv
+import json                                       # read summary.json / write query files
+import os                                         # paths
+import random                                     # pick the source documents of queries (seeded)
+from collections import Counter, defaultdict      # count doc_freq / group by domain
+from dataclasses import dataclass                 # compact record type
 
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # โฟลเดอร์รากของ repo
-DEFAULT_DATA = os.environ.get("AMTP_DATA", os.path.join(REPO, "data", "amtp_file_db_v4"))  # ที่วาง dataset (v4)
-DOMAINS = ["D1", "D2", "D3", "D4"]                # domain ทั้งหมด
-DATASET_TAG = "amtp_file_db dataset-v4 (arXiv Kaggle, 4 x 125,000 + 10% insert pool, seed 42, AMTP Phase 1 keywords kappa=20)"  # ชื่อ dataset ที่จะบันทึกไว้ในไฟล์ผล
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # repository root
+DEFAULT_DATA = os.environ.get("AMTP_DATA", os.path.join(REPO, "data", "amtp_file_db_v4"))  # dataset location (v4)
+DOMAINS = ["D1", "D2", "D3", "D4"]                # all domains
+DATASET_TAG = "amtp_file_db dataset-v4 (arXiv Kaggle, 4 x 125,000 + 10% insert pool, seed 42, AMTP Phase 1 keywords kappa=20)"  # dataset name recorded in result files
 
 
 @dataclass
 class Doc:
-    doc_id: str                                   # รหัสเอกสาร เช่น "D1_000001"
-    domain: str                                   # domain เช่น "D1"
-    is_initial: bool                              # True = เอกสารเริ่มต้น, False = insert pool
-    keywords: list                                # W(d) ที่สกัดไว้แล้ว (ไม่ซ้ำกันในไฟล์เดียว)
-    file_path: str                                # path ของไฟล์ .txt (เทียบกับโฟลเดอร์ dataset)
+    doc_id: str                                   # document id, e.g. "D1_000001"
+    domain: str                                   # domain, e.g. "D1"
+    is_initial: bool                              # True = initial document, False = insert pool
+    keywords: list                                # extracted W(d) (no duplicates within one file)
+    file_path: str                                # path of the .txt file (relative to the dataset folder)
 
 
 # ============================================================================
-# 1) โหลด dataset
+# 1) load the dataset
 # ============================================================================
 def load(data_dir: str = None):
-    """อ่าน documents.csv ครั้งเดียวแล้ว cache ไว้ คืน dict:
+    """Read documents.csv once and cache it; returns a dict:
        {"initial": {domain: [Doc, ...]}, "pool": {domain: [Doc, ...]}, "dir": path}"""
-    data_dir = data_dir or DEFAULT_DATA           # ใช้ path ที่ส่งมา หรือค่าเริ่มต้น
-    cache = load.__dict__.setdefault("_cache", {})  # cache แยกตาม path
-    if data_dir in cache:                         # เคยโหลดแล้ว
-        return cache[data_dir]                    # คืนของเดิม
-    path = os.path.join(data_dir, "documents.csv")  # ไฟล์หลักสำหรับ baseline
-    if not os.path.exists(path):                  # ยังไม่ได้วาง dataset
+    data_dir = data_dir or DEFAULT_DATA           # the given path, or the default
+    cache = load.__dict__.setdefault("_cache", {})  # one cache entry per path
+    if data_dir in cache:                         # already loaded
+        return cache[data_dir]                    # return the cached copy
+    path = os.path.join(data_dir, "documents.csv")  # the main file for the baselines
+    if not os.path.exists(path):                  # dataset not unpacked yet
         raise SystemExit(
-            f"ไม่พบ {path}\n"
-            "ยังไม่ได้แตก dataset -> รันจากโฟลเดอร์รากของ repo:  python3 datasets/arxiv/unpack.py\n"
-            f"(หรือใส่ --data <โฟลเดอร์ dataset> / ตั้งตัวแปร AMTP_DATA)")
-    initial, pool = defaultdict(list), defaultdict(list)  # แยกเอกสารเริ่มต้น / insert pool
-    csv.field_size_limit(1 << 24)                 # คอลัมน์ keywords ยาวได้ (kappa = 20)
-    with open(path, encoding="utf-8-sig", newline="") as f:  # utf-8-sig = ตัด BOM หัวไฟล์ออก
-        for r in csv.DictReader(f):               # อ่านทีละแถว
-            kws = list(dict.fromkeys(k.strip() for k in r["keywords"].split(";") if k.strip()))  # แยก keyword
-            doc = Doc(r["doc_id"], r["domain_id"], r["is_initial"] == "1", kws, r["file_path"])  # สร้าง Doc
-            (initial if doc.is_initial else pool)[doc.domain].append(doc)  # ใส่กลุ่มที่ถูกต้อง
-    for group in (initial, pool):                 # เรียงตาม doc_id (= ลำดับเวลา) ให้แน่นอน
+            f"not found: {path}\n"
+            "dataset not unpacked yet -> from the repository root run:  python3 datasets/arxiv/unpack.py\n"
+            f"(or pass --data <dataset folder> / set AMTP_DATA)")
+    initial, pool = defaultdict(list), defaultdict(list)  # split initial documents / insert pool
+    csv.field_size_limit(1 << 24)                 # the keywords column can be long (kappa = 20)
+    with open(path, encoding="utf-8-sig", newline="") as f:  # utf-8-sig drops a leading BOM
+        for r in csv.DictReader(f):               # one row at a time
+            kws = list(dict.fromkeys(k.strip() for k in r["keywords"].split(";") if k.strip()))  # split the keywords
+            doc = Doc(r["doc_id"], r["domain_id"], r["is_initial"] == "1", kws, r["file_path"])  # build the Doc
+            (initial if doc.is_initial else pool)[doc.domain].append(doc)  # put it in the right group
+    for group in (initial, pool):                 # sort by doc_id (= time order) to be deterministic
         for d in group:
             group[d].sort(key=lambda x: x.doc_id)
-    cache[data_dir] = {"initial": dict(initial), "pool": dict(pool), "dir": data_dir}  # เก็บ cache
-    return cache[data_dir]                        # คืนผล
+    cache[data_dir] = {"initial": dict(initial), "pool": dict(pool), "dir": data_dir}  # store in the cache
+    return cache[data_dir]                        # return
 
 
 def summary(data_dir: str = None) -> dict:
-    """อ่าน summary.json (ตัวเลขสำหรับเขียน Dataset section ใน paper)"""
+    """Read summary.json (numbers for the paper's Dataset section)."""
     with open(os.path.join(data_dir or DEFAULT_DATA, "summary.json"), encoding="utf-8") as f:
-        return json.load(f)                       # คืน dict
+        return json.load(f)                       # return a dict
 
 
 # ============================================================================
-# 2) เลือกเอกสาร
+# 2) choose documents
 # ============================================================================
 def sample(n: int, domains=None, data_dir: str = None):
-    """เอกสารเริ่มต้น n ไฟล์: แบ่งเท่า ๆ กันทุก domain ที่เลือก เอาไฟล์แรก ๆ ตามลำดับ doc_id
-    ตัวอย่าง n = 10,000 กับ 4 domain -> D1..D4 domain ละ 2,500 ไฟล์แรก"""
+    """n initial documents split evenly over the chosen domains, the first files in doc_id order.
+    Example: n = 10,000 with 4 domains -> the first 2,500 files of each of D1..D4."""
     ds = load(data_dir)                           # dataset
-    domains = list(domains or DOMAINS)            # domain ที่ใช้
-    per, extra = divmod(n, len(domains))          # จำนวนต่อ domain (เศษให้ domain แรก ๆ)
-    out = []                                      # ผลลัพธ์
-    for i, d in enumerate(domains):               # ทุก domain
-        want = per + (1 if i < extra else 0)      # จำนวนที่ต้องการจาก domain นี้
-        have = ds["initial"].get(d, [])           # เอกสารที่มี
-        if want > len(have):                      # ขอเกินที่มี
-            raise SystemExit(f"ขอ {want} ไฟล์จาก {d} แต่มีแค่ {len(have)} (N สูงสุด = {len(have):,} x จำนวน domain)")
-        out.extend(have[:want])                   # เอาไฟล์แรก ๆ
-    return out                                    # คืนรายการ Doc
+    domains = list(domains or DOMAINS)            # domains used
+    per, extra = divmod(n, len(domains))          # per-domain count (the remainder goes to the first domains)
+    out = []                                      # result
+    for i, d in enumerate(domains):               # every domain
+        want = per + (1 if i < extra else 0)      # number wanted from this domain
+        have = ds["initial"].get(d, [])           # documents available
+        if want > len(have):                      # asked for more than available
+            raise SystemExit(f"asked for {want} files from {d} but it has only {len(have)} (max N = {len(have):,} x number of domains)")
+        out.extend(have[:want])                   # take the first files
+    return out                                    # return the list of Doc
 
 
 def read_bytes(doc: Doc, data_dir: str = None) -> bytes:
-    """เนื้อหาไฟล์ .txt ของเอกสาร (title + abstract) สำหรับ scheme ที่ต้องเข้ารหัสไฟล์จริง"""
-    with open(os.path.join(load(data_dir)["dir"], doc.file_path), "rb") as f:  # path เทียบกับโฟลเดอร์ dataset
-        return f.read()                           # คืน bytes
+    """Content of a document's .txt file (title + abstract), for schemes that encrypt real files."""
+    with open(os.path.join(load(data_dir)["dir"], doc.file_path), "rb") as f:  # path relative to the dataset folder
+        return f.read()                           # return bytes
 
 
 def insert_pool(domains=None, data_dir: str = None):
-    """เอกสาร insert pool (ไม่อยู่ในชุดเริ่มต้น) สำหรับ Experiment 3 สลับ domain ทีละไฟล์ D1, D2, D3, D4, D1, ..."""
+    """Insert-pool documents (not in the initial set) for the update experiments, alternating domains one file at
+    a time: D1, D2, D3, D4, D1, ..."""
     ds = load(data_dir)                           # dataset
-    lists = [ds["pool"].get(d, []) for d in (domains or DOMAINS)]  # pool ของแต่ละ domain
-    out = []                                      # ผลลัพธ์
-    for i in range(max(len(x) for x in lists)):   # วนตามลำดับ
-        out.extend(x[i] for x in lists if i < len(x))  # หยิบ domain ละ 1 ไฟล์
-    return out                                    # คืนรายการ Doc
+    lists = [ds["pool"].get(d, []) for d in (domains or DOMAINS)]  # pool of each domain
+    out = []                                      # result
+    for i in range(max(len(x) for x in lists)):   # round robin
+        out.extend(x[i] for x in lists if i < len(x))  # one file per domain
+    return out                                    # return the list of Doc
 
 
 # ============================================================================
-# 3) Query และ ground truth
+# 3) queries and ground truth
 # ============================================================================
 def doc_freq(docs) -> Counter:
-    """document frequency: keyword แต่ละตัวอยู่ในกี่เอกสาร"""
-    c = Counter()                                 # ตัวนับ
-    for d in docs:                                # ทุกเอกสาร
-        c.update(d.keywords)                      # keyword ในไฟล์เดียวไม่ซ้ำอยู่แล้ว
-    return c                                      # คืนผล
+    """Document frequency: in how many documents each keyword appears."""
+    c = Counter()                                 # counter
+    for d in docs:                                # every document
+        c.update(d.keywords)                      # keywords within one file are already unique
+    return c                                      # return
 
 
 def boolean_shapes(terms):
-    """query 4 รูปแบบตาม AMTP Exp.1 (ชื่อและรูปแบบเหมือน se_collab boolean_shapes)"""
+    """Query shapes as in AMTP Exp. 1 (names and forms as in se_collab boolean_shapes)."""
     t = list(terms)                               # keyword
-    if len(t) == 1:                               # keyword เดียว
-        return {"single": t[0]}                   # มีแบบเดียว
-    half = len(t) // 2                            # แบ่งครึ่ง
-    L, R = t[:half], t[half:]                     # ซ้าย / ขวา
+    if len(t) == 1:                               # single keyword
+        return {"single": t[0]}                   # only one shape
+    half = len(t) // 2                            # split in half
+    L, R = t[:half], t[half:]                     # left / right
     return {
         "conjunctive": " AND ".join(t),           # A AND B AND C AND D
         "disjunctive": " OR ".join(t),            # A OR B OR C OR D
@@ -153,47 +156,48 @@ def boolean_shapes(terms):
 
 
 def make_queries(docs, kqs, per_kq: int = 1, seed: int = 42):
-    """สร้าง query ทุก k_Q: สุ่มเอกสารต้นแบบ (seed คงที่) แล้วเอา keyword ของไฟล์นั้น k ตัว
-    keyword เรียงจาก doc_freq มากไปน้อย (ผลลัพธ์ของ OR จะมีขนาดพอสมควร)
-    ถ้า k มากกว่าจำนวน keyword ในไฟล์ (สูงสุด kappa = 20) จะเติมจากเอกสารสุ่มอีกไฟล์ -> AND อาจได้ผลว่าง
-    คืน list ของ dict {kQ, shape, query, terms, source_doc, domain}"""
-    df = doc_freq(docs)                           # doc_freq ของชุดเอกสารนี้
-    out = []                                      # ผลลัพธ์
-    for k in kqs:                                 # ทุก k_Q
-        rng = random.Random(f"{seed}-{k}")        # seed แยกตาม k -> query ของ k หนึ่งไม่ขึ้นกับ k อื่น
-        for j in range(per_kq):                   # จำนวน query ต่อ k
-            cand = [d for d in docs if len(d.keywords) >= k] or docs  # ไฟล์ที่มี keyword พอ
-            src = cand[rng.randrange(len(cand))]  # เอกสารต้นแบบ
-            terms = sorted(src.keywords, key=lambda w: (-df[w], w))[:k]  # k keyword ที่ df สูงสุดของไฟล์นี้
-            while len(terms) < k:                 # ยังไม่ครบ (k > จำนวน keyword ในไฟล์ เช่น k = 16)
-                extra = docs[rng.randrange(len(docs))]  # สุ่มอีกไฟล์
+    """Build queries for every k_Q: pick a source document (fixed seed) and take k of its keywords,
+    in decreasing doc_freq (so OR results have a reasonable size).
+    If k exceeds the number of keywords in the file (at most kappa = 20), keywords of another random document are
+    added -> the AND result may be empty.
+    Returns a list of dicts {kQ, shape, query, terms, source_doc, domain}."""
+    df = doc_freq(docs)                           # doc_freq of this document set
+    out = []                                      # result
+    for k in kqs:                                 # every k_Q
+        rng = random.Random(f"{seed}-{k}")        # one seed per k -> the queries of one k do not depend on other k
+        for j in range(per_kq):                   # queries per k
+            cand = [d for d in docs if len(d.keywords) >= k] or docs  # files with enough keywords
+            src = cand[rng.randrange(len(cand))]  # source document
+            terms = sorted(src.keywords, key=lambda w: (-df[w], w))[:k]  # the k keywords of this file with the highest df
+            while len(terms) < k:                 # not enough yet (k > keywords in the file, e.g. k = 16)
+                extra = docs[rng.randrange(len(docs))]  # another random file
                 terms += [w for w in sorted(extra.keywords, key=lambda w: (-df[w], w)) if w not in terms][:k - len(terms)]
-            for shape, q in boolean_shapes(terms).items():  # ทุกรูปแบบ
+            for shape, q in boolean_shapes(terms).items():  # every shape
                 out.append({"kQ": k, "q": j, "shape": shape, "query": q, "terms": terms,
                             "source_doc": src.doc_id, "domain": src.domain})
-    return out                                    # คืนรายการ query
+    return out                                    # return the list of queries
 
 
 def inverted_index(docs):
-    """keyword -> เซตตำแหน่งเอกสาร (0..N-1) ใช้หาคำตอบที่ถูกต้อง"""
+    """keyword -> set of document positions (0..N-1), used to compute the correct answer."""
     inv = defaultdict(set)                        # index
-    for i, d in enumerate(docs):                  # ทุกเอกสาร
-        for w in d.keywords:                      # ทุก keyword
-            inv[w].add(i)                         # จด
-    return inv                                    # คืน index
+    for i, d in enumerate(docs):                  # every document
+        for w in d.keywords:                      # every keyword
+            inv[w].add(i)                         # record
+    return inv                                    # return the index
 
 
 def ground_truth(inv, terms):
-    """คำตอบที่ถูกต้องของ query แบบ AND: ตำแหน่งเอกสารที่มีทุก keyword"""
-    sets = [inv.get(w, set()) for w in terms]     # posting ของแต่ละ keyword
+    """Correct answer of an AND query: positions of the documents that contain every keyword."""
+    sets = [inv.get(w, set()) for w in terms]     # posting of each keyword
     return set.intersection(*sets) if sets else set()  # intersection
 
 
 def save_queries(path, rows):
-    """บันทึก query เป็น JSON (key หลักเหมือน exp1_queries.json ของ SE-COLLAB + dataset/domain)"""
-    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)  # สร้างโฟลเดอร์
-    with open(path, "w", encoding="utf-8") as f:  # เปิดไฟล์
-        json.dump(rows, f, indent=1, ensure_ascii=False)  # เขียน
+    """Save queries as JSON (main keys as in SE-COLLAB's exp1_queries.json + dataset/domain)."""
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)  # create the folder
+    with open(path, "w", encoding="utf-8") as f:  # open the file
+        json.dump(rows, f, indent=1, ensure_ascii=False)  # write
 
 
 SHARED_QUERIES = os.path.join(REPO, "baselines", "results", "exp1_queries.json")  # replayed by every scheme
@@ -436,10 +440,10 @@ def write_manifest(csv_path):
             "dataset": DATASET_TAG, "machine": machine_info(),
             "amtp_gamma_v": os.environ.get("AMTP_GAMMA_V", "1") != "0",   # AMTP: γ with the version v (B4 study)
             "amtp_placement": os.environ.get("AMTP_PLACEMENT", "fill"),   # AMTP: placement rule (amtp/variants.py)
-            "amtp_and_prune": os.environ.get("AMTP_AND_PRUNE", "0") == "1",   # AMTP: AND pruning (amtp/server.py)
-            "amtp_part_results": os.environ.get("AMTP_PART_RESULTS", "0") == "1",   # AMTP: result-only part check
-            "amtp_and_greedy": os.environ.get("AMTP_AND_GREEDY", "0") == "1",   # AMTP: AND pruning planner
-            "amtp_part_leaf": os.environ.get("AMTP_PART_LEAF", "0") == "1"}   # AMTP: Search Tree leaf by partition
+            "amtp_and_prune": os.environ.get("AMTP_AND_PRUNE", "1") != "0",   # AMTP: AND pruning (amtp/server.py)
+            "amtp_part_results": os.environ.get("AMTP_PART_RESULTS", "1") != "0",   # AMTP: result-only part check
+            "amtp_and_greedy": os.environ.get("AMTP_AND_GREEDY", "1") != "0",   # AMTP: AND pruning planner
+            "amtp_part_leaf": os.environ.get("AMTP_PART_LEAF", "1") != "0"}   # AMTP: Search Tree leaf by partition
     with open(out, "w", encoding="utf-8") as f:
         json.dump(info, f, indent=1, ensure_ascii=False)
     return out
@@ -468,9 +472,9 @@ if __name__ == "__main__":
         save_queries(a.out, rows)
         print(f"-> {os.path.relpath(a.out)}  ({len(rows)} queries, {a.per_kq} per kQ, the same at every N)")
     else:
-        ds = load(a.data)                         # โหลด
-        for d in DOMAINS:                         # แสดงจำนวนต่อ domain
+        ds = load(a.data)                         # load
+        for d in DOMAINS:                         # count per domain
             print(d, "initial", len(ds["initial"].get(d, [])), "pool", len(ds["pool"].get(d, [])))
-        docs = sample(10_000, data_dir=a.data)    # ลองเลือก 10,000 ไฟล์
-        for q in make_queries(docs, [1, 4])[:3]:  # ลองสร้าง query
+        docs = sample(10_000, data_dir=a.data)    # try choosing 10,000 files
+        for q in make_queries(docs, [1, 4])[:3]:  # try building queries
             print(q["kQ"], q["shape"], q["query"])

@@ -11,7 +11,7 @@ Nothing in `amtp_code/` or `baselines/` is changed. Everything here is adapters,
 ./demo_v2/run_demo.sh
 ```
 
-Opens `http://127.0.0.1:8102`. The default loads 4 domains × 5,000 real files and takes about 1.5 minutes;
+Opens `http://127.0.0.1:8102`. The default loads 4 domains × 5,000 real files and takes about 30 s to 1.5 minutes, depending on the machine;
 the page shows the progress. For a rehearsal:
 
 ```bash
@@ -20,7 +20,7 @@ the page shows the progress. For a rehearsal:
 
 Other flags: `--domains D1,D2`, `--base-port 8101`, `--no-browser`. Stop with Ctrl-C.
 
-First time only (already done in this checkout's `.venv`):
+First time only (the demo's web packages; the dataset must be unpacked, see the main README):
 
 ```bash
 .venv/bin/python -m pip install -r demo_v2/requirements.txt

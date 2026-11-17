@@ -114,7 +114,7 @@ def test_frequent_keyword_touches_more_partitions_than_rare(demo):
 
 
 def test_evidence_counts_cover_pruned_keywords(demo):
-    """Rare AND frequent: with AMTP_AND_PRUNE=1 the frequent keyword arrives as focus evidence (segs + nb, no L).
+    """Rare AND frequent: with AND pruning on (default) the frequent keyword arrives as focus evidence (segs + nb, no L).
     The panels must still count what it carries instead of showing 0 partitions / 0 entries."""
     q = f'{demo["examples"]["Rare keyword"]} AND {demo["examples"]["Frequent keyword"]}'
     run = search(demo, q)["runs"][0]
@@ -129,7 +129,7 @@ def test_evidence_counts_cover_pruned_keywords(demo):
     server_rows = [e for e in last_query_event(demo)["evidence"] if e["status"] == "present"]
     assert sorted((e["partitions"], e["entries"], e["pruned"]) for e in server_rows) == \
         sorted((e["partitions"], e["entries"], e["pruned"]) for e in rows)
-    if os.environ.get("AMTP_AND_PRUNE", "0") == "1":
+    if os.environ.get("AMTP_AND_PRUNE", "1") != "0":
         assert any(e["pruned"] for e in rows), rows
     else:
         assert not any(e["pruned"] for e in rows), rows
