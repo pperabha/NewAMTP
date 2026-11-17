@@ -443,7 +443,8 @@ def write_manifest(csv_path):
             "amtp_and_prune": os.environ.get("AMTP_AND_PRUNE", "1") != "0",   # AMTP: AND pruning (amtp/server.py)
             "amtp_part_results": os.environ.get("AMTP_PART_RESULTS", "1") != "0",   # AMTP: result-only part check
             "amtp_and_greedy": os.environ.get("AMTP_AND_GREEDY", "1") != "0",   # AMTP: AND pruning planner
-            "amtp_part_leaf": os.environ.get("AMTP_PART_LEAF", "1") != "0"}   # AMTP: Search Tree leaf by partition
+            "amtp_part_leaf": os.environ.get("AMTP_PART_LEAF", "1") != "0",   # AMTP: Search Tree leaf by partition
+            "amtp_anchor": os.environ.get("AMTP_ANCHOR", "in-process")}   # AMTP: Root Anchor (bench make_anchor)
     with open(out, "w", encoding="utf-8") as f:
         json.dump(info, f, indent=1, ensure_ascii=False)
     return out
