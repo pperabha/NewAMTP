@@ -1003,7 +1003,8 @@ measured separately on Ethereum Sepolia and reported apart; there, anchoring one
 131\,ms. The Search Tree is a B$^{+}$ tree of order
 $B = 64$; keywords are extracted with RAKE, at most $\kappa = 20$ phrases of 1--3 words per document,
 and documents longer than $\Theta_{doc}$ are chunked. Unless otherwise stated, each reported value is
-averaged over 10 independent runs after 3 warm-up runs. End-to-end query latency is query generation
+averaged over 10 independent runs after 3 warm-up runs; where a setting contains several queries, each
+point is the median of these per-query averages and the bars show the interquartile range. End-to-end query latency is query generation
 plus server time plus DU verification; it excludes the DU's read of the anchored root, which is
 reported separately, and the CP-ABE decryption of returned records.
 ```

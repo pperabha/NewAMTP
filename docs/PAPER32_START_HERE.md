@@ -72,6 +72,10 @@
 - **#51 = B:** IMT แบบ indexed Merkle tree (next pointer); แก้ paper ด้วย somo 1.5, 2.1, 1.11 Step 1
 - **#46 = B (ตาม setup ของ (32)):** ทุกค่าที่รายงานเป็น **mean** ของ 10 run หลัง warm-up 3 (*"averaged over 10 independent runs"*)
   กราฟใช้คอลัมน์ `_ms` (mean) ไม่ใช่ `_ms_median`; ex4 = mean ของ 10 run (แต่ละ run = mean ต่อ batch)
+- **รวมข้าม query (เจ้าของงาน 19 พ.ย., ไม่ขัด (32)):** แต่ละ query = **mean ของ 10 run** (#46) แล้วแต่ละจุดบนกราฟที่มีหลาย query
+  (ex1, ex2 verify ตาม rQ) = **median ของ query ในจุดนั้น** และ error bar = IQR (Q1–Q3) เหมือนกราฟรอบ (31) (`plot_paper.agg`)
+  เหตุผล: query ที่มีผลมาก (เช่น AND-of-OR kQ 2 ที่ 12,933 records) ไม่ใช่ run ซ้ำของ query เดียวกัน; (32) กำหนดแค่การเฉลี่ยข้าม run
+  ต้องเขียนใน setup (B4 ข้อ 8); เจ้าของงานเลือก **ไม่เขียน** ในเนื้อหาผลเรื่อง query ที่ผลมากและ OR ล้วน (กราฟ OR ยังอยู่ตาม (32))
 
 ## 4. งานของ B ทีละขั้น
 
@@ -134,7 +138,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | 5 | Exp 4 ใช้ dataset เต็ม | 20% (25k + 250 batch × 100) × 5 ระดับ skew |
 | 6 | **ใหม่** ยังไม่บอกว่าวัดบน network ไหน | เพิ่มใน setup: *Protocol costs are measured against the same RootAnchor contract deployed on a local EVM; on-chain anchoring latency, read latency and gas are measured separately on Ethereum Sepolia and reported apart.* |
 | 7 | **ใหม่** ยังไม่ได้นิยาม end-to-end | end-to-end = query gen + server + verify; **ไม่รวม** เวลาอ่าน root (รายงานแยก) และการถอดรหัส CP-ABE ของ record |
-| 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, **SS512**, symmetric pairing; #54 C); Sepolia; *"each reported value is averaged over 10 independent runs after 3 warm-up runs"* (mean, #46); θ 64/16; fill placement; query 4 keyword |
+| 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, **SS512**, symmetric pairing; #54 C); Sepolia; *"each reported value is averaged over 10 independent runs after 3 warm-up runs"* (mean, #46) + *"for settings with several queries, each point is the median over the queries and bars show the interquartile range"*; θ 64/16; fill placement; query 4 keyword |
 | 9a | สมการ (9) σ_d แยกจาก (11) σ_op | เพิ่ม: *"Since U_d in (8) coincides with U_ins in (10), the upload signature σ_d is the σ_op of that insertion request; an upload is signed once."* |
 | 10 | สัญลักษณ์ PAPC: Table II เขียน ρ_w แต่สมการ (19), (20), (42), (49), (68) และ proof Theorem 1 เขียน σ_w (ชนกับ σ ของลายเซ็น σ_d / σ_op / σ_root) | ใช้ **ρ_w ทุกที่** (ตรง Table II และโค้ด `rho()`) |
 | 11 | setup: ช่องที่ยังไม่บอกค่า | Search Tree = B+ tree order **B = 64**; keyword extraction = RAKE, สูงสุด κ = 20 ต่อไฟล์ (1–3 คำ), แบ่ง chunk เมื่อไฟล์ยาวเกิน Θ_doc (ตรงประโยค "chunked documents" ของ (32)) |
