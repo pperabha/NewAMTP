@@ -39,7 +39,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                      # ต้�
 - ไฟล์ใหม่ `amtp_code/amtp/core/abs.py` แบบเดียวกับ `amtp/core/cpabe.py` (CP-ABE จริง): Charm, curve **SS512**
   (ตัวเดียวกับ BSW07 / SE-COLLAB); ถ้า scheme ต้องการ asymmetric pairing ให้บอก A ก่อนเลือก curve
 - policy ต่อ domain (ตาม (32) "document-operation and root-update policies"):
-  - upload / update (σ_d, σ_op): เช่น `domain:D1 AND role:owner`
+  - upload / update (σ_d, σ_op): **`domain:Di AND role:owner` ตัวเดียวกันทั้ง insert และ delete (#43 = A)**
   - attribute ของ DO: เช่น `{domain:D1, role:owner}`
 - แปลง policy (AND / OR) เป็น monotone span program ในไฟล์เดียวกัน
 
@@ -59,13 +59,11 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                      # ต้�
 - push branch `feat/real-abs` แล้วบอก A (A จะ merge เข้า `feat/paper32-experiments` และเพิ่ม `AMTP_ABS=mpr` ใน
   `scripts/paper32_env.sh`)
 
-## B3 — บัญชี Sepolia ต่อเครื่อง (1–2 ชม.)
+## B3 — บัญชี Sepolia (เปลี่ยนแล้ว: บัญชีเดียว, #42 = A)
 
-- AWS ~14 เครื่อง แต่ละเครื่องต้องมีบัญชี admin ของตัวเอง (transaction จากบัญชีเดียวต้องเรียงกัน)
-- ใช้ `chain/sepolia.py keys` เป็นฐาน: สคริปต์ใหม่ `chain/sepolia_fund.py` สร้าง key ต่อเครื่อง (ไฟล์ `.env` ต่อเครื่อง,
-  **ห้าม commit key**), แบ่ง test ETH จากบัญชีหลัก 1 บัญชีไปทุกบัญชี, และพิมพ์ยอดคงเหลือ
-- เช็กราคา gas ก่อนรัน: ประมาณ 4,200 tx × ~110k gas; ถ้า ETH ไม่พอ ทางสำรองคือ ex4 ส่ง root ลง EVM ในเครื่อง
-  (`AMTP_ANCHOR=chain-local`) — บอก A
+- เวลา protocol ทุก ex วัดบน EVM ในเครื่อง (`AMTP_ANCHOR=chain-local`); Sepolia ใช้แค่ชุดเล็กแยก
+  (`chain/gas_domains.py --max-d 32` + บางจุดของ ex3) จึงใช้บัญชี admin บัญชีเดียว ไม่ต้องทำ `sepolia_fund.py`
+- เช็กยอด test ETH (`chain/sepolia.py status`): ประมาณ 200 tx × ~110k gas; **ห้าม commit key / `.env`**
 - RPC URL: ใช้ของ Alchemy / Infura (free) ใส่ `.env` เป็น `AMTP_RPC=...`
 
 ## B4 — Overleaf ส่วนที่ไม่ต้องรอผล (3–4 ชม.)

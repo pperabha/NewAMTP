@@ -15,8 +15,8 @@ branch หลักของงานนี้: `feat/paper32-experiments` · �
 - ex3 Update AMTP vs Chen: (a) x = batch 1/10/100/1000, (b) x = N ที่ b = 100; ms ต่อ update, insert / delete;
   ไม่นับ split/merge
 - ex4 Ablation AMTP / Static-MT / Global-MT: **20% ของ dataset** (เริ่ม 25k + 250 batch × 100), θ_max 64,
-  **5 ระดับ skew** (เครื่องเพิ่ม)
-- ex5 Multi-domain D = 1–32: query, proof gen, verify, root maintenance (anchor time + gas บน Sepolia), update isolation
+  **5 ระดับ skew** (0, 0.25, 0.5, 0.75, 0.95), **10 run** (#45); 3 variant ที่ระดับ index + เส้น AMTP protocol เต็ม (#44)
+- ex5 Multi-domain D = 1–32: query, proof gen, verify, root maintenance (anchor time + gas บน Sepolia ชุดแยก, #42), update isolation
   (insert + delete), baseline ทุกตัวที่รันได้ (SE-COLLAB, Du)
 - Search 2.2 / Verify 2.2 ซ้อนกับ ex5: เก็บผลทั้งสองชุด
 
@@ -49,7 +49,7 @@ branch หลักของงานนี้: `feat/paper32-experiments` · �
 | A1 | ex1 ให้ครบ (มีแล้ว: query p32, anchor_read; เหลือตรวจ Chen/Du รองรับ kQ 16 และสคริปต์รัน) | 1–2 ชม. |
 | A2 | ex2: สร้าง layout clustered / dispersed ใหม่บน v4 (โค้ดเดิม `suite_exp2` + `exp2_layouts.json`), verify / tamper เดิม | 2–3 ชม. |
 | A3 | ex3: (b) ไล่ N, ไม่นับ epoch ที่มี split/merge, Chen ทั้ง (a) และ (b) | 2 ชม. |
-| A4 | ex4: 20% (25k), 5 ระดับ skew (`SM_SKEWS`), แยกเวลา split/merge | 2 ชม. |
+| A4 | ex4: 20% (25k), 5 ระดับ skew (`SM_SKEWS`), 10 run, แยกเวลา split/merge, เส้น AMTP protocol เต็ม | 3 ชม. |
 | A5 | ex5: เพิ่ม delete, Du, root maintenance จาก Sepolia | 2 ชม. |
 | A6 | smoke ทุก ex บน Mac (ขนาดเล็ก) + แผนเครื่อง AWS (~14 เครื่อง) + สคริปต์ปล่อยงาน | 1–2 ชม. |
 | A7 | รันจริงบน AWS, เฝ้า, ดึงผลกลับ (ตรวจ manifest: query_set p32, cpabe bsw07, ABS mpr, anchor) | ~10 ชม. (ส่วนใหญ่รอ) |
@@ -61,7 +61,7 @@ branch หลักของงานนี้: `feat/paper32-experiments` · �
 |---|---|---|
 | B1 | ดาวน์โหลด PDF ABS (ePrint 2008/328) → implement ใน Charm (`amtp/core/abs.py`), policy ต่อ domain เช่น `domain:D1 AND role:owner` | 4–6 ชม. |
 | B2 | ต่อ ABS เข้า σ_d / σ_op ผ่าน `AMTP_ABS`, test: เซ็นแล้วผ่าน, attribute ไม่ครบไม่ผ่าน, แก้ลายเซ็นไม่ผ่าน, รวม key ไม่ผ่าน; pytest ทั้งสองโหมด; วัดเวลา sign/verify | 2–3 ชม. |
-| B3 | Sepolia: บัญชีต่อเครื่อง, สคริปต์แบ่ง test ETH จากบัญชีเดียว, เช็กราคา gas ก่อนรัน (ทางสำรอง: ex4 anchor บน EVM ในเครื่อง) | 1–2 ชม. |
+| B3 | Sepolia: บัญชีเดียว (#42 = A), เช็กยอด test ETH สำหรับชุดแยก (~200 tx) | 0.5 ชม. |
 | B4 | Overleaf (ไม่ต้องรอผล): วาง LaTeX ตัวเร่ง (AND pruning, result-only, part leaf), แก้ 6 จุด σ_root = ECDSA, dataset arXiv แทน Enron, ช่วง N, setup (Python 3.12, AWS r7i.4xlarge, SHA-256, AES-GCM, BSW07, ABS, Sepolia, reps 10/warm-up 3, θ 64/16) | 3–4 ชม. |
 | B5 | ใส่กราฟและตัวเลขจริงลง Overleaf, เขียนข้อความผลแต่ละ ex | 3 ชม. |
 | B6 | clean repo หลังได้ผลครบ (ไม่ทำระหว่าง AWS กำลังรัน): ลบ worktree/branch ที่ไม่ใช้, ไฟล์ผลชั่วคราว, อัปเดต README / HANDOFF | 1–2 ชม. |

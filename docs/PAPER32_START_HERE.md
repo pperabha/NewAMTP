@@ -25,14 +25,14 @@
 | ex1 Search | 🟡 คน A ทำอยู่ | query set p32 (kQ 1/2/4/8/16) ✅, เวลาอ่าน root แยกเป็นคอลัมน์ `anchor_read` ✅, เหลือสคริปต์รัน |
 | ex2 Verify / tamper / clustered-dispersed | ⏳ คน A | |
 | ex3 update vs Chen, ex5 D = 1–32 | ⏳ คน A | **ต้องรอ ABS** (มี update ผ่าน protocol เต็ม) |
-| ex4 ablation | ⏳ คน A | ไม่ใช้ ABS: `bench/ablation.py` วัดที่ระดับ index (ไม่มี σ_op, validator, anchor) ดู issue #44 |
-| รันบน AWS + กราฟ | ⏳ คน A | ex1, ex2, ex4 ปล่อยได้ก่อน เพราะไม่ใช้ ABS |
+| ex4 ablation | ⏳ คน A | 3 variant ที่ระดับ index (`bench/ablation.py`) ไม่ใช้ ABS + เส้น AMTP ผ่าน protocol เต็ม (ต้องรอ ABS) (#44 = A+) |
+| รันบน AWS + กราฟ | ⏳ คน A | ex1, ex2 และ ex4 ส่วน 3 variant ปล่อยได้ก่อน เพราะไม่ใช้ ABS |
 | Overleaf | ⏳ **B (B4, B5)** | ดูข้อ 6 |
 
 **ABS กระทบอะไรบ้าง** (ตรวจในโค้ดแล้ว): ABS ใช้เฉพาะตอน **update** คือ DO เซ็นที่ `amtp/owner.py:94` และ
 `bench/experiments.py:133,138` จากนั้น CS ตรวจที่ `amtp/server.py:86` และ DO ตรวจซ้ำที่ `amtp/validator.py:335`
 ฝั่ง search และ verify ของ DU ไม่ใช้ ABS เลย (ตรวจด้วย Merkle proof + root ที่อ่านจาก contract)
-ดังนั้นถ้า ABS ช้า จะกระทบแค่ ex3 กับ ex5 (ex4 ไม่ผ่าน protocol ที่มีลายเซ็น)
+ดังนั้นถ้า ABS ช้า จะกระทบแค่ ex3, ex5 และเส้น AMTP protocol เต็มของ ex4
 
 ## 3. สิ่งที่ตกลงกันแล้ว (ห้ามเปลี่ยนเอง ถ้าคิดว่าควรเปลี่ยนให้ถาม A ก่อน)
 
@@ -45,7 +45,7 @@
   | ex1 2.1, 2.2 / ex2 2.1, 2.2 | 4 domain × 100k = 400k (2.2 แบ่งกลุ่มใหม่เป็น D = 1–32) |
   | ex2 clustered / dispersed | **1 domain × 100k** (แทน N = 10⁶ ของ (32)) |
   | ex3 | 100k × b 1/10/100/1000 และ N 10k–125k ที่ b = 100 |
-  | ex4 | เริ่ม 25k + insert 250 batch × 100 (→ 50k) แล้ว delete 65% ของกลุ่มร้อน; skew = **0, 0.25, 0.5, 0.75, 0.95** |
+  | ex4 | เริ่ม 25k + insert 250 batch × 100 (→ 50k) แล้ว delete 65% ของกลุ่มร้อน; skew = **0, 0.25, 0.5, 0.75, 0.95**; **10 run** ต่อจุด (#45) |
   | ex5 | D = 1–32, ทุก domain 5k (สูงสุด 160k) |
 - reps = 10 หลัง warm-up 3 · query default 4 keyword · θ_max 64 / θ_min 16
 - AMTP เปิดตัวเร่งทั้งหมด (fill placement, AND pruning + greedy, result-only partition proofs, part leaf) และเอาคำอธิบาย LaTeX ใส่ลง (32)
@@ -54,9 +54,14 @@
 - query อ่าน root จาก contract ทุกครั้ง; เวลาอ่าน (`anchor_read`) รายงานแยกจาก end-to-end
 - update รายงาน protocol time แยกจาก anchor time + gas
 
-**ข้อเสนอที่รอเจ้าของงานตัดสิน:** วัดเวลา protocol ทุก ex บน contract ใน EVM ในเครื่อง (`chain-local`: bytecode
-และ `ecrecover` ตัวเดียวกัน ไม่มีเวลารอ block มาปน) แล้ววัด anchor time + gas บน Sepolia เป็นชุดเล็กแยก (ex5 D = 1–32 + บางจุดของ ex3)
-ถ้าเจ้าของงานตกลง **B3 จะเหลือแค่บัญชี Sepolia บัญชีเดียว** ไม่ต้องสร้างบัญชีต่อเครื่อง
+**ตัดสินแล้ว 18 พ.ย. (issue #42–#45):**
+- **#42 = A:** เวลา protocol ทุก ex วัดกับ contract บน EVM ในเครื่อง (`chain-local`: bytecode และ `ecrecover` ตัวเดียวกัน
+  ไม่มีเวลารอ block มาปน); anchor time + gas + read latency วัดบน Sepolia เป็นชุดเล็กแยก (ex5 D = 1–32 ด้วย
+  `chain/gas_domains.py` + บางจุดของ ex3) → **B3 ใช้บัญชี Sepolia บัญชีเดียว**
+- **#43 = A:** ABS ใช้ policy เดียวกันทั้ง insert และ delete: `domain:Di AND role:owner` (upload policy = operation policy)
+- **#44 = A+:** ex4 เทียบ AMTP / Static-MT / Global-MT(v) ที่ระดับ index (`bench/ablation.py`) **และ** เพิ่มเส้น AMTP ผ่าน
+  protocol เต็ม (ABS + DO validator + anchor) ทุก skew เพื่อวัด split/merge overhead ใน protocol จริง
+- **#45 = C:** ex4 รัน **10 run** ต่อจุด (variant × skew) ใช้ ~10 เครื่อง (ประมาณ ~5 ชม.)
 
 ## 4. งานของ B ทีละขั้น
 
@@ -80,7 +85,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
    - **เขียนตามสูตรในเปเปอร์เท่านั้น ห้ามเขียนจากความจำ**
 2. ไฟล์ใหม่ `amtp_code/amtp/core/abs.py` แบบเดียวกับ `amtp/core/cpabe.py`: ใช้ Charm curve **SS512**
    (ถ้า scheme ต้องใช้ asymmetric pairing ให้บอก A ก่อนเลือก curve); แปลง policy AND/OR เป็น monotone span program
-3. policy ต่อ domain เช่น `domain:D1 AND role:owner`; attribute ของ DO เช่น `{domain:D1, role:owner}`
+3. policy ต่อ domain: **`domain:Di AND role:owner` ตัวเดียวกันทั้ง insert และ delete (#43 = A)**; attribute ของ DO เช่น `{domain:D1, role:owner}`
 4. ต่อเข้า `amtp/core/crypto.py` ผ่าน env **`AMTP_ABS`** (`ed25519` = ตัวเดิม ค่าเริ่มต้น, `mpr` = ABS จริง)
    ทำแบบเดียวกับ `make_authority()` ที่เลือก CP-ABE ตาม `AMTP_CPABE`
    - **interface ต้องเหมือนเดิม:** `Signer()`, `.public`, `.sign(msg)`, `sig_ok(public, msg, sig)` เพื่อไม่ต้องแก้ไฟล์ของ A
@@ -102,8 +107,9 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 
 ### B3: Sepolia (ส่ง 02:00)
 
-- ถ้าข้อเสนอในข้อ 3 ผ่าน: ใช้บัญชีเดียว และเช็กว่ามี test ETH พอ (`chain/sepolia.py status`)
-- ถ้าไม่ผ่าน: ทำ `chain/sepolia_fund.py` สร้าง key ต่อเครื่อง (~14 เครื่อง) แล้วแบ่ง ETH จากบัญชีหลัก
+- **ใช้บัญชีเดียว (#42 = A)**: ไม่ต้องทำ `sepolia_fund.py` แล้ว
+- เช็กว่ามี test ETH พอ (`chain/sepolia.py status`) สำหรับชุด Sepolia: `chain/gas_domains.py --max-d 32` (~64 tx) +
+  บางจุดของ ex3 (~100 tx) ≈ 200 tx × ~110k gas; บอก A ถ้า ETH เหลือน้อย
 - **ห้าม commit `.env` หรือ private key**; RPC ใส่ `.env` เป็น `AMTP_RPC=...`
 
 ### B4: Overleaf ส่วนที่ไม่ต้องรอผล (ส่ง **15:00**)
