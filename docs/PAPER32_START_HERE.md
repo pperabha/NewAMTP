@@ -24,14 +24,15 @@
 | **ABS จริง** สำหรับ σ_op (และ σ_d) | ❌ **ยังไม่ได้ทำ: งานของ B** | ต้องเข้าผ่าน env `AMTP_ABS=mpr` (ดูข้อ 4) |
 | ex1 Search | 🟡 คน A ทำอยู่ | query set p32 (kQ 1/2/4/8/16) ✅, เวลาอ่าน root แยกเป็นคอลัมน์ `anchor_read` ✅, เหลือสคริปต์รัน |
 | ex2 Verify / tamper / clustered-dispersed | ⏳ คน A | |
-| ex3 update vs Chen, ex4 ablation, ex5 D = 1–32 | ⏳ คน A | **ต้องรอ ABS** (มี update) |
-| รันบน AWS + กราฟ | ⏳ คน A | ex1, ex2 ปล่อยได้ก่อน เพราะไม่ใช้ ABS |
+| ex3 update vs Chen, ex5 D = 1–32 | ⏳ คน A | **ต้องรอ ABS** (มี update ผ่าน protocol เต็ม) |
+| ex4 ablation | ⏳ คน A | ไม่ใช้ ABS: `bench/ablation.py` วัดที่ระดับ index (ไม่มี σ_op, validator, anchor) ดู issue #44 |
+| รันบน AWS + กราฟ | ⏳ คน A | ex1, ex2, ex4 ปล่อยได้ก่อน เพราะไม่ใช้ ABS |
 | Overleaf | ⏳ **B (B4, B5)** | ดูข้อ 6 |
 
 **ABS กระทบอะไรบ้าง** (ตรวจในโค้ดแล้ว): ABS ใช้เฉพาะตอน **update** คือ DO เซ็นที่ `amtp/owner.py:94` และ
 `bench/experiments.py:133,138` จากนั้น CS ตรวจที่ `amtp/server.py:86` และ DO ตรวจซ้ำที่ `amtp/validator.py:335`
 ฝั่ง search และ verify ของ DU ไม่ใช้ ABS เลย (ตรวจด้วย Merkle proof + root ที่อ่านจาก contract)
-ดังนั้นถ้า ABS ช้า จะกระทบแค่ ex3, ex4, ex5
+ดังนั้นถ้า ABS ช้า จะกระทบแค่ ex3 กับ ex5 (ex4 ไม่ผ่าน protocol ที่มีลายเซ็น)
 
 ## 3. สิ่งที่ตกลงกันแล้ว (ห้ามเปลี่ยนเอง ถ้าคิดว่าควรเปลี่ยนให้ถาม A ก่อน)
 
@@ -144,7 +145,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 
 | เวลา | A | B |
 |---|---|---|
-| ตอนนี้ – 02:00 | ex1–ex5 + smoke บน Mac; ปล่อย ex1, ex2 ขึ้น AWS | **B1 + B2 ABS, B3 Sepolia** |
+| ตอนนี้ – 02:00 | ex1–ex5 + smoke บน Mac; ปล่อย ex1, ex2, ex4 ขึ้น AWS | **B1 + B2 ABS, B3 Sepolia** |
 | **03:00** ⚑ | go/no-go ABS | |
 | 03:00 – 05:00 | merge ABS, smoke, ปล่อย ex3–ex5 | ช่วย review |
 | 05:00 – 15:00 | เฝ้า AWS, รันซ้ำที่ล้ม | **B4 Overleaf (15:00)** |
