@@ -48,9 +48,9 @@ branch หลักของงานนี้: `feat/paper32-experiments` · �
 |---|---|---|
 | A1 | ex1 ให้ครบ (มีแล้ว: query p32, anchor_read; เหลือตรวจ Chen/Du รองรับ kQ 16 และสคริปต์รัน) | 1–2 ชม. |
 | A2 | ex2: สร้าง layout clustered / dispersed ใหม่บน v4 (โค้ดเดิม `suite_exp2` + `exp2_layouts.json`), verify / tamper เดิม | 2–3 ชม. |
-| A3 | ex3: (b) ไล่ N, ไม่นับ epoch ที่มี split/merge, Chen ทั้ง (a) และ (b) | 2 ชม. |
+| A3 | ex3: (b) ไล่ N, ไม่นับ epoch ที่มี split/merge, Chen ทั้ง (a) และ (b), **แยกเวลา posting-state repair และ authentication-tree maintenance** ตามที่ (32) บอกให้วัด | 3 ชม. |
 | A4 | ex4: 20% (25k), 5 ระดับ skew (`SM_SKEWS`), 10 run, แยกเวลา split/merge, เส้น AMTP protocol เต็ม | 3 ชม. |
-| A5 | ex5: เพิ่ม delete, Du, root maintenance จาก Sepolia | 2 ชม. |
+| A5 | ex5: **ใช้ contract (`make_anchor`) แทน RootAnchor ในโปรแกรม**, เพิ่ม delete, Du (multi-cloud), root maintenance จาก Sepolia (`gas_domains.py`) | 2 ชม. |
 | A6 | smoke ทุก ex บน Mac (ขนาดเล็ก) + แผนเครื่อง AWS (~14 เครื่อง) + สคริปต์ปล่อยงาน | 1–2 ชม. |
 | A7 | รันจริงบน AWS, เฝ้า, ดึงผลกลับ (ตรวจ manifest: query_set p32, cpabe bsw07, ABS mpr, anchor) | ~10 ชม. (ส่วนใหญ่รอ) |
 | A8 | plot กราฟทุก ex (line chart, บอกตรงที่แพ้) ด้วยค่า **mean** (`_ms`) ตาม (32) (#46) | 3 ชม. |

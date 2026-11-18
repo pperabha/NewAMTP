@@ -24,7 +24,7 @@
 | **ABS จริง** สำหรับ σ_op (และ σ_d) | ❌ **ยังไม่ได้ทำ: งานของ B** | ต้องเข้าผ่าน env `AMTP_ABS=mpr` (ดูข้อ 4) |
 | ex1 Search | 🟡 คน A ทำอยู่ | query set p32 (kQ 1/2/4/8/16) ✅, เวลาอ่าน root แยกเป็นคอลัมน์ `anchor_read` ✅, เหลือสคริปต์รัน |
 | ex2 Verify / tamper / clustered-dispersed | ⏳ คน A | |
-| ex3 update vs Chen, ex5 D = 1–32 | ⏳ คน A | **ต้องรอ ABS** (มี update ผ่าน protocol เต็ม) |
+| ex3 update vs Chen, ex5 D = 1–32 | ⏳ คน A | **ต้องรอ ABS** (มี update ผ่าน protocol เต็ม); ex3 ต้องเพิ่มเวลา posting repair / auth-tree แยก, ex5 ต้องต่อ contract + delete + Du (ตามที่ (32) บอกให้วัด) |
 | ex4 ablation | ⏳ คน A | 3 variant ที่ระดับ index (`bench/ablation.py`) ไม่ใช้ ABS + เส้น AMTP ผ่าน protocol เต็ม (ต้องรอ ABS) (#44 = A+) |
 | รันบน AWS + กราฟ | ⏳ คน A | ex1, ex2 และ ex4 ส่วน 3 variant ปล่อยได้ก่อน เพราะไม่ใช้ ABS |
 | Overleaf | ⏳ **B (B4, B5)** | ดูข้อ 6 |
@@ -120,7 +120,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | # | ใน (32) ตอนนี้ | แก้เป็น |
 |---|---|---|
 | 1 | σ_root เซ็นด้วย ABS | ECDSA secp256k1 ที่ contract ตรวจ แก้ 6 จุด: Phase 1 Step 1, สมการ (29), Threat model + IV-A, Theorem 3 + proof, Table III/IV (T_ABS → T_Sig), ย่อหน้าหลัง Table IV |
-| 2 | Phase 4–5 ใช้ L_h เต็ม และ partition proof ทุก M_cov | วาง LaTeX จาก `docs/paper_latex_2026-11-17_somo.tex` (ทุกจุดที่มี `% >>> [SOMO 17 Nov]`) |
+| 2 | (32) ยังไม่มีการแก้ construction ให้ตรงโค้ดชุด 17 พ.ย. เลย (เช่น (8)/(10) ไม่มี g_d) | **วางทั้งไฟล์** `docs/paper_latex_2026-11-17_somo.tex` ไม่ใช่แค่ตัวเร่ง: ส่วน 1 (1.1–1.13 รวม **1.2 g_d ใน U_d/U_ins**, **1.3 หนึ่ง epoch = batch ≤ b op** (ex3 ใช้ b ถึง 1000), 1.4 fill, 1.5 IMT, 1.7–1.13 ตัวเร่ง + part leaf), ส่วน 2 (assumptions, Proposition 1, Theorem 1), ส่วน 3.1–3.3 (Table III/IV + cost), ส่วน 5 (abstract, intro) · **ห้ามวาง 3.4 และ 3.6 ตรงๆ** (เขียนไว้สำหรับรอบ (31): "Exp 3–4 ran before the part leaf", re-run instances) ให้เขียน setup / baselines ใหม่ตามรอบนี้ · ต้องแก้ σ_root ในส่วน 2 ของไฟล์ด้วย (ไฟล์เขียนก่อนตัดสิน ECDSA) |
 | 3 | dataset Enron | arXiv (ใช้ย่อหน้า dataset ของ AMTP (31)) |
 | 4 | N ∈ {10⁴, 5×10⁴, 10⁵, 5×10⁵, 10⁶} (Exp 1), 10⁴–10⁶ (Exp 3), N = 10⁶ (Exp 2) | Exp 1/3: 10k, 25k, 50k, 75k, 100k, 125k ต่อ domain; Exp 2: N = 100k; Exp 4: 25k → 50k, skew 0/0.25/0.5/0.75/0.95; Exp 5: 5k ต่อ domain; จำนวน domain [X] = 4 |
 | 5 | Exp 4 ใช้ dataset เต็ม | 20% (25k + 250 batch × 100) × 5 ระดับ skew |
