@@ -987,7 +987,8 @@ transition.
 
 ```latex
 AMTP is implemented as a Python~3.12 prototype and evaluated on AWS \texttt{r7i.4xlarge} instances
-(Intel Xeon Platinum 8488C, 16 vCPUs, 128\,GiB RAM, Ubuntu Linux), one job at a time per instance.
+(Intel Xeon Platinum 8488C, 16 vCPUs, 128\,GiB RAM, Ubuntu Linux), one job at a time per instance,
+except Experiment~4, which ran six processes per instance, at most one per physical core.
 Cryptographic operations use the \texttt{cryptography} library: SHA-256 for $H$, AES-256-GCM for
 document encryption, AES-SIV for $\mathsf{DEnc}$, and HMAC-SHA256 for query authentication. $K_d$ is
 protected by the BSW07 CP-ABE scheme, and requests are signed with the single-authority attribute-based
@@ -997,13 +998,21 @@ SS512 pairing group, for which the unforgeability proof of that ABS construction
 resistance, is given in the generic group model. Root transitions are signed with ECDSA over
 secp256k1 and verified by the RootAnchor contract. Protocol costs are measured against the same
 RootAnchor contract deployed on a local EVM; on-chain anchoring latency, read latency and gas are
-measured separately on Ethereum Sepolia and reported apart. The Search Tree is a B$^{+}$ tree of order
+measured separately on Ethereum Sepolia and reported apart; there, anchoring one root update takes
+11.0\,s (median; about 17 minutes until the block is finalized) and reading the anchored root takes
+131\,ms. The Search Tree is a B$^{+}$ tree of order
 $B = 64$; keywords are extracted with RAKE, at most $\kappa = 20$ phrases of 1--3 words per document,
 and documents longer than $\Theta_{doc}$ are chunked. Unless otherwise stated, each reported value is
 averaged over 10 independent runs after 3 warm-up runs. End-to-end query latency is query generation
 plus server time plus DU verification; it excludes the DU's read of the anchored root, which is
 reported separately, and the CP-ABE decryption of returned records.
 ```
+
+แก้ 19 พ.ย. (PR นี้): ประโยค Exp 4 หกกระบวนการต่อเครื่อง (คน A ขอใน PR #59; แผน 5 เครื่อง × 6 process เริ่มรันแล้ว
+`docs/reports/2026-11-19-paper32-aws-ex4-start.md`) และตัวเลข Sepolia จาก `chain/runs/sepolia_bench_20261119_012227.*`
+(โค้ดปัจจุบัน ABS SS512 + BSW07, D = 1: anchor median 11.0 s, max 60.4 s, finality ~1,015 s, อ่าน root latest 131 ms /
+finalized 149 ms) · gas ต่อ root update ตาม D (87k ที่ D = 1 → 166.5k ที่ D = 32, `chain/runs/gas_domains_20261119_005048.csv`)
+เป็นผลของ Exp 5 ไว้เขียนใน B5 ไม่ใส่ใน Setup
 
 ตรวจก่อนส่ง: ค่า `\Theta_{doc}` (ถ้า paper ไม่ได้นิยามสัญลักษณ์นี้ไว้ ให้เขียน "documents longer than the chunk limit are chunked" แทน) และเวอร์ชันของ `cryptography` บนเครื่อง AWS
 
