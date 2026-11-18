@@ -19,7 +19,12 @@
 | M5 | single domain verification time | AMTP, Chen, Du, SE-COLLAB |
 | M6 | multi domain verification time | AMTP, **SE-COLLAB เท่านั้น** |
 | M7 | ablation (Exp 4 ตามที่ตกลง) | AMTP, Static-MT, Global-MT(v) + AMTP (protocol เต็ม) |
-| M8 | multi domain scalability (Exp 5) | AMTP, SE-COLLAB (Du ตาม (32) "where directly applicable" มีข้อมูลไว้) |
+| M8 | multi domain scalability (Exp 5) | AMTP, **SE-COLLAB เท่านั้น** ในกราฟหลัก (เจ้าของงานเลือก A, 19 พ.ย.) |
+
+**M8 / Exp 5 กับ Du (เจ้าของงาน 19 พ.ย.: แบบ A แต่เก็บข้อมูลไว้ทั้งคู่):** กราฟหลักมีแค่ AMTP กับ SE-COLLAB และมีหนึ่งประโยคใน paper ว่า
+Du เทียบตรงไม่ได้ เพราะ Du ไล่จำนวน cloud (n_c) ไม่ใช่จำนวน domain (D) และไม่มี Domain Root แยกกัน ข้อมูล Du ยังรันและเก็บครบ
+(`du/exp5_clouds`, n_c = 4/8/16/32, N = 5k) สคริปต์ plot ของ Exp 5 มีสวิตช์ `--with-du` ไว้ใส่เส้น Du ที่ D = n_c = 4–32 (แบบ B)
+ถ้าเปลี่ยนใจตอน plot ไม่ต้องรันใหม่
 
 ## ความยุติธรรมของการเทียบ (ตรวจในโค้ดแล้ว)
 - ทุก scheme: dataset, keyword และ query ชุดเดียวกัน (`baselines/amtp_dataset.py`, `AMTP_QUERY_SET=p32`), N เดียวกัน, รันบน**เครื่องเดียวกัน**
@@ -72,7 +77,7 @@
 ## Exp 5 Multi-Domain Scalability and Isolation ((32): query, proof gen, verify, root maintenance vs D; update one domain; Du where applicable)
 | รูป | x | y | scheme | ข้อมูล | สถานะ |
 |---|---|---|---|---|---|
-| 5a | D 1–32 (domain เป้าหมาย 5k) | query · proof gen · verify | AMTP, SE-COLLAB; Du ที่ n_c = 4–32 | `exp5`, Du `clouds` | ✅ รันอยู่ w9 |
+| 5a | D 1–32 (domain เป้าหมาย 5k) | query · proof gen · verify | AMTP, SE-COLLAB (Du ที่ n_c = 4–32 เก็บไว้ ใส่ได้ด้วย `--with-du`) | `exp5`, Du `clouds` | ✅ รันอยู่ w9 |
 | 5b root maintenance | D 1–32 | anchor time + gas ต่อ update (EVM ในเครื่อง) และ gas + เวลาจริงบน Sepolia | AMTP | `exp5` + `chain/runs/gas_domains_20261119_005048.csv` | ✅ / ✅ Sepolia เสร็จ |
 | 5c update isolation | D 1–32 | ms ต่อ insert / delete ของ domain เป้าหมาย (Domain Root อื่นไม่เปลี่ยน = gate ผ่าน) | AMTP | `exp5` | ✅ |
 
