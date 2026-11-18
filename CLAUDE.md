@@ -1,5 +1,8 @@
 # NewAMTP — instructions for Claude
 
+**Paper (32) round (deadline 2026-11-19 21:00): read `docs/PAPER32_START_HERE.md` first** (status, decisions,
+who does what, rules). Then `docs/HANDOFF.md` for the project as a whole.
+
 **Read `docs/HANDOFF.md` first.** It has the project overview, every decision made so far, the current
 results, what is running on the cloud now, and the open tasks. Detailed history: `docs/reports/`.
 
