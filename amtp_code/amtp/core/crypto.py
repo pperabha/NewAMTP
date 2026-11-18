@@ -3,7 +3,8 @@
   AES-GCM          document encryption E_d                     (real)
   AES-SIV          deterministic keyword encryption DEnc        (real)
   HMAC-SHA256      query authentication tag tau_Q               (real)
-  Ed25519          owner signature on root transitions          (stand-in for ABS)
+  Ed25519          owner signature σ_op (and σ_root in-process) (stand-in for ABS)
+  MPR ABS          real ABS for σ_op = σ_d, core/abs.py         (AMTP_ABS=mpr)
   Policy key wrap  hides K_d behind an attribute policy         (stand-in for CP-ABE)
   BSW07 CP-ABE     real CP-ABE for K_d, core/cpabe.py           (AMTP_CPABE=bsw07)
 
@@ -104,10 +105,12 @@ def hmac_ok(key: bytes, msg: bytes, tag: bytes) -> bool:
     return hmac.compare_digest(hmac_tag(key, msg), tag)
 
 
-# ---------- signatures (ABS stand-in) ----------
+# ---------- signatures: σ_op (= σ_d of an upload) ----------
 
-class Signer:
-    def __init__(self):
+class Ed25519Signer:
+    """The ABS stand-in: an ordinary Ed25519 key (AMTP_ABS=ed25519, the default)."""
+
+    def __init__(self, domain: str = None):
         self._sk = Ed25519PrivateKey.generate()
         self.public = self._sk.public_key()
 
@@ -115,7 +118,29 @@ class Signer:
         return self._sk.sign(msg)
 
 
-def sig_ok(public: Ed25519PublicKey, msg: bytes, sig: bytes) -> bool:
+def abs_kind(kind: str = None) -> str:
+    kind = (kind or os.environ.get("AMTP_ABS", "ed25519")).lower()
+    if kind not in ("ed25519", "mpr"):
+        raise ValueError(f"unknown AMTP_ABS={kind!r} (use 'ed25519' or 'mpr')")
+    return kind
+
+
+def Signer(domain: str = None, kind: str = None):
+    """A Data Owner's request signer: AMTP_ABS=mpr -> real ABS (Maji-Prabhakaran-Rosulek, core/abs.py,
+    needs Charm; the constructor also runs the domain's ABS Setup + AttrGen); unset or 'ed25519' -> the
+    Ed25519 stand-in. Both have .public and .sign(msg); sig_ok verifies either."""
+    if abs_kind(kind) == "mpr":
+        from .abs import AbsSigner
+        return AbsSigner(domain)
+    return Ed25519Signer(domain)
+
+
+def sig_ok(public, msg: bytes, sig: bytes) -> bool:
+    if type(public).__name__ == "AbsPublic":
+        from .abs import verify
+        return verify(public, msg, sig)
+    if not isinstance(public, Ed25519PublicKey) or not isinstance(sig, (bytes, bytearray)):
+        return False
     try:
         public.verify(sig, msg)
         return True
