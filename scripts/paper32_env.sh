@@ -11,6 +11,9 @@ export AMTP_CPABE=bsw07           # K_d under real CP-ABE (BSW07, Charm, SS512)
 export AMTP_ABS=mpr               # σ_op = σ_d under real ABS (Maji-Prabhakaran-Rosulek, amtp/core/abs.py)
 export AMTP_ABS_CURVE=SS512       # decision #54 C: the curve of CP-ABE and SE-COLLAB (symmetric pairing)
 export AMTP_ANCHOR=${AMTP_ANCHOR:-chain-local}   # Root Anchor contract on an in-process EVM; chain = Sepolia (.env)
+# AMTP query suites (search1, verify1, xsearch, xverify, xdomains, exp5) through bench_split.run: every row also has the
+# server's search alone (server_search_pf: no proof, no fetch) next to DU verify and end-to-end (owner, 19 Nov)
+export AMTP_MOD=${AMTP_MOD:-bench_split.run}
 export REPS=${REPS:-10}           # advisor: 10 measured runs per point
 export WARMUP=${WARMUP:-3}
 # Exp. 3 of (32): (a) x = b at N = 100k (step update), (b) x = N at b = 100 (step update_n); partitions frozen (no split / merge)
