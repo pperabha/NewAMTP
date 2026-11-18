@@ -42,6 +42,14 @@ test chain + CP-ABE รันด้วยกันผ่าน 18 ตัว (ร
 
 ## 4. ตัดสินใจแล้ว
 
+- **อาจารย์ (18 พ.ย.): ใช้ dataset arXiv v4 ที่มีอยู่ ลดขนาดลง ไม่ขยายไปถึง 10⁶ และวัดซ้ำ reps = 10**
+  - N = 10k, 25k, 50k, 75k, 100k, 125k ไฟล์ต่อ domain (ขนาดที่ dataset มีอยู่แล้ว ไม่ต้องสร้าง dataset ใหม่)
+  - ตรงไหนที่ (32) เขียน N = 10⁶ (เช่น Exp 2) ใช้ 125k แทน; paper ต้องแก้ช่วง N ใน Setup และ Exp 1–3
+  - reps = 10 ต่อจุด หลัง warm-up 3 ครั้ง (warm-up คงค่าเดิมจนกว่าอาจารย์จะสั่ง) ใน paper เติม "averaged over 10 runs after 3 warm-up runs"
+  - ข้อความเรื่อง 10⁶ ในข้อ 4 (ย่อหน้าถัดไป), 6, 8, 9 ด้านล่างเขียนก่อนการตัดสินใจนี้ ให้ยึดข้อนี้
+- Exp 1 ใช้ query ที่มีอยู่ได้เลย: `queries_boolean_multi.jsonl` มีครบ 4 รูปแบบของ (32) (AND, OR, AND_of_OR, OR_of_AND)
+  ที่ kQ = 2, 4, 8, 16 แบบละ 20 query พร้อมจำนวนผลลัพธ์ที่ถูกต้องทุก domain ทุกขนาด; kQ = 1 จาก `queries_search_single.jsonl`
+  ที่ขาดคือตัวรันที่ไล่ทุกขนาด N (ตอนนี้ query หลายรูปแบบรันแค่ที่ 100k)
 - **ใช้ arXiv ไม่ใช้ Enron** (ต่างจากที่ (32) เขียน ต้องแก้ประโยค dataset ใน Setup)
   - Enron มี ~517k อีเมลและซ้ำกันเยอะ ต้องเติม synthetic ให้ถึง 10⁶: record ที่ copy มามี keyword เหมือนต้นฉบับ
     ทำให้ rQ และ posting โตตามจำนวน copy ไม่ใช่ตามข้อมูลจริง และไม่มี domain ตามธรรมชาติ
@@ -97,7 +105,7 @@ test chain + CP-ABE รันด้วยกันผ่าน 18 ตัว (ร
 
 | | (32) เขียนว่า | ตอนนี้ | ต้องทำ |
 |---|---|---|---|
-| Setup | Enron + synthetic, N 10⁴–10⁶, รอบ [30/50/100], ค่า θ / D / signature เว้นว่าง | arXiv 4 × 125k, 15–30 รอบ | arXiv 10⁶ จริง (ข้อ 4), เติมค่าว่าง |
+| Setup | Enron + synthetic, N 10⁴–10⁶, รอบ [30/50/100], ค่า θ / D / signature เว้นว่าง | arXiv 4 × 125k, 15–30 รอบ | arXiv v4 เดิม N 10k–125k, reps = 10 (ข้อ 4), เติมค่าว่าง |
 | Exp 1 Search | N ∈ {10⁴, 5×10⁴, 10⁵, 5×10⁵, 10⁶}, kQ ∈ {1, 2, 4, 8, 16}, A∧B∧C∧D, A∨B∨C∨D, (A∨B)∧(C∨D), (A∧B)∨(C∧D); วัด query gen, server search/proof gen, end-to-end; เทียบ SE-COLLAB (+ ตัวอื่นเท่าที่รองรับ) | สูงสุด 125k, kQ ชุดอื่น, ไม่มี OR ล้วน, กราฟ paper เป็น search-only | query ชุดใหม่ + รันใหม่ |
 | Exp 2 Selective proof | N = 10⁶, เปลี่ยน pQ / rQ / sQ, query แบบ clustered กับ dispersed; วัด proof gen, verify, proof size | Exp 2 ตอนนี้ = tamper detection + verify vs rQ ที่ 100k | ออกแบบใหม่ทั้งหมด (ตัวสร้าง query ที่คุมการกระจายข้าม partition); tamper detection ไม่อยู่ใน (32) |
 | Exp 3 Dynamic update | N 10⁴–10⁶, batch 1/10/100/1000, insert + delete, เทียบ Chen, ไม่นับ split/merge; วัด update latency, repair, tree, throughput | `suite_exp3` + update ของ Chen sim มีแล้ว แต่ไม่ได้อยู่ใน paper ล่าสุด | วิธีตัด split/merge + protocol/anchor (5C) |
@@ -140,16 +148,32 @@ anchor in-process 0.12 -> 0.23 ms (`baselines/results/paper/data/amtp/amtp_exp5_
 - **ตัวเลขที่วัดได้ของ AMTP แทบไม่เปลี่ยน**: search 0.024 ms ที่ 10k -> 0.027 ms ที่ 125k (เกือบคงที่ เพราะขึ้นกับ pQ / rQ / sQ
   ไม่ใช่ N) แต่ baseline บางตัวโตตาม N (end-to-end ของ Chen 0.38 -> 2.54 ms) ลด N จึงทำให้ AMTP ดูดีน้อยลง
 - (32) กำหนด N ถึง 10⁶ ถ้าจะตรง paper ลด N สูงสุดไม่ได้ ที่ลดได้คือจำนวนรอบ (ตามค่าที่ paper เติม) และจำนวน batch ใน Exp 4
+  (หลังจากนั้นอาจารย์ตัดสินให้ลด dataset และ reps = 10 ดูข้อ 4)
+- วัดจริงบน Mac (search1, domain D1, 20 query, 1 รอบ = เวลาโหลด + สร้าง index เกือบทั้งหมด):
 
-## 9. งานถัดไป (เรียงลำดับ)
+| N | เวลา | ต่อ 1,000 ไฟล์ |
+|---|---|---|
+| 10,000 | 19 s | 1.9 s |
+| 25,000 | 40 s | 1.6 s |
+| 50,000 | 88 s | 1.8 s |
+| 125,000 | 268 s | 2.1 s |
+
+  โตเกือบเป็นเส้นตรง (เร็วกว่าเส้นตรงเล็กน้อยที่ N ใหญ่) ลดเหลือ 20% -> สร้าง index เร็วขึ้น ~5–6 เท่า; ส่วนที่ไม่เร็วขึ้น:
+  การวัด query ของ AMTP (ไม่ขึ้นกับ N), Exp 4 AMTP / Static-MT (ขึ้นกับจำนวน batch), เวลารอ block บน Sepolia (~12 s ต่อ epoch)
+  Exp 4 Global-MT (hash ทั้ง tree ทุก update) เร็วขึ้นมาก (เดิม 13–14 ชม. ต่อรอบ)
+
+## 9. งานถัดไป (เรียงลำดับ, ปรับหลังอาจารย์ตัดสิน dataset เดิม + reps = 10)
 
 1. รอตัดสิน 5A / 5B / 5C (5A ต้องถามอาจารย์)
 2. ABS จริงสำหรับ σ_d / σ_op (ถ้า 5A ผ่าน)
-3. เลือก arXiv เพิ่มให้มี domain ขนาด 10⁶ (`datasets/arxiv/select_files_v4.py`) + keyword
-4. ทดสอบ build ที่ 10⁶ (AMTP และ baseline ทั้ง 3 โดยเฉพาะ SE-COLLAB ที่ใช้ pairing): เวลาและ RAM
-5. ตัวสร้าง query / workload ของแต่ละ Exp ตาม (32) (Exp 2 clustered / dispersed, Exp 4 ระดับ skew)
-6. smoke test ทุก Exp บน Mac -> รันจริงบน AWS (anchor บน Sepolia: Exp 3 ~1,320 epoch ~4.5 ชม., Exp 5 ~200 epoch,
-   Exp 4 ~5,000 epoch ~17 ชม. ต้องแยก account รันขนาน) -> กราฟ (line chart เท่านั้น)
+3. Exp 1: ตัวรันที่ไล่ N ทุกขนาดสำหรับ 4 รูปแบบ × kQ 1, 2, 4, 8, 16 วัด query gen, search/proof gen, end-to-end (ทุก scheme ที่รองรับ)
+4. Exp 2: ตัวสร้าง query แบบ clustered / dispersed ที่คุม pQ / rQ / sQ ที่ N = 125k
+5. Exp 3: update batch 1/10/100/1000 insert + delete ไม่นับ split/merge, protocol / anchor แยกกัน, เทียบ Chen
+6. Exp 4: ไล่ระดับ skew + แยกเวลา split/merge; Exp 5: เพิ่ม delete, เทียบ Du, root maintenance จาก Sepolia
+7. smoke test ทุก Exp บน Mac -> รันจริงบน AWS ด้วย reps = 10 (anchor บน Sepolia: Exp 3 ~400 epoch ~1.3 ชม.,
+   Exp 5 ~200 epoch, Exp 4 หลายพัน epoch ต้องแยก account รันขนาน) -> กราฟ (line chart เท่านั้น)
+
+(งานเดิม "เลือก arXiv เพิ่มให้ถึง 10⁶" และ "ทดสอบ build ที่ 10⁶" ยกเลิกแล้ว)
 
 ## 10. วิธีรัน
 

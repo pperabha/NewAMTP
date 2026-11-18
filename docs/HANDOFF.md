@@ -14,7 +14,7 @@
 - **CP-ABE จริง** (BSW07, Charm): `AMTP_CPABE=bsw07` — `docs/reports/2026-11-17-real-cpabe.md`
 - **Root Anchor บน Ethereum จริง** (contract บน Sepolia): `AMTP_ANCHOR=chain | chain-local` — `docs/reports/2026-11-17-chain-anchor.md`, `chain/README.md`
 - **ABS ยังเป็นตัวจำลอง** (Ed25519) ข้อเสนอ: ABS จริงสำหรับ σ_d / σ_op, ECDSA ที่ contract ตรวจสำหรับ σ_root (รออาจารย์)
-- **dataset: ใช้ arXiv ต่อ (ไม่ใช้ Enron)** และเลือกเพิ่มให้ถึง 10⁶ ไฟล์จริง
+- **dataset: ใช้ arXiv v4 ที่มีอยู่ (ไม่ใช้ Enron, ไม่ขยายถึง 10⁶)** N = 10k–125k ต่อ domain และ **reps = 10** (อาจารย์สั่ง 18 พ.ย.)
 - ผลรอบส่งงาน 17 พ.ย. อยู่ที่ `baselines/results/paper/` (Figs. 3–10) และ repo สาธารณะ `ApiSom-o/AMTP-submission`
 
 ---
