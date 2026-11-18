@@ -50,3 +50,7 @@
 - pytest ทั้งชุดผ่าน: ค่าเริ่มต้น 574, `AMTP_ABS=mpr` (SS512) 575, `mpr` + `bsw07` 575; `test_abs.py` บน BN254 14 passed
 - เปิด **PR #55** (B1+B2, `feat/real-abs` → `feat/paper32-experiments`) และ **issue #54** (Decision: ABS curve, เสนอ SS512)
   เตือน Prim ให้ไลน์บอกคน A แล้ว · งานถัดไป: B4 Overleaf (`docs/paper32_overleaf_B4.tex`, ส่ง 15:00)
+- คน A ตัดสิน **#54 = C (SS512)**; ยืนยันจาก PDF MPR หน้า 20 ว่า proof ทำในกรณี G = H (comment ใน #54)
+- merge `feat/paper32-experiments` (#47, #52, #53) เข้า `feat/real-abs`: #49 ย้าย `bucket` ออกจาก U_op (ไม่ชนกับไฟล์ ABS)
+- B4 scope เปลี่ยน (#47): วาง LaTeX จาก `_somo` เฉพาะข้อที่ระบุใน START_HERE B4 ข้อ 2 (ห้าม 1.1, 1.2, ห้ามวาง 3.4/3.6 ตรงๆ),
+  เพิ่มข้อ 10 (ρ_w แทน σ_w) และข้อ 11 (B = 64, RAKE κ = 20); setup ABS = "MPR (Charm, SS512, symmetric pairing)"
