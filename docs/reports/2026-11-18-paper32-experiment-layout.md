@@ -34,7 +34,7 @@ ex2_verify/                               (32) Exp 2: Selective Proof, Verificat
 ├── Verify_2.1_multi_domain_vary_results     x = rQ รวม, 4 domain × 100k                    AMTP vs SE-COLLAB
 ├── Verify_2.2_multi_domain_vary_domains     x = D, y = เวลา verify อย่างเดียว               AMTP vs SE-COLLAB
 │                                            คงที่: ไฟล์ชุดเดิม (100k/domain × 4 แบ่งกลุ่มใหม่) และ query ชุดเดิม -> rQ เท่าเดิม
-└── Verify_3_clustered_vs_dispersed (ใหม่ ตาม (32))  N = 125k, marker keyword ที่มีผล rQ ไฟล์ วางแบบ clustered
+└── Verify_3_clustered_vs_dispersed (ใหม่ ตาม (32))  N = 100k (ตัดสิน 18 พ.ย.), marker keyword ที่มีผล rQ ไฟล์ วางแบบ clustered
                                              (อยู่ใน partition น้อย) / dispersed (กระจายหลาย partition) / partition_spread;
                                              y = proof gen, verify, proof size; x = rQ หรือ sQ
                                              (โค้ดเดิม suite_exp2 + exp2_layouts.json ต้องสร้างใหม่บน v4)
@@ -46,7 +46,8 @@ ex3_update_cost/                          (32) Exp 3: Dynamic Update Scalability
 
 ex4_split_merge/                          (32) Exp 4: Adaptive Partitioning under Skewed Growth
     AMTP vs Static-MT vs Global-MT, θ_max = 64
-    x = ระดับ skew (สัดส่วน update ที่ลง partition ร้อน เช่น 0 / 25 / 50 / 75 / 100%)
+    เริ่ม 25k (20% ของ dataset) + insert 250 batch × 100 (→ 50k) แล้ว delete 65% ของกลุ่มร้อน (merge เกิดเฟสนี้)
+    x = ระดับ skew = สัดส่วนไฟล์ใหม่ที่บังคับลงกลุ่มร้อน: 0, 0.25, 0.5, 0.75, 0.95 (ตัดสิน 18 พ.ย.)
     y = update latency, search/proof latency, verify latency, partition ใหญ่สุด, เวลา split/merge
 
 ex5_multidomain/                          (32) Exp 5: Multi-Domain Scalability and Isolation

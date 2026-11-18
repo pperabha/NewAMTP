@@ -35,8 +35,17 @@
 
 ## 3. สิ่งที่ตกลงกันแล้ว (ห้ามเปลี่ยนเอง ถ้าคิดว่าควรเปลี่ยนให้ถาม A ก่อน)
 
-- dataset **arXiv v4** (ไม่ใช้ Enron); ex1/2/3/5 ใช้ขนาดเดียวกับ (31) คือ 100k ต่อ domain, ไล่ 10k–125k, ex5 domain เป้าหมาย 5k;
-  ex4 ใช้ 20% (25k + 250 batch × 100) × 5 ระดับ skew
+- dataset **arXiv v4 ที่มีอยู่จริงเท่านั้น** (ไม่ใช้ Enron, ไม่สร้างข้อมูลเพิ่มให้ถึง 10⁶: อาจารย์สั่ง) ขนาดของแต่ละ ex:
+
+  | Exp | ขนาด |
+  |---|---|
+  | ex1 1.1 / ex2 1.1, 1.2 | 1 domain × 100k |
+  | ex1 1.2 | 1 domain × 10k, 25k, 50k, 75k, 100k, 125k (kQ = 4) |
+  | ex1 2.1, 2.2 / ex2 2.1, 2.2 | 4 domain × 100k = 400k (2.2 แบ่งกลุ่มใหม่เป็น D = 1–32) |
+  | ex2 clustered / dispersed | **1 domain × 100k** (แทน N = 10⁶ ของ (32)) |
+  | ex3 | 100k × b 1/10/100/1000 และ N 10k–125k ที่ b = 100 |
+  | ex4 | เริ่ม 25k + insert 250 batch × 100 (→ 50k) แล้ว delete 65% ของกลุ่มร้อน; skew = **0, 0.25, 0.5, 0.75, 0.95** |
+  | ex5 | D = 1–32, ทุก domain 5k (สูงสุด 160k) |
 - reps = 10 หลัง warm-up 3 · query default 4 keyword · θ_max 64 / θ_min 16
 - AMTP เปิดตัวเร่งทั้งหมด (fill placement, AND pruning + greedy, result-only partition proofs, part leaf) และเอาคำอธิบาย LaTeX ใส่ลง (32)
 - σ_root = **ECDSA** ที่ contract ตรวจ (ABS ตรวจบน chain ไม่ได้จริง: pairing แพงเกินไปสำหรับ gas และยังไม่มีงานไหนทำ)
@@ -103,7 +112,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | 1 | σ_root เซ็นด้วย ABS | ECDSA secp256k1 ที่ contract ตรวจ แก้ 6 จุด: Phase 1 Step 1, สมการ (29), Threat model + IV-A, Theorem 3 + proof, Table III/IV (T_ABS → T_Sig), ย่อหน้าหลัง Table IV |
 | 2 | Phase 4–5 ใช้ L_h เต็ม และ partition proof ทุก M_cov | วาง LaTeX จาก `docs/paper_latex_2026-11-17_somo.tex` (ทุกจุดที่มี `% >>> [SOMO 17 Nov]`) |
 | 3 | dataset Enron | arXiv (ใช้ย่อหน้า dataset ของ AMTP (31)) |
-| 4 | N สูงสุด 10⁶ | 10k–125k ต่อ domain; ex2 "N = 10⁶" → 100k; ex4 25k × 5 skew; ex5 domain เป้าหมาย 5k |
+| 4 | N ∈ {10⁴, 5×10⁴, 10⁵, 5×10⁵, 10⁶} (Exp 1), 10⁴–10⁶ (Exp 3), N = 10⁶ (Exp 2) | Exp 1/3: 10k, 25k, 50k, 75k, 100k, 125k ต่อ domain; Exp 2: N = 100k; Exp 4: 25k → 50k, skew 0/0.25/0.5/0.75/0.95; Exp 5: 5k ต่อ domain; จำนวน domain [X] = 4 |
 | 5 | Exp 4 ใช้ dataset เต็ม | 20% (25k + 250 batch × 100) × 5 ระดับ skew |
 | 6 | **ใหม่** ยังไม่บอกว่าวัดบน network ไหน | เพิ่มใน setup: *Protocol costs are measured against the same RootAnchor contract deployed on a local EVM; on-chain anchoring latency, read latency and gas are measured separately on Ethereum Sepolia and reported apart.* |
 | 7 | **ใหม่** ยังไม่ได้นิยาม end-to-end | end-to-end = query gen + server + verify; **ไม่รวม** เวลาอ่าน root (รายงานแยก) และการถอดรหัส CP-ABE ของ record |
@@ -118,6 +127,9 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 - B6: ห้ามทำตอน AWS กำลังรัน; ทำเป็น PR แยกให้เจ้าของงานกด merge
 
 ## 5. กฎ (สำหรับ Claude ของ B)
+
+- **workflow ของทีม (ดู `CLAUDE.md` หัวข้อ "Team workflow"):** เสร็จ 1 task → เปิด PR เข้า `feat/paper32-experiments`
+  tag อีกฝั่ง · ต้องตัดสินใจ → เปิด issue `Decision: ...` · หลังเปิด PR หรือ issue ให้เตือนคนของคุณทักไลน์บอกเพื่อน
 
 - **แก้ได้เฉพาะไฟล์ของ B:** `amtp_code/amtp/core/`, `amtp_code/tests/test_abs*.py`, `amtp_code/bench/abs_bench.py`,
   `chain/` และ paper; **ห้ามแก้** `amtp_code/bench/` (ไฟล์อื่น), `baselines/`, `datasets/`, `scripts/` (ของ A)
