@@ -62,6 +62,11 @@
 - **#44 = A+:** ex4 เทียบ AMTP / Static-MT / Global-MT(v) ที่ระดับ index (`bench/ablation.py`) **และ** เพิ่มเส้น AMTP ผ่าน
   protocol เต็ม (ABS + DO validator + anchor) ทุก skew เพื่อวัด split/merge overhead ใน protocol จริง
 - **#45 = C:** ex4 รัน **10 run** ต่อจุด (variant × skew) ใช้ ~10 เครื่อง (ประมาณ ~5 ชม.)
+- **หลัก: ยึด (32) ตามตัวอักษร ยกเว้นสิ่งที่ตกลงกันในรายการนี้** (เจ้าของงาน 18 พ.ย.)
+- **#48 = A:** AAD ของไฟล์ = `Encode(i, id_d)` ตาม (32) (โค้ดแก้)
+- **#49 = A:** U_d / U_ins ตาม (8) / (10) ไม่มี g_d; placement group เป็น input ของ CS ฝั่งเดียว (โค้ดแก้)
+- **#50 = B:** epoch = batch ≤ b operation (b = 1 = (32)); แก้ paper ด้วย somo 1.3, 2.4–2.6
+- **#51 = B:** IMT แบบ indexed Merkle tree (next pointer); แก้ paper ด้วย somo 1.5, 2.1, 1.11 Step 1
 - **#46 = B (ตาม setup ของ (32)):** ทุกค่าที่รายงานเป็น **mean** ของ 10 run หลัง warm-up 3 (*"averaged over 10 independent runs"*)
   กราฟใช้คอลัมน์ `_ms` (mean) ไม่ใช่ `_ms_median`; ex4 = mean ของ 10 run (แต่ละ run = mean ต่อ batch)
 
@@ -120,7 +125,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | # | ใน (32) ตอนนี้ | แก้เป็น |
 |---|---|---|
 | 1 | σ_root เซ็นด้วย ABS | ECDSA secp256k1 ที่ contract ตรวจ แก้ 6 จุด: Phase 1 Step 1, สมการ (29), Threat model + IV-A, Theorem 3 + proof, Table III/IV (T_ABS → T_Sig), ย่อหน้าหลัง Table IV |
-| 2 | (32) ยังไม่มีการแก้ construction ให้ตรงโค้ดชุด 17 พ.ย. เลย (เช่น (8)/(10) ไม่มี g_d) | **วางทั้งไฟล์** `docs/paper_latex_2026-11-17_somo.tex` ไม่ใช่แค่ตัวเร่ง: ส่วน 1 (1.1–1.13 รวม **1.2 g_d ใน U_d/U_ins**, **1.3 หนึ่ง epoch = batch ≤ b op** (ex3 ใช้ b ถึง 1000), 1.4 fill, 1.5 IMT, 1.7–1.13 ตัวเร่ง + part leaf), ส่วน 2 (assumptions, Proposition 1, Theorem 1), ส่วน 3.1–3.3 (Table III/IV + cost), ส่วน 5 (abstract, intro) · **ห้ามวาง 3.4 และ 3.6 ตรงๆ** (เขียนไว้สำหรับรอบ (31): "Exp 3–4 ran before the part leaf", re-run instances) ให้เขียน setup / baselines ใหม่ตามรอบนี้ · ต้องแก้ σ_root ในส่วน 2 ของไฟล์ด้วย (ไฟล์เขียนก่อนตัดสิน ECDSA) |
+| 2 | (32) ยังไม่มีการแก้ construction ชุด 17 พ.ย. | **ยึด (32) เป็นหลัก ยกเว้นสิ่งที่ตกลงกัน** วางจาก `docs/paper_latex_2026-11-17_somo.tex` **เฉพาะ**: 1.3 (epoch = batch, #50 B) · 1.4 (fill, comment) · 1.5 + 2.1 + 1.11 Step 1 (IMT แบบ indexed, #51 B) · 1.6 · 1.7–1.13 (ตัวเร่ง + part leaf) · 1.11 ที่เหลือ · 2.2 (leakage: คง "placement group" เพราะ CS ยังเห็น hint) · 2.3–2.8 (Proposition 1 / Theorem 1 รองรับ batch และตัวเร่ง; ใช้ ECDSA กับ σ_root) · 3.1–3.3 · 5.x · **ห้ามวาง 1.1 และ 1.2** (โค้ดแก้ให้ตรง (32) แล้ว: AAD = Encode(i, id_d) #48 A, U_d / U_ins ไม่มี g_d #49 A) · **ห้ามวาง 3.4 / 3.6 ตรงๆ** (ของรอบ (31)) |
 | 3 | dataset Enron | arXiv (ใช้ย่อหน้า dataset ของ AMTP (31)) |
 | 4 | N ∈ {10⁴, 5×10⁴, 10⁵, 5×10⁵, 10⁶} (Exp 1), 10⁴–10⁶ (Exp 3), N = 10⁶ (Exp 2) | Exp 1/3: 10k, 25k, 50k, 75k, 100k, 125k ต่อ domain; Exp 2: N = 100k; Exp 4: 25k → 50k, skew 0/0.25/0.5/0.75/0.95; Exp 5: 5k ต่อ domain; จำนวน domain [X] = 4 |
 | 5 | Exp 4 ใช้ dataset เต็ม | 20% (25k + 250 batch × 100) × 5 ระดับ skew |
