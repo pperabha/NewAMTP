@@ -24,7 +24,7 @@
 #               update = owner request (tokens + σ_op) + CS prepare + Validator + anchor;
 #               file encryption apart                                                       (AMTP, Chen)
 #   update_n    Exp. 3 (b): update cost against N = UPDATE_N_SIZES at b = UPDATE_N_B (AMTP, Chen)
-#   exp5        Multi-domain scalability: D = 1..32 domains, target domain of 5,000 files; query cost and
+#   exp5        (+ Du clouds at n_c = EXP5_DU_CLOUDS) Multi-domain scalability: D = 1..32 domains, target domain of 5,000 files; query cost and
 #               the target domain's update (one epoch, Phase 2 protocol); other roots unchanged  (AMTP, SE-COLLAB)
 #   theta       θ sweep (NOT in the default steps: not in the plan; ex4 covers θ = 64/128/256). Run by name only.
 #   skewproto   Exp. 4 AMTP line through the full protocol (signed requests, DO validation, anchor), same workload
@@ -59,6 +59,8 @@ UPDATE_SIZES=${UPDATE_SIZES:-100000}                   # N (files from all 4 dom
 UPDATE_B=${UPDATE_B:-1 10 100 1000}                    # b = signed requests per epoch
 UPDATE_N_SIZES=${UPDATE_N_SIZES:-10000 25000 50000 75000 100000 125000}   # update_n: x = N (Exp. 3 (b) of (32))
 UPDATE_N_B=${UPDATE_N_B:-100}                          # update_n: the fixed b
+EXP5_DU_N=${EXP5_DU_N:-5000}                           # exp5 Du: files (= the AMTP target domain of exp5_workload.json)
+EXP5_DU_CLOUDS=${EXP5_DU_CLOUDS:-4 8 16 32}            # exp5 Du: n_c (>= t = 3)
 XD_KQ=${XD_KQ:-4}                                      # xdomains: query kQ kept
 XD_SHAPES=${XD_SHAPES:-AND}                            # xdomains: query shapes kept
 THETA_N=${THETA_N:-200000}                           # needs shared exp1_queries.json at this N (10k..200k)
@@ -157,6 +159,10 @@ step_update_n() {      # Exp. 3 (b): x = N at one b (step "update" is (a): x = b
 step_exp5() {
   run exp5_amtp amtp_code "$PY" -m bench.experiments exp5 $COMMON $O_AMTP ${X_EXP5:-}
   run exp5_secollab baselines "$PY" se_collab_sim.py exp5 $COMMON $SE_OPTS $O_SE ${X_EXP5:-}
+  # Du (multi-cloud, "where directly applicable" in (32)): n_c clouds holding shares of N = EXP5_DU_N files (the AMTP
+  # target-domain size); RS needs n_c >= t = 3, so only D = 4..32 have a Du point
+  run exp5_du baselines "$PY" du_et_al_sim.py clouds $COMMON --n "$EXP5_DU_N" --clouds $EXP5_DU_CLOUDS \
+    --kq 1 2 4 8 --out "$RUN_DIR/du/exp5_clouds"
 }
 step_theta() {
   run theta_amtp amtp_code "$PY" -m bench.experiments theta $COMMON --n "$THETA_N" --theta-values $THETA_VALUES $O_AMTP

@@ -717,8 +717,9 @@ def suite_exp3(a):
 def suite_exp5(a):
     """Exp. 5: D independent domains, replaying the shared baselines/results/exp5_workload.json (the same
     domains, queries and update files as SE-COLLAB). The target domain (groups[0], identical for every D) is
-    queried, then updated alone. Measures query cost, the anchor's Global Root update, and checks that every
-    other Domain Root is unchanged."""
+    queried, then updated alone: warm-up + reps inserts, then the same files deleted (one operation = one epoch).
+    Root maintenance = the RootAnchor contract (AMTP_ANCHOR) checking σ_root and deriving R_G over the D domains:
+    anchor_ms and anchor_gas (gasUsed). Every other Domain Root must stay unchanged (isolation gate)."""
     corpus = Corpus(a)
     meta, groups, queries, fresh = corpus.D.load_exp5_workload(a.exp5_workload, a.data)
     if len(fresh) < a.warmup + a.reps:
@@ -729,7 +730,7 @@ def suite_exp5(a):
     print(f"[exp5] multi-domain  D={counts} per-domain={meta['per_domain']} queries={len(queries)}")
     w = Writer("exp5_domains", a.out)
     for nd in counts:
-        anchor, server = RootAnchor(), CloudServer()
+        anchor, server = make_anchor(), CloudServer()       # the RA of (32): the RootAnchor contract (AMTP_ANCHOR)
         t0 = time.perf_counter()
         doms = [Domain(f"D{k:02d}", corpus, groups[k], a, anchor, server) for k in range(nd)]
         states = [d.publish_snapshot() for d in doms]
@@ -744,25 +745,46 @@ def suite_exp5(a):
             if info.pop("ids") != ground_truth(text, inv, doms[0].cids):
                 raise SystemExit(f"CORRECTNESS GATE FAILED: result != ground truth for {q['query']}")
             w.add(**base, kQ=q["kQ"], q=q["q"], shape=q["shape"], op="query", status="ok", **info, **res)
-        samples = []
         target = doms[0]
         proto = Protocol(target)                             # the target domain's own policy (adaptive)
-        for rep in range(a.warmup + a.reps):                 # update the target domain only: one insert = one epoch
+        txs = getattr(anchor, "txs", None)                   # chain anchors: one TxRecord (gasUsed) per transaction
+
+        def one_update(make):
+            """One epoch on the target domain only; every other Domain Root must stay as anchored (isolation)."""
             before = {d.name: anchor.latest(d.name) for d in doms[1:]}
-            e = corpus.encrypt_fresh(fresh[rep], target.name)          # file encryption: not counted
+            n_tx = len(txs) if txs is not None else 0
             gc.disable()                                     # same timing rule as exp3
             try:
-                times, _ = proto.epoch(lambda: [corpus.insert_request(e, fresh[rep], target.name,
-                                                                      target.eng.epoch, target.signer)])
+                times, _ = proto.epoch(make)
             finally:
                 gc.enable()
             if any(anchor.latest(d.name) != before[d.name] for d in doms[1:]):
                 raise SystemExit("ISOLATION FAILED: updating one domain changed another Domain Root")
-            if rep >= a.warmup:
-                samples.append(times)
+            gas = sum(t.gas for t in txs[n_tx:]) if txs is not None else None   # on chain: R_D + R_G of D domains
+            return times, gas
+
+        inserted = []
+        for kind in ("insert", "delete"):                    # update isolation for both operations, one per epoch
+            samples, gases = [], []
+            for rep in range(a.warmup + a.reps):
+                if kind == "insert":
+                    e = corpus.encrypt_fresh(fresh[rep], target.name)  # file encryption: not counted
+                    inserted.append((fresh[rep].doc_id, e[0]))
+                    times, gas = one_update(lambda: [corpus.insert_request(e, fresh[rep], target.name,
+                                                                           target.eng.epoch, target.signer)])
+                else:
+                    did, cid = inserted[rep]                 # delete the files inserted above, in order
+                    times, gas = one_update(lambda: [Corpus.delete_request(did, cid, target.name,
+                                                                           target.eng.epoch, target.signer)])
+                if rep >= a.warmup:
+                    samples.append(times)
+                    gases.append(gas)
+            w.add(**base, op="update_one_domain", update_kind=kind, b=1, status="ok",
+                  untouched_roots_unchanged=nd - 1, **summarize(samples),
+                  anchor_gas=st.mean(gases) if gases and gases[0] is not None else "")
         proto.check()
-        w.add(**base, op="update_one_domain", update_kind="dynamic", b=1, status="ok",
-              untouched_roots_unchanged=nd - 1, **summarize(samples))
+        for d_id, _ in inserted:
+            corpus._docs.pop((d_id, target.name), None)
         del doms, states, anchor, server
         gc.collect()
     w.close()
