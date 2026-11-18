@@ -9,6 +9,33 @@
 กติกา: line chart เท่านั้น · ค่า = **mean** ของ 10 run หลัง warm-up 3 (#46) · บอกตรงๆ ว่า AMTP แพ้ตรงไหน
 ✅ = มีข้อมูล / กำลังรัน · ⏳ = ยังไม่ได้รัน · ❗ = ยังไม่มีโค้ด/ข้อมูล
 
+## กราฟที่ต้องมีแน่นอน (เจ้าของงาน 19 พ.ย.)
+| # | กราฟ | scheme |
+|---|---|---|
+| M1 | server search time อย่างเดียว, single domain (ไล่ kQ และไล่ N) | AMTP, Chen, Du, SE-COLLAB |
+| M2 | Boolean server search time, multi domain, **(A∨B)∧(C∨D)** | AMTP, **SE-COLLAB เท่านั้น** |
+| M3 | Boolean server search time, multi domain, **(A∧B)∨(C∧D)** | AMTP, **SE-COLLAB เท่านั้น** |
+| M4 | tamper detection | AMTP, Chen, Du, SE-COLLAB |
+| M5 | single domain verification time | AMTP, Chen, Du, SE-COLLAB |
+| M6 | multi domain verification time | AMTP, **SE-COLLAB เท่านั้น** |
+| M7 | ablation (Exp 4 ตามที่ตกลง) | AMTP, Static-MT, Global-MT(v) + AMTP (protocol เต็ม) |
+| M8 | multi domain scalability (Exp 5) | AMTP, SE-COLLAB (Du ตาม (32) "where directly applicable" มีข้อมูลไว้) |
+
+## ความยุติธรรมของการเทียบ (ตรวจในโค้ดแล้ว)
+- ทุก scheme: dataset, keyword และ query ชุดเดียวกัน (`baselines/amtp_dataset.py`, `AMTP_QUERY_SET=p32`), N เดียวกัน, รันบน**เครื่องเดียวกัน**
+  ใน step เดียวกัน, 10 run หลัง warm-up 3, ใช้ mean, ขนาด proof / response นับด้วยกติกาเดียวกัน (`baselines/wire_sizes.py`)
+- **server search อย่างเดียว** = งานของ server ที่ดึง posting และประเมิน Boolean โดยไม่สร้าง proof และไม่ fetch ไฟล์:
+  - AMTP `server_search_pf` = lookup + focus + posting sets + Boolean eval (ผลต้องตรงกับ response เต็ม ไม่งั้นหยุด)
+  - SE-COLLAB `search_no_fetch` = `bpl_retrieval` + `boolean_eval` (search_core ลบ result_fetch)
+  - Du `search_no_fetch` = Algorithm 2 (match Bloom-filter tree) ของทุก cloud ใช้ **cloud ที่ช้าที่สุด** (cloud ทำงานขนานกัน
+    เหมือน `server_total` ของ Du; ผลรวมทุก cloud อยู่ใน `search_no_fetch_sum`); วัดหลัง query เต็ม (cache อุ่น → เข้าทาง Du)
+  - Chen `server_total` = เดิน chain + homomorphic add + XOR proof (proof เป็นแค่ XOR); Chen **ไม่มี fetch** และ **AND ทำที่ user**
+    (ถอดรหัส bitmap แล้ว AND) ต้องเขียนใน caption ว่า server ของ Chen ไม่ได้ประเมิน Boolean
+- **verify** = ขั้นตรวจฝั่ง user ของแต่ละ scheme เอง (`verify_total`)
+- **end-to-end** = query gen + server + verify ทุก scheme; ไม่รวมการถอดรหัสไฟล์ของทุก scheme; AMTP ไม่รวมเวลาอ่าน root (`anchor_read` แยก)
+  เพราะ baseline ไม่มี chain
+- สิ่งที่ AMTP ทำเพิ่มแต่ baseline ไม่มี (ไม่ได้ตัดออกจากเส้นหลัก แต่แยกคอลัมน์ให้เห็น): ABS ใน update (`abs_*`), anchor บน contract (`anchor`)
+
 ## Exp 1 Boolean Search Scalability ((32): query-generation, server search/proof-generation, end-to-end)
 | รูป | x | y (panel) | scheme | ข้อมูล | สถานะ |
 |---|---|---|---|---|---|
