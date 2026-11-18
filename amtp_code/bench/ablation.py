@@ -198,7 +198,7 @@ def main():
                 stream, phases = stream + drops, phases + ["hot_delete"] * len(drops)
             for variant in variants:
                 eng = build(variant, initial, a)
-                tag = {"run": run, "variant": variant, "skew": skew, "b": a.batch_size}
+                tag = {"run": run, "seed": seed, "variant": variant, "skew": skew, "b": a.batch_size}
                 splits = merges = 0
                 last_insert = phases.count("insert") - 1
 
