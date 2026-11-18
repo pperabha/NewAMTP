@@ -361,10 +361,41 @@ class AnchorRead:
         return self.value
 
 
+_ONCE = None    # set by measure_fn: the DU-side work done once per measured query (issue #68)
+
+
+def once(key, fn):
+    """(value, ms) of fn(). Inside measure_fn the DU's anchor read and record decryption run ONCE per query (the first
+    call, a warm-up run) and later repetitions reuse that value and time (issue #68, decision A): the DU's CP-ABE
+    pairings (~120 ms) and EVM call would otherwise run between the timed repetitions in the same process and evict
+    the server's data from the CPU caches, slowing the timed parts by 1.4-1.6x, although the DU and the CS are separate
+    machines. Every timed part (query generation, server, the 7 verification checks) still runs in every repetition.
+    Outside measure_fn (or after it) fn() runs every time, as before."""
+    if _ONCE is not None and key in _ONCE:
+        return _ONCE[key]
+    t0 = time.perf_counter()
+    out = (fn(), (time.perf_counter() - t0) * 1e3)
+    if _ONCE is not None:
+        _ONCE[key] = out
+    return out
+
+
+def anchor_read(dom):
+    """Phase 4 Step 1: the DU reads (e*, R_D) of dom from the RA"""
+    return once(("read", dom.name), lambda: AnchorRead(dom.name, dom.anchor.latest(dom.name)))
+
+
+def decrypt_checked(user, resp):
+    opened = user.decrypt(resp)
+    if any(o["status"] != "open" for o in opened):
+        raise SystemExit("CORRECTNESS GATE FAILED: an authorised user could not decrypt a result")
+    return opened
+
+
 def run_query(dom, state, user, text):
-    """One full query: anchor read -> trapdoor -> admission + ASPA response -> 7 checks -> decrypt."""
-    ta = time.perf_counter()
-    read = AnchorRead(dom.name, dom.anchor.latest(dom.name))   # Phase 4 Step 1: the DU reads (e*, R_D) from the RA
+    """One full query: anchor read -> trapdoor -> admission + ASPA response -> 7 checks -> decrypt.
+    anchor read and decrypt: once per query inside measure_fn (see once())."""
+    read, t_read = anchor_read(dom)
     t0 = time.perf_counter()
     t_q, ctx = user.make_query(dom.name, text, read)
     t1 = time.perf_counter()
@@ -386,21 +417,17 @@ def run_query(dom, state, user, text):
     h2 = HashCounter.calls
     if not rep["accepted"]:
         raise SystemExit(f"CORRECTNESS GATE FAILED: honest query rejected at {rep['failed']}")
-    t5 = time.perf_counter()
-    opened = user.decrypt(resp)
-    t6 = time.perf_counter()
-    if any(o["status"] != "open" for o in opened):
-        raise SystemExit("CORRECTNESS GATE FAILED: an authorised user could not decrypt a result")
+    _, t_dec = once(("decrypt", dom.name, text, len(resp["R_ct"])), lambda: decrypt_checked(user, resp))
     vp = rep["phase_ms"]
-    times = {"anchor_read": (t0 - ta) * 1e3, "query_gen": (t1 - t0) * 1e3,
+    times = {"anchor_read": t_read, "query_gen": (t1 - t0) * 1e3,
              "server_admission": (t_adm - t1) * 1e3, "server_lookup": phase["lookup"],
              "server_eval": phase["eval"], "server_proof": phase["proof"], "server_fetch": phase["fetch"],
              "server_total": (t2 - t1) * 1e3,
              "verify_idx": vp["idx"], "verify_papc": vp["papc"], "verify_part": vp["part"],
              "verify_comp": vp["comp"], "verify_ct": vp["ct"], "verify_total": (t4 - t3) * 1e3,
-             "du_decrypt": (t6 - t5) * 1e3,
+             "du_decrypt": t_dec,
              "end_to_end": (t1 - t0 + t2 - t1 + t4 - t3) * 1e3,
-             "end_to_end_anchor": (t0 - ta + t1 - t0 + t2 - t1 + t4 - t3) * 1e3}   # + the DU's anchor read
+             "end_to_end_anchor": t_read + (t1 - t0 + t2 - t1 + t4 - t3) * 1e3}   # + the DU's anchor read
     ev = resp["proof"]["evidence"]
     info = {"rQ": len(resp["R_ct"]),
             "pQ": sum(len(c) for e in ev if e["status"] == "present"
@@ -416,17 +443,22 @@ def run_query(dom, state, user, text):
 def measure_fn(fn, a):
     """--warmup unrecorded runs of fn(), then --reps recorded ones with the GC off.
     fn() returns (times, info); returns (summary of times, last info, every recorded info)."""
-    for _ in range(a.warmup):
-        fn()
-    samples, infos = [], []
-    gc.disable()
+    global _ONCE
+    _ONCE = {}                                  # DU anchor read + decryption once per query (issue #68)
     try:
-        for _ in range(max(1, a.reps)):
-            m, info = fn()
-            samples.append(m)
-            infos.append(info)
+        for _ in range(a.warmup):
+            fn()
+        samples, infos = [], []
+        gc.disable()
+        try:
+            for _ in range(max(1, a.reps)):
+                m, info = fn()
+                samples.append(m)
+                infos.append(info)
+        finally:
+            gc.enable()
     finally:
-        gc.enable()
+        _ONCE = None
     return summarize(samples), infos[-1], infos
 
 
@@ -499,7 +531,7 @@ def run_tampered(dom, state, user, text, kind, targets, extra=None):
     """One query whose response the server tampered with. Times the user's normal verification (early abort:
     stops at the first failed check) and the full check (every file, names the wrong ones).
     Returns detected = rejected, the first Phase 5 check that failed and the number of files named."""
-    t_q, ctx = user.make_query(dom.name, text, dom.anchor)
+    t_q, ctx = user.make_query(dom.name, text, anchor_read(dom)[0])   # read once per query (#68)
     if dom.server._admit(t_q):
         raise SystemExit("query rejected at admission")
     resp = build_response(state, boolean.from_json(t_q["B_Q"]), t_q["nonce"], dom.server.dht)
