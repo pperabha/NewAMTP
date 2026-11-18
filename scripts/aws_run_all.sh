@@ -26,6 +26,8 @@
 #   exp5        Multi-domain scalability: D = 1..32 domains, target domain of 5,000 files; query cost and
 #               the target domain's update (one epoch, Phase 2 protocol); other roots unchanged  (AMTP, SE-COLLAB)
 #   theta       θ sweep (NOT in the default steps: not in the plan; ex4 covers θ = 64/128/256). Run by name only.
+#   skewproto   Exp. 4 AMTP line through the full protocol (signed requests, DO validation, anchor), same workload
+#               as splitmerge (NOT in the default steps; paper (32) round: scripts/paper32_env.sh)
 #   splitmerge  split / merge: start with SM_N files, insert as many again (95% into one hot group), then delete
 #               65% of the hot group; θ_max = 64/128/256; layout + queries every SM_QUERY_EVERY batches
 #               (AMTP vs Static-MT vs Global-MT); one batch of SM_B updates = one epoch (b, recorded in the CSV);
@@ -68,6 +70,7 @@ SM_THETAS=${SM_THETAS:-64 128 256}
 SM_QUERY_EVERY=${SM_QUERY_EVERY:-100}
 SM_VARIANTS=${SM_VARIANTS:-}                           # e.g. "AMTP,Static-MT" or "Global-MT(v)" (empty: bench default)
 SM_TAG=${SM_TAG:-}                                     # suffix of the split / merge folder, e.g. _gmtv
+SM_SEED=${SM_SEED:-1}                                  # first run's seed (run k uses SM_SEED + k): split runs over machines
 [ -n "${DRY_RUN:-}" ] || mkdir -p "$LOGS"
 COMMON="--reps $REPS --warmup $WARMUP"
 echo "results -> $RUN_DIR"
@@ -156,8 +159,17 @@ step_splitmerge() {
     run "splitmerge_t$t$SM_TAG" amtp_code "$PY" -m bench.ablation --source arxiv --n "$SM_N" \
       --theta-max "$t" --theta-min $((t / 4)) --batches "$SM_BATCHES" --batch-size "$SM_B" --delete-frac 0 \
       --fresh-source initial --skews "$SM_SKEWS" --runs "$SM_RUNS" --hot-delete-frac "$SM_HOT_DELETE" \
-      --query-every "$SM_QUERY_EVERY" ${var[@]+"${var[@]}"} \
+      --query-every "$SM_QUERY_EVERY" --seed "$SM_SEED" ${var[@]+"${var[@]}"} \
       --out "$RUN_DIR/amtp/splitmerge_n${SM_N}_t${t}${SM_TAG}"
+  done
+}
+step_skewproto() {      # Exp. 4 (32), AMTP through the full protocol (#44 A+): same workload as splitmerge
+  local t
+  for t in $SM_THETAS; do
+    run "skewproto_t$t$SM_TAG" amtp_code "$PY" -m bench.experiments skewproto $COMMON \
+      --sm-n "$SM_N" --sm-batches "$SM_BATCHES" --sm-b "$SM_B" --theta-max "$t" --theta-min $((t / 4)) \
+      --skews "$SM_SKEWS" --hot-delete-frac "$SM_HOT_DELETE" --delete-frac 0 --fresh-source initial \
+      --runs "$SM_RUNS" --sm-seed "$SM_SEED" --out "$RUN_DIR/amtp/skewproto_n${SM_N}_t${t}${SM_TAG}"
   done
 }
 

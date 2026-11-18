@@ -233,6 +233,7 @@ class Engine:
         c0, b0 = HashCounter.snapshot()
         touched = sorted((self._modified | self._new) & self.parts.keys())
         splits, merges = self.policy.adapt(self, touched)
+        t_adapt = time.perf_counter()              # Phase 3 Steps 1-2: split / merge and relocation
 
         parts_changed = {}
         for pid in self._modified & self.parts.keys():
@@ -254,10 +255,12 @@ class Engine:
                               {p: self.parts[p].v for p in self._new}, dict(self._retired_v))
             pi = self._evidence()
 
+        t_ev = time.perf_counter()                 # versions + Aff_i / π^upd (evidence only)
         if self._new or self._retired:
             self._rebuild_part_tree()
         elif self._modified:                       # every changed inner node of the domain tree once
             self.part_tree.set_leaves({self.part_pos[pid]: self._A(pid) for pid in self._modified}, self._undo)
+        t_part = time.perf_counter()               # partition Merkle roots A_{i,j} and R^part
 
         dirty_pids = {}
         sel_of = {}                                # h -> Sel(h): ONE Search Tree lookup per dirty key
@@ -294,13 +297,23 @@ class Engine:
                 if h in self.rho:
                     self._pop(self.rho, h)
                     removed.append(h)
+        t_post = time.perf_counter()               # Phase 3 Step 3: γ, R^post, σ_w of the affected keys
         self._update_imt(added, removed)
+        t_imt = time.perf_counter()                # IMT leaves and R^idx
 
         self._attr(self, "epoch", self.epoch + 1)
         self._attr(self, "R_D", domain_root(self.domain, self.epoch, self.part_tree.root, self.imt.root))
         c1, b1 = HashCounter.snapshot()
         stats = {
             "update_ms": (time.perf_counter() - t0) * 1000,
+            # breakdown of update_ms (Exp. 3: posting-state repair vs authentication-tree maintenance;
+            # Exp. 4: split / merge overhead)
+            "restructure_ms": (t_adapt - t0) * 1000,
+            "evidence_ms": (t_ev - t_adapt) * 1000,
+            "partition_tree_ms": (t_part - t_ev) * 1000,
+            "posting_repair_ms": (t_post - t_part) * 1000,
+            "imt_ms": (t_imt - t_post) * 1000,
+            "auth_tree_ms": (t_part - t_ev + t_imt - t_post) * 1000,
             "hash_calls": c1 - c0, "hash_bytes": b1 - b0,
             "splits": splits, "merges": merges,
             "partitions_changed": n_parts_changed,
