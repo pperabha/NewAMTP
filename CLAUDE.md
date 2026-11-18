@@ -5,10 +5,10 @@ who does what, rules). Then `docs/HANDOFF.md` for the project as a whole.
 
 ## Team workflow for the paper (32) round (owner's rule, 2026-11-18; both Claudes follow it)
 
-People: person A = owner (GitHub `ApiSom-o`), person B = Prim (GitHub `PremroseeverD`). Tasks: `docs/PAPER32_START_HERE.md`.
+People: person A = owner (GitHub `ApiSom-o`), person B = Prim (GitHub `PrimRoseEverD`). Tasks: `docs/PAPER32_START_HERE.md`.
 
 1. **One task done → one PR**, base `feat/paper32-experiments`, title starting with the task id (e.g. `A2:`, `B1+B2:`).
-   The PR body tags the other person (`@PremroseeverD` from A's side, `@ApiSom-o` from B's side) and says what
+   The PR body tags the other person (`@PrimRoseEverD` from A's side, `@ApiSom-o` from B's side) and says what
    was done, how it was tested (pytest result), and what the other side must do next.
    For this round, commit + push + open the PR **without asking first** (overrides the "ask before" rule below
    for paper (32) task PRs only). Never merge: the owner presses merge.
