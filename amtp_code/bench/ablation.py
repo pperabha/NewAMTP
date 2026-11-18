@@ -234,6 +234,7 @@ def main():
                     merges += st["merges"]
                     _write(writers, files, "updates", {**tag, "batch": bi, "phase": phases[bi], **_round(st)})
                     summary.setdefault((variant, skew), {}).setdefault("update_ms", []).append(st["update_ms"])
+                    summary[(variant, skew)].setdefault("restructure_ms", []).append(st["restructure_ms"])
                     summary[(variant, skew)].setdefault("hash_calls", []).append(st["hash_calls"])
                     summary[(variant, skew)].setdefault("hash_bytes", []).append(st["hash_bytes"])
                     if bi < len(stream) - 1 and ((a.query_every and (bi + 1) % a.query_every == 0)
@@ -268,19 +269,21 @@ def _write(writers, files, name, row):
 
 
 def _print_summary(summary, variants, skews, out):
-    cols = ["update_ms", "hash_calls", "hash_bytes", "server_ms", "verify_ms", "proof_bytes", "max_partition"]
-    lines = ["| skew | variant | " + " | ".join(f"median {c}" for c in cols) + " |",
+    cols = ["update_ms", "restructure_ms", "hash_calls", "hash_bytes", "server_ms", "verify_ms", "proof_bytes",
+            "max_partition"]
+    lines = ["| skew | variant | " + " | ".join(f"mean {c}" for c in cols) + " |",
              "|---|---|" + "---|" * len(cols)]
     for skew in skews:
         for v in variants:
             vals = summary[(v, skew)]
             lines.append(f"| {skew} | {v} | " + " | ".join(
-                f"{statistics.median(vals[c]):.3f}" if c.endswith("_ms")
-                else f"{statistics.median(vals[c]):.0f}" for c in cols) + " |")
+                f"{statistics.mean(vals[c]):.3f}" if c.endswith("_ms")
+                else f"{statistics.mean(vals[c]):.0f}" for c in cols) + " |")
     text = "\n".join(lines)
     print("\n" + text)
     with open(os.path.join(out, "summary.md"), "w") as fh:
-        fh.write(text + "\n\nMedians only. Use the raw CSVs for confidence intervals and plots.\n")
+        fh.write(text + "\n\nMeans over every batch of every run (paper (32): values averaged over the runs; "
+                 "restructure_ms = split / merge and relocation inside the commit). Raw rows: updates.csv.\n")
 
 
 if __name__ == "__main__":

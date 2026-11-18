@@ -103,6 +103,7 @@ class Corpus:
         groups = sorted(set(cat.values()) | set(self.D.DOMAINS))
         self.bucket_of = {g: i % a.buckets for i, g in enumerate(groups)}
         self.cat = cat
+        self.bucket_override = {}                       # doc_id -> group (skewproto: the groups of bench.ablation)
         self._h, self._docs = {}, {}
 
     def keys_for(self, domain):
@@ -152,7 +153,9 @@ class Corpus:
             body = enc({"title": doc.doc_id,
                         "body": self.D.read_bytes(doc, self.data).decode("utf-8", "replace")})
             ct = make_ct(k_d, body, self.authority.wrap(k_d, POLICY), aad)    # raw CT bytes
-            bucket = self.bucket_of[self.cat.get(doc.doc_id, doc.domain)]
+            bucket = self.bucket_override.get(doc.doc_id)
+            if bucket is None:
+                bucket = self.bucket_of[self.cat.get(doc.doc_id, doc.domain)]
             self._docs[key] = (ciphertext_id(ct), ct, frozenset(self.h(w, domain) for w in doc.keywords), bucket)
         return self._docs[key]
 
@@ -246,8 +249,8 @@ class Protocol:
 
     def epoch(self, make_requests):
         """One epoch; make_requests() builds the b signed requests (the owner's tokens + σ_op, files already
-        encrypted). Returns ({request, server, validate, anchor, update, commit} ms, the CS's stats);
-        update = request + server + validate + anchor."""
+        encrypted). Returns ({request, server, validate, anchor, update, protocol, commit, commit breakdown} ms,
+        the CS's stats); update = request + server + validate + anchor, protocol = update - anchor."""
         dom = self.dom
         tr = time.perf_counter()
         requests = make_requests()
@@ -260,9 +263,15 @@ class Protocol:
         t3 = time.perf_counter()
         self.val.advance()
         dom.server.finalize_update(dom.name, snapshot=False)
+        st = prop["stats"]
         return {"request": (t0 - tr) * 1e3, "server": (t1 - t0) * 1e3, "validate": (t2 - t1) * 1e3,
                 "anchor": (t3 - t2) * 1e3, "update": (t3 - tr) * 1e3,
-                "commit": prop["stats"]["update_ms"]}, prop["stats"]
+                "protocol": (t2 - tr) * 1e3,                       # update without the anchor (reported apart)
+                "commit": st["update_ms"],
+                # inside the CS's commit (Exp. 3 of (32): posting-state repair vs authentication-tree maintenance)
+                "restructure": st["restructure_ms"], "posting_repair": st["posting_repair_ms"],
+                "auth_tree": st["auth_tree_ms"], "partition_tree": st["partition_tree_ms"],
+                "imt": st["imt_ms"], "evidence": st["evidence_ms"]}, st
 
     def check(self):
         eng = self.dom.eng
@@ -976,9 +985,89 @@ def suite_theta(a):
     w.close()
 
 
+def suite_skewproto(a):
+    """Exp. 4 of (32), the AMTP line through the full protocol (issue #44, decision A+). Same documents, groups and
+    skewed stream as bench.ablation (same --sm-seed, skew order, --hot, --delete-frac, --hot-delete-frac,
+    --fresh-source), but every batch of --sm-b operations is one epoch of Phases 2-3: the DO's signed requests
+    (C(d) tokens + σ_op), the CS's prepare_update (the stream's group is the CS placement hint), DO validation and
+    σ_root, and the Root Anchor (AMTP_ANCHOR). File encryption is done before the epoch and not counted.
+    Per batch: request / server / validate / anchor / update / protocol ms, the commit breakdown (restructure =
+    split / merge and relocation, posting_repair, auth_tree), splits, merges, max partition."""
+    from bench.workload import arxiv_docs, hot_delete_stream, update_stream
+    corpus = Corpus(a)
+    skews = [float(x) for x in a.skews.split(",")]
+    extra = a.sm_batches * a.sm_b
+    w = Writer("skew_protocol", a.out)
+    print(f"[skewproto] N={a.sm_n} batches={a.sm_batches} x b={a.sm_b} skews={skews} runs={a.runs} "
+          f"θ={a.theta_max}/{a.theta_min} hot_delete={a.hot_delete_frac}")
+    for run in range(a.runs):
+        seed = a.sm_seed + run                                   # bench.ablation: seed = --seed + run
+        wdocs = arxiv_docs(a.sm_n, a.buckets, extra, a.data, fresh_source=a.fresh_source)
+        initial_w, fresh_w = wdocs[:a.sm_n], wdocs[a.sm_n:]
+        by_id = {d.doc_id: d for d in corpus.D.sample(a.sm_n + extra, None, a.data)}
+        by_id.update({d.doc_id: d for d in corpus.D.insert_pool(None, a.data)})
+        corpus.bucket_override = {d.doc_id: d.bucket for d in wdocs}
+        doc_of = {d.cid: d.doc_id for d in wdocs}                # placeholder cid (workload) -> doc_id
+        for si, skew in enumerate(skews):
+            stream = update_stream(initial_w, fresh_w, a.sm_batches, a.sm_b, skew, list(range(a.hot)),
+                                   a.delete_frac, seed * 1000 + si)
+            phases = ["insert"] * len(stream)
+            if a.hot_delete_frac > 0:
+                drops = hot_delete_stream(initial_w, stream, a.sm_b, list(range(a.hot)), a.hot_delete_frac,
+                                          seed * 1000 + si + 500)
+                stream, phases = stream + drops, phases + ["hot_delete"] * len(drops)
+            anchor, server = make_anchor(), CloudServer()
+            dom = Domain("A", corpus, [by_id[d.doc_id] for d in initial_w], a, anchor, server,
+                         AdaptivePolicy(a.buckets, a.theta_min, a.theta_max, a.placement))
+            real = dict(zip(dom.doc_ids, dom.cids))              # doc_id -> real cid_d
+            proto = Protocol(dom)
+            dom.eng.ops_per_epoch = a.sm_b
+            splits = merges = 0
+            for bi, ops in enumerate(stream):
+                enc = {}
+                for op in ops:                                   # file encryption: before the epoch, not counted
+                    if op[0] == "ins":
+                        enc[op[1].doc_id] = corpus.encrypt_fresh(by_id[op[1].doc_id], "A")
+
+                def requests():
+                    out = []
+                    for op in ops:
+                        if op[0] == "ins":
+                            d = by_id[op[1].doc_id]
+                            r = corpus.insert_request(enc[d.doc_id], d, "A", dom.eng.epoch, dom.signer)
+                            r["bucket"] = op[2]                 # the stream's group (forced hot share = skew)
+                        else:
+                            did = doc_of[op[1]]
+                            r = Corpus.delete_request(did, real[did], "A", dom.eng.epoch, dom.signer)
+                        out.append(r)
+                    return out
+                gc.disable()
+                try:
+                    times, stt = proto.epoch(requests)
+                finally:
+                    gc.enable()
+                for op in ops:
+                    if op[0] == "ins":
+                        real[op[1].doc_id] = enc[op[1].doc_id][0]
+                        corpus._docs.pop((op[1].doc_id, "A"), None)
+                splits += stt["splits"]
+                merges += stt["merges"]
+                lay = dom.eng.layout()
+                w.add(scheme="AMTP", variant="AMTP (full protocol)", run=run, skew=skew, batch=bi, phase=phases[bi],
+                      b=a.sm_b, ops=len(ops), splits=stt["splits"], merges=stt["merges"],
+                      partitions=lay["partitions"], max_partition=lay["max_partition"],
+                      **{f"{k}_ms": v for k, v in times.items()})
+            proto.check()
+            print(f"run {run} skew {skew:<4} AMTP (full protocol) partitions={lay['partitions']} "
+                  f"max={lay['max_partition']} splits={splits} merges={merges}", flush=True)
+            del dom, proto, anchor, server
+            gc.collect()
+    w.close()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("mode", choices=["exp1", "exp2-layouts", "exp2", "exp3", "exp5", "theta",
+    ap.add_argument("mode", choices=["exp1", "exp2-layouts", "exp2", "exp3", "exp5", "theta", "skewproto",
                                      "search1", "verify1", "tamper", "xsearch", "xverify", "xdomains"])
     ap.add_argument("--data", default=None, help="dataset folder (default <repo>/data/amtp_file_db_v4 or AMTP_DATA)")
     ap.add_argument("--domains", nargs="+", default=["D1", "D2", "D3", "D4"], help="dataset domains to sample")
@@ -1015,6 +1104,17 @@ def main():
                     help="xdomains: keep only these query shapes (default all)")
     ap.add_argument("--tamper-kinds", nargs="+", default=D.TAMPER_KINDS, choices=D.TAMPER_KINDS)
     ap.add_argument("--out", default=OUT)
+    # skewproto (Exp. 4 AMTP line through the protocol): the same workload options as bench.ablation
+    ap.add_argument("--sm-n", type=int, default=25_000, help="skewproto: initial files (one domain)")
+    ap.add_argument("--sm-batches", type=int, default=250, help="skewproto: insert batches")
+    ap.add_argument("--sm-b", type=int, default=100, help="skewproto: operations per batch = per epoch")
+    ap.add_argument("--skews", default="0,0.25,0.5,0.75,0.95", help="skewproto: share of new files forced into the hot group")
+    ap.add_argument("--hot", type=int, default=1, help="skewproto: number of hot groups")
+    ap.add_argument("--delete-frac", type=float, default=0.0, help="skewproto: phase 1 share of random deletes")
+    ap.add_argument("--hot-delete-frac", type=float, default=0.65, help="skewproto: then delete this share of the hot group")
+    ap.add_argument("--fresh-source", choices=["pool", "initial"], default="initial")
+    ap.add_argument("--runs", type=int, default=1, help="skewproto: independent runs (seed = --sm-seed + run)")
+    ap.add_argument("--sm-seed", type=int, default=1, help="skewproto: = bench.ablation --seed")
     ap.add_argument("--gamma-no-v", action="store_true",
                     help="γ = H(PID ‖ H(Enc(L))) without the partition version v (study B4; same as AMTP_GAMMA_V=0)")
     ap.add_argument("--and-prune", action="store_true",
@@ -1047,7 +1147,7 @@ def main():
         os.environ["AMTP_PART_LEAF"] = "1"                # recorded in every manifest
         set_part_leaf(True)
     run = {"exp1": suite_exp1, "exp2-layouts": suite_exp2_layouts, "exp2": suite_exp2, "exp3": suite_exp3, "exp5": suite_exp5,
-           "theta": suite_theta, "search1": suite_search1, "verify1": suite_verify1, "tamper": suite_tamper,
+           "theta": suite_theta, "skewproto": suite_skewproto, "search1": suite_search1, "verify1": suite_verify1, "tamper": suite_tamper,
            "xsearch": suite_xsearch, "xverify": suite_xverify, "xdomains": suite_xdomains}
     for name in [a.mode]:
         run[name](a)
