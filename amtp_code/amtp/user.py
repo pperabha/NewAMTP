@@ -373,8 +373,7 @@ class DataUser:
         out = []
         for r in resp["R_ct"]:
             ct = unpack_ct(_ct_bytes(r))          # already checked by b_ct before decryption
-            item = {"cid": r["cid"], "pid": r["pid"], "loc": r["loc"],
-                    "policy": ct["aad"]["policy"], "doc": ct["aad"]["doc"]}
+            item = {"cid": r["cid"], "pid": r["pid"], "loc": r["loc"], "doc": ct["aad"]["doc"]}
             k_d = unwrap(ct["CK"], self.attr_keys)
             if k_d is None:
                 item["status"] = "locked"
