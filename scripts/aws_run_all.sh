@@ -52,6 +52,7 @@ GV=${AMTP_GAMMA_V:-1}; export AMTP_GAMMA_V=$GV         # 0: AMTP's γ without th
 RUN_ID=${RUN_ID:-$(date '+%Y%m%d_%H%M')_$(git rev-parse --short HEAD)$([ "$GV" = 0 ] && echo _gamma_no_v)}
 RUN_DIR=${RUN_DIR:-$REPO/baselines/results/runs/$RUN_ID}
 LOGS=${LOGS:-$RUN_DIR/logs}
+AMTP_MOD=${AMTP_MOD:-bench.experiments}               # bench_split.run: + the server's search alone (no proof, no fetch)
 O_AMTP="--out $RUN_DIR/amtp"; O_CHEN="--out $RUN_DIR/chen"; O_DU="--out $RUN_DIR/du"; O_SE="--out $RUN_DIR/secollab"
 CHEN_OPTS=${CHEN_OPTS:---scope full --edb memory}     # full index in RAM; use "--scope auto" if RAM runs out
 SE_OPTS=${SE_OPTS:---proof-mode paths}                 # SE-COLLAB's own per-file Merkle paths, every step alike
@@ -117,13 +118,13 @@ step_check() {
   run check_du baselines "$PY" du_et_al_sim.py demo
 }
 step_search1() {
-  run search1_amtp amtp_code "$PY" -m bench.experiments search1 $COMMON $O_AMTP ${X_SEARCH1:-}
+  run search1_amtp amtp_code "$PY" -m $AMTP_MOD search1 $COMMON $O_AMTP ${X_SEARCH1:-}
   run search1_chen baselines "$PY" chen_et_al_sim.py search1 $COMMON $CHEN_OPTS $O_CHEN ${X_SEARCH1:-}
   run search1_du baselines "$PY" du_et_al_sim.py search1 $COMMON $O_DU ${X_SEARCH1:-}
   run search1_secollab baselines "$PY" se_collab_sim.py search1 $COMMON $SE_OPTS $O_SE ${X_SEARCH1:-}
 }
 step_verify1() {
-  run verify1_amtp amtp_code "$PY" -m bench.experiments verify1 $COMMON $O_AMTP ${X_VERIFY1:-}
+  run verify1_amtp amtp_code "$PY" -m $AMTP_MOD verify1 $COMMON $O_AMTP ${X_VERIFY1:-}
   run verify1_chen baselines "$PY" chen_et_al_sim.py verify1 $COMMON $CHEN_OPTS $O_CHEN ${X_VERIFY1:-}
   run verify1_du baselines "$PY" du_et_al_sim.py verify1 $COMMON $O_DU ${X_VERIFY1:-}
   run verify1_secollab baselines "$PY" se_collab_sim.py verify1 $COMMON $SE_OPTS $O_SE ${X_VERIFY1:-}
@@ -135,15 +136,15 @@ step_tamper() {
   run tamper_secollab baselines "$PY" se_collab_sim.py tamper $COMMON $SE_OPTS $O_SE ${X_TAMPER:-}
 }
 step_xsearch() {
-  run xsearch_amtp amtp_code "$PY" -m bench.experiments xsearch $COMMON $O_AMTP ${X_XSEARCH:-}
+  run xsearch_amtp amtp_code "$PY" -m $AMTP_MOD xsearch $COMMON $O_AMTP ${X_XSEARCH:-}
   run xsearch_secollab baselines "$PY" se_collab_sim.py xsearch $COMMON $SE_OPTS $O_SE ${X_XSEARCH:-}
 }
 step_xverify() {
-  run xverify_amtp amtp_code "$PY" -m bench.experiments xverify $COMMON $O_AMTP ${X_XVERIFY:-}
+  run xverify_amtp amtp_code "$PY" -m $AMTP_MOD xverify $COMMON $O_AMTP ${X_XVERIFY:-}
   run xverify_secollab baselines "$PY" se_collab_sim.py xverify $COMMON $SE_OPTS $O_SE ${X_XVERIFY:-}
 }
 step_xdomains() {
-  run xdomains_amtp amtp_code "$PY" -m bench.experiments xdomains $COMMON --x-kq $XD_KQ --shapes $XD_SHAPES $O_AMTP ${X_XDOMAINS:-}
+  run xdomains_amtp amtp_code "$PY" -m $AMTP_MOD xdomains $COMMON --x-kq $XD_KQ --shapes $XD_SHAPES $O_AMTP ${X_XDOMAINS:-}
   run xdomains_secollab baselines "$PY" se_collab_sim.py xdomains $COMMON $SE_OPTS --x-kq $XD_KQ --shapes $XD_SHAPES $O_SE ${X_XDOMAINS:-}
 }
 step_update() {
@@ -157,7 +158,7 @@ step_update_n() {      # Exp. 3 (b): x = N at one b (step "update" is (a): x = b
     --out "$RUN_DIR/chen/update_n"
 }
 step_exp5() {
-  run exp5_amtp amtp_code "$PY" -m bench.experiments exp5 $COMMON $O_AMTP ${X_EXP5:-}
+  run exp5_amtp amtp_code "$PY" -m $AMTP_MOD exp5 $COMMON $O_AMTP ${X_EXP5:-}
   run exp5_secollab baselines "$PY" se_collab_sim.py exp5 $COMMON $SE_OPTS $O_SE ${X_EXP5:-}
   # Du (multi-cloud, "where directly applicable" in (32)): n_c clouds holding shares of N = EXP5_DU_N files (the AMTP
   # target-domain size); RS needs n_c >= t = 3, so only D = 4..32 have a Du point
