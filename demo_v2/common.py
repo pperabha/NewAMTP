@@ -32,6 +32,8 @@ STAND_INS = [
     {"paper": "Replicated DHT", "demo": "in-memory DHT inside the server process",
      "note": "6 nodes, 3 replicas, one machine"},
 ]
+if os.environ.get("AMTP_CPABE", "wrap").lower() == "bsw07":      # real CP-ABE (amtp/core/cpabe.py)
+    STAND_INS = [s for s in STAND_INS if s["paper"] != "CP-ABE"]
 
 
 # ---------------------------------------------------------------- wire format

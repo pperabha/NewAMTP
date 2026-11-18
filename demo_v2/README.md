@@ -20,6 +20,16 @@ the page shows the progress. For a rehearsal:
 
 Other flags: `--domains D1,D2`, `--base-port 8101`, `--no-browser`. Stop with Ctrl-C.
 
+Real CP-ABE instead of the policy key wrap (BSW07 in Charm, SS512; needs Charm, see `baselines/README.md`):
+
+```bash
+AMTP_CPABE=bsw07 ./demo_v2/run_demo.sh
+```
+
+Encrypting with CP-ABE costs about 10 ms per file on a Mac (Intel), so 4 × 5,000 files add about 3–4 minutes
+to the start; `--files-per-domain 500` starts in seconds. The CP-ABE line then disappears from the stand-ins
+at the top of the page.
+
 First time only (the demo's web packages; the dataset must be unpacked, see the main README):
 
 ```bash
@@ -125,7 +135,7 @@ What is real:
 
 Stand-ins and limits:
 
-1. **Ed25519 stands in for ABS**, a **policy key wrap stands in for CP-ABE**, the **Root Anchor is a Python
+1. **Ed25519 stands in for ABS**, a **policy key wrap stands in for CP-ABE** (unless `AMTP_CPABE=bsw07`), the **Root Anchor is a Python
    class in its own process, not a blockchain**, and the **DHT is in memory inside the server process**.
    These are the stand-ins of `amtp_code` itself; the page lists them at the top.
 2. **Verification is against the Domain Root.** `R_G` is not used to accept a result, in the code or in the
