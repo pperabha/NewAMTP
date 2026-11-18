@@ -1,0 +1,106 @@
+{
+ "command": "chain/sepolia_bench.py --n 10000 --b 100 --epochs 8",
+ "git_commit": "a59b156",
+ "git_dirty": false,
+ "chain_id": 11155111,
+ "contract": "0xf04b5287a1Db458C4D25bef73b55fAf89AcF3Ec0",
+ "explorer": "https://sepolia.etherscan.io/address/0xf04b5287a1Db458C4D25bef73b55fAf89AcF3Ec0",
+ "confirmations": 1,
+ "domains": [
+  "D1",
+  "D2",
+  "D3",
+  "D4"
+ ],
+ "n_per_domain": 10000,
+ "b": 100,
+ "epochs_per_domain": 8,
+ "theta": [
+  16,
+  64
+ ],
+ "placement": "fill",
+ "machine": "macOS-15.7.3-arm64-arm-64bit",
+ "python": "3.12.15",
+ "setup_txs": [
+  {
+   "op": "register",
+   "domain": "D1",
+   "tx": "0x89f8c00b1d78fda083742fc7132fcf644294da05f988641760708974e86f34ca",
+   "block": 12154779,
+   "gas": 589229,
+   "seconds": 4.307967166882008
+  },
+  {
+   "op": "submit",
+   "domain": "D1",
+   "tx": "0x135fbd7f477b89a8e2aff6babde503d9f951dbbbf68c8a7b287e8659dda6d307",
+   "block": 12154780,
+   "gas": 77133,
+   "seconds": 3.742407582933083
+  },
+  {
+   "op": "register",
+   "domain": "D2",
+   "tx": "0xb489647d6e7e8d3de6f0e8f0e702211acc9a193b2767f76b72701ab742f40a45",
+   "block": 12154781,
+   "gas": 505406,
+   "seconds": 11.586480875033885
+  },
+  {
+   "op": "submit",
+   "domain": "D2",
+   "tx": "0x092dcb6a1633068eb34616a4918a61aee2ef0e54c75610212fa8d9401ecfe6c1",
+   "block": 12154782,
+   "gas": 88649,
+   "seconds": 5.750986916944385
+  },
+  {
+   "op": "register",
+   "domain": "D3",
+   "tx": "0x329fe6587cbed0c1b7a4b20a4f4bc5e36f4d75b9703c6df687003585236a976f",
+   "block": 12154783,
+   "gas": 518381,
+   "seconds": 10.272687833057716
+  },
+  {
+   "op": "submit",
+   "domain": "D3",
+   "tx": "0x5e3d3de9b9626126ed96af4b847fea523bf189ce276ed64da84736f79d8c4160",
+   "block": 12154784,
+   "gas": 101612,
+   "seconds": 3.4291388751007617
+  },
+  {
+   "op": "register",
+   "domain": "D4",
+   "tx": "0xa0c3791bc255106ff0b8de121a14c3b545c4081acfe4f27c56d56ccfb772dbfb",
+   "block": 12154785,
+   "gas": 528208,
+   "seconds": 10.998602542094886
+  },
+  {
+   "op": "submit",
+   "domain": "D4",
+   "tx": "0x909fc9f36fa234d0394873095ac0e38870e97e65eee9aeb6d902ba5bfa51d7bb",
+   "block": 12154786,
+   "gas": 111468,
+   "seconds": 4.788763415999711
+  }
+ ],
+ "summary_median": {
+  "request_ms": 10.091562406159937,
+  "server_ms": 447.3121881019324,
+  "validate_ms": 444.3451665574685,
+  "update_without_anchor_ms": 923.8097289344296,
+  "anchor_ms": 10752.20727105625,
+  "update_ms": 11877.820792025886,
+  "read_latest_ms": 256.5213539637625,
+  "gas": 111837.5,
+  "final_s": 951.9819675683975,
+  "anchor_ms_max": 23021.615833975375,
+  "final_s_max": 1163.3573200702667,
+  "read_finalized_ms": 672.4249793915078,
+  "epochs": 32
+ }
+}
