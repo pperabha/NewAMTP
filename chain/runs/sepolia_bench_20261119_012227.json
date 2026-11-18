@@ -1,0 +1,142 @@
+{
+ "command": "chain/sepolia_bench.py --domains D1 --n 5000 --b 1 10 100 --warmup 1 --reps 3 --deploy",
+ "git_commit": "00888ca",
+ "git_dirty": false,
+ "chain_id": 11155111,
+ "contract": "0x71AfaF6Af69693Cd74E3C78A605Aa32fD3e179e4",
+ "explorer": "https://sepolia.etherscan.io/address/0x71AfaF6Af69693Cd74E3C78A605Aa32fD3e179e4",
+ "confirmations": 1,
+ "domains": [
+  "D1"
+ ],
+ "n_per_domain": 5000,
+ "b": [
+  1,
+  10,
+  100
+ ],
+ "warmup": 1,
+ "reps": 3,
+ "policy": "adaptive",
+ "theta": [
+  16,
+  64
+ ],
+ "placement": "fill",
+ "machine": "macOS-15.7.3-arm64-arm-64bit",
+ "python": "3.12.15",
+ "setup_txs": [
+  {
+   "op": "register",
+   "domain": "D1",
+   "tx": "0x949827440fd9cd3eede02aac7d9bde99cef68dd7ae0378cfd6b3e8298fa927d3",
+   "block": 12163079,
+   "gas": 497930,
+   "seconds": 5.313939165789634
+  },
+  {
+   "op": "submit",
+   "domain": "D1",
+   "tx": "0x84406008dc2ed559f3a32b928bdce6eaa86b3d0f1c909d85b5d1b7a560674d80",
+   "block": 12163081,
+   "gas": 86649,
+   "seconds": 3.2357135410420597
+  }
+ ],
+ "summary_median": {
+  "anchor_ms": 10994.137353962287,
+  "final_s": 1014.777773976326,
+  "gas": 87051.0,
+  "read_latest_ms": 131.36258348822594,
+  "anchor_ms_max": 60433.604625053704,
+  "final_s_max": 1164.768336057663,
+  "read_finalized_ms": 149.09479185007513,
+  "epochs": 18,
+  "by_b_op": {
+   "b1_insert": {
+    "request_ms": 9.846542030572891,
+    "server_ms": 36.708332831040025,
+    "validate_ms": 38.61749987117946,
+    "update_without_anchor_ms": 84.46495793759823,
+    "anchor_ms": 14327.30458304286,
+    "update_ms": 14409.82549986802,
+    "read_latest_ms": 133.75262496992946,
+    "gas": 87057,
+    "final_s": 1118.5007510185242,
+    "anchor_ms_max": 60433.604625053704,
+    "final_s_max": 1142.5411019325256,
+    "epochs": 3
+   },
+   "b1_delete": {
+    "request_ms": 12.460083002224565,
+    "server_ms": 44.75166695192456,
+    "validate_ms": 39.94845785200596,
+    "update_without_anchor_ms": 96.2339579127729,
+    "anchor_ms": 10579.913000110537,
+    "update_ms": 10669.75445812568,
+    "read_latest_ms": 144.82229202985764,
+    "gas": 87057,
+    "final_s": 1129.3717517852783,
+    "anchor_ms_max": 21963.0451251287,
+    "final_s_max": 1164.768336057663,
+    "epochs": 3
+   },
+   "b10_insert": {
+    "request_ms": 68.28450015746057,
+    "server_ms": 210.47720802016556,
+    "validate_ms": 239.622208988294,
+    "update_without_anchor_ms": 503.61383287236094,
+    "anchor_ms": 11210.056457901374,
+    "update_ms": 11704.244749853387,
+    "read_latest_ms": 125.50566717982292,
+    "gas": 87040,
+    "final_s": 1032.9374980926514,
+    "anchor_ms_max": 11237.687542103231,
+    "final_s_max": 1068.7047321796417,
+    "epochs": 3
+   },
+   "b10_delete": {
+    "request_ms": 67.01583391986787,
+    "server_ms": 206.15887502208352,
+    "validate_ms": 228.313917061314,
+    "update_without_anchor_ms": 545.945999911055,
+    "anchor_ms": 10778.218250023201,
+    "update_ms": 11763.781459070742,
+    "read_latest_ms": 126.67841580696404,
+    "gas": 87040,
+    "final_s": 1020.5237329006195,
+    "anchor_ms_max": 24363.8993750792,
+    "final_s_max": 1058.0376760959625,
+    "epochs": 3
+   },
+   "b100_insert": {
+    "request_ms": 702.124458970502,
+    "server_ms": 1501.628499943763,
+    "validate_ms": 1038.9365830924362,
+    "update_without_anchor_ms": 3234.260416124016,
+    "anchor_ms": 8654.771874891594,
+    "update_ms": 12069.332042010501,
+    "read_latest_ms": 132.4048328679055,
+    "gas": 87057,
+    "final_s": 910.7299571037292,
+    "anchor_ms_max": 9841.267457930371,
+    "final_s_max": 945.3594379425049,
+    "epochs": 3
+   },
+   "b100_delete": {
+    "request_ms": 682.4751251842827,
+    "server_ms": 1527.6557088363916,
+    "validate_ms": 1575.4167090635747,
+    "update_without_anchor_ms": 3220.73620907031,
+    "anchor_ms": 19585.672416025773,
+    "update_ms": 22806.408625096083,
+    "read_latest_ms": 129.64491685852408,
+    "gas": 87040,
+    "final_s": 898.6975190639496,
+    "anchor_ms_max": 20014.136916026473,
+    "final_s_max": 934.3435440063477,
+    "epochs": 3
+   }
+  }
+ }
+}

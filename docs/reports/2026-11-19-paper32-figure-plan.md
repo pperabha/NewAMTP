@@ -1,5 +1,11 @@
 # รายการกราฟของ paper (32) (A8 ทำกราฟ, B5 ใส่ Overleaf)
 
+**ทุกการทดลอง query ทั้ง single และ multi domain (Exp 1, 2, 5 และ 2.2) มี 3 ตัววัด (เจ้าของงาน 19 พ.ย.):**
+1. **server search time อย่างเดียว** (ไม่รวม proof และ fetch): AMTP `server_search_pf` (`bench_split.run`, PR #63), Chen `server_total`
+   (ไม่มี proof / fetch อยู่แล้ว), SE-COLLAB และ Du `search_no_fetch`
+2. **DU verify time:** `verify_total`
+3. **end-to-end:** query gen + server + verify (ไม่รวมเวลาอ่าน root และการถอดรหัส; `anchor_read` แยก)
+
 กติกา: line chart เท่านั้น · ค่า = **mean** ของ 10 run หลัง warm-up 3 (#46) · บอกตรงๆ ว่า AMTP แพ้ตรงไหน
 ✅ = มีข้อมูล / กำลังรัน · ⏳ = ยังไม่ได้รัน · ❗ = ยังไม่มีโค้ด/ข้อมูล
 
@@ -45,4 +51,6 @@
 
 ## ไม่ใช่กราฟ (ตาราง / ข้อความใน paper)
 - ตาราง ABS (Setup, AttrGen, Sign, Verify, ขนาดลายเซ็น; BN254 / MNT224 / SS512): `baselines/results/abs/abs_costs.csv` (B)
-- เวลาอ่าน root บน Sepolia, เวลาจน finality, protocol vs anchor บน Sepolia: `chain/sepolia_bench.py` (กำลังรัน) → setup / Exp 5
+- Sepolia (`chain/runs/sepolia_bench_20261119_012227.*`, โค้ดปัจจุบัน ABS + CP-ABE จริง, D1 5k, b = 1/10/100): anchor median 11.0 s
+  (max 60.4 s), finality ~1,015 s, gas 87.05k ต่อ root update (D = 1), อ่าน root latest 131 ms / finalized 149 ms;
+  protocol b = 1: 84–96 ms, b = 10: 0.50–0.55 s, b = 100: 3.2 s → setup / Exp 3 / Exp 5
