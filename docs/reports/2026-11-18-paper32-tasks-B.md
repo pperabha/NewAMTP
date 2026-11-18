@@ -79,7 +79,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                      # ต้�
 3. **dataset**: Enron → arXiv (ใช้ย่อหน้า dataset ของ AMTP (31)); ช่วง N: ex1/2/3/5 ตาม (31) (100k ต่อ domain, ไล่ 10k–125k),
    ex2 "N = 10⁶" → 100k, ex4 = 25k (20%) + 5 ระดับ skew, ex5 domain เป้าหมาย 5k
 4. **setup** (เติมช่อง [ ]): Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu);
-   `cryptography`: SHA-256, AES-256-GCM, AES-SIV (DEnc), HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, BN254);
+   `cryptography`: SHA-256, AES-256-GCM, AES-SIV (DEnc), HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, SS512, #54 C);
    σ_root ECDSA secp256k1 ตรวจใน RootAnchor contract บน Ethereum Sepolia; reps 10 หลัง warm-up 3; θ_max 64, θ_min 16,
    fill placement; query default 4 keyword; เวลาอ่าน root จาก Sepolia ~257 ms รายงานแยก (query วัดกับ contract บน EVM ในเครื่อง)
 5. ชื่อและเนื้อหา Exp 2 เพิ่ม tamper detection; แก้ "Fig. ??" และ caption "Enter Caption"

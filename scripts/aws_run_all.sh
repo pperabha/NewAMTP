@@ -23,6 +23,7 @@
 #   update      update cost at N = UPDATE_SIZES: one epoch of b signed requests, b in UPDATE_B;
 #               update = owner request (tokens + σ_op) + CS prepare + Validator + anchor;
 #               file encryption apart                                                       (AMTP, Chen)
+#   update_n    Exp. 3 (b): update cost against N = UPDATE_N_SIZES at b = UPDATE_N_B (AMTP, Chen)
 #   exp5        Multi-domain scalability: D = 1..32 domains, target domain of 5,000 files; query cost and
 #               the target domain's update (one epoch, Phase 2 protocol); other roots unchanged  (AMTP, SE-COLLAB)
 #   theta       θ sweep (NOT in the default steps: not in the plan; ex4 covers θ = 64/128/256). Run by name only.
@@ -56,6 +57,8 @@ CHEN_OPTS=${CHEN_OPTS:---scope full --edb memory}     # full index in RAM; use "
 SE_OPTS=${SE_OPTS:---proof-mode paths}                 # SE-COLLAB's own per-file Merkle paths, every step alike
 UPDATE_SIZES=${UPDATE_SIZES:-100000}                   # N (files from all 4 domains in one AMTP domain)
 UPDATE_B=${UPDATE_B:-1 10 100 1000}                    # b = signed requests per epoch
+UPDATE_N_SIZES=${UPDATE_N_SIZES:-10000 25000 50000 75000 100000 125000}   # update_n: x = N (Exp. 3 (b) of (32))
+UPDATE_N_B=${UPDATE_N_B:-100}                          # update_n: the fixed b
 XD_KQ=${XD_KQ:-4}                                      # xdomains: query kQ kept
 XD_SHAPES=${XD_SHAPES:-AND}                            # xdomains: query shapes kept
 THETA_N=${THETA_N:-200000}                           # needs shared exp1_queries.json at this N (10k..200k)
@@ -145,6 +148,12 @@ step_update() {
   run update_amtp amtp_code "$PY" -m bench.experiments exp3 $COMMON --sizes $UPDATE_SIZES --batches $UPDATE_B $O_AMTP
   run update_chen baselines "$PY" chen_et_al_sim.py exp3 $COMMON --sizes $UPDATE_SIZES --batches $UPDATE_B $O_CHEN
 }
+step_update_n() {      # Exp. 3 (b): x = N at one b (step "update" is (a): x = b at UPDATE_SIZES)
+  run update_n_amtp amtp_code "$PY" -m bench.experiments exp3 $COMMON --sizes $UPDATE_N_SIZES --batches $UPDATE_N_B \
+    --out "$RUN_DIR/amtp/update_n"
+  run update_n_chen baselines "$PY" chen_et_al_sim.py exp3 $COMMON --sizes $UPDATE_N_SIZES --batches $UPDATE_N_B \
+    --out "$RUN_DIR/chen/update_n"
+}
 step_exp5() {
   run exp5_amtp amtp_code "$PY" -m bench.experiments exp5 $COMMON $O_AMTP ${X_EXP5:-}
   run exp5_secollab baselines "$PY" se_collab_sim.py exp5 $COMMON $SE_OPTS $O_SE ${X_EXP5:-}
@@ -174,7 +183,7 @@ step_skewproto() {      # Exp. 4 (32), AMTP through the full protocol (#44 A+): 
 }
 
 STEPS=("$@")
-[ ${#STEPS[@]} -eq 0 ] && STEPS=(check search1 verify1 tamper xsearch xverify xdomains update exp5 splitmerge)
+[ ${#STEPS[@]} -eq 0 ] && STEPS=(check search1 verify1 tamper xsearch xverify xdomains update update_n exp5 splitmerge)
 echo "commit $(git rev-parse --short HEAD), uncommitted changes: $(git status --porcelain --untracked-files=no | wc -l)"
 for s in "${STEPS[@]}"; do
   "step_$s"

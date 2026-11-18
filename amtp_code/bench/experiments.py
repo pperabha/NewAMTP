@@ -131,12 +131,12 @@ class Corpus:
         u = {"domain": domain, "op": "insert", "epoch": epoch, "nonce": os.urandom(16).hex(),
              "id": doc.doc_id, "ct": ct,
              "C": sorted({keyword_cipher(k_s, norm(w)) for w in doc.keywords})}
-        return {"U": u, "sig": signer.sign(request_digest(u)), "bucket": bucket}   # bucket: CS placement hint
+        return {"U": u, "sig": _sign(signer, request_digest(u)), "bucket": bucket}   # bucket: CS placement hint
 
     @staticmethod
     def delete_request(doc_id, cid, domain, epoch, signer):
         u = {"domain": domain, "op": "delete", "epoch": epoch, "nonce": os.urandom(16).hex(), "id": doc_id, "cid": cid}
-        return {"U": u, "sig": signer.sign(request_digest(u))}
+        return {"U": u, "sig": _sign(signer, request_digest(u))}
 
     def h(self, word, domain):
         """h_w under the domain's own K_s (the same word has a different key in every domain)"""
@@ -198,7 +198,7 @@ class Domain:
 
     def __init__(self, name, corpus, docs, a, anchor, server, policy=None, extra_words=None):
         self.name, self.corpus = name, corpus
-        self.signer = Signer()                     # σ_op (and σ_root with the in-process anchor)
+        self.signer = Signer(name)                 # σ_op = σ_d (AMTP_ABS); σ_root too with the in-process anchor
         # σ_root: an anchor on a chain supplies the key its contract checks (amtp/chain_anchor.py)
         self.root_signer = anchor.root_signer(name) if hasattr(anchor, "root_signer") else self.signer
         server.register_query_key(name, corpus.keys_for(name).k_a)
@@ -252,6 +252,7 @@ class Protocol:
         encrypted). Returns ({request, server, validate, anchor, update, protocol, commit, commit breakdown} ms,
         the CS's stats); update = request + server + validate + anchor, protocol = update - anchor."""
         dom = self.dom
+        SigTimer.take()                                     # start this epoch's signature clock at zero
         tr = time.perf_counter()
         requests = make_requests()
         t0 = time.perf_counter()
@@ -264,7 +265,9 @@ class Protocol:
         self.val.advance()
         dom.server.finalize_update(dom.name, snapshot=False)
         st = prop["stats"]
-        return {"request": (t0 - tr) * 1e3, "server": (t1 - t0) * 1e3, "validate": (t2 - t1) * 1e3,
+        sig_t = SigTimer.take()
+        return {**sig_t,                                    # ABS (σ_op) sign + CS / DO verify, inside request / server / validate
+                "request": (t0 - tr) * 1e3, "server": (t1 - t0) * 1e3, "validate": (t2 - t1) * 1e3,
                 "anchor": (t3 - t2) * 1e3, "update": (t3 - tr) * 1e3,
                 "protocol": (t2 - tr) * 1e3,                       # update without the anchor (reported apart)
                 "commit": st["update_ms"],
@@ -305,6 +308,43 @@ def load_queries(path, explicit):
     if explicit:
         raise SystemExit(f"query file not found: {path}")
     raise SystemExit(f"{path} not found: run a baseline's exp1 first (it writes the shared queries)")
+
+
+class SigTimer:
+    """Wall time of the request signatures inside one epoch (decision #54: ABS reported apart from the index work):
+    the DO's σ_op signing (Corpus.insert_request / delete_request), the CS's check at admission (amtp.server) and
+    the validating DO's re-check (amtp.validator). It wraps the same sig_ok the protocol calls; nothing is skipped."""
+    sign = verify_cs = verify_do = 0.0
+
+    @classmethod
+    def take(cls):
+        out = {"abs_sign": cls.sign * 1e3, "abs_verify_cs": cls.verify_cs * 1e3, "abs_verify_do": cls.verify_do * 1e3}
+        out["abs"] = out["abs_sign"] + out["abs_verify_cs"] + out["abs_verify_do"]
+        cls.sign = cls.verify_cs = cls.verify_do = 0.0
+        return out
+
+
+def _timed_sig_ok(where, fn):
+    def check(public, msg, sig):
+        t = time.perf_counter()
+        try:
+            return fn(public, msg, sig)
+        finally:
+            setattr(SigTimer, where, getattr(SigTimer, where) + time.perf_counter() - t)
+    return check
+
+
+def _sign(signer, msg):
+    t = time.perf_counter()
+    sig = signer.sign(msg)
+    SigTimer.sign += time.perf_counter() - t
+    return sig
+
+
+import amtp.server as _server_mod          # noqa: E402
+import amtp.validator as _validator_mod    # noqa: E402
+_server_mod.sig_ok = _timed_sig_ok("verify_cs", _server_mod.sig_ok)
+_validator_mod.sig_ok = _timed_sig_ok("verify_do", _validator_mod.sig_ok)
 
 
 class AnchorRead:

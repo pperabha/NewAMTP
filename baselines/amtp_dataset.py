@@ -452,6 +452,7 @@ def write_manifest(csv_path):
             "amtp_and_greedy": os.environ.get("AMTP_AND_GREEDY", "1") != "0",   # AMTP: AND pruning planner
             "amtp_part_leaf": os.environ.get("AMTP_PART_LEAF", "1") != "0",   # AMTP: Search Tree leaf by partition
             "amtp_anchor": os.environ.get("AMTP_ANCHOR", "in-process"),   # AMTP: Root Anchor (bench make_anchor)
+            "amtp_abs": os.environ.get("AMTP_ABS", "ed25519"), "amtp_abs_curve": os.environ.get("AMTP_ABS_CURVE", "BN254"),
             "amtp_cpabe": os.environ.get("AMTP_CPABE", "wrap"),   # AMTP: K_d under the stand-in or real BSW07
             "query_set": QUERY_SET}                   # Search 1.1 / 1.2 query file (every scheme)
     with open(out, "w", encoding="utf-8") as f:
