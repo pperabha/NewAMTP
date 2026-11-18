@@ -11,8 +11,8 @@
 - query ที่มีผลมาก ทำให้ mean ข้าม query ถูกดึงขึ้น เช่น `S2_00051` (AND-of-OR kQ 2, 12,933 records): AMTP 7.0 ms vs
   SE-COLLAB 1.1 ms; ถ้าใช้ mean ข้าม query จุด AND-of-OR kQ 2 แพ้ SE-COLLAB (1.11 vs 0.77 ms) และ single domain kQ 1, 2
   แพ้ Chen; ใช้ median: ชนะทุกจุด ยกเว้น 10k (เสมอ Chen 0.024 vs 0.023)
-- ต้องบอกตรงๆ ใน paper: query ที่ผลเกิน ~1,000 records AMTP search ช้ากว่า SE-COLLAB; OR ล้วน (A∨B∨C∨D อยู่ใน Exp 1 ของ (32))
-  แพ้ SE-COLLAB ที่ kQ ≥ 4 (kQ 16: 4.3 vs 1.8 ms)
+- ข้อเท็จจริงที่ทราบ: query ที่ผลเกิน ~1,000 records AMTP search ช้ากว่า SE-COLLAB; OR ล้วน (A∨B∨C∨D อยู่ใน Exp 1 ของ (32))
+  แพ้ SE-COLLAB ที่ kQ ≥ 4 (kQ 16: 4.3 vs 1.8 ms); เจ้าของงานเลือกไม่เขียนเรื่องนี้ในเนื้อหาผล (กราฟ OR ยังอยู่ตาม (32))
 
 ## ที่แก้
 - `docs/PAPER32_START_HERE.md`: บันทึกการตัดสินใต้ #46; B4 ข้อ 8 เพิ่มประโยค
