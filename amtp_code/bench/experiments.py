@@ -298,10 +298,26 @@ def load_queries(path, explicit):
     raise SystemExit(f"{path} not found: run a baseline's exp1 first (it writes the shared queries)")
 
 
+class AnchorRead:
+    """The (e*, R_D) the DU has just read from the Root Anchor, handed to make_query unchanged. The read is a contract
+    call (an RPC) when the anchor is on a chain, so it is timed on its own (anchor_read) and query_gen stays the
+    trapdoor only, the same work as every baseline's query generation."""
+
+    def __init__(self, domain, latest):
+        self.domain, self.value = domain, latest
+
+    def latest(self, domain):
+        if domain != self.domain:
+            raise ValueError(f"anchor read for {self.domain}, asked for {domain}")
+        return self.value
+
+
 def run_query(dom, state, user, text):
-    """One full query: trapdoor -> admission + ASPA response -> 7 checks -> decrypt."""
+    """One full query: anchor read -> trapdoor -> admission + ASPA response -> 7 checks -> decrypt."""
+    ta = time.perf_counter()
+    read = AnchorRead(dom.name, dom.anchor.latest(dom.name))   # Phase 4 Step 1: the DU reads (e*, R_D) from the RA
     t0 = time.perf_counter()
-    t_q, ctx = user.make_query(dom.name, text, dom.anchor)
+    t_q, ctx = user.make_query(dom.name, text, read)
     t1 = time.perf_counter()
     h0 = HashCounter.calls
     reason = dom.server._admit(t_q)                     # same admission as CloudServer.search
@@ -327,14 +343,15 @@ def run_query(dom, state, user, text):
     if any(o["status"] != "open" for o in opened):
         raise SystemExit("CORRECTNESS GATE FAILED: an authorised user could not decrypt a result")
     vp = rep["phase_ms"]
-    times = {"query_gen": (t1 - t0) * 1e3,
+    times = {"anchor_read": (t0 - ta) * 1e3, "query_gen": (t1 - t0) * 1e3,
              "server_admission": (t_adm - t1) * 1e3, "server_lookup": phase["lookup"],
              "server_eval": phase["eval"], "server_proof": phase["proof"], "server_fetch": phase["fetch"],
              "server_total": (t2 - t1) * 1e3,
              "verify_idx": vp["idx"], "verify_papc": vp["papc"], "verify_part": vp["part"],
              "verify_comp": vp["comp"], "verify_ct": vp["ct"], "verify_total": (t4 - t3) * 1e3,
              "du_decrypt": (t6 - t5) * 1e3,
-             "end_to_end": (t1 - t0 + t2 - t1 + t4 - t3) * 1e3}
+             "end_to_end": (t1 - t0 + t2 - t1 + t4 - t3) * 1e3,
+             "end_to_end_anchor": (t0 - ta + t1 - t0 + t2 - t1 + t4 - t3) * 1e3}   # + the DU's anchor read
     ev = resp["proof"]["evidence"]
     info = {"rQ": len(resp["R_ct"]),
             "pQ": sum(len(c) for e in ev if e["status"] == "present"
