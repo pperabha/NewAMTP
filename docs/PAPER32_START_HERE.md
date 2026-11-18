@@ -133,6 +133,8 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | 7 | **ใหม่** ยังไม่ได้นิยาม end-to-end | end-to-end = query gen + server + verify; **ไม่รวม** เวลาอ่าน root (รายงานแยก) และการถอดรหัส CP-ABE ของ record |
 | 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, BN254); Sepolia; *"each reported value is averaged over 10 independent runs after 3 warm-up runs"* (mean, #46); θ 64/16; fill placement; query 4 keyword |
 | 9a | สมการ (9) σ_d แยกจาก (11) σ_op | เพิ่ม: *"Since U_d in (8) coincides with U_ins in (10), the upload signature σ_d is the σ_op of that insertion request; an upload is signed once."* |
+| 10 | สัญลักษณ์ PAPC: Table II เขียน ρ_w แต่สมการ (19), (20), (42), (49), (68) และ proof Theorem 1 เขียน σ_w (ชนกับ σ ของลายเซ็น σ_d / σ_op / σ_root) | ใช้ **ρ_w ทุกที่** (ตรง Table II และโค้ด `rho()`) |
+| 11 | setup: ช่องที่ยังไม่บอกค่า | Search Tree = B+ tree order **B = 64**; keyword extraction = RAKE, สูงสุด κ = 20 ต่อไฟล์ (1–3 คำ), แบ่ง chunk เมื่อไฟล์ยาวเกิน Θ_doc (ตรงประโยค "chunked documents" ของ (32)) |
 | 9 | Exp 2 | ชื่อและเนื้อหาเพิ่ม tamper detection; แก้ "Fig. ??" และ caption "Enter Caption" |
 
 ต้องหาด้วยว่าใน (32) มีประโยคที่ระบุชื่อ blockchain หรือบอกว่า "query อ่านจาก public chain" ทุกครั้งหรือไม่ ถ้ามี ต้องแก้ให้ตรงกับข้อ 6
