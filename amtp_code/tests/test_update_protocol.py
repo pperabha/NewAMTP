@@ -83,7 +83,7 @@ def test_b1_protocol_equals_plain_engine(placement):
         req = random_requests(owner, rnd, 1, live, k)[0]
         u = req["U"]
         if u["op"] == "insert":
-            plain.insert(H(u["ct"]), {H(c) for c in u["C"]}, u["bucket"])
+            plain.insert(H(u["ct"]), {H(c) for c in u["C"]}, req["bucket"])
         else:
             plain.delete(u["cid"])
         plain.commit()
