@@ -1,0 +1,267 @@
+{
+ "command": "chain/gas_domains.py --max-d 32",
+ "git_commit": "ff7dcd5",
+ "git_dirty": false,
+ "chain_id": 11155111,
+ "contract": "0x3E8A4dcA73f35A1a7B7a3919871E3FaA3eFd82d2",
+ "explorer": "https://sepolia.etherscan.io/address/0x3E8A4dcA73f35A1a7B7a3919871E3FaA3eFd82d2",
+ "machine": "macOS-15.7.3-arm64-arm-64bit",
+ "rows": [
+  {
+   "D": 1,
+   "register_gas": 497942,
+   "submit_gas": 86656,
+   "submit_s": 11.086,
+   "block": 12162962,
+   "tx": "0x9d4ccc2f0d00b4aa18e94ed3c7c8e4a1b2227f8bd5b226f384878230f372fd1e"
+  },
+  {
+   "D": 2,
+   "register_gas": 765553,
+   "submit_gas": 102631,
+   "submit_s": 11.974,
+   "block": 12162964,
+   "tx": "0x86aaa7f32417f3641582b5c6cdc5004cc08613c8273200f6a16ca3c937eadb23"
+  },
+  {
+   "D": 3,
+   "register_gas": 1027032,
+   "submit_gas": 118553,
+   "submit_s": 9.267,
+   "block": 12162966,
+   "tx": "0x6b238d06d4e34791ef1f0ea2a13f92f65d8cb9eed79c1bdedac6dddc11ac3334"
+  },
+  {
+   "D": 4,
+   "register_gas": 585387,
+   "submit_gas": 118548,
+   "submit_s": 10.879,
+   "block": 12162968,
+   "tx": "0x0ae5d6290851556aea0cd13829b660cfca6464e849b0f53c969a05a55e91eed2"
+  },
+  {
+   "D": 5,
+   "register_gas": 1549833,
+   "submit_gas": 134550,
+   "submit_s": 11.984,
+   "block": 12162971,
+   "tx": "0xfb2b7da9df74ee02b8dbd6fc1f58518e47b498cdcac4abf70bc3e1c4842d1adb"
+  },
+  {
+   "D": 6,
+   "register_gas": 644729,
+   "submit_gas": 134521,
+   "submit_s": 23.134,
+   "block": 12162974,
+   "tx": "0x8af20331cf47651b83080617d3af47bd0b5191198d063a557470be6985c626ab"
+  },
+  {
+   "D": 7,
+   "register_gas": 656546,
+   "submit_gas": 134509,
+   "submit_s": 13.242,
+   "block": 12162976,
+   "tx": "0xddd65837f2a932388de237c646c1d5c978f74c6412d6c96c346c6bd85b75055f"
+  },
+  {
+   "D": 8,
+   "register_gas": 668364,
+   "submit_gas": 134521,
+   "submit_s": 13.419,
+   "block": 12162978,
+   "tx": "0x254b6a71d1710ccabfb8b70e473eeee88ff306b9429253777e7b0690376fd758"
+  },
+  {
+   "D": 9,
+   "register_gas": 2595323,
+   "submit_gas": 150491,
+   "submit_s": 11.748,
+   "block": 12162980,
+   "tx": "0xc3ab3fc29d609606bd89f5f5ea949b9e31f1691e0ac60460f9466eddbe77d2cf"
+  },
+  {
+   "D": 10,
+   "register_gas": 1110484,
+   "submit_gas": 150508,
+   "submit_s": 11.204,
+   "block": 12162982,
+   "tx": "0x12265dc487841eeb80164ce5ef29b0b914eba1cc8ed42fadea5ffb273ab3ff93"
+  },
+  {
+   "D": 11,
+   "register_gas": 1122607,
+   "submit_gas": 150508,
+   "submit_s": 12.679,
+   "block": 12162984,
+   "tx": "0x9171a7857cbc044641274bfe2157c6b50ac4d96caea4b183e0b4a2ab00e5ce65"
+  },
+  {
+   "D": 12,
+   "register_gas": 1134417,
+   "submit_gas": 150508,
+   "submit_s": 12.029,
+   "block": 12162986,
+   "tx": "0xe8679172d38afae6bbc09535f82344f5e5c893675c859aa86155a4cb5827093f"
+  },
+  {
+   "D": 13,
+   "register_gas": 1146239,
+   "submit_gas": 150491,
+   "submit_s": 11.137,
+   "block": 12162988,
+   "tx": "0x77744cdde1100f568b1a23898cac70f809b7a7f837eb4feefb1a7a449e7d8421"
+  },
+  {
+   "D": 14,
+   "register_gas": 1158073,
+   "submit_gas": 150508,
+   "submit_s": 11.989,
+   "block": 12162990,
+   "tx": "0xc60420532c7e1228bf789a5cd4f962e93f193f49561dc688c0d4676774380234"
+  },
+  {
+   "D": 15,
+   "register_gas": 1169895,
+   "submit_gas": 150491,
+   "submit_s": 11.827,
+   "block": 12162992,
+   "tx": "0x0255f2c436989b1fa209da0149680799c0d4b7d532c8659bc26eafb6107931f3"
+  },
+  {
+   "D": 16,
+   "register_gas": 1181718,
+   "submit_gas": 150508,
+   "submit_s": 11.87,
+   "block": 12162994,
+   "tx": "0x0f339c1caa126883e604edc0f91538e2481971236e72abca488a13c3c96d5bfe"
+  },
+  {
+   "D": 17,
+   "register_gas": 4893732,
+   "submit_gas": 166452,
+   "submit_s": 12.848,
+   "block": 12162996,
+   "tx": "0xec8173314eaf415ebef4deb89269f8bcf4c9c31501bc3de7efc90b40e4114808"
+  },
+  {
+   "D": 18,
+   "register_gas": 1327878,
+   "submit_gas": 166469,
+   "submit_s": 22.378,
+   "block": 12162998,
+   "tx": "0xe72413eb72c01589ccc8a556ff86d49fad288c1acf54fea3b41495b5a2a7796f"
+  },
+  {
+   "D": 19,
+   "register_gas": 1339704,
+   "submit_gas": 166469,
+   "submit_s": 12.772,
+   "block": 12163000,
+   "tx": "0xd55bb1b7369707877447d9e5f01a0083a2faaddec896d39bbb3bd5b9d540ede1"
+  },
+  {
+   "D": 20,
+   "register_gas": 1295316,
+   "submit_gas": 166469,
+   "submit_s": 12.382,
+   "block": 12163002,
+   "tx": "0x9b95eebea3d807485b0c9d3e5b8c8b90aca92d95493312c9d31845b06eac0b6c"
+  },
+  {
+   "D": 21,
+   "register_gas": 1327444,
+   "submit_gas": 166457,
+   "submit_s": 23.471,
+   "block": 12163006,
+   "tx": "0x1750af3c72a8f09bf5f603ec32dad81c6a54d6d357452a5e0ff63de30a68cfb4"
+  },
+  {
+   "D": 22,
+   "register_gas": 1329271,
+   "submit_gas": 166440,
+   "submit_s": 11.838,
+   "block": 12163008,
+   "tx": "0x5670d429eae7affcdab30f32d2955910f25bb399d8a99815f0e3ad8b6f64fcfc"
+  },
+  {
+   "D": 23,
+   "register_gas": 1351086,
+   "submit_gas": 166457,
+   "submit_s": 14.366,
+   "block": 12163010,
+   "tx": "0x9ae325fc05982f8f66977f1844eea4c8c95d5e88665fc3796be3c1cfd5817448"
+  },
+  {
+   "D": 24,
+   "register_gas": 1322926,
+   "submit_gas": 166457,
+   "submit_s": 13.163,
+   "block": 12163012,
+   "tx": "0xbf2a87b6bd747026737636917cb4a8e3576c9130990aa6ec42dafc090e985133"
+  },
+  {
+   "D": 25,
+   "register_gas": 1364753,
+   "submit_gas": 166469,
+   "submit_s": 10.551,
+   "block": 12163014,
+   "tx": "0x57888e7cb705301097ff5ff493cf1991d97d90eb41de49018396b93349e197ce"
+  },
+  {
+   "D": 26,
+   "register_gas": 1366569,
+   "submit_gas": 166457,
+   "submit_s": 12.324,
+   "block": 12163017,
+   "tx": "0x66356ef28d83f4cff7d2224f2c9b28ede0e2e6485ca28bc340c7b3ebd08d3350"
+  },
+  {
+   "D": 27,
+   "register_gas": 1388410,
+   "submit_gas": 166440,
+   "submit_s": 11.148,
+   "block": 12163019,
+   "tx": "0x6e6ac2ed9fd0ad333ac894a80611eca576ae9c474a7e63ca8a3aa85acf04c531"
+  },
+  {
+   "D": 28,
+   "register_gas": 1380239,
+   "submit_gas": 166457,
+   "submit_s": 11.962,
+   "block": 12163022,
+   "tx": "0x0ac3ee234da41caa3bea5558deaf859ce85e9f4464c5eec62dadca30a572ad13"
+  },
+  {
+   "D": 29,
+   "register_gas": 1412068,
+   "submit_gas": 166452,
+   "submit_s": 12.78,
+   "block": 12163024,
+   "tx": "0x9229ce582dda0127630d9598b3365c3e9b412d7db4d2023eaf18baa7dbe4e3db"
+  },
+  {
+   "D": 30,
+   "register_gas": 1377680,
+   "submit_gas": 166452,
+   "submit_s": 11.792,
+   "block": 12163026,
+   "tx": "0x55797fa664f8a1e4b83635e8368bc2baaaeb93ca562cacc49686036cd4c1fa34"
+  },
+  {
+   "D": 31,
+   "register_gas": 1369811,
+   "submit_gas": 166452,
+   "submit_s": 12.174,
+   "block": 12163028,
+   "tx": "0x0e48b0c84b2f386239231581d9b6ba03e6b5122956fb14e99ae02409283e6009"
+  },
+  {
+   "D": 32,
+   "register_gas": 1381641,
+   "submit_gas": 166452,
+   "submit_s": 10.753,
+   "block": 12163030,
+   "tx": "0x78d8b7dda863fa4294a24af05a64c31239a1297a770f6f6972ff65f96572ca5f"
+  }
+ ]
+}
