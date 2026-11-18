@@ -47,3 +47,6 @@
   ต้องแจ้งคน A เพราะทุก update request ถูก verify 2 ครั้ง (CS + DO)
 - จุดที่คน A ต้องทำ: `owner.py:49` และ `bench/experiments.py:198` ส่งชื่อ domain เข้า `Signer(domain)`
   (ตอนนี้ไม่ส่ง จึงใช้ policy `domain:default AND role:owner`; ขนาดและเวลาเท่ากัน แต่ชื่อ domain ใน Υ ไม่ตรง)
+- pytest ทั้งชุดผ่าน: ค่าเริ่มต้น 574, `AMTP_ABS=mpr` (SS512) 575, `mpr` + `bsw07` 575; `test_abs.py` บน BN254 14 passed
+- เปิด **PR #55** (B1+B2, `feat/real-abs` → `feat/paper32-experiments`) และ **issue #54** (Decision: ABS curve, เสนอ SS512)
+  เตือน Prim ให้ไลน์บอกคน A แล้ว · งานถัดไป: B4 Overleaf (`docs/paper32_overleaf_B4.tex`, ส่ง 15:00)
