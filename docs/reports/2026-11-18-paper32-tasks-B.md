@@ -36,8 +36,8 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                      # ต้�
 - scheme: **Maji–Prabhakaran–Rosulek, "Attribute-Based Signatures"** (IACR ePrint 2008/328; CT-RSA 2011)
   ใช้ practical instantiation (monotone span program + pairing) **ตามสูตรในเปเปอร์ทุกตัว ห้ามเขียนจากความจำ**
   (เว็บ eprint บล็อกการดึงอัตโนมัติ: เปิด https://eprint.iacr.org/2008/328.pdf ใน browser แล้วบันทึกเอง)
-- ไฟล์ใหม่ `amtp_code/amtp/core/abs.py` แบบเดียวกับ `amtp/core/cpabe.py` (CP-ABE จริง): Charm, curve **SS512**
-  (ตัวเดียวกับ BSW07 / SE-COLLAB); ถ้า scheme ต้องการ asymmetric pairing ให้บอก A ก่อนเลือก curve
+- ไฟล์ใหม่ `amtp_code/amtp/core/abs.py` แบบเดียวกับ `amtp/core/cpabe.py` (CP-ABE จริง): Charm, curve **BN254**
+  (asymmetric pairing ตามที่ MPR ต้องใช้; ตกลงแล้ว 18 พ.ย.; CP-ABE ยังใช้ SS512)
 - policy ต่อ domain (ตาม (32) "document-operation and root-update policies"):
   - upload / update (σ_d, σ_op): **`domain:Di AND role:owner` ตัวเดียวกันทั้ง insert และ delete (#43 = A)**
   - attribute ของ DO: เช่น `{domain:D1, role:owner}`
@@ -79,7 +79,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                      # ต้�
 3. **dataset**: Enron → arXiv (ใช้ย่อหน้า dataset ของ AMTP (31)); ช่วง N: ex1/2/3/5 ตาม (31) (100k ต่อ domain, ไล่ 10k–125k),
    ex2 "N = 10⁶" → 100k, ex4 = 25k (20%) + 5 ระดับ skew, ex5 domain เป้าหมาย 5k
 4. **setup** (เติมช่อง [ ]): Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu);
-   `cryptography`: SHA-256, AES-256-GCM, AES-SIV (DEnc), HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm);
+   `cryptography`: SHA-256, AES-256-GCM, AES-SIV (DEnc), HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, BN254);
    σ_root ECDSA secp256k1 ตรวจใน RootAnchor contract บน Ethereum Sepolia; reps 10 หลัง warm-up 3; θ_max 64, θ_min 16,
    fill placement; query default 4 keyword; เวลาอ่าน root จาก Sepolia ~257 ms รายงานแยก (query วัดกับ contract บน EVM ในเครื่อง)
 5. ชื่อและเนื้อหา Exp 2 เพิ่ม tamper detection; แก้ "Fig. ??" และ caption "Enter Caption"

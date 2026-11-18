@@ -85,8 +85,9 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 1. scheme: **Maji–Prabhakaran–Rosulek, "Attribute-Based Signatures"** (IACR ePrint 2008/328)
    - เว็บ eprint บล็อกการดึงอัตโนมัติ (403) ให้ Prim เปิด https://eprint.iacr.org/2008/328.pdf ใน browser แล้วบันทึกไฟล์ให้ Claude อ่าน
    - **เขียนตามสูตรในเปเปอร์เท่านั้น ห้ามเขียนจากความจำ**
-2. ไฟล์ใหม่ `amtp_code/amtp/core/abs.py` แบบเดียวกับ `amtp/core/cpabe.py`: ใช้ Charm curve **SS512**
-   (ถ้า scheme ต้องใช้ asymmetric pairing ให้บอก A ก่อนเลือก curve); แปลง policy AND/OR เป็น monotone span program
+2. ไฟล์ใหม่ `amtp_code/amtp/core/abs.py` แบบเดียวกับ `amtp/core/cpabe.py`: ใช้ Charm curve **BN254** (asymmetric pairing
+   ตามที่ MPR ต้องใช้; ตกลงแล้ว 18 พ.ย.; CP-ABE ยังใช้ SS512 เพราะเป็น primitive แยกกัน); แปลง policy AND/OR เป็น monotone span program
+   **σ_d = σ_op ของคำขอ insert:** U_d (8) กับ U_ins (10) เป็น tuple เดียวกัน upload จึงเซ็น ABS ครั้งเดียว (ไม่ต้องแก้ `owner.py`, `server.py`, `validator.py`)
 3. policy ต่อ domain: **`domain:Di AND role:owner` ตัวเดียวกันทั้ง insert และ delete (#43 = A)**; attribute ของ DO เช่น `{domain:D1, role:owner}`
 4. ต่อเข้า `amtp/core/crypto.py` ผ่าน env **`AMTP_ABS`** (`ed25519` = ตัวเดิม ค่าเริ่มต้น, `mpr` = ABS จริง)
    ทำแบบเดียวกับ `make_authority()` ที่เลือก CP-ABE ตาม `AMTP_CPABE`
@@ -125,7 +126,8 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | 5 | Exp 4 ใช้ dataset เต็ม | 20% (25k + 250 batch × 100) × 5 ระดับ skew |
 | 6 | **ใหม่** ยังไม่บอกว่าวัดบน network ไหน | เพิ่มใน setup: *Protocol costs are measured against the same RootAnchor contract deployed on a local EVM; on-chain anchoring latency, read latency and gas are measured separately on Ethereum Sepolia and reported apart.* |
 | 7 | **ใหม่** ยังไม่ได้นิยาม end-to-end | end-to-end = query gen + server + verify; **ไม่รวม** เวลาอ่าน root (รายงานแยก) และการถอดรหัส CP-ABE ของ record |
-| 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm); Sepolia; *"each reported value is averaged over 10 independent runs after 3 warm-up runs"* (mean, #46); θ 64/16; fill placement; query 4 keyword |
+| 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm, BN254); Sepolia; *"each reported value is averaged over 10 independent runs after 3 warm-up runs"* (mean, #46); θ 64/16; fill placement; query 4 keyword |
+| 9a | สมการ (9) σ_d แยกจาก (11) σ_op | เพิ่ม: *"Since U_d in (8) coincides with U_ins in (10), the upload signature σ_d is the σ_op of that insertion request; an upload is signed once."* |
 | 9 | Exp 2 | ชื่อและเนื้อหาเพิ่ม tamper detection; แก้ "Fig. ??" และ caption "Enter Caption" |
 
 ต้องหาด้วยว่าใน (32) มีประโยคที่ระบุชื่อ blockchain หรือบอกว่า "query อ่านจาก public chain" ทุกครั้งหรือไม่ ถ้ามี ต้องแก้ให้ตรงกับข้อ 6
