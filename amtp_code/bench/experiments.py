@@ -128,9 +128,9 @@ class Corpus:
         cid, ct, _, bucket = encrypted
         k_s = self.keys_for(domain).k_s
         u = {"domain": domain, "op": "insert", "epoch": epoch, "nonce": os.urandom(16).hex(),
-             "id": doc.doc_id, "ct": ct, "bucket": bucket,
+             "id": doc.doc_id, "ct": ct,
              "C": sorted({keyword_cipher(k_s, norm(w)) for w in doc.keywords})}
-        return {"U": u, "sig": signer.sign(request_digest(u))}
+        return {"U": u, "sig": signer.sign(request_digest(u)), "bucket": bucket}   # bucket: CS placement hint
 
     @staticmethod
     def delete_request(doc_id, cid, domain, epoch, signer):
@@ -148,7 +148,7 @@ class Corpus:
         key = (doc.doc_id, domain)
         if key not in self._docs:
             k_d = os.urandom(32)
-            aad = {"domain": domain, "doc": doc.doc_id, "policy": POLICY}
+            aad = {"domain": domain, "doc": doc.doc_id}        # aad_d = Encode(i, id_d)
             body = enc({"title": doc.doc_id,
                         "body": self.D.read_bytes(doc, self.data).decode("utf-8", "replace")})
             ct = make_ct(k_d, body, self.authority.wrap(k_d, POLICY), aad)    # raw CT bytes
@@ -159,7 +159,7 @@ class Corpus:
     def encrypt_version(self, doc, domain, suffix):
         """Another valid ciphertext of the same document with `suffix` appended (an older version of the file)."""
         k_d = os.urandom(32)
-        aad = {"domain": domain, "doc": doc.doc_id, "policy": POLICY}
+        aad = {"domain": domain, "doc": doc.doc_id}        # aad_d = Encode(i, id_d)
         body = enc({"title": doc.doc_id,
                     "body": (self.D.read_bytes(doc, self.data) + suffix).decode("utf-8", "replace")})
         return make_ct(k_d, body, self.authority.wrap(k_d, POLICY), aad)

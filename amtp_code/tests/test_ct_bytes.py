@@ -12,11 +12,11 @@ from amtp.adversary import flip_one_byte
 
 
 def test_ct_is_bytes_and_cid_hashes_the_raw_bytes():
-    ct = make_ct(b"k" * 32, b"hello", {"t": "none"}, {"domain": "A", "doc": "d1", "policy": "-"})
+    ct = make_ct(b"k" * 32, b"hello", {"t": "none"}, {"domain": "A", "doc": "d1"})
     assert isinstance(ct, bytes) and ct.startswith(CT_MAGIC)
     assert ciphertext_id(ct) == H(ct)
     parsed = unpack_ct(ct)
-    assert parsed["aad"] == {"domain": "A", "doc": "d1", "policy": "-"}
+    assert parsed["aad"] == {"domain": "A", "doc": "d1"}
     with pytest.raises(TypeError):
         ciphertext_id({"E": "not bytes"})
 
@@ -28,14 +28,14 @@ def test_malformed_ct_does_not_parse(bad):
 
 
 def test_trailing_bytes_are_rejected():
-    ct = make_ct(b"k" * 32, b"x", {"t": "none"}, {"domain": "A", "doc": "d", "policy": "-"})
+    ct = make_ct(b"k" * 32, b"x", {"t": "none"}, {"domain": "A", "doc": "d"})
     with pytest.raises(ValueError):
         unpack_ct(ct + b"\0")
 
 
 def test_dht_returns_stored_bytes_and_deletes():
     dht = DHT()
-    ct = make_ct(b"k" * 32, b"body", {"t": "none"}, {"domain": "A", "doc": "d", "policy": "-"})
+    ct = make_ct(b"k" * 32, b"body", {"t": "none"}, {"domain": "A", "doc": "d"})
     cid = ciphertext_id(ct)
     dht.put(cid, ct)
     assert dht.get(cid) is ct                     # immutable bytes: no copy needed
@@ -48,7 +48,7 @@ def test_dht_returns_stored_bytes_and_deletes():
 
 def test_dht_skips_a_corrupted_replica():
     dht = DHT()
-    ct = make_ct(b"k" * 32, b"body", {"t": "none"}, {"domain": "A", "doc": "d", "policy": "-"})
+    ct = make_ct(b"k" * 32, b"body", {"t": "none"}, {"domain": "A", "doc": "d"})
     cid = ciphertext_id(ct)
     dht.put(cid, ct)
     first = dht.replica_nodes(cid)[0]
