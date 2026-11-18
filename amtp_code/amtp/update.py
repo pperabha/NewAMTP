@@ -15,11 +15,13 @@ from .index import EMPTY_SLOT, SENTINEL_HI, SENTINEL_LO, ZERO, domain_root, imt_
 
 # ------------------------------------------------------------ requests U_op
 def enc_request(u: dict) -> bytes:
-    """U_ins = <i, insert, e*, η, id_d, CT_d, bucket, C(d)>,  U_del = <i, delete, e*, η, id_d, cid_d>."""
+    """U_ins = <i, insert, e*, η, id_d, CT_d, C(d)>,  U_del = <i, delete, e*, η, id_d, cid_d>  (eqs. (8), (10) of (32)).
+    The placement group is not part of U_op and is not signed: it is a hint to the CS's placement policy
+    (request field "bucket", next to "U" and "sig"); no verification step depends on it."""
     if u["op"] == "insert":
         c = sorted(u["C"])
         return lp(TAG_REQUEST, u["domain"], "insert", u["epoch"], bytes.fromhex(u["nonce"]), u["id"],
-                  u["ct"], u["bucket"], len(c), *c)
+                  u["ct"], len(c), *c)
     if u["op"] == "delete":
         return lp(TAG_REQUEST, u["domain"], "delete", u["epoch"], bytes.fromhex(u["nonce"]), u["id"],
                   cid_bytes(u["cid"]))
