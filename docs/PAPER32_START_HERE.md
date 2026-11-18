@@ -62,6 +62,8 @@
 - **#44 = A+:** ex4 เทียบ AMTP / Static-MT / Global-MT(v) ที่ระดับ index (`bench/ablation.py`) **และ** เพิ่มเส้น AMTP ผ่าน
   protocol เต็ม (ABS + DO validator + anchor) ทุก skew เพื่อวัด split/merge overhead ใน protocol จริง
 - **#45 = C:** ex4 รัน **10 run** ต่อจุด (variant × skew) ใช้ ~10 เครื่อง (ประมาณ ~5 ชม.)
+- **#46 = B (ตาม setup ของ (32)):** ทุกค่าที่รายงานเป็น **mean** ของ 10 run หลัง warm-up 3 (*"averaged over 10 independent runs"*)
+  กราฟใช้คอลัมน์ `_ms` (mean) ไม่ใช่ `_ms_median`; ex4 = mean ของ 10 run (แต่ละ run = mean ต่อ batch)
 
 ## 4. งานของ B ทีละขั้น
 
@@ -123,7 +125,7 @@ AMTP_CPABE=bsw07 ../.venv/bin/python -m pytest -q                # ต้อง�
 | 5 | Exp 4 ใช้ dataset เต็ม | 20% (25k + 250 batch × 100) × 5 ระดับ skew |
 | 6 | **ใหม่** ยังไม่บอกว่าวัดบน network ไหน | เพิ่มใน setup: *Protocol costs are measured against the same RootAnchor contract deployed on a local EVM; on-chain anchoring latency, read latency and gas are measured separately on Ethereum Sepolia and reported apart.* |
 | 7 | **ใหม่** ยังไม่ได้นิยาม end-to-end | end-to-end = query gen + server + verify; **ไม่รวม** เวลาอ่าน root (รายงานแยก) และการถอดรหัส CP-ABE ของ record |
-| 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm); Sepolia; reps 10 / warm-up 3; θ 64/16; fill placement; query 4 keyword |
+| 8 | setup ยังมีช่อง [ ] | Python 3.12; AWS r7i.4xlarge (Xeon Platinum 8488C, 16 vCPU, 128 GiB, Ubuntu); `cryptography`: SHA-256, AES-256-GCM, AES-SIV, HMAC-SHA256; CP-ABE BSW07 (Charm 0.62, SS512); ABS MPR (Charm); Sepolia; *"each reported value is averaged over 10 independent runs after 3 warm-up runs"* (mean, #46); θ 64/16; fill placement; query 4 keyword |
 | 9 | Exp 2 | ชื่อและเนื้อหาเพิ่ม tamper detection; แก้ "Fig. ??" และ caption "Enter Caption" |
 
 ต้องหาด้วยว่าใน (32) มีประโยคที่ระบุชื่อ blockchain หรือบอกว่า "query อ่านจาก public chain" ทุกครั้งหรือไม่ ถ้ามี ต้องแก้ให้ตรงกับข้อ 6

@@ -53,7 +53,7 @@ branch หลักของงานนี้: `feat/paper32-experiments` · �
 | A5 | ex5: เพิ่ม delete, Du, root maintenance จาก Sepolia | 2 ชม. |
 | A6 | smoke ทุก ex บน Mac (ขนาดเล็ก) + แผนเครื่อง AWS (~14 เครื่อง) + สคริปต์ปล่อยงาน | 1–2 ชม. |
 | A7 | รันจริงบน AWS, เฝ้า, ดึงผลกลับ (ตรวจ manifest: query_set p32, cpabe bsw07, ABS mpr, anchor) | ~10 ชม. (ส่วนใหญ่รอ) |
-| A8 | plot กราฟทุก ex (line chart, บอกตรงที่แพ้) | 3 ชม. |
+| A8 | plot กราฟทุก ex (line chart, บอกตรงที่แพ้) ด้วยค่า **mean** (`_ms`) ตาม (32) (#46) | 3 ชม. |
 
 ## คน B — ของจริง, Sepolia, Overleaf, clean repo
 
