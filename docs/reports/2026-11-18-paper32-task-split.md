@@ -1,5 +1,7 @@
 # แบ่งงาน 2 คน (ทำคู่ขนาน) — ส่ง conference 19 พ.ย. 2026 21:00
 
+**คน A = เจ้าของงาน · คน B = Prim** (งานละเอียดของ B: `docs/reports/2026-11-18-paper32-tasks-B.md`)
+
 branch หลักของงานนี้: `feat/paper32-experiments` · โครงการทดลอง: `docs/reports/2026-11-18-paper32-experiment-layout.md`
 ที่มาของการตัดสินใจ: `docs/reports/2026-11-18-paper32-plan-real-primitives.md`
 
