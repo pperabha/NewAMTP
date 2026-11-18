@@ -1,0 +1,183 @@
+{
+ "chain_id": 11155111,
+ "contract": "0xC0051fD71465485c1FEb316BBc164d34D089f750",
+ "explorer": "https://sepolia.etherscan.io/address/0xC0051fD71465485c1FEb316BBc164d34D089f750",
+ "transactions": 15,
+ "submits": 13,
+ "submit_seconds_median": 11.627803083043545,
+ "submit_seconds_max": 24.27314666705206,
+ "submit_gas_median": 89021,
+ "register_gas": [
+  589217,
+  505180
+ ],
+ "read_latest_root": {
+  "latest": {
+   "median_ms": 241.4800834376365,
+   "max_ms": 291.1443749908358,
+   "epoch_seen": 8
+  },
+  "finalized": {
+   "median_ms": 337.0596250751987,
+   "max_ms": 600.827292073518,
+   "epoch_seen": "not finalized yet"
+  }
+ },
+ "verdicts": [
+  [
+   "honest",
+   "accepted"
+  ],
+  [
+   "tamper_ct",
+   "rejected at ct"
+  ],
+  [
+   "hide_posting",
+   "rejected at papc"
+  ],
+  [
+   "forge_partition",
+   "rejected at part"
+  ],
+  [
+   "stale",
+   "rejected at anchor"
+  ],
+  [
+   "replay",
+   "rejected at ctx"
+  ],
+  [
+   "honest after a new epoch",
+   "accepted"
+  ]
+ ],
+ "epochs": {
+  "A": 8,
+  "B": 5
+ },
+ "txs": [
+  {
+   "op": "register",
+   "domain": "A",
+   "tx": "0x9b2864512e366ddf9581b25ea56bf2bfdcc308478ee83cb60e298bad508fd3a7",
+   "block": 12154716,
+   "gas": 589217,
+   "seconds": 12.622855541994795
+  },
+  {
+   "op": "register",
+   "domain": "B",
+   "tx": "0x6cd28e95eb14f3d74b90f2b661100b132c35963fde9305e1cabc9c306decd6de",
+   "block": 12154718,
+   "gas": 505180,
+   "seconds": 23.959547915961593
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0x9556ba2cdf779a59bd9f7e729aa9f1ca8608a123370b5203e75eb76b876effe2",
+   "block": 12154719,
+   "gas": 89014,
+   "seconds": 11.1149918329902
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0x4b566d31eb6c4433a35e9fe9f56449603afa78e4adeb8a600f862834d8112424",
+   "block": 12154720,
+   "gas": 89009,
+   "seconds": 12.432800333946943
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0x5419a8076644d06e9e9de33abdb9f04207d80edeceb732492bfa21d42a1cce40",
+   "block": 12154721,
+   "gas": 89038,
+   "seconds": 11.431142708985135
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0xd84b30153c31b0e6b35971e8d85572e26d298a4249b5e806a5941d1e999b2545",
+   "block": 12154722,
+   "gas": 89009,
+   "seconds": 11.073375958018005
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0xec4860e8c834c6e871795af80a64acbf1af3b1918b6a52a91be73641ed91f1ed",
+   "block": 12154723,
+   "gas": 89021,
+   "seconds": 11.469708667136729
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0x8450530145cb0e7d28f4dcf04ddf67563011762b759c6fddf6db727e18269cf8",
+   "block": 12154724,
+   "gas": 89026,
+   "seconds": 11.627803083043545
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0x52076260f1f2cb0b2e07f65ab18e4ba104ae74b06cd56339b219a3483ba14289",
+   "block": 12154725,
+   "gas": 89038,
+   "seconds": 12.187729791970924
+  },
+  {
+   "op": "submit",
+   "domain": "B",
+   "tx": "0x0f8b1d24a3f9de990a0ffec5434c0ba70f0e2ed256cb06b018fa6d29073751d6",
+   "block": 12154726,
+   "gas": 89026,
+   "seconds": 12.669607708929107
+  },
+  {
+   "op": "submit",
+   "domain": "B",
+   "tx": "0x3fdc92127233d8214825cd79b45fd62dc84e9aef83fc94519d81ccf80a9e523d",
+   "block": 12154727,
+   "gas": 88997,
+   "seconds": 10.35395050002262
+  },
+  {
+   "op": "submit",
+   "domain": "B",
+   "tx": "0x3e04137686c1611a5bf05e257e6bab42646c1c97f8b2e44482107d231598df14",
+   "block": 12154728,
+   "gas": 89009,
+   "seconds": 11.797154124826193
+  },
+  {
+   "op": "submit",
+   "domain": "B",
+   "tx": "0xb4d35e7b9d63998ada237eb83f9771d9485897307d949034f12fc939762f07ab",
+   "block": 12154730,
+   "gas": 88997,
+   "seconds": 24.27314666705206
+  },
+  {
+   "op": "submit",
+   "domain": "B",
+   "tx": "0xc39ce2bdc269f8fb461306c61e511dc436e61546d818212c7957dfe71b3ca428",
+   "block": 12154731,
+   "gas": 89021,
+   "seconds": 11.475556917022914
+  },
+  {
+   "op": "submit",
+   "domain": "A",
+   "tx": "0x6dfb7396624b6297d12f4ed09e1d542545828df56fe1161e60f0cac7ed689d20",
+   "block": 12154733,
+   "gas": 89021,
+   "seconds": 21.18350254208781
+  }
+ ],
+ "post_query_epoch_txs": 1
+}

@@ -5,6 +5,20 @@
 
 ---
 
+## สถานะล่าสุด (18 พ.ย. 2026) — อ่านก่อนส่วนอื่น
+
+ส่วนด้านล่าง (0–12) เขียนไว้ 15 พ.ย. บางเรื่องเก่าแล้ว สถานะปัจจุบัน:
+
+- **อาจารย์สั่งให้ใช้ของจริง** และ paper เวอร์ชัน **AMTP (32)** เขียน Evaluation ใหม่เป็น 5 การทดลอง ทีมจะ**ทำการทดลองใหม่ตาม (32)**
+  รายละเอียด การตัดสินใจ และงานถัดไปทั้งหมด: **`docs/reports/2026-11-18-paper32-plan-real-primitives.md`**
+- **CP-ABE จริง** (BSW07, Charm): `AMTP_CPABE=bsw07` — `docs/reports/2026-11-17-real-cpabe.md`
+- **Root Anchor บน Ethereum จริง** (contract บน Sepolia): `AMTP_ANCHOR=chain | chain-local` — `docs/reports/2026-11-17-chain-anchor.md`, `chain/README.md`
+- **ABS ยังเป็นตัวจำลอง** (Ed25519) ข้อเสนอ: ABS จริงสำหรับ σ_d / σ_op, ECDSA ที่ contract ตรวจสำหรับ σ_root (รออาจารย์)
+- **dataset: ใช้ arXiv ต่อ (ไม่ใช้ Enron)** และเลือกเพิ่มให้ถึง 10⁶ ไฟล์จริง
+- ผลรอบส่งงาน 17 พ.ย. อยู่ที่ `baselines/results/paper/` (Figs. 3–10) และ repo สาธารณะ `ApiSom-o/AMTP-submission`
+
+---
+
 ## 0. เริ่มต้นอ่านอะไรก่อน
 
 | ลำดับ | ไฟล์ | ทำไม |

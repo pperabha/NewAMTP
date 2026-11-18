@@ -169,16 +169,39 @@ class Corpus:
                         {d: self.keys_for(d) for d in domains})
 
 
+def make_anchor():
+    """The Root Anchor of a benchmark run: in-process (default, every result of the paper) or, with
+    AMTP_ANCHOR=chain, a fresh RootAnchor contract on the network of <repo>/.env (chain/README.md);
+    AMTP_ANCHOR=chain-local: the same contract on an in-process chain (eth-tester), to check a run."""
+    mode = os.environ.get("AMTP_ANCHOR", "in-process")
+    if mode == "in-process":
+        return RootAnchor()
+    from amtp.chain_anchor import ChainAnchor
+    if mode == "chain-local":
+        return ChainAnchor.local()
+    if mode != "chain":
+        raise SystemExit(f"AMTP_ANCHOR must be in-process, chain or chain-local, not {mode}")
+    sys.path.insert(0, os.path.join(REPO_ROOT, "chain"))
+    from sepolia import read_env
+    env = {k: v for k, v in read_env().items() if k != "AMTP_ANCHOR_ADDR"}      # a fresh contract per build
+    anchor = ChainAnchor.from_env(env)
+    anchor.generate_owner_keys = True              # domain names of a run ("D", D1..): keys made for the run
+    print(f" Root Anchor contract {anchor.address} (chain id {anchor.chain_id})", flush=True)
+    return anchor
+
+
 class Domain:
     """One AMTP domain: engine + owner signer, registered on the anchor and the server."""
 
     def __init__(self, name, corpus, docs, a, anchor, server, policy=None, extra_words=None):
         self.name, self.corpus = name, corpus
-        self.signer = Signer()
+        self.signer = Signer()                     # σ_op (and σ_root with the in-process anchor)
+        # σ_root: an anchor on a chain supplies the key its contract checks (amtp/chain_anchor.py)
+        self.root_signer = anchor.root_signer(name) if hasattr(anchor, "root_signer") else self.signer
         server.register_query_key(name, corpus.keys_for(name).k_a)
         self.anchor, self.server = anchor, server
         self.eng = Engine(name, policy or AdaptivePolicy(a.buckets, a.theta_min, a.theta_max, a.placement))
-        anchor.register_domain(name, self.signer.public, self.eng.R_D)      # R^(0)
+        anchor.register_domain(name, self.root_signer.public, self.eng.R_D)      # R^(0)
         self.cids = []
         self.doc_ids = [d.doc_id for d in docs]
         for i, d in enumerate(docs):
@@ -194,7 +217,7 @@ class Domain:
     def finalize(self):
         """Owner signs the transition, the anchor accepts it, the server exposes the snapshot."""
         _, prev = self.anchor.latest(self.name)
-        sig = self.signer.sign(transition_message(self.name, self.eng.epoch, self.eng.R_D, prev))
+        sig = self.root_signer.sign(transition_message(self.name, self.eng.epoch, self.eng.R_D, prev))
         self.anchor.submit(self.name, self.eng.epoch, self.eng.R_D, sig)
 
     def publish_snapshot(self):
@@ -219,7 +242,7 @@ class Protocol:
         server.engines[dom.name], server.owner_keys[dom.name] = eng, [dom.signer.public]
         server.docs[dom.name] = dict(docs)
         self.dom = dom
-        self.val = Validator.bootstrap(dom.name, dom.signer, eng.policy, eng, docs, [dom.signer.public])
+        self.val = Validator.bootstrap(dom.name, dom.root_signer, eng.policy, eng, docs, [dom.signer.public])
 
     def epoch(self, make_requests):
         """One epoch; make_requests() builds the b signed requests (the owner's tokens + σ_op, files already
@@ -467,7 +490,7 @@ def summarize(samples, prefix=""):
 
 
 def setup(name, corpus, docs, a, policy=None, extra_words=None):
-    anchor, server = RootAnchor(), CloudServer()
+    anchor, server = make_anchor(), CloudServer()
     t0 = time.perf_counter()
     dom = Domain(name, corpus, docs, a, anchor, server, policy, extra_words)
     state = dom.publish_snapshot()
@@ -791,7 +814,7 @@ def suite_tamper(a):
 
 def multi_build(corpus, named_docs, a):
     """One AMTP domain per (name, docs), each with its own keys and Domain Root, on one anchor and server."""
-    anchor, server = RootAnchor(), CloudServer()
+    anchor, server = make_anchor(), CloudServer()
     t0 = time.perf_counter()
     doms = [Domain(name, corpus, docs, a, anchor, server) for name, docs in named_docs]
     states = [d.publish_snapshot() for d in doms]
