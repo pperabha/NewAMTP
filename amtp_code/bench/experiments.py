@@ -1115,7 +1115,7 @@ def suite_skewproto(a):
                 splits += stt["splits"]
                 merges += stt["merges"]
                 lay = dom.eng.layout()
-                w.add(scheme="AMTP", variant="AMTP (full protocol)", run=run, skew=skew, batch=bi, phase=phases[bi],
+                w.add(scheme="AMTP", variant="AMTP (full protocol)", run=run, seed=seed, skew=skew, batch=bi, phase=phases[bi],
                       b=a.sm_b, ops=len(ops), splits=stt["splits"], merges=stt["merges"],
                       partitions=lay["partitions"], max_partition=lay["max_partition"],
                       **{f"{k}_ms": v for k, v in times.items()})
