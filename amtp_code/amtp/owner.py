@@ -46,7 +46,7 @@ class DataOwner:
         self.domain, self.name = domain, name
         self.keys, self.authority = keys, authority
         self.anchor, self.server = anchor, server
-        self.signer = Signer()                    # ABS stand-in: signs σ_op (and σ_root, in-process anchor)
+        self.signer = Signer(domain)              # σ_op = σ_d (AMTP_ABS: ABS of this domain); σ_root too, in-process anchor
         # σ_root key: an anchor on a chain supplies the key its contract checks (chain_anchor.py)
         root_signer = anchor.root_signer(domain) if hasattr(anchor, "root_signer") else self.signer
         self.policy = policy or AdaptivePolicy(1, theta_min, theta_max)
