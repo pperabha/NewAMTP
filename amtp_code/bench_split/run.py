@@ -60,7 +60,8 @@ def _parts(ph, prefix, with_focus):
 
 def run_query_split(dom, state, user, text):
     idx = _index_for(state, dom.name)                          # setup: built before the first timing
-    t_q, _ = user.make_query(dom.name, text, dom.anchor)       # the same B_Q the full query sends (not timed)
+    t_q, _ = user.make_query(dom.name, text, E.anchor_read(dom)[0])   # the same B_Q as the full query (not timed;
+    #                                                                   anchor read once per query, issue #68)
     b_q = boolean.from_json(t_q["B_Q"])
     plain, pf, fast = {}, {}, {}
     forms = [lambda: search_only(state, b_q, dom.server.dht, timing=plain),
