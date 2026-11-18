@@ -20,6 +20,9 @@
 #   xsearch     Search 2.1         Boolean AND / OR queries over the 4 domains               (AMTP, SE-COLLAB)
 #   xverify     Verify 2.1         multi-domain keywords with ~10..10,000 results            (AMTP, SE-COLLAB)
 #   xdomains    Search / Verify 2.2  the same files as D = 1..32 domains, kQ = XD_KQ, shapes XD_SHAPES (AMTP, SE-COLLAB)
+#   exp2        Exp. 2 of (32) (selective proof): one marker keyword with exactly r_Q results, placed clustered /
+#               dispersed / partition_spread, in the shared baselines/results/exp2_layouts.json (N and r_Q come
+#               from that file: python -m bench.experiments exp2-layouts --n N writes it)              (4 schemes)
 #   update      update cost at N = UPDATE_SIZES: one epoch of b signed requests, b in UPDATE_B;
 #               update = owner request (tokens + σ_op) + CS prepare + Validator + anchor;
 #               file encryption apart                                                       (AMTP, Chen)
@@ -38,7 +41,7 @@
 # every manifest records amtp_gamma_v. Default 1 (the paper's γ). Baselines are not affected.
 # SCHEMES="amtp chen": run only these schemes' jobs (split a step over machines; the check step always runs).
 # DRY_RUN=1: print the commands instead of running them. scripts/cloud_worker.sh holds the 10-machine plan.
-# X_SEARCH1, X_VERIFY1, X_TAMPER, X_XSEARCH, X_XVERIFY, X_XDOMAINS, X_EXP5: extra options for every scheme of
+# X_SEARCH1, X_VERIFY1, X_TAMPER, X_XSEARCH, X_XVERIFY, X_XDOMAINS, X_EXP2, X_EXP5: extra options for every scheme of
 # that step (empty by default; scripts/smoke_all.sh uses them to run every step small).
 # Settings (environment variables, defaults below). Commit the code first: every manifest records the
 # git commit and git_dirty. Logs go to $LOGS; a failed step is reported at the end, the others still run.
@@ -147,6 +150,12 @@ step_xdomains() {
   run xdomains_amtp amtp_code "$PY" -m $AMTP_MOD xdomains $COMMON --x-kq $XD_KQ --shapes $XD_SHAPES $O_AMTP ${X_XDOMAINS:-}
   run xdomains_secollab baselines "$PY" se_collab_sim.py xdomains $COMMON $SE_OPTS --x-kq $XD_KQ --shapes $XD_SHAPES $O_SE ${X_XDOMAINS:-}
 }
+step_exp2() {          # Exp. 2 (32): every scheme replays the same committed layouts file
+  run exp2_amtp amtp_code "$PY" -m $AMTP_MOD exp2 $COMMON $O_AMTP ${X_EXP2:-}
+  run exp2_chen baselines "$PY" chen_et_al_sim.py exp2 $COMMON $CHEN_OPTS $O_CHEN ${X_EXP2:-}
+  run exp2_du baselines "$PY" du_et_al_sim.py exp2 $COMMON $O_DU ${X_EXP2:-}
+  run exp2_secollab baselines "$PY" se_collab_sim.py exp2 $COMMON $SE_OPTS $O_SE ${X_EXP2:-}
+}
 step_update() {
   run update_amtp amtp_code "$PY" -m bench.experiments exp3 $COMMON --sizes $UPDATE_SIZES --batches $UPDATE_B $O_AMTP
   run update_chen baselines "$PY" chen_et_al_sim.py exp3 $COMMON --sizes $UPDATE_SIZES --batches $UPDATE_B $O_CHEN
@@ -190,7 +199,7 @@ step_skewproto() {      # Exp. 4 (32), AMTP through the full protocol (#44 A+): 
 }
 
 STEPS=("$@")
-[ ${#STEPS[@]} -eq 0 ] && STEPS=(check search1 verify1 tamper xsearch xverify xdomains update update_n exp5 splitmerge)
+[ ${#STEPS[@]} -eq 0 ] && STEPS=(check search1 verify1 tamper xsearch xverify xdomains exp2 update update_n exp5 splitmerge)
 echo "commit $(git rev-parse --short HEAD), uncommitted changes: $(git status --porcelain --untracked-files=no | wc -l)"
 for s in "${STEPS[@]}"; do
   "step_$s"
