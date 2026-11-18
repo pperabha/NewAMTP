@@ -1,5 +1,23 @@
 # NewAMTP — instructions for Claude
 
+**Paper (32) round (deadline 2026-11-19 21:00): read `docs/PAPER32_START_HERE.md` first** (status, decisions,
+who does what, rules). Then `docs/HANDOFF.md` for the project as a whole.
+
+## Team workflow for the paper (32) round (owner's rule, 2026-11-18; both Claudes follow it)
+
+People: person A = owner (GitHub `ApiSom-o`), person B = Prim (GitHub `PrimRoseEverD`). Tasks: `docs/PAPER32_START_HERE.md`.
+
+1. **One task done → one PR**, base `feat/paper32-experiments`, title starting with the task id (e.g. `A2:`, `B1+B2:`).
+   The PR body tags the other person (`@PrimRoseEverD` from A's side, `@ApiSom-o` from B's side) and says what
+   was done, how it was tested (pytest result), and what the other side must do next.
+   For this round, commit + push + open the PR **without asking first** (overrides the "ask before" rule below
+   for paper (32) task PRs only). Never merge: the owner presses merge.
+2. **A decision is needed → open a GitHub issue** (title `Decision: ...`), tag both people, list the options with
+   a recommendation, and do not build on an undecided option. Record the answer in the issue and in
+   `docs/PAPER32_START_HERE.md`.
+3. **After every PR or issue, remind your person to message the other on LINE** with the link (GitHub
+   notifications are not enough with this deadline).
+
 **Read `docs/HANDOFF.md` first.** It has the project overview, every decision made so far, the current
 results, what is running on the cloud now, and the open tasks. Detailed history: `docs/reports/`.
 

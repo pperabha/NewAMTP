@@ -12,7 +12,7 @@
 | รอบวัด | **reps = 10** หลัง warm-up 3 (อาจารย์สั่ง) |
 | query default | 4 keyword (ตาม (32) "a query contains four keywords") |
 | θ_max / θ_min | 64 / 16 (`docs/THETA_CHOICE.md`), placement = fill, query flags เปิดทั้งหมด (ค่าเริ่มต้นของโค้ด) |
-| crypto จริงทั้งหมด | CP-ABE BSW07 (`AMTP_CPABE=bsw07`), **ABS จริง** สำหรับ σ_d / σ_op (ต้อง implement), Root Anchor บน Ethereum (`AMTP_ANCHOR=chain` บน Sepolia เมื่อวัด update / root; `chain-local` ตอนทดสอบ) |
+| crypto จริงทั้งหมด | CP-ABE BSW07 (`AMTP_CPABE=bsw07`), **ABS จริง** สำหรับ σ_d / σ_op (ต้อง implement), Root Anchor บน Ethereum: เวลา protocol วัดบน `chain-local` ทุก ex; anchor time + gas + read latency วัดบน Sepolia ชุดแยก (#42) |
 | update time | รายงาน **protocol time** (เตรียม + ตรวจ + เซ็น) แยกจาก **anchor time + gas** บน chain |
 | กราฟ | line chart เท่านั้น, บอกตรงๆ ว่าแพ้ตรงไหน |
 
@@ -34,7 +34,7 @@ ex2_verify/                               (32) Exp 2: Selective Proof, Verificat
 ├── Verify_2.1_multi_domain_vary_results     x = rQ รวม, 4 domain × 100k                    AMTP vs SE-COLLAB
 ├── Verify_2.2_multi_domain_vary_domains     x = D, y = เวลา verify อย่างเดียว               AMTP vs SE-COLLAB
 │                                            คงที่: ไฟล์ชุดเดิม (100k/domain × 4 แบ่งกลุ่มใหม่) และ query ชุดเดิม -> rQ เท่าเดิม
-└── Verify_3_clustered_vs_dispersed (ใหม่ ตาม (32))  N = 125k, marker keyword ที่มีผล rQ ไฟล์ วางแบบ clustered
+└── Verify_3_clustered_vs_dispersed (ใหม่ ตาม (32))  N = 100k (ตัดสิน 18 พ.ย.), marker keyword ที่มีผล rQ ไฟล์ วางแบบ clustered
                                              (อยู่ใน partition น้อย) / dispersed (กระจายหลาย partition) / partition_spread;
                                              y = proof gen, verify, proof size; x = rQ หรือ sQ
                                              (โค้ดเดิม suite_exp2 + exp2_layouts.json ต้องสร้างใหม่บน v4)
@@ -45,8 +45,10 @@ ex3_update_cost/                          (32) Exp 3: Dynamic Update Scalability
     split / merge ไม่นับ (ตาม (32)); protocol time รวม ABS sign/verify จริง; anchor time แยกไปที่ ex5
 
 ex4_split_merge/                          (32) Exp 4: Adaptive Partitioning under Skewed Growth
-    AMTP vs Static-MT vs Global-MT, θ_max = 64
-    x = ระดับ skew (สัดส่วน update ที่ลง partition ร้อน เช่น 0 / 25 / 50 / 75 / 100%)
+    AMTP vs Static-MT vs Global-MT(v), θ_max = 64, 10 run ต่อจุด (#45)
+    3 variant วัดที่ระดับ index (`bench/ablation.py`) + เส้น AMTP ผ่าน protocol เต็ม (ABS + validator + anchor) (#44)
+    เริ่ม 25k (20% ของ dataset) + insert 250 batch × 100 (→ 50k) แล้ว delete 65% ของกลุ่มร้อน (merge เกิดเฟสนี้)
+    x = ระดับ skew = สัดส่วนไฟล์ใหม่ที่บังคับลงกลุ่มร้อน: 0, 0.25, 0.5, 0.75, 0.95 (ตัดสิน 18 พ.ย.)
     y = update latency, search/proof latency, verify latency, partition ใหญ่สุด, เวลา split/merge
 
 ex5_multidomain/                          (32) Exp 5: Multi-Domain Scalability and Isolation
@@ -84,6 +86,7 @@ search-only 0.018 · server total 0.133 · verify 0.199 · end-to-end 0.392 (ร
 
 ข้อเสนอ: Exp 1 / 2 (query จำนวนมาก) ใช้ contract บน EVM ในเครื่อง (`chain-local`) และรายงานเวลาอ่านบน Sepolia จริง
 (~257 ms) แยกไว้ใน setup / Exp 5; การทดลองที่เขียน root (Exp 3–5) ใช้ Sepolia
+**ตัดสินแล้ว (#42 = A):** เวลา protocol ทุก ex ใช้ `chain-local`; Sepolia เป็นชุดแยก (gas_domains D = 1–32 + บางจุดของ ex3)
 
 ## สถานะ
 
