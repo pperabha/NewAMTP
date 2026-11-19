@@ -13,6 +13,12 @@
    จาก `baselines/results/paper32/figures/` (อยู่ใน `feat/paper32-experiments` แล้ว หลัง merge PR #71)
 3. **preamble:** ถ้ายังไม่มี ให้เพิ่ม `\usepackage[caption=false,font=footnotesize]{subfig}` (แบบที่ IEEEtran แนะนำ)
 4. **เลขรูป:** paper มี Fig. 1 (system model) และ Fig. 2 (workflow) แล้ว รูปผลเริ่มที่ Fig. 3 · ใช้ `\ref` เสมอ
+4b. **แก้ตาม PR #74 (19 พ.ย.):** Fig. 6 ใช้รูปสรุป `e2_tamper_attack_types.pdf` แทน 2 ช่อง hide / inject เดิม และคำที่หมายถึง
+   $r_Q$ ใช้ "returned files" (แกน x ของรูป verify / layout เปลี่ยนเป็น "Returned files $r_Q$") · **ถ้าวาง Fig. 5 / Fig. 6 ไปแล้ว**
+   ให้แทนบล็อกรูปและย่อหน้า Fig. 6 ทั้งบล็อก, แก้ caption และ 3 วลีในย่อหน้าผลของ Fig. 5 ("the returned files occupy",
+   "for the clustered layout", "for the dispersed layout") และอัปโหลด PDF ชุดใหม่ทับ (แกน x ใหม่)
+4c. **แก้ตาม #76 (19 พ.ย.):** Fig. 8 ไม่มีเส้น AMTP full protocol; ช่อง (a) = `e4_batches_skew0.95` แทน `e4_query_verify`
+   (ตัวเลขฝั่ง query อยู่ในข้อความแทน) · **ถ้าวาง Fig. 8 ไปแล้ว** ให้แทนทั้งบล็อกรูปและย่อหน้า Results ของ Exp 4
 5. ห้ามใช้ `e5_root_gas_localevm` (gas ของ py-evm ไม่ตรง Ethereum) · ใช้ `e5_sepolia_gas` เท่านั้น
 6. เจ้าของงาน (#66): **ไม่อธิบาย** query ที่ผลมากหรือ OR ล้วนในเนื้อหา แต่รูป OR ยังอยู่ตาม (32) · กติกาทีม: บอกตรงๆ ว่าแพ้ตรงไหน
    → ปรับแล้ว (PR #73): เจ้าของงานให้**เก็บ**ประโยคที่บอกว่า OR แพ้ไว้ (เปลี่ยนจาก #66)
@@ -107,52 +113,52 @@ SE-COLLAB 0.83 → 0.18 ms → AMTP เร็วกว่าถึง D = 8, **�
 \subfloat[Proof generation]{\includegraphics[width=0.32\textwidth]{figs/e2_layouts_proof.pdf}\label{fig:e2-proof}}\hfil
 \subfloat[DU verification]{\includegraphics[width=0.32\textwidth]{figs/e2_layouts_verify.pdf}\label{fig:e2-verify}}\hfil
 \subfloat[Proof size]{\includegraphics[width=0.32\textwidth]{figs/e2_layouts_proof_kb.pdf}\label{fig:e2-size}}
-\caption{Selective proof for one domain of $10^5$ documents and a marker keyword with $r_Q$ matches
-placed in few partitions (clustered), in many partitions (dispersed), or one per partition (partition
+\caption{Selective proof for one domain of $10^5$ documents and a marker keyword whose $r_Q$ returned files
+are placed in few partitions (clustered), in many partitions (dispersed), or one per partition (partition
 spread). Chen et al.\ and Du et al.\ have no separate proof-generation step.}
 \label{fig:e2-layouts}
 \end{figure*}
 
 \textbf{Results.} Fig.~\ref{fig:e2-layouts} shows that AMTP's proof work follows the partitions that
-the matches occupy. For $r_Q = 1{,}000$, the clustered layout covers 39 partitions and the dispersed
+the returned files occupy. For $r_Q = 1{,}000$, the clustered layout covers 39 partitions and the dispersed
 one 880: proof generation takes 0.71 vs.\ 5.7\,ms, verification 16.7 vs.\ 32.5\,ms, and the proof
 55 vs.\ 320\,KB. SE-COLLAB's proof does not depend on the layout and grows with $r_Q$ (561\,KB at
 $r_Q = 1{,}000$); AMTP's proof is smaller in every layout from $r_Q = 100$ (at most 1.0\,MB vs.\
-2.8\,MB at $r_Q = 5{,}000$). AMTP generates proofs faster than SE-COLLAB for clustered matches at every
-$r_Q$, but more slowly for dispersed matches from $r_Q = 100$ (22.7 vs.\ 17.5\,ms at $r_Q = 5{,}000$),
+2.8\,MB at $r_Q = 5{,}000$). AMTP generates proofs faster than SE-COLLAB for the clustered layout at every
+$r_Q$, but more slowly for the dispersed layout from $r_Q = 100$ (22.7 vs.\ 17.5\,ms at $r_Q = 5{,}000$),
 and its verification is slower than SE-COLLAB's from $r_Q = 100$ (84--129 vs.\ 55--58\,ms at
 $r_Q = 5{,}000$). Chen et al.\ verifies fastest with a constant 32-byte tag, and Du et al.\ is the slowest
 (361--369\,ms, 17\,MB at $r_Q = 5{,}000$).
 ```
 
-### Fig. 6 (verify ตาม r_Q, tamper) [M4, M5, M6] · รูป: `e2_single_verify_verify`, `e2_multi_verify_verify`, `e2_tamper_hide_detection`, `e2_tamper_inject_detection`
+### Fig. 6 (verify ตาม r_Q, tamper) [M4, M5, M6] · รูป: `e2_single_verify_verify`, `e2_multi_verify_verify`, `e2_tamper_attack_types` (รูปสรุป tamper จาก PR #74 แทน hide / inject 2 ช่องเดิม)
 → **วางต่อท้าย** ย่อหน้าผลของ Fig. 5
 
 ```latex
 \begin{figure*}[t]
 \centering
-\subfloat[Verification, one domain]{\includegraphics[width=0.24\textwidth]{figs/e2_single_verify_verify.pdf}\label{fig:e2-v1}}\hfil
-\subfloat[Verification, four domains]{\includegraphics[width=0.24\textwidth]{figs/e2_multi_verify_verify.pdf}\label{fig:e2-v2}}\hfil
-\subfloat[Detection: hidden files]{\includegraphics[width=0.24\textwidth]{figs/e2_tamper_hide_detection.pdf}\label{fig:e2-hide}}\hfil
-\subfloat[Detection: injected files]{\includegraphics[width=0.24\textwidth]{figs/e2_tamper_inject_detection.pdf}\label{fig:e2-inject}}
-\caption{(a), (b) DU verification for real keywords with $r_Q$ results; (c), (d) share of tampered
-responses that the DU rejects when $t$ returned files are hidden or non-matching files are injected.
-Four domains: SE-COLLAB is the only baseline.}
+\subfloat[Verification, one domain]{\includegraphics[width=0.29\textwidth]{figs/e2_single_verify_verify.pdf}\label{fig:e2-v1}}\hfil
+\subfloat[Verification, four domains]{\includegraphics[width=0.29\textwidth]{figs/e2_multi_verify_verify.pdf}\label{fig:e2-v2}}\hfil
+\subfloat[Tamper detection]{\includegraphics[width=0.40\textwidth]{figs/e2_tamper_attack_types.pdf}\label{fig:e2-tamper}}
+\caption{(a), (b) DU verification for real keywords with $r_Q$ returned files (four domains: SE-COLLAB
+is the only baseline). (c) Number of attack types (modified, hidden, injected, and older versions of
+files) that each scheme detects in every run when $t$ of the 2{,}021--2{,}122 returned files are
+tampered with; Chen et al.'s model covers only hidden and injected files.}
 \label{fig:e2-verify-tamper}
 \end{figure*}
 
 For real keywords (Fig.~\ref{fig:e2-v1}), AMTP verifies in 0.52--69.8\,ms for $r_Q$ from 10 to
-10{,}000, faster than Du et al.\ (0.75--179\,ms) and faster than SE-COLLAB only at $r_Q = 10$
+10{,}000 returned files, faster than Du et al.\ (0.75--179\,ms) and faster than SE-COLLAB only at $r_Q = 10$
 (SE-COLLAB: 1.04--28.7\,ms); Chen et al.\ is the fastest (0.28--7.7\,ms). AMTP's proof is 6--573\,KB,
 against 6--1{,}431\,KB for SE-COLLAB and 35\,KB--8.7\,MB for Du et al. Over four domains
 (Fig.~\ref{fig:e2-v2}) the picture is the same: AMTP is faster than SE-COLLAB at $r_Q = 10$ and slower
 beyond (258 vs.\ 109\,ms at $r_Q = 10{,}000$), with a smaller proof from $r_Q = 100$ (2.2 vs.\ 5.3\,MB
 at $r_Q = 10{,}000$).
-AMTP rejected every tampered response for all four attacks (modified, hidden, injected, and older
-versions of files) and all $t$ from 5 to 1{,}000, and accepted every honest response.
-SE-COLLAB did not detect hidden or injected files (Fig.~\ref{fig:e2-hide}, \ref{fig:e2-inject}),
-Du et al.\ did not detect injected files, and Chen et al.'s model does not cover modified or older
-ciphertexts. For hidden files, AMTP rejects in about 31\,ms, against 6\,ms for Chen et al.,
+AMTP detected all four attack types (modified, hidden, injected, and older versions of files) in
+every run and for every $t$ from 5 to 1{,}000, and accepted every honest response
+(Fig.~\ref{fig:e2-tamper}). Du et al.\ detected three of the four (it misses injected files),
+SE-COLLAB two (it misses hidden and injected files), and Chen et al.\ both attacks its model
+covers (hidden and injected files; it has no model of modified or older ciphertexts). For hidden files, AMTP rejects in about 31\,ms, against 6\,ms for Chen et al.,
 23\,ms for SE-COLLAB (which does not detect them), and 145\,ms for Du et al.
 ```
 
@@ -194,35 +200,40 @@ $b = 100$, AMTP's cost per request grows by 1.5$\times$ (35 to 53\,ms) and Chen 
 
 ## 5. Experiment 4: Adaptive Partitioning under Skewed Growth [M7]
 
-### Fig. 8 · รูป: `e4_update_insert`, `e4_update_delete`, `e4_max_partition`, `e4_query_verify`
+### Fig. 8 (#76: ระดับ index อย่างเดียว ไม่มีเส้น AMTP full protocol) · รูป: `e4_batches_skew0.95`, `e4_update_insert`, `e4_update_delete`, `e4_max_partition`
 ค้นหา: `Experiment 4: Adaptive Partitioning under Skewed` → ย่อหน้าจบที่ `keeping restructuring overhead bounded.`
 → **วางต่อท้าย**
 
 ```latex
 \begin{figure*}[t]
 \centering
+\subfloat[Every batch, $s = 0.95$]{\includegraphics[width=0.24\textwidth]{figs/e4_batches_skew0.95.pdf}\label{fig:e4-batches}}\hfil
 \subfloat[Insertion batches]{\includegraphics[width=0.24\textwidth]{figs/e4_update_insert.pdf}\label{fig:e4-ins}}\hfil
 \subfloat[Deletion batches]{\includegraphics[width=0.24\textwidth]{figs/e4_update_delete.pdf}\label{fig:e4-del}}\hfil
-\subfloat[Largest partition]{\includegraphics[width=0.24\textwidth]{figs/e4_max_partition.pdf}\label{fig:e4-max}}\hfil
-\subfloat[DU verification]{\includegraphics[width=0.24\textwidth]{figs/e4_query_verify.pdf}\label{fig:e4-ver}}
-\caption{Skewed growth: 25{,}000 documents, 250 batches of 100 insertions with a fraction $s$ on one
-hot group, then deletion of 65\% of the hot group. AMTP, Static-MT, and Global-MT(v) are compared at
-the index level; AMTP (full protocol) adds signed requests, DO validation, and anchoring around the same
-index work and is not directly comparable with the other two.}
+\subfloat[Largest partition]{\includegraphics[width=0.24\textwidth]{figs/e4_max_partition.pdf}\label{fig:e4-max}}
+\caption{Skewed growth at the index level: 25{,}000 documents, 250 batches of 100 insertions with a
+fraction $s$ on one hot group, then deletion of 65\% of the hot group. (a) every batch at $s = 0.95$;
+(b), (c) mean time per batch of each phase; (d) largest partition after the last batch. The single
+spikes at batches 25 and 247 are capacity doublings of the IMT, in AMTP and Static-MT alike.}
 \label{fig:e4}
 \end{figure*}
 
-\textbf{Results.} Adaptive partitioning keeps every partition at no more than $\theta_{\max} = 64$ live entries for
-all skew levels, whereas the largest Static-MT partition grows to 2{,}492--8{,}206 entries and
-Global-MT(v) keeps all 33{,}000--48{,}000 entries in one tree (Fig.~\ref{fig:e4-max}). An insertion
-batch costs 443--694\,ms in AMTP, 3.6--6.9$\times$ less than Static-MT and 9.9--15.8$\times$ less than
-Global-MT(v) (Fig.~\ref{fig:e4-ins}). For deletions, Static-MT is about as fast as AMTP without skew
-(1.26 vs.\ 1.32\,s per batch), and AMTP is up to 2.2$\times$ faster as the skew grows
-(Fig.~\ref{fig:e4-del}). Splits and merges take 7--9\,ms per batch, about 1--2\% of AMTP's update time,
-with 282--376 restructuring events per run. The price is on the query side: with more, smaller
-partitions, AMTP's verification (4.7--6.0\,ms) takes 14--16\% longer than Static-MT's (4.3--5.2\,ms)
-and about 1.8$\times$ as long as Global-MT(v)'s (2.6--3.3\,ms), and its proofs (60--79\,KB) are 6\% and
-23--26\% larger than theirs (56--74\,KB and 47--64\,KB) (Fig.~\ref{fig:e4-ver}).
+\textbf{Results.} Adaptive partitioning keeps every partition at no more than $\theta_{\max} = 64$ live
+entries for all skew levels, whereas the largest Static-MT partition grows to 2{,}492--8{,}206 entries
+and Global-MT(v) keeps all 33{,}000--48{,}000 entries in one tree (Fig.~\ref{fig:e4-max}). With 95\%
+of the insertions on one group (Fig.~\ref{fig:e4-batches}), an AMTP batch stays at about 0.3--0.6\,s
+while Static-MT's grows to about 6\,s as its hot partition fills, and AMTP remains the fastest
+throughout the deletion phase. Over all skew levels, an insertion batch costs 443--694\,ms in AMTP,
+3.6--6.9$\times$ less than Static-MT and 9.9--15.8$\times$ less than Global-MT(v)
+(Fig.~\ref{fig:e4-ins}). For deletions, Static-MT is about as fast as AMTP without skew (1.26 vs.\
+1.32\,s per batch), and AMTP is up to 2.2$\times$ faster as the skew grows (Fig.~\ref{fig:e4-del}).
+Splits and merges take 7--9\,ms per batch, about 1--2\% of AMTP's update time, with 282--376
+restructuring events per run. The price is on the query side: with more, smaller partitions, AMTP's
+verification (4.7--6.0\,ms) takes 14--16\% longer than Static-MT's (4.3--5.2\,ms) and about
+1.8$\times$ as long as Global-MT(v)'s (2.6--3.3\,ms), and its proofs (60--79\,KB) are 6\% and
+23--26\% larger than theirs (56--74\,KB and 47--64\,KB). Run through the full protocol (ABS-signed
+requests, DO validation, and anchoring), the same insertion batches take 3.7--4.2\,s, about half of
+which is the request signatures (Experiment~3); the index work is identical.
 ```
 
 ---
