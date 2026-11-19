@@ -32,7 +32,7 @@ class Doc:
         # Small placeholder ciphertext: the structure benchmarks do not decrypt,
         # but the verifier still checks H(CT) = cid and the domain binding.
         self.ct = pack_ct({"N": "00", "C": H(doc_id, *sorted(words)).hex()}, {"t": "none"},
-                          enc({"domain": domain, "doc": doc_id, "policy": "-"}))
+                          enc({"domain": domain, "doc": doc_id}))
         self.cid = ciphertext_id(self.ct)
 
 

@@ -8,6 +8,7 @@
 # Output: baselines/results/runs/smoke_<date>_<commit>/ (git-ignored). Every step must finish without FAIL.
 # Sizes: 10k files per domain (the smallest dataset-v4 size), domain D1 for the single-domain steps;
 # tamper needs 100k (the only size with tamper sets) so it runs D1 only; D = 1, 2 for the multi-domain steps.
+# exp2 runs at the N of the committed baselines/results/exp2_layouts.json (100k); it cannot be made smaller.
 set -u
 cd "$(dirname "$0")/.."
 export RUN_DIR=${RUN_DIR:-$(pwd)/baselines/results/runs/smoke_$(date '+%Y%m%d_%H%M')_$(git rev-parse --short HEAD)}

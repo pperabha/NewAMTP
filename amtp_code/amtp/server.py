@@ -97,7 +97,7 @@ class CloudServer:
                 if not self.dht.has(cid):
                     stored.append(cid)
                 self.dht.put(cid, u["ct"])
-                placements.append(list(eng.insert(cid, {H(c) for c in u["C"]}, u["bucket"])))
+                placements.append(list(eng.insert(cid, {H(c) for c in u["C"]}, req.get("bucket", 0))))   # CS-side hint
                 docs[u["id"]] = cid
             else:
                 cid = u["cid"]

@@ -46,7 +46,7 @@ class DataOwner:
         self.domain, self.name = domain, name
         self.keys, self.authority = keys, authority
         self.anchor, self.server = anchor, server
-        self.signer = Signer()                    # ABS stand-in: signs σ_op (and σ_root, in-process anchor)
+        self.signer = Signer(domain)              # σ_op = σ_d (AMTP_ABS: ABS of this domain); σ_root too, in-process anchor
         # σ_root key: an anchor on a chain supplies the key its contract checks (chain_anchor.py)
         root_signer = anchor.root_signer(domain) if hasattr(anchor, "root_signer") else self.signer
         self.policy = policy or AdaptivePolicy(1, theta_min, theta_max)
@@ -77,7 +77,7 @@ class DataOwner:
     def encrypt(self, doc: dict):
         """CT_d = <E_d, C_Kd, aad_d> as raw bytes, cid_d = H(CT_d), and C(d)."""
         k_d = os.urandom(32)
-        aad = {"domain": self.domain, "doc": doc["id"], "policy": doc["policy"]}
+        aad = {"domain": self.domain, "doc": doc["id"]}           # aad_d = Encode(i, id_d), eq. (2) of (32)
         body = enc({"title": doc["title"], "body": doc["body"]})
         ct = make_ct(k_d, body, self.authority.wrap(k_d, doc["policy"]), aad)   # raw bytes
         # W(d): taken from the shared dataset (documents.csv) when given, so AMTP indexes exactly
@@ -94,11 +94,14 @@ class DataOwner:
         return {"U": u, "sig": self.signer.sign(request_digest(u))}
 
     def insert_request(self, doc: dict, bucket: int = 0):
+        """<U_d, σ_d> of eqs. (8)-(9) of (32) (= U_ins, σ_op of the insertion); `bucket` is the placement
+        hint for the CS, outside U_d and the signature."""
         ct, _, c_d = self.encrypt(doc)
         e_star, _ = self.anchor.latest(self.domain)
-        return self._signed({"domain": self.domain, "op": "insert", "epoch": e_star,
-                             "nonce": os.urandom(16).hex(), "id": doc["id"], "ct": ct,
-                             "bucket": bucket, "C": c_d})
+        req = self._signed({"domain": self.domain, "op": "insert", "epoch": e_star,
+                            "nonce": os.urandom(16).hex(), "id": doc["id"], "ct": ct, "C": c_d})
+        req["bucket"] = bucket
+        return req
 
     def delete_request(self, doc_id: str):
         e_star, _ = self.anchor.latest(self.domain)

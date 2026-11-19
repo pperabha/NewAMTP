@@ -103,6 +103,7 @@ class Corpus:
         groups = sorted(set(cat.values()) | set(self.D.DOMAINS))
         self.bucket_of = {g: i % a.buckets for i, g in enumerate(groups)}
         self.cat = cat
+        self.bucket_override = {}                       # doc_id -> group (skewproto: the groups of bench.ablation)
         self._h, self._docs = {}, {}
 
     def keys_for(self, domain):
@@ -128,14 +129,14 @@ class Corpus:
         cid, ct, _, bucket = encrypted
         k_s = self.keys_for(domain).k_s
         u = {"domain": domain, "op": "insert", "epoch": epoch, "nonce": os.urandom(16).hex(),
-             "id": doc.doc_id, "ct": ct, "bucket": bucket,
+             "id": doc.doc_id, "ct": ct,
              "C": sorted({keyword_cipher(k_s, norm(w)) for w in doc.keywords})}
-        return {"U": u, "sig": signer.sign(request_digest(u))}
+        return {"U": u, "sig": _sign(signer, request_digest(u)), "bucket": bucket}   # bucket: CS placement hint
 
     @staticmethod
     def delete_request(doc_id, cid, domain, epoch, signer):
         u = {"domain": domain, "op": "delete", "epoch": epoch, "nonce": os.urandom(16).hex(), "id": doc_id, "cid": cid}
-        return {"U": u, "sig": signer.sign(request_digest(u))}
+        return {"U": u, "sig": _sign(signer, request_digest(u))}
 
     def h(self, word, domain):
         """h_w under the domain's own K_s (the same word has a different key in every domain)"""
@@ -148,18 +149,20 @@ class Corpus:
         key = (doc.doc_id, domain)
         if key not in self._docs:
             k_d = os.urandom(32)
-            aad = {"domain": domain, "doc": doc.doc_id, "policy": POLICY}
+            aad = {"domain": domain, "doc": doc.doc_id}        # aad_d = Encode(i, id_d)
             body = enc({"title": doc.doc_id,
                         "body": self.D.read_bytes(doc, self.data).decode("utf-8", "replace")})
             ct = make_ct(k_d, body, self.authority.wrap(k_d, POLICY), aad)    # raw CT bytes
-            bucket = self.bucket_of[self.cat.get(doc.doc_id, doc.domain)]
+            bucket = self.bucket_override.get(doc.doc_id)
+            if bucket is None:
+                bucket = self.bucket_of[self.cat.get(doc.doc_id, doc.domain)]
             self._docs[key] = (ciphertext_id(ct), ct, frozenset(self.h(w, domain) for w in doc.keywords), bucket)
         return self._docs[key]
 
     def encrypt_version(self, doc, domain, suffix):
         """Another valid ciphertext of the same document with `suffix` appended (an older version of the file)."""
         k_d = os.urandom(32)
-        aad = {"domain": domain, "doc": doc.doc_id, "policy": POLICY}
+        aad = {"domain": domain, "doc": doc.doc_id}        # aad_d = Encode(i, id_d)
         body = enc({"title": doc.doc_id,
                     "body": (self.D.read_bytes(doc, self.data) + suffix).decode("utf-8", "replace")})
         return make_ct(k_d, body, self.authority.wrap(k_d, POLICY), aad)
@@ -195,7 +198,7 @@ class Domain:
 
     def __init__(self, name, corpus, docs, a, anchor, server, policy=None, extra_words=None):
         self.name, self.corpus = name, corpus
-        self.signer = Signer()                     # σ_op (and σ_root with the in-process anchor)
+        self.signer = Signer(name)                 # σ_op = σ_d (AMTP_ABS); σ_root too with the in-process anchor
         # σ_root: an anchor on a chain supplies the key its contract checks (amtp/chain_anchor.py)
         self.root_signer = anchor.root_signer(name) if hasattr(anchor, "root_signer") else self.signer
         server.register_query_key(name, corpus.keys_for(name).k_a)
@@ -246,9 +249,10 @@ class Protocol:
 
     def epoch(self, make_requests):
         """One epoch; make_requests() builds the b signed requests (the owner's tokens + σ_op, files already
-        encrypted). Returns ({request, server, validate, anchor, update, commit} ms, the CS's stats);
-        update = request + server + validate + anchor."""
+        encrypted). Returns ({request, server, validate, anchor, update, protocol, commit, commit breakdown} ms,
+        the CS's stats); update = request + server + validate + anchor, protocol = update - anchor."""
         dom = self.dom
+        SigTimer.take()                                     # start this epoch's signature clock at zero
         tr = time.perf_counter()
         requests = make_requests()
         t0 = time.perf_counter()
@@ -260,9 +264,17 @@ class Protocol:
         t3 = time.perf_counter()
         self.val.advance()
         dom.server.finalize_update(dom.name, snapshot=False)
-        return {"request": (t0 - tr) * 1e3, "server": (t1 - t0) * 1e3, "validate": (t2 - t1) * 1e3,
+        st = prop["stats"]
+        sig_t = SigTimer.take()
+        return {**sig_t,                                    # ABS (σ_op) sign + CS / DO verify, inside request / server / validate
+                "request": (t0 - tr) * 1e3, "server": (t1 - t0) * 1e3, "validate": (t2 - t1) * 1e3,
                 "anchor": (t3 - t2) * 1e3, "update": (t3 - tr) * 1e3,
-                "commit": prop["stats"]["update_ms"]}, prop["stats"]
+                "protocol": (t2 - tr) * 1e3,                       # update without the anchor (reported apart)
+                "commit": st["update_ms"],
+                # inside the CS's commit (Exp. 3 of (32): posting-state repair vs authentication-tree maintenance)
+                "restructure": st["restructure_ms"], "posting_repair": st["posting_repair_ms"],
+                "auth_tree": st["auth_tree_ms"], "partition_tree": st["partition_tree_ms"],
+                "imt": st["imt_ms"], "evidence": st["evidence_ms"]}, st
 
     def check(self):
         eng = self.dom.eng
@@ -298,10 +310,94 @@ def load_queries(path, explicit):
     raise SystemExit(f"{path} not found: run a baseline's exp1 first (it writes the shared queries)")
 
 
-def run_query(dom, state, user, text):
-    """One full query: trapdoor -> admission + ASPA response -> 7 checks -> decrypt."""
+class SigTimer:
+    """Wall time of the request signatures inside one epoch (decision #54: ABS reported apart from the index work):
+    the DO's σ_op signing (Corpus.insert_request / delete_request), the CS's check at admission (amtp.server) and
+    the validating DO's re-check (amtp.validator). It wraps the same sig_ok the protocol calls; nothing is skipped."""
+    sign = verify_cs = verify_do = 0.0
+
+    @classmethod
+    def take(cls):
+        out = {"abs_sign": cls.sign * 1e3, "abs_verify_cs": cls.verify_cs * 1e3, "abs_verify_do": cls.verify_do * 1e3}
+        out["abs"] = out["abs_sign"] + out["abs_verify_cs"] + out["abs_verify_do"]
+        cls.sign = cls.verify_cs = cls.verify_do = 0.0
+        return out
+
+
+def _timed_sig_ok(where, fn):
+    def check(public, msg, sig):
+        t = time.perf_counter()
+        try:
+            return fn(public, msg, sig)
+        finally:
+            setattr(SigTimer, where, getattr(SigTimer, where) + time.perf_counter() - t)
+    return check
+
+
+def _sign(signer, msg):
+    t = time.perf_counter()
+    sig = signer.sign(msg)
+    SigTimer.sign += time.perf_counter() - t
+    return sig
+
+
+import amtp.server as _server_mod          # noqa: E402
+import amtp.validator as _validator_mod    # noqa: E402
+_server_mod.sig_ok = _timed_sig_ok("verify_cs", _server_mod.sig_ok)
+_validator_mod.sig_ok = _timed_sig_ok("verify_do", _validator_mod.sig_ok)
+
+
+class AnchorRead:
+    """The (e*, R_D) the DU has just read from the Root Anchor, handed to make_query unchanged. The read is a contract
+    call (an RPC) when the anchor is on a chain, so it is timed on its own (anchor_read) and query_gen stays the
+    trapdoor only, the same work as every baseline's query generation."""
+
+    def __init__(self, domain, latest):
+        self.domain, self.value = domain, latest
+
+    def latest(self, domain):
+        if domain != self.domain:
+            raise ValueError(f"anchor read for {self.domain}, asked for {domain}")
+        return self.value
+
+
+_ONCE = None    # set by measure_fn: the DU-side work done once per measured query (issue #68)
+
+
+def once(key, fn):
+    """(value, ms) of fn(). Inside measure_fn the DU's anchor read and record decryption run ONCE per query (the first
+    call, a warm-up run) and later repetitions reuse that value and time (issue #68, decision A): the DU's CP-ABE
+    pairings (~120 ms) and EVM call would otherwise run between the timed repetitions in the same process and evict
+    the server's data from the CPU caches, slowing the timed parts by 1.4-1.6x, although the DU and the CS are separate
+    machines. Every timed part (query generation, server, the 7 verification checks) still runs in every repetition.
+    Outside measure_fn (or after it) fn() runs every time, as before."""
+    if _ONCE is not None and key in _ONCE:
+        return _ONCE[key]
     t0 = time.perf_counter()
-    t_q, ctx = user.make_query(dom.name, text, dom.anchor)
+    out = (fn(), (time.perf_counter() - t0) * 1e3)
+    if _ONCE is not None:
+        _ONCE[key] = out
+    return out
+
+
+def anchor_read(dom):
+    """Phase 4 Step 1: the DU reads (e*, R_D) of dom from the RA"""
+    return once(("read", dom.name), lambda: AnchorRead(dom.name, dom.anchor.latest(dom.name)))
+
+
+def decrypt_checked(user, resp):
+    opened = user.decrypt(resp)
+    if any(o["status"] != "open" for o in opened):
+        raise SystemExit("CORRECTNESS GATE FAILED: an authorised user could not decrypt a result")
+    return opened
+
+
+def run_query(dom, state, user, text):
+    """One full query: anchor read -> trapdoor -> admission + ASPA response -> 7 checks -> decrypt.
+    anchor read and decrypt: once per query inside measure_fn (see once())."""
+    read, t_read = anchor_read(dom)
+    t0 = time.perf_counter()
+    t_q, ctx = user.make_query(dom.name, text, read)
     t1 = time.perf_counter()
     h0 = HashCounter.calls
     reason = dom.server._admit(t_q)                     # same admission as CloudServer.search
@@ -321,20 +417,17 @@ def run_query(dom, state, user, text):
     h2 = HashCounter.calls
     if not rep["accepted"]:
         raise SystemExit(f"CORRECTNESS GATE FAILED: honest query rejected at {rep['failed']}")
-    t5 = time.perf_counter()
-    opened = user.decrypt(resp)
-    t6 = time.perf_counter()
-    if any(o["status"] != "open" for o in opened):
-        raise SystemExit("CORRECTNESS GATE FAILED: an authorised user could not decrypt a result")
+    _, t_dec = once(("decrypt", dom.name, text, len(resp["R_ct"])), lambda: decrypt_checked(user, resp))
     vp = rep["phase_ms"]
-    times = {"query_gen": (t1 - t0) * 1e3,
+    times = {"anchor_read": t_read, "query_gen": (t1 - t0) * 1e3,
              "server_admission": (t_adm - t1) * 1e3, "server_lookup": phase["lookup"],
              "server_eval": phase["eval"], "server_proof": phase["proof"], "server_fetch": phase["fetch"],
              "server_total": (t2 - t1) * 1e3,
              "verify_idx": vp["idx"], "verify_papc": vp["papc"], "verify_part": vp["part"],
              "verify_comp": vp["comp"], "verify_ct": vp["ct"], "verify_total": (t4 - t3) * 1e3,
-             "du_decrypt": (t6 - t5) * 1e3,
-             "end_to_end": (t1 - t0 + t2 - t1 + t4 - t3) * 1e3}
+             "du_decrypt": t_dec,
+             "end_to_end": (t1 - t0 + t2 - t1 + t4 - t3) * 1e3,
+             "end_to_end_anchor": t_read + (t1 - t0 + t2 - t1 + t4 - t3) * 1e3}   # + the DU's anchor read
     ev = resp["proof"]["evidence"]
     info = {"rQ": len(resp["R_ct"]),
             "pQ": sum(len(c) for e in ev if e["status"] == "present"
@@ -350,17 +443,22 @@ def run_query(dom, state, user, text):
 def measure_fn(fn, a):
     """--warmup unrecorded runs of fn(), then --reps recorded ones with the GC off.
     fn() returns (times, info); returns (summary of times, last info, every recorded info)."""
-    for _ in range(a.warmup):
-        fn()
-    samples, infos = [], []
-    gc.disable()
+    global _ONCE
+    _ONCE = {}                                  # DU anchor read + decryption once per query (issue #68)
     try:
-        for _ in range(max(1, a.reps)):
-            m, info = fn()
-            samples.append(m)
-            infos.append(info)
+        for _ in range(a.warmup):
+            fn()
+        samples, infos = [], []
+        gc.disable()
+        try:
+            for _ in range(max(1, a.reps)):
+                m, info = fn()
+                samples.append(m)
+                infos.append(info)
+        finally:
+            gc.enable()
     finally:
-        gc.enable()
+        _ONCE = None
     return summarize(samples), infos[-1], infos
 
 
@@ -433,7 +531,7 @@ def run_tampered(dom, state, user, text, kind, targets, extra=None):
     """One query whose response the server tampered with. Times the user's normal verification (early abort:
     stops at the first failed check) and the full check (every file, names the wrong ones).
     Returns detected = rejected, the first Phase 5 check that failed and the number of files named."""
-    t_q, ctx = user.make_query(dom.name, text, dom.anchor)
+    t_q, ctx = user.make_query(dom.name, text, anchor_read(dom)[0])   # read once per query (#68)
     if dom.server._admit(t_q):
         raise SystemExit("query rejected at admission")
     resp = build_response(state, boolean.from_json(t_q["B_Q"]), t_q["nonce"], dom.server.dht)
@@ -651,8 +749,9 @@ def suite_exp3(a):
 def suite_exp5(a):
     """Exp. 5: D independent domains, replaying the shared baselines/results/exp5_workload.json (the same
     domains, queries and update files as SE-COLLAB). The target domain (groups[0], identical for every D) is
-    queried, then updated alone. Measures query cost, the anchor's Global Root update, and checks that every
-    other Domain Root is unchanged."""
+    queried, then updated alone: warm-up + reps inserts, then the same files deleted (one operation = one epoch).
+    Root maintenance = the RootAnchor contract (AMTP_ANCHOR) checking σ_root and deriving R_G over the D domains:
+    anchor_ms and anchor_gas (gasUsed). Every other Domain Root must stay unchanged (isolation gate)."""
     corpus = Corpus(a)
     meta, groups, queries, fresh = corpus.D.load_exp5_workload(a.exp5_workload, a.data)
     if len(fresh) < a.warmup + a.reps:
@@ -663,7 +762,7 @@ def suite_exp5(a):
     print(f"[exp5] multi-domain  D={counts} per-domain={meta['per_domain']} queries={len(queries)}")
     w = Writer("exp5_domains", a.out)
     for nd in counts:
-        anchor, server = RootAnchor(), CloudServer()
+        anchor, server = make_anchor(), CloudServer()       # the RA of (32): the RootAnchor contract (AMTP_ANCHOR)
         t0 = time.perf_counter()
         doms = [Domain(f"D{k:02d}", corpus, groups[k], a, anchor, server) for k in range(nd)]
         states = [d.publish_snapshot() for d in doms]
@@ -678,25 +777,46 @@ def suite_exp5(a):
             if info.pop("ids") != ground_truth(text, inv, doms[0].cids):
                 raise SystemExit(f"CORRECTNESS GATE FAILED: result != ground truth for {q['query']}")
             w.add(**base, kQ=q["kQ"], q=q["q"], shape=q["shape"], op="query", status="ok", **info, **res)
-        samples = []
         target = doms[0]
         proto = Protocol(target)                             # the target domain's own policy (adaptive)
-        for rep in range(a.warmup + a.reps):                 # update the target domain only: one insert = one epoch
+        txs = getattr(anchor, "txs", None)                   # chain anchors: one TxRecord (gasUsed) per transaction
+
+        def one_update(make):
+            """One epoch on the target domain only; every other Domain Root must stay as anchored (isolation)."""
             before = {d.name: anchor.latest(d.name) for d in doms[1:]}
-            e = corpus.encrypt_fresh(fresh[rep], target.name)          # file encryption: not counted
+            n_tx = len(txs) if txs is not None else 0
             gc.disable()                                     # same timing rule as exp3
             try:
-                times, _ = proto.epoch(lambda: [corpus.insert_request(e, fresh[rep], target.name,
-                                                                      target.eng.epoch, target.signer)])
+                times, _ = proto.epoch(make)
             finally:
                 gc.enable()
             if any(anchor.latest(d.name) != before[d.name] for d in doms[1:]):
                 raise SystemExit("ISOLATION FAILED: updating one domain changed another Domain Root")
-            if rep >= a.warmup:
-                samples.append(times)
+            gas = sum(t.gas for t in txs[n_tx:]) if txs is not None else None   # on chain: R_D + R_G of D domains
+            return times, gas
+
+        inserted = []
+        for kind in ("insert", "delete"):                    # update isolation for both operations, one per epoch
+            samples, gases = [], []
+            for rep in range(a.warmup + a.reps):
+                if kind == "insert":
+                    e = corpus.encrypt_fresh(fresh[rep], target.name)  # file encryption: not counted
+                    inserted.append((fresh[rep].doc_id, e[0]))
+                    times, gas = one_update(lambda: [corpus.insert_request(e, fresh[rep], target.name,
+                                                                           target.eng.epoch, target.signer)])
+                else:
+                    did, cid = inserted[rep]                 # delete the files inserted above, in order
+                    times, gas = one_update(lambda: [Corpus.delete_request(did, cid, target.name,
+                                                                           target.eng.epoch, target.signer)])
+                if rep >= a.warmup:
+                    samples.append(times)
+                    gases.append(gas)
+            w.add(**base, op="update_one_domain", update_kind=kind, b=1, status="ok",
+                  untouched_roots_unchanged=nd - 1, **summarize(samples),
+                  anchor_gas=st.mean(gases) if gases and gases[0] is not None else "")
         proto.check()
-        w.add(**base, op="update_one_domain", update_kind="dynamic", b=1, status="ok",
-              untouched_roots_unchanged=nd - 1, **summarize(samples))
+        for d_id, _ in inserted:
+            corpus._docs.pop((d_id, target.name), None)
         del doms, states, anchor, server
         gc.collect()
     w.close()
@@ -959,9 +1079,89 @@ def suite_theta(a):
     w.close()
 
 
+def suite_skewproto(a):
+    """Exp. 4 of (32), the AMTP line through the full protocol (issue #44, decision A+). Same documents, groups and
+    skewed stream as bench.ablation (same --sm-seed, skew order, --hot, --delete-frac, --hot-delete-frac,
+    --fresh-source), but every batch of --sm-b operations is one epoch of Phases 2-3: the DO's signed requests
+    (C(d) tokens + σ_op), the CS's prepare_update (the stream's group is the CS placement hint), DO validation and
+    σ_root, and the Root Anchor (AMTP_ANCHOR). File encryption is done before the epoch and not counted.
+    Per batch: request / server / validate / anchor / update / protocol ms, the commit breakdown (restructure =
+    split / merge and relocation, posting_repair, auth_tree), splits, merges, max partition."""
+    from bench.workload import arxiv_docs, hot_delete_stream, update_stream
+    corpus = Corpus(a)
+    skews = [float(x) for x in a.skews.split(",")]
+    extra = a.sm_batches * a.sm_b
+    w = Writer("skew_protocol", a.out)
+    print(f"[skewproto] N={a.sm_n} batches={a.sm_batches} x b={a.sm_b} skews={skews} runs={a.runs} "
+          f"θ={a.theta_max}/{a.theta_min} hot_delete={a.hot_delete_frac}")
+    for run in range(a.runs):
+        seed = a.sm_seed + run                                   # bench.ablation: seed = --seed + run
+        wdocs = arxiv_docs(a.sm_n, a.buckets, extra, a.data, fresh_source=a.fresh_source)
+        initial_w, fresh_w = wdocs[:a.sm_n], wdocs[a.sm_n:]
+        by_id = {d.doc_id: d for d in corpus.D.sample(a.sm_n + extra, None, a.data)}
+        by_id.update({d.doc_id: d for d in corpus.D.insert_pool(None, a.data)})
+        corpus.bucket_override = {d.doc_id: d.bucket for d in wdocs}
+        doc_of = {d.cid: d.doc_id for d in wdocs}                # placeholder cid (workload) -> doc_id
+        for si, skew in enumerate(skews):
+            stream = update_stream(initial_w, fresh_w, a.sm_batches, a.sm_b, skew, list(range(a.hot)),
+                                   a.delete_frac, seed * 1000 + si)
+            phases = ["insert"] * len(stream)
+            if a.hot_delete_frac > 0:
+                drops = hot_delete_stream(initial_w, stream, a.sm_b, list(range(a.hot)), a.hot_delete_frac,
+                                          seed * 1000 + si + 500)
+                stream, phases = stream + drops, phases + ["hot_delete"] * len(drops)
+            anchor, server = make_anchor(), CloudServer()
+            dom = Domain("A", corpus, [by_id[d.doc_id] for d in initial_w], a, anchor, server,
+                         AdaptivePolicy(a.buckets, a.theta_min, a.theta_max, a.placement))
+            real = dict(zip(dom.doc_ids, dom.cids))              # doc_id -> real cid_d
+            proto = Protocol(dom)
+            dom.eng.ops_per_epoch = a.sm_b
+            splits = merges = 0
+            for bi, ops in enumerate(stream):
+                enc = {}
+                for op in ops:                                   # file encryption: before the epoch, not counted
+                    if op[0] == "ins":
+                        enc[op[1].doc_id] = corpus.encrypt_fresh(by_id[op[1].doc_id], "A")
+
+                def requests():
+                    out = []
+                    for op in ops:
+                        if op[0] == "ins":
+                            d = by_id[op[1].doc_id]
+                            r = corpus.insert_request(enc[d.doc_id], d, "A", dom.eng.epoch, dom.signer)
+                            r["bucket"] = op[2]                 # the stream's group (forced hot share = skew)
+                        else:
+                            did = doc_of[op[1]]
+                            r = Corpus.delete_request(did, real[did], "A", dom.eng.epoch, dom.signer)
+                        out.append(r)
+                    return out
+                gc.disable()
+                try:
+                    times, stt = proto.epoch(requests)
+                finally:
+                    gc.enable()
+                for op in ops:
+                    if op[0] == "ins":
+                        real[op[1].doc_id] = enc[op[1].doc_id][0]
+                        corpus._docs.pop((op[1].doc_id, "A"), None)
+                splits += stt["splits"]
+                merges += stt["merges"]
+                lay = dom.eng.layout()
+                w.add(scheme="AMTP", variant="AMTP (full protocol)", run=run, seed=seed, skew=skew, batch=bi, phase=phases[bi],
+                      b=a.sm_b, ops=len(ops), splits=stt["splits"], merges=stt["merges"],
+                      partitions=lay["partitions"], max_partition=lay["max_partition"],
+                      **{f"{k}_ms": v for k, v in times.items()})
+            proto.check()
+            print(f"run {run} skew {skew:<4} AMTP (full protocol) partitions={lay['partitions']} "
+                  f"max={lay['max_partition']} splits={splits} merges={merges}", flush=True)
+            del dom, proto, anchor, server
+            gc.collect()
+    w.close()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("mode", choices=["exp1", "exp2-layouts", "exp2", "exp3", "exp5", "theta",
+    ap.add_argument("mode", choices=["exp1", "exp2-layouts", "exp2", "exp3", "exp5", "theta", "skewproto",
                                      "search1", "verify1", "tamper", "xsearch", "xverify", "xdomains"])
     ap.add_argument("--data", default=None, help="dataset folder (default <repo>/data/amtp_file_db_v4 or AMTP_DATA)")
     ap.add_argument("--domains", nargs="+", default=["D1", "D2", "D3", "D4"], help="dataset domains to sample")
@@ -998,6 +1198,17 @@ def main():
                     help="xdomains: keep only these query shapes (default all)")
     ap.add_argument("--tamper-kinds", nargs="+", default=D.TAMPER_KINDS, choices=D.TAMPER_KINDS)
     ap.add_argument("--out", default=OUT)
+    # skewproto (Exp. 4 AMTP line through the protocol): the same workload options as bench.ablation
+    ap.add_argument("--sm-n", type=int, default=25_000, help="skewproto: initial files (one domain)")
+    ap.add_argument("--sm-batches", type=int, default=250, help="skewproto: insert batches")
+    ap.add_argument("--sm-b", type=int, default=100, help="skewproto: operations per batch = per epoch")
+    ap.add_argument("--skews", default="0,0.25,0.5,0.75,0.95", help="skewproto: share of new files forced into the hot group")
+    ap.add_argument("--hot", type=int, default=1, help="skewproto: number of hot groups")
+    ap.add_argument("--delete-frac", type=float, default=0.0, help="skewproto: phase 1 share of random deletes")
+    ap.add_argument("--hot-delete-frac", type=float, default=0.65, help="skewproto: then delete this share of the hot group")
+    ap.add_argument("--fresh-source", choices=["pool", "initial"], default="initial")
+    ap.add_argument("--runs", type=int, default=1, help="skewproto: independent runs (seed = --sm-seed + run)")
+    ap.add_argument("--sm-seed", type=int, default=1, help="skewproto: = bench.ablation --seed")
     ap.add_argument("--gamma-no-v", action="store_true",
                     help="γ = H(PID ‖ H(Enc(L))) without the partition version v (study B4; same as AMTP_GAMMA_V=0)")
     ap.add_argument("--and-prune", action="store_true",
@@ -1030,7 +1241,7 @@ def main():
         os.environ["AMTP_PART_LEAF"] = "1"                # recorded in every manifest
         set_part_leaf(True)
     run = {"exp1": suite_exp1, "exp2-layouts": suite_exp2_layouts, "exp2": suite_exp2, "exp3": suite_exp3, "exp5": suite_exp5,
-           "theta": suite_theta, "search1": suite_search1, "verify1": suite_verify1, "tamper": suite_tamper,
+           "theta": suite_theta, "skewproto": suite_skewproto, "search1": suite_search1, "verify1": suite_verify1, "tamper": suite_tamper,
            "xsearch": suite_xsearch, "xverify": suite_xverify, "xdomains": suite_xdomains}
     for name in [a.mode]:
         run[name](a)

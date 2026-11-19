@@ -281,7 +281,14 @@ V4_SIZES = [10_000, 25_000, 50_000, 75_000, 100_000, 125_000]   # files per doma
 V4_FIX = 100_000                                  # files per domain where the size is fixed (tamper_sets use it)
 D_COUNTS = [1, 2, 4, 8, 16, 32]                   # columns of domain_groups.csv
 TAMPER_KINDS = ["modify", "hide", "inject", "old_version"]
-S1_KQ = 5                                         # Search 1.2: k_Q of the files-per-domain figure
+# Search 1.1 / 1.2 query set, the same for every scheme (they all read it here): v4 = the files of the 17 Nov runs
+# (k_Q 1, 2, 5, 10, 15, 20; Search 1.2 at k_Q = 5); p32 = paper (32) Exp. 1 (k_Q 1, 2, 4, 8, 16; Search 1.2 at k_Q = 4,
+# the paper's default "four keywords"), written by datasets/arxiv/make_queries_p32.py with the v4 generator
+QUERY_SET = os.environ.get("AMTP_QUERY_SET", "v4")
+_SINGLE = {"v4": ("queries_search_single.jsonl", 5), "p32": ("queries_search_single_p32.jsonl", 4)}
+if QUERY_SET not in _SINGLE:
+    raise SystemExit(f"AMTP_QUERY_SET must be one of {sorted(_SINGLE)}, not {QUERY_SET!r}")
+S1_KQ = _SINGLE[QUERY_SET][1]                     # Search 1.2: k_Q of the files-per-domain figure
 # modify = change returned file bytes; hide = leave matching files out; inject = add files that do not match the
 # query; old_version = return an older (validly encrypted) version of the file. Applied to t files, t = tamper_counts.
 OLD_VERSION_SUFFIX = b"\n[previous version of this file]"   # the "older version" every scheme encrypts
@@ -294,8 +301,8 @@ def _jsonl(name):
 
 def search_single_queries():
     """Search 1.1 / 1.2: AND queries inside one domain. Keys: query_id, domain, kQ, shape (single / AND),
-    text (AMTP syntax, quoted), keywords, result_size {files_per_domain: exact count}"""
-    return _jsonl("queries_search_single.jsonl")
+    text (AMTP syntax, quoted), keywords, result_size {files_per_domain: exact count}. File: AMTP_QUERY_SET."""
+    return _jsonl(_SINGLE[QUERY_SET][0])
 
 
 def search1_points(queries, sizes, fix=V4_FIX, kq=S1_KQ, every=False):
@@ -444,7 +451,10 @@ def write_manifest(csv_path):
             "amtp_part_results": os.environ.get("AMTP_PART_RESULTS", "1") != "0",   # AMTP: result-only part check
             "amtp_and_greedy": os.environ.get("AMTP_AND_GREEDY", "1") != "0",   # AMTP: AND pruning planner
             "amtp_part_leaf": os.environ.get("AMTP_PART_LEAF", "1") != "0",   # AMTP: Search Tree leaf by partition
-            "amtp_anchor": os.environ.get("AMTP_ANCHOR", "in-process")}   # AMTP: Root Anchor (bench make_anchor)
+            "amtp_anchor": os.environ.get("AMTP_ANCHOR", "in-process"),   # AMTP: Root Anchor (bench make_anchor)
+            "amtp_abs": os.environ.get("AMTP_ABS", "ed25519"), "amtp_abs_curve": os.environ.get("AMTP_ABS_CURVE", "BN254"),
+            "amtp_cpabe": os.environ.get("AMTP_CPABE", "wrap"),   # AMTP: K_d under the stand-in or real BSW07
+            "query_set": QUERY_SET}                   # Search 1.1 / 1.2 query file (every scheme)
     with open(out, "w", encoding="utf-8") as f:
         json.dump(info, f, indent=1, ensure_ascii=False)
     return out
