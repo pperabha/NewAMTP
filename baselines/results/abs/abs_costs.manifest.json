@@ -1,6 +1,6 @@
 {
- "command": "/home/user/NewAMTP/amtp_code/bench/abs_bench.py --curves SS512 BN254 MNT224 --out ../baselines/results/abs",
- "git_commit": "7c28cd378137d5b2ed8d6ef9f32e03f3709e4a7a",
+ "command": "bench/abs_bench.py --curves SS512 BN254 MNT224 --reps 15 --warmup 3 --out ../baselines/results/abs_aws",
+ "git_commit": "8ed08b7cf8d0bbe67cf134cdcdd25e70941566b6",
  "git_dirty": false,
  "reps": 15,
  "warmup": 3,
@@ -13,8 +13,8 @@
  "t_max": 8,
  "charm": "0.62",
  "python": "3.12.3",
- "platform": "Linux-6.18.44-fc-v595-x86_64-with-glibc2.39",
+ "platform": "Linux-7.0.0-1017-aws-x86_64-with-glibc2.39",
  "processor": "x86_64",
- "cpus": 4,
- "started": "2026-11-18 17:36:14"
+ "cpus": 16,
+ "started": "2026-11-19 14:15:57"
 }
