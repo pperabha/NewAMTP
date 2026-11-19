@@ -72,6 +72,7 @@ Every timing = mean of 10 runs after 3 warm-up runs (#46). Query-level points (E
 | e2_tamper_inject_verify | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | time until the DU rejects |
 | e2_tamper_old_version_detection | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | a scheme without this attack model has no line (Chen: modify / old version N/A) |
 | e2_tamper_old_version_verify | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | time until the DU rejects |
+| e2_tamper_attack_types | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | attack types (modified, hidden, injected, old version) detected in every run; Chen has no modified / old-version attack model |
 | e2_multi_verify_verify | <data>/p32_x_search_verify_w8 verify_multi | SE-COLLAB only (multi domain) |
 | e2_multi_verify_proof_kb | <data>/p32_x_search_verify_w8 verify_multi | SE-COLLAB only (multi domain) |
 | e2_multi_verify_e2e | <data>/p32_x_search_verify_w8 verify_multi | SE-COLLAB only (multi domain) |

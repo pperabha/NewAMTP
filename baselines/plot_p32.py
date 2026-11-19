@@ -289,6 +289,77 @@ def exp1():
 
 
 # ---------------------------------------------------------------- Exp. 2
+SHORT = {"modify": "modified", "hide": "hidden", "inject": "injected", "old_version": "old version"}
+
+
+def attack_types(tam, run):
+    """one panel: how many of the 4 attack types each scheme detects in EVERY run, vs tampered files t
+    (equal lines drawn slightly apart; the note at the right end names what is missed)"""
+    res, notes = {}, {}
+    for s in ORDER:
+        agg = {}
+        for r in tam[s]:
+            if r["tamper"] == "none" or r.get("detected_runs", "") == "":
+                continue
+            a = agg.setdefault((int(r["tampered"]), r["tamper"]), [0, 0])
+            a[0] += int(r["detected_runs"])
+            a[1] += int(r["runs"])
+        if not agg:
+            continue
+        ts = sorted({t for t, _ in agg})
+        kinds = sorted({k for _, k in agg}, key=list(SHORT).index)
+        ys = [sum(1 for k in kinds if agg.get((t, k), [0, 0])[1] and agg[(t, k)][0] == agg[(t, k)][1]) for t in ts]
+        missed = [SHORT[k] for k in kinds if any(agg[(t, k)][0] < agg[(t, k)][1] for t in ts if (t, k) in agg)]
+        if len(kinds) < 4:
+            notes[s] = f"{ys[-1]} of {len(kinds)} applicable  ·  no modify / old model"
+        elif missed:
+            notes[s] = f"{ys[-1]} of 4  ·  misses " + ", ".join(missed)
+        else:
+            notes[s] = f"{ys[-1]} of 4  ·  every attack"
+        res[s] = (ts, ys)
+    if "amtp" not in res:
+        return
+    f, ax = plt.subplots(figsize=(7.6, 4.4), dpi=200)
+    f.patch.set_facecolor(SURFACE)
+    style(ax)
+    seen = {}
+    for s in ORDER:
+        if s not in res:
+            continue
+        ts, ys = res[s]
+        tie = seen.get(ys[0], 0)
+        seen[ys[0]] = tie + 1
+        off = 0.12 * tie
+        color, marker = STYLE[s]
+        ax.plot(ts, [y - off for y in ys], color=color, marker=marker, markersize=7, markeredgecolor="white",
+                linewidth=2.2, label=NAME[s])
+        ax.annotate(notes[s], (ts[-1], ys[-1] - off), xytext=(8, -9 if tie else 0), textcoords="offset points",
+                    va="center", fontsize=8.5, color=INK2)
+        for t, y in zip(ts, ys):
+            POINTS.append({"figure": "e2_tamper_attack_types", "series": NAME[s], "x": t, "y": y})
+    ts = res["amtp"][0]
+    ax.set_xscale("log")
+    ax.set_xticks(ts)
+    ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}"))
+    ax.xaxis.set_minor_formatter(NullFormatter())
+    ax.set_xlim(ts[0] * 0.75, ts[-1] * 14)
+    ax.set_ylim(-0.3, 4.9)
+    ax.set_yticks(range(5))
+    rq = sorted({int(r["rQ"]) for r in tam["amtp"] if r.get("rQ")})
+    ax.set_xlabel(f"Tampered files $t$ (of {rq[0]:,}–{rq[-1]:,} returned)", color=INK2, fontsize=11)
+    ax.set_ylabel("Attack types detected in every run (of 4)", color=INK2, fontsize=11)
+    ax.legend(frameon=False, fontsize=9, loc="upper left", ncol=4)
+    f.tight_layout()
+    os.makedirs(OUT, exist_ok=True)
+    for ext in ("png", "pdf"):
+        f.savefig(os.path.join(OUT, f"e2_tamper_attack_types.{ext}"), facecolor=SURFACE, dpi=200)
+    plt.close(f)
+    INDEX.append(("e2_tamper_attack_types", f"{run} tamper_detection",
+                  "attack types (modified, hidden, injected, old version) detected in every run; Chen has no "
+                  "modified / old-version attack model"))
+    print(f"-> {os.path.relpath(os.path.join(OUT, 'e2_tamper_attack_types.png'))}")
+
+
 def exp2():
     run = find("p32_exp2")
     data = {s: rows(run, s, "exp2_selective_proof") for s in ORDER}
@@ -298,14 +369,14 @@ def exp2():
             figure(f"e2_layout_{lay}_{m}", [scheme_series(s, metric_pts([r for r in data[s] if r["layout"] == lay],
                                                                         s, m, lambda r: int(r["rQ"])))
                                             for s in ORDER],
-                   "Matching records $r_Q$", YLABEL[m], f"{run} exp2_selective_proof layout={lay}",
+                   "Returned files $r_Q$", YLABEL[m], f"{run} exp2_selective_proof layout={lay}",
                    "Chen and Du have no separate proof generation" if m == "proof" else "", logx=True)
         ser = []                                               # AMTP: the three layouts on one figure
         for s in ("amtp", "secollab"):
             for lay in layouts:
                 pts = metric_pts([r for r in data[s] if r["layout"] == lay], s, m, lambda r: int(r["rQ"]))
                 ser.append(scheme_series(s, pts, f" ({lay.replace('_', ' ')})", LAYOUT_LS[lay]))
-        figure(f"e2_layouts_{m}", ser, "Matching records $r_Q$", YLABEL[m], f"{run} exp2_selective_proof",
+        figure(f"e2_layouts_{m}", ser, "Returned files $r_Q$", YLABEL[m], f"{run} exp2_selective_proof",
                "clustered = few partitions, dispersed = many, partition spread = one record per partition",
                logx=True)
     run = find("p32_ex2_verify1_tamper")
@@ -313,7 +384,7 @@ def exp2():
     for m in ("verify", "proof_kb", "e2e", "search", "server"):
         figure(f"e2_single_verify_{m}", [scheme_series(s, metric_pts(v1[s], s, m, lambda r: int(r["target_results"])))
                                          for s in ORDER],
-               "Matching records $r_Q$ (target)", YLABEL[m], f"{run} verify_single",
+               "Returned files $r_Q$ (target)", YLABEL[m], f"{run} verify_single",
                NOTE_SEARCH if m == "search" else "", logx=True)
     tam = {s: rows(run, s, "tamper_detection") for s in ORDER}
     for kind, title in KINDS.items():
@@ -330,6 +401,7 @@ def exp2():
                logy=False, pct=True)
         figure(f"e2_tamper_{kind}_verify", ser_t, f"{title} $t$", YLABEL["verify"], f"{run} tamper_detection",
                "time until the DU rejects", logx=True)
+    attack_types(tam, run)
     for s in ORDER:                                            # false alarms: honest responses rejected
         honest = [r for r in tam[s] if r["tamper"] == "none"]
         if honest:
@@ -340,7 +412,7 @@ def exp2():
     for m in ("verify", "proof_kb", "e2e", "search"):
         figure(f"e2_multi_verify_{m}", [scheme_series(s, metric_pts(vm[s], s, m, lambda r: int(r["target_results"])))
                                         for s in PAIR],
-               "Matching records $r_Q$ (target, 4 domains)", YLABEL[m], f"{run} verify_multi",
+               "Returned files $r_Q$ (target, 4 domains)", YLABEL[m], f"{run} verify_multi",
                "SE-COLLAB only (multi domain)", logx=True)
 
 
