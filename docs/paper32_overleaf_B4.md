@@ -1006,7 +1006,9 @@ and documents longer than $\Theta_{doc}$ are chunked. Unless otherwise stated, e
 averaged over 10 independent runs after 3 warm-up runs; where a setting contains several queries, each
 point is the median of these per-query averages and the bars show the interquartile range. End-to-end query latency is query generation
 plus server time plus DU verification; it excludes the DU's read of the anchored root, which is
-reported separately, and the CP-ABE decryption of returned records.
+reported separately, and the CP-ABE decryption of returned records. The DU reads the anchored root
+and decrypts the returned records once per query, outside the timed repetitions; query generation, the
+CS's work, and all verification checks run in every repetition.
 ```
 
 แก้ 19 พ.ย. (PR นี้): ประโยค Exp 4 หกกระบวนการต่อเครื่อง (คน A ขอใน PR #59; แผน 5 เครื่อง × 6 process เริ่มรันแล้ว

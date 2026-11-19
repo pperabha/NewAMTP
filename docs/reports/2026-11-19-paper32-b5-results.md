@@ -1,0 +1,23 @@
+# B5: รูปและข้อความผลการทดลองของ AMTP (32) สำหรับ Overleaf
+
+วันที่ 19 พ.ย. 2026 · คน B · branch `docs/paper32-b5-results` (แตกจาก `feat/paper32-experiments` `b4cad59`)
+
+## ทำอะไร
+- `docs/paper32_overleaf_B5.md` (ใหม่): รูปผล 7 รูป (Fig. 3–9, แต่ละรูป 3–4 subfigure) ครอบคลุม M1–M8 ของ figure plan,
+  บล็อก LaTeX (`figure*` + `\subfloat`), caption, และย่อหน้า Results ของ Exp 1–5 พร้อมตัวเลขจาก
+  `baselines/results/paper32/figures/figure_points.csv` (PR #71) · วิธีวางแบบ ค้นหา / วางต่อท้าย
+- เขียนจุดที่ AMTP แพ้ตามจริง: Chen ที่ kQ = 1, 2 (search) และ kQ = 1 (end-to-end); Du end-to-end ที่ kQ ≥ 4; (A∨B)∧(C∨D) ที่ kQ = 2;
+  OR ล้วน (ติดป้าย [ถาม A] ตาม #66); proof gen แบบ dispersed และ verify เทียบ SE-COLLAB ที่ rQ ≥ 100; update ช้ากว่า Chen 25–230 เท่า
+  (ส่วนใหญ่เป็น ABS); Exp 4 ฝั่ง query; Exp 5 verify
+- `docs/paper32_overleaf_B4.md` E1: เพิ่มประโยค "DU อ่าน root และถอดรหัสครั้งเดียวต่อ query นอกรอบที่จับเวลา" (#68 / PR #69)
+
+## เจอระหว่างทำ (ต้องให้ A ตัดสิน)
+- #66 กำหนดจุดที่มีหลาย query = median ของ query + error bar IQR และ E1 ของ B4 มีประโยคนี้ แต่ `baselines/plot_p32.py`
+  (`mean_by`) ใช้ **mean ข้าม query และไม่มี error bar** → ประโยคใน Setup ไม่ตรงกับรูป ตัวเลขใน B5 เป็นค่าจากรูปปัจจุบัน (mean)
+  ทางเลือก: plot ใหม่ด้วย median + IQR (แล้วอัปเดตตัวเลข B5) หรือ ตัดท่อนนั้นออกจาก Setup
+
+## วิธีตรวจตัวเลข
+`figure_points.csv` ของ PR #71: ทุกตัวเลขในย่อหน้าเทียบกับไฟล์นี้แล้ว (ค่า y ต่อ series ต่อ x)
+
+## สถานะ
+เอกสารอย่างเดียว ไม่แก้โค้ด · รอ A ตัดสินเรื่อง median/mean และประโยค OR · Prim วางลง Overleaf
