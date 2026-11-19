@@ -1,6 +1,6 @@
 # Paper (32) figures (baselines/plot_p32.py)
 
-Every value = mean of 10 runs after 3 warm-up runs; numbers in figure_points.csv.
+Every timing = mean of 10 runs after 3 warm-up runs (#46). Query-level points (Exp. 1, 2, 5 queries, tamper verification) = median over the queries of that x, error bars = interquartile range (#66); Exp. 3, Exp. 4, update isolation and Sepolia = mean over runs / batches / updates, no bars. Numbers (and q1 / q3) in figure_points.csv.
 
 | figure | data | note |
 |---|---|---|
