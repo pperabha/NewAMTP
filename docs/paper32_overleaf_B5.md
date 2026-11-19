@@ -15,7 +15,7 @@
 4. **เลขรูป:** paper มี Fig. 1 (system model) และ Fig. 2 (workflow) แล้ว รูปผลเริ่มที่ Fig. 3 · ใช้ `\ref` เสมอ
 5. ห้ามใช้ `e5_root_gas_localevm` (gas ของ py-evm ไม่ตรง Ethereum) · ใช้ `e5_sepolia_gas` เท่านั้น
 6. เจ้าของงาน (#66): **ไม่อธิบาย** query ที่ผลมากหรือ OR ล้วนในเนื้อหา แต่รูป OR ยังอยู่ตาม (32) · กติกาทีม: บอกตรงๆ ว่าแพ้ตรงไหน
-   → ประโยคที่บอกแพ้ใน OR เขียนเป็นข้อเท็จจริงสั้นๆ ไม่อธิบายเหตุ และติดป้าย **[ถาม A]** ให้ A เลือกเก็บหรือตัด
+   → ปรับแล้ว (PR #73): เจ้าของงานให้**เก็บ**ประโยคที่บอกว่า OR แพ้ไว้ (เปลี่ยนจาก #66)
 
 ## 1. เพิ่มใน Setup [ตาม #68 / PR #69] (ใส่ใน E1 ของ B4 แล้ว: ทำข้อนี้เฉพาะถ้าวาง E1 ฉบับเก่าไปแล้ว)
 
@@ -82,7 +82,7 @@ Fig.~\ref{fig:e1-multi} compares the four Boolean forms of the experiment with S
 domains. AMTP is faster at every $k_Q$ for conjunctions (2.4--4.9$\times$), for
 $(A \wedge B) \vee (C \wedge D)$ (2.8--5.1$\times$), and for $(A \vee B) \wedge (C \vee D)$
 (1.8--7.8$\times$). For a disjunction, AMTP is faster with two keywords and SE-COLLAB from four
-keywords (4.5 vs.\ 1.7\,ms at $k_Q = 16$). % [ถาม A] เก็บหรือตัดประโยค OR นี้ (#66)
+keywords (4.5 vs.\ 1.7\,ms at $k_Q = 16$).
 ```
 
 ถ้าต้องการรูป end-to-end ของ multi-domain ด้วย (ไม่บังคับ): `e1_multi_*_e2e` — ตัวเลข: AND AMTP 1.3–6.3 vs SE-COLLAB 9.5–10.4 ms;
@@ -180,7 +180,7 @@ maintenance are parts of the request, CS preparation, and DO validation.}
 \textbf{Results.} Updates are AMTP's most expensive operation (Fig.~\ref{fig:e3}). One insertion takes
 287\,ms when every request is its own epoch and 35\,ms per request in batches of 1{,}000, whereas
 Chen et al.\ needs 1.2--1.5\,ms per request at every batch size; AMTP's throughput rises from 3.5 to
-28.5 requests per second against about 700 for Chen et al. Most of the gap is authorization: the
+28.5 requests per second against 700--800 for Chen et al.'s insertions Most of the gap is authorization: the
 attribute-based request signature and its two verifications take 2.1\,s of the 5.1\,s protocol time of
 a batch of 100 insertions and 21.2\,s of 34.9\,s for a batch of 1{,}000, while posting repair (0.75\,s)
 and authentication-tree maintenance (0.29\,s) remain small. For $b = 1$, anchoring on the contract
@@ -212,17 +212,17 @@ index work and is not directly comparable with the other two.}
 \label{fig:e4}
 \end{figure*}
 
-\textbf{Results.} Adaptive partitioning keeps every partition at $\theta_{\max} = 64$ live entries for
-all skew levels, whereas the largest Static-MT partition grows to 3{,}209--8{,}206 entries and
+\textbf{Results.} Adaptive partitioning keeps every partition at no more than $\theta_{\max} = 64$ live entries for
+all skew levels, whereas the largest Static-MT partition grows to 2{,}492--8{,}206 entries and
 Global-MT(v) keeps all 33{,}000--48{,}000 entries in one tree (Fig.~\ref{fig:e4-max}). An insertion
 batch costs 443--694\,ms in AMTP, 3.6--6.9$\times$ less than Static-MT and 9.9--15.8$\times$ less than
 Global-MT(v) (Fig.~\ref{fig:e4-ins}). For deletions, Static-MT is about as fast as AMTP without skew
 (1.26 vs.\ 1.32\,s per batch), and AMTP is up to 2.2$\times$ faster as the skew grows
 (Fig.~\ref{fig:e4-del}). Splits and merges take 7--9\,ms per batch, about 1--2\% of AMTP's update time,
 with 282--376 restructuring events per run. The price is on the query side: with more, smaller
-partitions, AMTP's verification (4.7--6.0\,ms) and proofs (60--79\,KB) are slightly larger than
-Static-MT's (4.3--5.2\,ms, 56--74\,KB) and Global-MT(v)'s (2.6--3.3\,ms, 47--64\,KB)
-(Fig.~\ref{fig:e4-ver}).
+partitions, AMTP's verification (4.7--6.0\,ms) takes 14--16\% longer than Static-MT's (4.3--5.2\,ms)
+and about 1.8$\times$ as long as Global-MT(v)'s (2.6--3.3\,ms), and its proofs (60--79\,KB) are 6\% and
+23--26\% larger than theirs (56--74\,KB and 47--64\,KB) (Fig.~\ref{fig:e4-ver}).
 ```
 
 ---
@@ -268,6 +268,6 @@ mined.
 ## 8. ตรวจหลังวาง
 - [ ] ทุก `\ref{fig:e…}` ไม่เป็น ??, เลขรูป 3–9 เรียงตามลำดับที่อ้าง
 - [x] #72 = A: median + IQR (รูปและตัวเลขในไฟล์นี้ตรงกันแล้ว)
-- [ ] [ถาม A] ประโยค OR ใน Exp 1
+- [x] ประโยค OR ใน Exp 1: เจ้าของงานให้เก็บไว้ (PR #73)
 - [ ] Recompile: รูป `figure*` 4 ช่องอ่านออก (ถ้าแน่นไป ใช้ 2×2 ด้วย `\\` หลังช่องที่ 2 และ width=0.45)
 - [ ] ความยาว paper: ถ้าเกิน ตัดรูป (ไม่บังคับ) ก่อน แล้วรวม Fig. 5 + 6 เป็นรูปเดียว
