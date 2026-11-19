@@ -180,7 +180,7 @@ def scheme_series(scheme, pts, suffix="", ls="-"):
 
 
 def figure(fig_id, series, xlabel, ylabel, source, note="", logx=False, logy=True, xticks=None, kfmt=False,
-           pct=False):
+           pct=False, vline=None):
     """one line chart; skipped (not an error) when no series has a point"""
     series = [s for s in series if s["pts"]]
     if not series:
@@ -226,6 +226,10 @@ def figure(fig_id, series, xlabel, ylabel, source, note="", logx=False, logy=Tru
             ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:,.0f}" if v >= 1000 else f"{v:g}"))
     if kfmt:
         ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v / 1000:g}k"))
+    if vline is not None:                                  # (x, label): e.g. where the deletions start
+        ax.axvline(vline[0], color=INK2, linestyle=":", linewidth=1.0)
+        ax.annotate(vline[1], (vline[0], 1), xycoords=("data", "axes fraction"), xytext=(4, -2),
+                    textcoords="offset points", va="top", fontsize=8.5, color=INK2)
     ax.set_xlabel(xlabel, color=INK2, fontsize=11)
     ax.set_ylabel(ylabel, color=INK2, fontsize=11)
     ax.legend(frameon=False, fontsize=8.5, loc="best")
@@ -509,15 +513,17 @@ def exp4():
     figure("e4_proof_kb", [S(s["label"], s["color"], s["marker"], s["ls"], {k: v / KB for k, v in s["pts"].items()})
                            for s in by_var(lq, "proof_bytes")[:3]],
            "Skew level", "Proof size (KB)", src, "queries after the last batch", xticks=skews)
-    top = max(skews)
-    series = []
-    for v in VARIANTS:
-        rs = [r for r in allr if r["variant"] == v and float(r["skew"]) == top]
-        series.append(S(v, *V_STYLE[v][:3], mean_by(rs, lambda r: int(r["batch"]), "update_ms")))
-    for s in series:
-        s["marker"] = None
-    figure(f"e4_batches_skew{top:g}", series, "Batch", "Update time per batch (ms)", src,
-           f"skew {top:g}: mean over the 10 runs at every batch (insert batches, then hot delete)")
+    for sk_ in skews:                                    # every batch of the run, index level only (owner)
+        series = []
+        for v in VARIANTS[:3]:
+            rs = [r for r in upd if r["variant"] == v and float(r["skew"]) == sk_]
+            series.append(S(v, *V_STYLE[v][:3], mean_by(rs, lambda r: int(r["batch"]), "update_ms", 1 / 1000)))
+        for s in series:
+            s["marker"] = None
+        dels = [int(r["batch"]) for r in upd if float(r["skew"]) == sk_ and r["phase"] == "hot_delete"]
+        figure(f"e4_batches_skew{sk_:g}", series, "Update batch ($b = 100$ operations)", "Update time per batch (s)",
+               src, f"skew {sk_:g}: mean over the 10 runs at every batch (insert batches, then hot delete); index level",
+               vline=(min(dels), "deletions start") if dels else None)
 
 
 # ---------------------------------------------------------------- Exp. 5

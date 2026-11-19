@@ -95,7 +95,11 @@ Every timing = mean of 10 runs after 3 warm-up runs (#46). Query-level points (E
 | e4_query_server | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | queries after the last batch |
 | e4_query_verify | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | queries after the last batch |
 | e4_proof_kb | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | queries after the last batch |
-| e4_batches_skew0.95 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.95: mean over the 10 runs at every batch (insert batches, then hot delete) |
+| e4_batches_skew0 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.25 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.25: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.5 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.5: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.75 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.75: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.95 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.95: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
 | e5_query_search | <data>/p32_exp2_exp5_w10 exp5_domains | queried domain fixed at 5,000 records |
 | e5_query_proof | <data>/p32_exp2_exp5_w10 exp5_domains | queried domain fixed at 5,000 records |
 | e5_query_verify | <data>/p32_exp2_exp5_w10 exp5_domains | queried domain fixed at 5,000 records |
