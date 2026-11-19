@@ -62,3 +62,7 @@
 - PR #59 (B4) merge แล้ว; คน A ขอแก้ E1 (Exp 4 หก process ต่อเครื่อง) → PR แก้คู่มือ `docs/paper32-b4-fixes` (+ ตัวเลข Sepolia ใน Setup)
 - ข้อมูลสำหรับ B5: `docs/reports/2026-11-19-paper32-figure-plan.md` (กราฟ M1–M8; Chen server ไม่ประเมิน Boolean; Du เริ่ม D = 4);
   gas ต่อ root update 87k (D = 1) → 166.5k (D = 32) จาก `chain/runs/gas_domains_20261119_005048.csv`
+- PR #71 (ผลจริง + 103 รูป) จากคน A → **B5**: `docs/paper32_overleaf_B5.md` (Fig. 3–9 + ย่อหน้าผล Exp 1–5), branch `docs/paper32-b5-results`
+- เจอ: `plot_p32.py` ใช้ mean ข้าม query ไม่มี IQR แต่ #66 / Setup บอก median + IQR → แจ้ง A ใน PR B5
+- #72 = A: median + IQR; อัปเดตตัวเลข B5 ตาม figure_points.csv ใหม่ (74f259e)
+- PR #73 review: แก้ Exp 4 / Exp 3 4 จุด, ประโยค OR เก็บไว้; merge commit 9b49692 author ผิด → ต่อไปใช้ -c user.name/-c user.email กับ git merge ด้วยเสมอ
