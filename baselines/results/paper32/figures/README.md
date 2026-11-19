@@ -72,6 +72,7 @@ Every timing = mean of 10 runs after 3 warm-up runs (#46). Query-level points (E
 | e2_tamper_inject_verify | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | time until the DU rejects |
 | e2_tamper_old_version_detection | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | a scheme without this attack model has no line (Chen: modify / old version N/A) |
 | e2_tamper_old_version_verify | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | time until the DU rejects |
+| e2_tamper_attack_types | <data>/p32_ex2_verify1_tamper_w7 tamper_detection | attack types (modified, hidden, injected, old version) detected in every run; Chen has no modified / old-version attack model |
 | e2_multi_verify_verify | <data>/p32_x_search_verify_w8 verify_multi | SE-COLLAB only (multi domain) |
 | e2_multi_verify_proof_kb | <data>/p32_x_search_verify_w8 verify_multi | SE-COLLAB only (multi domain) |
 | e2_multi_verify_e2e | <data>/p32_x_search_verify_w8 verify_multi | SE-COLLAB only (multi domain) |
@@ -86,15 +87,19 @@ Every timing = mean of 10 runs after 3 warm-up runs (#46). Query-level points (E
 | e3_n_throughput | <data>/p32_ex3_w10/update_n exp3_dynamic_update | AMTP: signed requests (ABS) + CS prepare + DO validation + anchor (local EVM); Chen: token generation + CS apply, no update verification |
 | e3_n_breakdown_insert | <data>/p32_ex3_w10/update_n exp3_dynamic_update | ABS is part of request / CS prepare / DO validation; posting repair + auth tree are inside CS prepare |
 | e3_n_breakdown_delete | <data>/p32_ex3_w10/update_n exp3_dynamic_update | ABS is part of request / CS prepare / DO validation; posting repair + auth tree are inside CS prepare |
-| e4_update_insert | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; AMTP (full protocol) = signed requests, DO validation and anchor (local EVM) around the same index work |
-| e4_update_delete | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; AMTP (full protocol) = signed requests, DO validation and anchor (local EVM) around the same index work |
+| e4_update_insert | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; index level (the full-protocol run of the same workload is in skewproto, reported in the text only) |
+| e4_update_delete | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; index level (the full-protocol run of the same workload is in skewproto, reported in the text only) |
 | e4_restructure | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | restructure_ms inside the commit |
 | e4_splits_merges | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 |  |
 | e4_max_partition | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | after the last batch (insert + hot delete) |
 | e4_query_server | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | queries after the last batch |
 | e4_query_verify | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | queries after the last batch |
 | e4_proof_kb | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | queries after the last batch |
-| e4_batches_skew0.95 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.95: mean over the 10 runs at every batch (insert batches, then hot delete) |
+| e4_batches_skew0 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.25 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.25: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.5 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.5: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.75 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.75: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
+| e4_batches_skew0.95 | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | skew 0.95: mean over the 10 runs at every batch (insert batches, then hot delete); index level |
 | e5_query_search | <data>/p32_exp2_exp5_w10 exp5_domains | queried domain fixed at 5,000 records |
 | e5_query_proof | <data>/p32_exp2_exp5_w10 exp5_domains | queried domain fixed at 5,000 records |
 | e5_query_verify | <data>/p32_exp2_exp5_w10 exp5_domains | queried domain fixed at 5,000 records |
