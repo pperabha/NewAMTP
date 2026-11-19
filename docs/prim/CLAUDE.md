@@ -66,3 +66,4 @@
 - เจอ: `plot_p32.py` ใช้ mean ข้าม query ไม่มี IQR แต่ #66 / Setup บอก median + IQR → แจ้ง A ใน PR B5
 - #72 = A: median + IQR; อัปเดตตัวเลข B5 ตาม figure_points.csv ใหม่ (74f259e)
 - PR #73 review: แก้ Exp 4 / Exp 3 4 จุด, ประโยค OR เก็บไว้; merge commit 9b49692 author ผิด → ต่อไปใช้ -c user.name/-c user.email กับ git merge ด้วยเสมอ
+- PR #74 (คน A): รูปสรุป tamper + แกน 'Returned files' → แก้คู่มือ B5 Fig. 6 / คำ r_Q, branch docs/paper32-b5-tamper; แจ้งว่า #73 merge แบบปกติ ทำให้ 9b49692 (author ผิด) อยู่ใน history

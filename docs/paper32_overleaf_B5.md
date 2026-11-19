@@ -13,6 +13,10 @@
    จาก `baselines/results/paper32/figures/` (อยู่ใน `feat/paper32-experiments` แล้ว หลัง merge PR #71)
 3. **preamble:** ถ้ายังไม่มี ให้เพิ่ม `\usepackage[caption=false,font=footnotesize]{subfig}` (แบบที่ IEEEtran แนะนำ)
 4. **เลขรูป:** paper มี Fig. 1 (system model) และ Fig. 2 (workflow) แล้ว รูปผลเริ่มที่ Fig. 3 · ใช้ `\ref` เสมอ
+4b. **แก้ตาม PR #74 (19 พ.ย.):** Fig. 6 ใช้รูปสรุป `e2_tamper_attack_types.pdf` แทน 2 ช่อง hide / inject เดิม และคำที่หมายถึง
+   $r_Q$ ใช้ "returned files" (แกน x ของรูป verify / layout เปลี่ยนเป็น "Returned files $r_Q$") · **ถ้าวาง Fig. 5 / Fig. 6 ไปแล้ว**
+   ให้แทนบล็อกรูปและย่อหน้า Fig. 6 ทั้งบล็อก, แก้ caption และ 3 วลีในย่อหน้าผลของ Fig. 5 ("the returned files occupy",
+   "for the clustered layout", "for the dispersed layout") และอัปโหลด PDF ชุดใหม่ทับ (แกน x ใหม่)
 5. ห้ามใช้ `e5_root_gas_localevm` (gas ของ py-evm ไม่ตรง Ethereum) · ใช้ `e5_sepolia_gas` เท่านั้น
 6. เจ้าของงาน (#66): **ไม่อธิบาย** query ที่ผลมากหรือ OR ล้วนในเนื้อหา แต่รูป OR ยังอยู่ตาม (32) · กติกาทีม: บอกตรงๆ ว่าแพ้ตรงไหน
    → ปรับแล้ว (PR #73): เจ้าของงานให้**เก็บ**ประโยคที่บอกว่า OR แพ้ไว้ (เปลี่ยนจาก #66)
@@ -107,52 +111,52 @@ SE-COLLAB 0.83 → 0.18 ms → AMTP เร็วกว่าถึง D = 8, **�
 \subfloat[Proof generation]{\includegraphics[width=0.32\textwidth]{figs/e2_layouts_proof.pdf}\label{fig:e2-proof}}\hfil
 \subfloat[DU verification]{\includegraphics[width=0.32\textwidth]{figs/e2_layouts_verify.pdf}\label{fig:e2-verify}}\hfil
 \subfloat[Proof size]{\includegraphics[width=0.32\textwidth]{figs/e2_layouts_proof_kb.pdf}\label{fig:e2-size}}
-\caption{Selective proof for one domain of $10^5$ documents and a marker keyword with $r_Q$ matches
-placed in few partitions (clustered), in many partitions (dispersed), or one per partition (partition
+\caption{Selective proof for one domain of $10^5$ documents and a marker keyword whose $r_Q$ returned files
+are placed in few partitions (clustered), in many partitions (dispersed), or one per partition (partition
 spread). Chen et al.\ and Du et al.\ have no separate proof-generation step.}
 \label{fig:e2-layouts}
 \end{figure*}
 
 \textbf{Results.} Fig.~\ref{fig:e2-layouts} shows that AMTP's proof work follows the partitions that
-the matches occupy. For $r_Q = 1{,}000$, the clustered layout covers 39 partitions and the dispersed
+the returned files occupy. For $r_Q = 1{,}000$, the clustered layout covers 39 partitions and the dispersed
 one 880: proof generation takes 0.71 vs.\ 5.7\,ms, verification 16.7 vs.\ 32.5\,ms, and the proof
 55 vs.\ 320\,KB. SE-COLLAB's proof does not depend on the layout and grows with $r_Q$ (561\,KB at
 $r_Q = 1{,}000$); AMTP's proof is smaller in every layout from $r_Q = 100$ (at most 1.0\,MB vs.\
-2.8\,MB at $r_Q = 5{,}000$). AMTP generates proofs faster than SE-COLLAB for clustered matches at every
-$r_Q$, but more slowly for dispersed matches from $r_Q = 100$ (22.7 vs.\ 17.5\,ms at $r_Q = 5{,}000$),
+2.8\,MB at $r_Q = 5{,}000$). AMTP generates proofs faster than SE-COLLAB for the clustered layout at every
+$r_Q$, but more slowly for the dispersed layout from $r_Q = 100$ (22.7 vs.\ 17.5\,ms at $r_Q = 5{,}000$),
 and its verification is slower than SE-COLLAB's from $r_Q = 100$ (84--129 vs.\ 55--58\,ms at
 $r_Q = 5{,}000$). Chen et al.\ verifies fastest with a constant 32-byte tag, and Du et al.\ is the slowest
 (361--369\,ms, 17\,MB at $r_Q = 5{,}000$).
 ```
 
-### Fig. 6 (verify ตาม r_Q, tamper) [M4, M5, M6] · รูป: `e2_single_verify_verify`, `e2_multi_verify_verify`, `e2_tamper_hide_detection`, `e2_tamper_inject_detection`
+### Fig. 6 (verify ตาม r_Q, tamper) [M4, M5, M6] · รูป: `e2_single_verify_verify`, `e2_multi_verify_verify`, `e2_tamper_attack_types` (รูปสรุป tamper จาก PR #74 แทน hide / inject 2 ช่องเดิม)
 → **วางต่อท้าย** ย่อหน้าผลของ Fig. 5
 
 ```latex
 \begin{figure*}[t]
 \centering
-\subfloat[Verification, one domain]{\includegraphics[width=0.24\textwidth]{figs/e2_single_verify_verify.pdf}\label{fig:e2-v1}}\hfil
-\subfloat[Verification, four domains]{\includegraphics[width=0.24\textwidth]{figs/e2_multi_verify_verify.pdf}\label{fig:e2-v2}}\hfil
-\subfloat[Detection: hidden files]{\includegraphics[width=0.24\textwidth]{figs/e2_tamper_hide_detection.pdf}\label{fig:e2-hide}}\hfil
-\subfloat[Detection: injected files]{\includegraphics[width=0.24\textwidth]{figs/e2_tamper_inject_detection.pdf}\label{fig:e2-inject}}
-\caption{(a), (b) DU verification for real keywords with $r_Q$ results; (c), (d) share of tampered
-responses that the DU rejects when $t$ returned files are hidden or non-matching files are injected.
-Four domains: SE-COLLAB is the only baseline.}
+\subfloat[Verification, one domain]{\includegraphics[width=0.29\textwidth]{figs/e2_single_verify_verify.pdf}\label{fig:e2-v1}}\hfil
+\subfloat[Verification, four domains]{\includegraphics[width=0.29\textwidth]{figs/e2_multi_verify_verify.pdf}\label{fig:e2-v2}}\hfil
+\subfloat[Tamper detection]{\includegraphics[width=0.40\textwidth]{figs/e2_tamper_attack_types.pdf}\label{fig:e2-tamper}}
+\caption{(a), (b) DU verification for real keywords with $r_Q$ returned files (four domains: SE-COLLAB
+is the only baseline). (c) Number of attack types (modified, hidden, injected, and older versions of
+files) that each scheme detects in every run when $t$ of the 2{,}021--2{,}122 returned files are
+tampered with; Chen et al.'s model covers only hidden and injected files.}
 \label{fig:e2-verify-tamper}
 \end{figure*}
 
 For real keywords (Fig.~\ref{fig:e2-v1}), AMTP verifies in 0.52--69.8\,ms for $r_Q$ from 10 to
-10{,}000, faster than Du et al.\ (0.75--179\,ms) and faster than SE-COLLAB only at $r_Q = 10$
+10{,}000 returned files, faster than Du et al.\ (0.75--179\,ms) and faster than SE-COLLAB only at $r_Q = 10$
 (SE-COLLAB: 1.04--28.7\,ms); Chen et al.\ is the fastest (0.28--7.7\,ms). AMTP's proof is 6--573\,KB,
 against 6--1{,}431\,KB for SE-COLLAB and 35\,KB--8.7\,MB for Du et al. Over four domains
 (Fig.~\ref{fig:e2-v2}) the picture is the same: AMTP is faster than SE-COLLAB at $r_Q = 10$ and slower
 beyond (258 vs.\ 109\,ms at $r_Q = 10{,}000$), with a smaller proof from $r_Q = 100$ (2.2 vs.\ 5.3\,MB
 at $r_Q = 10{,}000$).
-AMTP rejected every tampered response for all four attacks (modified, hidden, injected, and older
-versions of files) and all $t$ from 5 to 1{,}000, and accepted every honest response.
-SE-COLLAB did not detect hidden or injected files (Fig.~\ref{fig:e2-hide}, \ref{fig:e2-inject}),
-Du et al.\ did not detect injected files, and Chen et al.'s model does not cover modified or older
-ciphertexts. For hidden files, AMTP rejects in about 31\,ms, against 6\,ms for Chen et al.,
+AMTP detected all four attack types (modified, hidden, injected, and older versions of files) in
+every run and for every $t$ from 5 to 1{,}000, and accepted every honest response
+(Fig.~\ref{fig:e2-tamper}). Du et al.\ detected three of the four (it misses injected files),
+SE-COLLAB two (it misses hidden and injected files), and Chen et al.\ both attacks its model
+covers (hidden and injected files; it has no model of modified or older ciphertexts). For hidden files, AMTP rejects in about 31\,ms, against 6\,ms for Chen et al.,
 23\,ms for SE-COLLAB (which does not detect them), and 145\,ms for Du et al.
 ```
 
