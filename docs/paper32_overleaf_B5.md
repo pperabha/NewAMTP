@@ -6,13 +6,11 @@
 
 ## 0. ต้องรู้ก่อนวาง
 
-1. **⚠️ ค่าที่ plot ยังไม่ตรงกับประโยคใน Setup (ต้องให้ A ตัดสิน):** #66 ให้แต่ละจุดที่มีหลาย query เป็น
-   **median ของ query + error bar IQR** และ E1 ของ B4 มีประโยคนี้แล้ว แต่ `baselines/plot_p32.py` (`mean_by`) ใช้ **mean ข้าม
-   query และไม่วาด error bar** ทางเลือก: (ก) A plot ใหม่ด้วย median + IQR แล้วตัวเลขในไฟล์นี้ต้องอัปเดต หรือ (ข) ลบท่อน
-   "where a setting contains several queries, … interquartile range" ออกจาก Setup และใช้ mean ตามรูปที่มี
-   **ตัวเลขด้านล่างเป็นค่าจากรูปปัจจุบัน (mean ข้าม query)**
+1. **ค่าที่ plot (#72 = A, เจ้าของงาน):** จุดของ query (Exp 1, Exp 2 verify, Exp 5 query, tamper verify) = **median ข้าม query + error
+   bar IQR** ตาม #66 และประโยค Setup ใน E1 ของ B4 ใช้ได้ตามเดิม · Exp 3, Exp 4, update isolation และ Sepolia = mean ข้าม run / batch
+   (#46) ไม่มี bar · **ตัวเลขทั้งหมดในไฟล์นี้มาจาก `figure_points.csv` ฉบับหลัง #72 (commit `74f259e`)**
 2. **อัปโหลดรูป:** สร้างโฟลเดอร์ `figs/` ใน Overleaf แล้วอัปโหลดเฉพาะ PDF ที่ใช้ (รายการในข้อ 1 ของแต่ละรูป)
-   จาก `baselines/results/paper32/figures/` (branch `results/paper32-figures` หรือ main หลัง merge)
+   จาก `baselines/results/paper32/figures/` (อยู่ใน `feat/paper32-experiments` แล้ว หลัง merge PR #71)
 3. **preamble:** ถ้ายังไม่มี ให้เพิ่ม `\usepackage[caption=false,font=footnotesize]{subfig}` (แบบที่ IEEEtran แนะนำ)
 4. **เลขรูป:** paper มี Fig. 1 (system model) และ Fig. 2 (workflow) แล้ว รูปผลเริ่มที่ Fig. 3 · ใช้ `\ref` เสมอ
 5. ห้ามใช้ `e5_root_gas_localevm` (gas ของ py-evm ไม่ตรง Ethereum) · ใช้ `e5_sepolia_gas` เท่านั้น
@@ -53,16 +51,16 @@ End-to-end is query generation, server time, and DU verification.}
 \end{figure*}
 
 \textbf{Results.} Fig.~\ref{fig:e1-single} shows single-domain conjunctive queries. AMTP's server
-search is 4.5--10.9$\times$ faster than SE-COLLAB and at least 7$\times$ faster than Du et al.\ at
-every $k_Q$. Against Chen et al., AMTP is slower for one and two keywords (0.065 vs.\ 0.008\,ms at
-$k_Q = 1$; 0.019 vs.\ 0.015\,ms at $k_Q = 2$) and 8--19\% faster from $k_Q = 4$, although Chen et
-al.'s server does not evaluate the conjunction. As the domain grows from $10^4$ to
-$1.25 \times 10^5$ documents, AMTP's search time rises by 29\% (0.020 to 0.026\,ms), Chen et al.'s
-by 73\%, and SE-COLLAB's by 4.3$\times$; AMTP overtakes Chen et al.\ from $7.5 \times 10^4$
-documents. End to end, AMTP takes 0.72--1.74\,ms for $k_Q \ge 2$, 1.8--7.9$\times$ less than Chen et
-al., whose DU work grows with the bitmap length, and 5--12$\times$ less than SE-COLLAB, whose query
-generation alone costs 3.3\,ms. Du et al.\ is 15--27\% faster end to end for $k_Q \ge 4$ and at every
-domain size, and Chen et al.\ is faster for single-keyword queries (0.87 vs.\ 6.5\,ms).
+search is 4.4--23$\times$ faster than SE-COLLAB and at least 11$\times$ faster than Du et al.\ at
+every $k_Q$. Against Chen et al., AMTP is 10--21\% faster from $k_Q = 2$, although Chen et al.'s
+server does not evaluate the conjunction, and slightly slower for a single keyword (0.0088 vs.\
+0.0083\,ms). As the domain grows from $10^4$ to $1.25 \times 10^5$ documents, AMTP's search time
+rises by 18\% (0.020 to 0.023\,ms), Chen et al.'s by 72\%, and SE-COLLAB's by 4.3$\times$; Chen et al.\
+is faster at $10^4$ and $2.5 \times 10^4$ documents, and AMTP from $5 \times 10^4$. End to end, AMTP
+takes 0.41--1.75\,ms, 1.1--5.3$\times$ less than Chen et al., whose DU work grows with the bitmap
+length, and 5.3--22$\times$ less than SE-COLLAB, whose query generation alone costs 3.3\,ms. Du et al.\
+is 22--31\% faster end to end for $k_Q \ge 2$ and at every domain size, and Chen et al.\ is faster at
+$10^4$ documents (0.44 vs.\ 0.54\,ms).
 ```
 
 ### Fig. 4 (multi-domain Boolean) [M2, M3] · รูป: `e1_multi_AND_search`, `e1_multi_OR_search`, `e1_multi_AND_of_OR_search`, `e1_multi_OR_of_AND_search`
@@ -81,20 +79,19 @@ domain-bound query per domain). SE-COLLAB is the only baseline that supports the
 \end{figure*}
 
 Fig.~\ref{fig:e1-multi} compares the four Boolean forms of the experiment with SE-COLLAB over four
-domains. AMTP is 2.2--4.2$\times$ faster for conjunctions and 1.5--4.3$\times$ faster for
-$(A \wedge B) \vee (C \wedge D)$ at every $k_Q$, and 1.5--2.3$\times$ faster for
-$(A \vee B) \wedge (C \vee D)$ from $k_Q = 4$; with two keywords this form is slower in AMTP
-(1.16 vs.\ 0.73\,ms). For a disjunction of four or more keywords, SE-COLLAB is faster
-(5.6 vs.\ 1.6\,ms at $k_Q = 16$). % [ถาม A] เก็บหรือตัดประโยค OR นี้ (#66)
+domains. AMTP is faster at every $k_Q$ for conjunctions (2.4--4.9$\times$), for
+$(A \wedge B) \vee (C \wedge D)$ (2.8--5.1$\times$), and for $(A \vee B) \wedge (C \vee D)$
+(1.8--7.8$\times$). For a disjunction, AMTP is faster with two keywords and SE-COLLAB from four
+keywords (4.5 vs.\ 1.7\,ms at $k_Q = 16$). % [ถาม A] เก็บหรือตัดประโยค OR นี้ (#66)
 ```
 
-ถ้าต้องการรูป end-to-end ของ multi-domain ด้วย (ไม่บังคับ): `e1_multi_*_e2e` — ตัวเลข: AND AMTP 2.2–6.4 vs SE-COLLAB 9.5–10.4 ms;
-(A∧B)∨(C∧D) AMTP ชนะที่ kQ 2, 4 แต่แพ้ที่ 8, 16 (16.2 vs 10.8, 29.2 vs 11.5 ms); (A∨B)∧(C∨D) แพ้ที่ kQ 2 (85 vs 41 ms) ชนะ 4–16; OR แพ้ทุก kQ
+ถ้าต้องการรูป end-to-end ของ multi-domain ด้วย (ไม่บังคับ): `e1_multi_*_e2e` — ตัวเลข: AND AMTP 1.3–6.3 vs SE-COLLAB 9.5–10.4 ms;
+(A∨B)∧(C∨D) ชนะทุก kQ (3.4–7.8 vs 9.9–11.8 ms); (A∧B)∨(C∧D) ชนะที่ kQ 2–8 แต่**แพ้ที่ kQ 16** (18.9 vs 11.2 ms); OR แพ้ทุก kQ
 
 ### Search 2.2 (ไม่บังคับ, ซ้อนกับ Exp 5) · `e1_domains_search`, `e1_domains_e2e`
-ตัวเลข (ไฟล์ 400k แบ่งเป็น D domain, query ไปทุก domain): search AMTP 0.030 → 0.58 ms (เพิ่มตาม D เพราะส่ง query ทุก domain),
-SE-COLLAB 0.82 → 0.18 ms → AMTP เร็วกว่าถึง D = 8, **ช้ากว่าที่ D = 16, 32**; end-to-end AMTP เร็วกว่าถึง D = 16 (7.0 vs 9.6 ms),
-**ช้ากว่าที่ D = 32** (13.4 vs 10.1 ms) · ถ้าใส่ ต้องเขียนจุดที่แพ้ด้วย
+ตัวเลข (ไฟล์ 400k แบ่งเป็น D domain, query ไปทุก domain): search AMTP 0.027 → 0.59 ms (เพิ่มตาม D เพราะส่ง query ทุก domain),
+SE-COLLAB 0.83 → 0.18 ms → AMTP เร็วกว่าถึง D = 8, **ช้ากว่าที่ D = 16, 32**; end-to-end AMTP เร็วกว่าถึง D = 16 (6.9 vs 9.6 ms),
+**ช้ากว่าที่ D = 32** (13.3 vs 10.0 ms) · ถ้าใส่ ต้องเขียนจุดที่แพ้ด้วย
 
 ---
 
@@ -144,12 +141,13 @@ Four domains: SE-COLLAB is the only baseline.}
 \label{fig:e2-verify-tamper}
 \end{figure*}
 
-For real keywords (Fig.~\ref{fig:e2-v1}), AMTP verifies 0.52--90.6\,ms for $r_Q$ from 10 to 10{,}000,
-faster than Du et al.\ (0.76--263\,ms) and faster than SE-COLLAB only at $r_Q = 10$; Chen et al.\ is
-the fastest (0.27--11.1\,ms). AMTP's proof is 6--716\,KB, against 6--2{,}099\,KB for SE-COLLAB and
-34\,KB--12\,MB for Du et al. Over four domains (Fig.~\ref{fig:e2-v2}) the picture is the same: AMTP is
-faster than SE-COLLAB at $r_Q = 10$ and slower beyond (252 vs.\ 111\,ms at $r_Q = 10{,}000$), with a
-smaller proof from $r_Q = 100$ (2.1 vs.\ 5.4\,MB at $r_Q = 10{,}000$).
+For real keywords (Fig.~\ref{fig:e2-v1}), AMTP verifies in 0.52--69.8\,ms for $r_Q$ from 10 to
+10{,}000, faster than Du et al.\ (0.75--179\,ms) and faster than SE-COLLAB only at $r_Q = 10$
+(SE-COLLAB: 1.04--28.7\,ms); Chen et al.\ is the fastest (0.28--7.7\,ms). AMTP's proof is 6--573\,KB,
+against 6--1{,}431\,KB for SE-COLLAB and 35\,KB--8.7\,MB for Du et al. Over four domains
+(Fig.~\ref{fig:e2-v2}) the picture is the same: AMTP is faster than SE-COLLAB at $r_Q = 10$ and slower
+beyond (258 vs.\ 109\,ms at $r_Q = 10{,}000$), with a smaller proof from $r_Q = 100$ (2.2 vs.\ 5.3\,MB
+at $r_Q = 10{,}000$).
 AMTP rejected every tampered response for all four attacks (modified, hidden, injected, and older
 versions of files) and all $t$ from 5 to 1{,}000, and accepted every honest response.
 SE-COLLAB did not detect hidden or injected files (Fig.~\ref{fig:e2-hide}, \ref{fig:e2-inject}),
@@ -249,9 +247,9 @@ unchanged. (d) gas of one root submission on Ethereum Sepolia.}
 \end{figure*}
 
 \textbf{Results.} Query cost does not depend on the number of domains (Fig.~\ref{fig:e5}): from
-$D = 1$ to 32, AMTP's end-to-end time stays at 3.06--3.12\,ms against 10.06--10.08\,ms for SE-COLLAB,
-and its server search at 0.045--0.046\,ms against 0.069--0.070\,ms. AMTP's verification is slower
-(2.09--2.12 vs.\ 1.52--1.53\,ms). Updating one domain never changed another Domain Root. Its protocol
+$D = 1$ to 32, AMTP's end-to-end time stays at 1.35--1.40\,ms against 9.38--9.40\,ms for SE-COLLAB,
+its server search at 0.037--0.039\,ms against 0.065--0.067\,ms, and its verification at
+0.81--0.84\,ms against 0.99--1.00\,ms. Updating one domain never changed another Domain Root. Its protocol
 time stays at 96--103\,ms, while the full update grows from 238 to 295\,ms because the contract
 recomputes the Global Root over all $D$ domains (anchoring 142 to 192\,ms on the local EVM). On
 Sepolia, a root update costs 86.7k gas for one domain and grows by about 16k gas each time $D$
@@ -269,7 +267,7 @@ mined.
 
 ## 8. ตรวจหลังวาง
 - [ ] ทุก `\ref{fig:e…}` ไม่เป็น ??, เลขรูป 3–9 เรียงตามลำดับที่อ้าง
-- [ ] ตัดสิน 0.1 (median + IQR หรือ mean) แล้วแก้ Setup หรือตัวเลขให้ตรงกัน
+- [x] #72 = A: median + IQR (รูปและตัวเลขในไฟล์นี้ตรงกันแล้ว)
 - [ ] [ถาม A] ประโยค OR ใน Exp 1
 - [ ] Recompile: รูป `figure*` 4 ช่องอ่านออก (ถ้าแน่นไป ใช้ 2×2 ด้วย `\\` หลังช่องที่ 2 และ width=0.45)
 - [ ] ความยาว paper: ถ้าเกิน ตัดรูป (ไม่บังคับ) ก่อน แล้วรวม Fig. 5 + 6 เป็นรูปเดียว

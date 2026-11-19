@@ -21,3 +21,10 @@
 
 ## สถานะ
 เอกสารอย่างเดียว ไม่แก้โค้ด · รอ A ตัดสินเรื่อง median/mean และประโยค OR · Prim วางลง Overleaf
+
+## อัปเดตหลัง #72 (เจ้าของงานเลือก A)
+- A plot ใหม่ (PR #71 commit `74f259e`): จุดของ query = median ข้าม query + IQR · ตัวเลขใน `docs/paper32_overleaf_B5.md`
+  อัปเดตจาก `figure_points.csv` ฉบับนี้: Exp 1 (single, multi, Search 2.2), Exp 2 verify single / multi, Exp 5 query
+- Exp 2 layouts, tamper, Exp 3, Exp 4, isolation, Sepolia: ค่าไม่เปลี่ยน (1 query ต่อจุด หรือเป็น mean ข้าม run)
+- ผลที่เปลี่ยน: AMTP ชนะ Chen ที่ kQ ≥ 2 (แพ้เฉพาะ kQ 1 เล็กน้อย และ N 10k / 25k); (A∨B)∧(C∨D) ชนะทุก kQ; OR แพ้ที่ kQ ≥ 4;
+  Exp 5 verify ของ AMTP เร็วกว่า SE-COLLAB แล้ว (0.81–0.84 vs 0.99–1.00 ms); Du ยังเร็วกว่าใน end-to-end ที่ kQ ≥ 2
