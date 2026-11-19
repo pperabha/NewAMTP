@@ -16,3 +16,11 @@ PR #74 (รูป `e2_tamper_attack_types.pdf` และแกน x ใหม่
 
 ## สถานะ
 เอกสารอย่างเดียว ไม่แก้โค้ด
+
+## เพิ่ม: Fig. 8 ตาม #76 (เจ้าของงานตัดสิน: Exp 4 ไม่มีเส้น AMTP full protocol)
+- Fig. 8 = (a) `e4_batches_skew0.95` (b) `e4_update_insert` (c) `e4_update_delete` (d) `e4_max_partition` (รูปของ PR #74 มีแค่ AMTP,
+  Static-MT, Global-MT(v)) · ตัด `e4_query_verify` และ `\ref{fig:e4-ver}`; ตัวเลขฝั่ง query อยู่ในข้อความ
+- caption: ตัดประโยค full protocol, เพิ่ม "spikes at batches 25 and 247 are capacity doublings of the IMT"
+- Results: เพิ่มย่อหน้า (a) (AMTP ~0.3–0.6 s ต่อ batch ขณะ Static-MT โตถึง ~6 s; ตรวจกับ figure_points.csv ของ PR #74) และประโยค
+  full protocol 3.7–4.2 s · ข้อความของ #76 เขียน "most of which is the request signatures" แต่ ABS ต่อ batch 100 ≈ 2.1 s
+  (Exp 3) = 50–57% ของ 3.7–4.2 s จึงเขียนเป็น "about half"

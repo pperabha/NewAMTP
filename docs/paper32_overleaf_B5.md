@@ -17,6 +17,8 @@
    $r_Q$ ใช้ "returned files" (แกน x ของรูป verify / layout เปลี่ยนเป็น "Returned files $r_Q$") · **ถ้าวาง Fig. 5 / Fig. 6 ไปแล้ว**
    ให้แทนบล็อกรูปและย่อหน้า Fig. 6 ทั้งบล็อก, แก้ caption และ 3 วลีในย่อหน้าผลของ Fig. 5 ("the returned files occupy",
    "for the clustered layout", "for the dispersed layout") และอัปโหลด PDF ชุดใหม่ทับ (แกน x ใหม่)
+4c. **แก้ตาม #76 (19 พ.ย.):** Fig. 8 ไม่มีเส้น AMTP full protocol; ช่อง (a) = `e4_batches_skew0.95` แทน `e4_query_verify`
+   (ตัวเลขฝั่ง query อยู่ในข้อความแทน) · **ถ้าวาง Fig. 8 ไปแล้ว** ให้แทนทั้งบล็อกรูปและย่อหน้า Results ของ Exp 4
 5. ห้ามใช้ `e5_root_gas_localevm` (gas ของ py-evm ไม่ตรง Ethereum) · ใช้ `e5_sepolia_gas` เท่านั้น
 6. เจ้าของงาน (#66): **ไม่อธิบาย** query ที่ผลมากหรือ OR ล้วนในเนื้อหา แต่รูป OR ยังอยู่ตาม (32) · กติกาทีม: บอกตรงๆ ว่าแพ้ตรงไหน
    → ปรับแล้ว (PR #73): เจ้าของงานให้**เก็บ**ประโยคที่บอกว่า OR แพ้ไว้ (เปลี่ยนจาก #66)
@@ -198,35 +200,40 @@ $b = 100$, AMTP's cost per request grows by 1.5$\times$ (35 to 53\,ms) and Chen 
 
 ## 5. Experiment 4: Adaptive Partitioning under Skewed Growth [M7]
 
-### Fig. 8 · รูป: `e4_update_insert`, `e4_update_delete`, `e4_max_partition`, `e4_query_verify`
+### Fig. 8 (#76: ระดับ index อย่างเดียว ไม่มีเส้น AMTP full protocol) · รูป: `e4_batches_skew0.95`, `e4_update_insert`, `e4_update_delete`, `e4_max_partition`
 ค้นหา: `Experiment 4: Adaptive Partitioning under Skewed` → ย่อหน้าจบที่ `keeping restructuring overhead bounded.`
 → **วางต่อท้าย**
 
 ```latex
 \begin{figure*}[t]
 \centering
+\subfloat[Every batch, $s = 0.95$]{\includegraphics[width=0.24\textwidth]{figs/e4_batches_skew0.95.pdf}\label{fig:e4-batches}}\hfil
 \subfloat[Insertion batches]{\includegraphics[width=0.24\textwidth]{figs/e4_update_insert.pdf}\label{fig:e4-ins}}\hfil
 \subfloat[Deletion batches]{\includegraphics[width=0.24\textwidth]{figs/e4_update_delete.pdf}\label{fig:e4-del}}\hfil
-\subfloat[Largest partition]{\includegraphics[width=0.24\textwidth]{figs/e4_max_partition.pdf}\label{fig:e4-max}}\hfil
-\subfloat[DU verification]{\includegraphics[width=0.24\textwidth]{figs/e4_query_verify.pdf}\label{fig:e4-ver}}
-\caption{Skewed growth: 25{,}000 documents, 250 batches of 100 insertions with a fraction $s$ on one
-hot group, then deletion of 65\% of the hot group. AMTP, Static-MT, and Global-MT(v) are compared at
-the index level; AMTP (full protocol) adds signed requests, DO validation, and anchoring around the same
-index work and is not directly comparable with the other two.}
+\subfloat[Largest partition]{\includegraphics[width=0.24\textwidth]{figs/e4_max_partition.pdf}\label{fig:e4-max}}
+\caption{Skewed growth at the index level: 25{,}000 documents, 250 batches of 100 insertions with a
+fraction $s$ on one hot group, then deletion of 65\% of the hot group. (a) every batch at $s = 0.95$;
+(b), (c) mean time per batch of each phase; (d) largest partition after the last batch. The single
+spikes at batches 25 and 247 are capacity doublings of the IMT, in AMTP and Static-MT alike.}
 \label{fig:e4}
 \end{figure*}
 
-\textbf{Results.} Adaptive partitioning keeps every partition at no more than $\theta_{\max} = 64$ live entries for
-all skew levels, whereas the largest Static-MT partition grows to 2{,}492--8{,}206 entries and
-Global-MT(v) keeps all 33{,}000--48{,}000 entries in one tree (Fig.~\ref{fig:e4-max}). An insertion
-batch costs 443--694\,ms in AMTP, 3.6--6.9$\times$ less than Static-MT and 9.9--15.8$\times$ less than
-Global-MT(v) (Fig.~\ref{fig:e4-ins}). For deletions, Static-MT is about as fast as AMTP without skew
-(1.26 vs.\ 1.32\,s per batch), and AMTP is up to 2.2$\times$ faster as the skew grows
-(Fig.~\ref{fig:e4-del}). Splits and merges take 7--9\,ms per batch, about 1--2\% of AMTP's update time,
-with 282--376 restructuring events per run. The price is on the query side: with more, smaller
-partitions, AMTP's verification (4.7--6.0\,ms) takes 14--16\% longer than Static-MT's (4.3--5.2\,ms)
-and about 1.8$\times$ as long as Global-MT(v)'s (2.6--3.3\,ms), and its proofs (60--79\,KB) are 6\% and
-23--26\% larger than theirs (56--74\,KB and 47--64\,KB) (Fig.~\ref{fig:e4-ver}).
+\textbf{Results.} Adaptive partitioning keeps every partition at no more than $\theta_{\max} = 64$ live
+entries for all skew levels, whereas the largest Static-MT partition grows to 2{,}492--8{,}206 entries
+and Global-MT(v) keeps all 33{,}000--48{,}000 entries in one tree (Fig.~\ref{fig:e4-max}). With 95\%
+of the insertions on one group (Fig.~\ref{fig:e4-batches}), an AMTP batch stays at about 0.3--0.6\,s
+while Static-MT's grows to about 6\,s as its hot partition fills, and AMTP remains the fastest
+throughout the deletion phase. Over all skew levels, an insertion batch costs 443--694\,ms in AMTP,
+3.6--6.9$\times$ less than Static-MT and 9.9--15.8$\times$ less than Global-MT(v)
+(Fig.~\ref{fig:e4-ins}). For deletions, Static-MT is about as fast as AMTP without skew (1.26 vs.\
+1.32\,s per batch), and AMTP is up to 2.2$\times$ faster as the skew grows (Fig.~\ref{fig:e4-del}).
+Splits and merges take 7--9\,ms per batch, about 1--2\% of AMTP's update time, with 282--376
+restructuring events per run. The price is on the query side: with more, smaller partitions, AMTP's
+verification (4.7--6.0\,ms) takes 14--16\% longer than Static-MT's (4.3--5.2\,ms) and about
+1.8$\times$ as long as Global-MT(v)'s (2.6--3.3\,ms), and its proofs (60--79\,KB) are 6\% and
+23--26\% larger than theirs (56--74\,KB and 47--64\,KB). Run through the full protocol (ABS-signed
+requests, DO validation, and anchoring), the same insertion batches take 3.7--4.2\,s, about half of
+which is the request signatures (Experiment~3); the index work is identical.
 ```
 
 ---
