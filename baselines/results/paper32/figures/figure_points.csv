@@ -1,0 +1,3289 @@
+figure,series,x,y
+e1_single_kq_search,AMTP,1,0.064854
+e1_single_kq_search,AMTP,2,0.019165
+e1_single_kq_search,AMTP,4,0.025617
+e1_single_kq_search,AMTP,8,0.042516
+e1_single_kq_search,AMTP,16,0.084158
+e1_single_kq_search,Chen [40],1,0.008306
+e1_single_kq_search,Chen [40],2,0.015255
+e1_single_kq_search,Chen [40],4,0.027823
+e1_single_kq_search,Chen [40],8,0.052338
+e1_single_kq_search,Chen [40],16,0.101354
+e1_single_kq_search,SE-COLLAB [37],1,0.203033
+e1_single_kq_search,SE-COLLAB [37],2,0.209519
+e1_single_kq_search,SE-COLLAB [37],4,0.241231
+e1_single_kq_search,SE-COLLAB [37],8,0.287565
+e1_single_kq_search,SE-COLLAB [37],16,0.382072
+e1_single_kq_search,Du [7],1,6.955075
+e1_single_kq_search,Du [7],2,0.789994
+e1_single_kq_search,Du [7],4,0.571539
+e1_single_kq_search,Du [7],8,0.609913
+e1_single_kq_search,Du [7],16,1.046348
+e1_single_n_search,AMTP,10000,0.019817
+e1_single_n_search,AMTP,25000,0.021119
+e1_single_n_search,AMTP,50000,0.022653
+e1_single_n_search,AMTP,75000,0.024148
+e1_single_n_search,AMTP,100000,0.025617
+e1_single_n_search,AMTP,125000,0.025547
+e1_single_n_search,Chen [40],10000,0.017607
+e1_single_n_search,Chen [40],25000,0.019489
+e1_single_n_search,Chen [40],50000,0.022195
+e1_single_n_search,Chen [40],75000,0.02505
+e1_single_n_search,Chen [40],100000,0.027823
+e1_single_n_search,Chen [40],125000,0.030483
+e1_single_n_search,SE-COLLAB [37],10000,0.066559
+e1_single_n_search,SE-COLLAB [37],25000,0.089078
+e1_single_n_search,SE-COLLAB [37],50000,0.12625
+e1_single_n_search,SE-COLLAB [37],75000,0.195398
+e1_single_n_search,SE-COLLAB [37],100000,0.241231
+e1_single_n_search,SE-COLLAB [37],125000,0.286862
+e1_single_n_search,Du [7],10000,0.266278
+e1_single_n_search,Du [7],25000,0.343233
+e1_single_n_search,Du [7],50000,0.444951
+e1_single_n_search,Du [7],75000,0.522104
+e1_single_n_search,Du [7],100000,0.571539
+e1_single_n_search,Du [7],125000,0.611399
+e1_single_kq_query_gen,AMTP,1,0.045287
+e1_single_kq_query_gen,AMTP,2,0.064995
+e1_single_kq_query_gen,AMTP,4,0.09982
+e1_single_kq_query_gen,AMTP,8,0.156379
+e1_single_kq_query_gen,AMTP,16,0.273026
+e1_single_kq_query_gen,Chen [40],1,0.005004
+e1_single_kq_query_gen,Chen [40],2,0.008759
+e1_single_kq_query_gen,Chen [40],4,0.015875
+e1_single_kq_query_gen,Chen [40],8,0.029227
+e1_single_kq_query_gen,Chen [40],16,0.055758
+e1_single_kq_query_gen,SE-COLLAB [37],1,3.347004
+e1_single_kq_query_gen,SE-COLLAB [37],2,3.330838
+e1_single_kq_query_gen,SE-COLLAB [37],4,3.343007
+e1_single_kq_query_gen,SE-COLLAB [37],8,3.360849
+e1_single_kq_query_gen,SE-COLLAB [37],16,3.402017
+e1_single_kq_query_gen,Du [7],1,0.02256
+e1_single_kq_query_gen,Du [7],2,0.028241
+e1_single_kq_query_gen,Du [7],4,0.051401
+e1_single_kq_query_gen,Du [7],8,0.097102
+e1_single_kq_query_gen,Du [7],16,0.191564
+e1_single_n_query_gen,AMTP,10000,0.083669
+e1_single_n_query_gen,AMTP,25000,0.088567
+e1_single_n_query_gen,AMTP,50000,0.092547
+e1_single_n_query_gen,AMTP,75000,0.097229
+e1_single_n_query_gen,AMTP,100000,0.09982
+e1_single_n_query_gen,AMTP,125000,0.106009
+e1_single_n_query_gen,Chen [40],10000,0.015118
+e1_single_n_query_gen,Chen [40],25000,0.015182
+e1_single_n_query_gen,Chen [40],50000,0.01558
+e1_single_n_query_gen,Chen [40],75000,0.015791
+e1_single_n_query_gen,Chen [40],100000,0.015875
+e1_single_n_query_gen,Chen [40],125000,0.016023
+e1_single_n_query_gen,SE-COLLAB [37],10000,3.336756
+e1_single_n_query_gen,SE-COLLAB [37],25000,3.344628
+e1_single_n_query_gen,SE-COLLAB [37],50000,3.347239
+e1_single_n_query_gen,SE-COLLAB [37],75000,3.341618
+e1_single_n_query_gen,SE-COLLAB [37],100000,3.343007
+e1_single_n_query_gen,SE-COLLAB [37],125000,3.354873
+e1_single_n_query_gen,Du [7],10000,0.05095
+e1_single_n_query_gen,Du [7],25000,0.051322
+e1_single_n_query_gen,Du [7],50000,0.051988
+e1_single_n_query_gen,Du [7],75000,0.05185
+e1_single_n_query_gen,Du [7],100000,0.051401
+e1_single_n_query_gen,Du [7],125000,0.051841
+e1_single_kq_server,AMTP,1,1.95319
+e1_single_kq_server,AMTP,2,0.211625
+e1_single_kq_server,AMTP,4,0.288669
+e1_single_kq_server,AMTP,8,0.352258
+e1_single_kq_server,AMTP,16,0.582969
+e1_single_kq_server,Chen [40],1,0.008306
+e1_single_kq_server,Chen [40],2,0.015255
+e1_single_kq_server,Chen [40],4,0.027823
+e1_single_kq_server,Chen [40],8,0.052338
+e1_single_kq_server,Chen [40],16,0.101354
+e1_single_kq_server,SE-COLLAB [37],1,5.213223
+e1_single_kq_server,SE-COLLAB [37],2,4.680277
+e1_single_kq_server,SE-COLLAB [37],4,4.711375
+e1_single_kq_server,SE-COLLAB [37],8,4.760418
+e1_single_kq_server,SE-COLLAB [37],16,4.869621
+e1_single_kq_server,Du [7],1,7.120945
+e1_single_kq_server,Du [7],2,0.801869
+e1_single_kq_server,Du [7],4,0.57277
+e1_single_kq_server,Du [7],8,0.611869
+e1_single_kq_server,Du [7],16,1.048614
+e1_single_n_server,AMTP,10000,0.176239
+e1_single_n_server,AMTP,25000,0.199881
+e1_single_n_server,AMTP,50000,0.230636
+e1_single_n_server,AMTP,75000,0.26012
+e1_single_n_server,AMTP,100000,0.288669
+e1_single_n_server,AMTP,125000,0.291608
+e1_single_n_server,Chen [40],10000,0.017607
+e1_single_n_server,Chen [40],25000,0.019489
+e1_single_n_server,Chen [40],50000,0.022195
+e1_single_n_server,Chen [40],75000,0.02505
+e1_single_n_server,Chen [40],100000,0.027823
+e1_single_n_server,Chen [40],125000,0.030483
+e1_single_n_server,SE-COLLAB [37],10000,4.539754
+e1_single_n_server,SE-COLLAB [37],25000,4.549579
+e1_single_n_server,SE-COLLAB [37],50000,4.58837
+e1_single_n_server,SE-COLLAB [37],75000,4.664099
+e1_single_n_server,SE-COLLAB [37],100000,4.711375
+e1_single_n_server,SE-COLLAB [37],125000,4.762778
+e1_single_n_server,Du [7],10000,0.268504
+e1_single_n_server,Du [7],25000,0.346745
+e1_single_n_server,Du [7],50000,0.450273
+e1_single_n_server,Du [7],75000,0.527864
+e1_single_n_server,Du [7],100000,0.57277
+e1_single_n_server,Du [7],125000,0.619207
+e1_single_kq_e2e,AMTP,1,6.505433
+e1_single_kq_e2e,AMTP,2,0.72162
+e1_single_kq_e2e,AMTP,4,0.878866
+e1_single_kq_e2e,AMTP,8,1.065719
+e1_single_kq_e2e,AMTP,16,1.744268
+e1_single_kq_e2e,Chen [40],1,0.869697
+e1_single_kq_e2e,Chen [40],2,1.268673
+e1_single_kq_e2e,Chen [40],4,3.872295
+e1_single_kq_e2e,Chen [40],8,5.480486
+e1_single_kq_e2e,Chen [40],16,13.822024
+e1_single_kq_e2e,SE-COLLAB [37],1,11.081005
+e1_single_kq_e2e,SE-COLLAB [37],2,8.946984
+e1_single_kq_e2e,SE-COLLAB [37],4,8.982331
+e1_single_kq_e2e,SE-COLLAB [37],8,9.049593
+e1_single_kq_e2e,SE-COLLAB [37],16,9.203043
+e1_single_kq_e2e,Du [7],1,17.365271
+e1_single_kq_e2e,Du [7],2,0.973972
+e1_single_kq_e2e,Du [7],4,0.726469
+e1_single_kq_e2e,Du [7],8,0.811137
+e1_single_kq_e2e,Du [7],16,1.349337
+e1_single_n_e2e,AMTP,10000,0.570653
+e1_single_n_e2e,AMTP,25000,0.651385
+e1_single_n_e2e,AMTP,50000,0.73634
+e1_single_n_e2e,AMTP,75000,0.816583
+e1_single_n_e2e,AMTP,100000,0.878866
+e1_single_n_e2e,AMTP,125000,0.916786
+e1_single_n_e2e,Chen [40],10000,0.618784
+e1_single_n_e2e,Chen [40],25000,1.282672
+e1_single_n_e2e,Chen [40],50000,2.25354
+e1_single_n_e2e,Chen [40],75000,3.113001
+e1_single_n_e2e,Chen [40],100000,3.872295
+e1_single_n_e2e,Chen [40],125000,4.482181
+e1_single_n_e2e,SE-COLLAB [37],10000,8.798384
+e1_single_n_e2e,SE-COLLAB [37],25000,8.819153
+e1_single_n_e2e,SE-COLLAB [37],50000,8.862335
+e1_single_n_e2e,SE-COLLAB [37],75000,8.93197
+e1_single_n_e2e,SE-COLLAB [37],100000,8.982331
+e1_single_n_e2e,SE-COLLAB [37],125000,9.048023
+e1_single_n_e2e,Du [7],10000,0.417908
+e1_single_n_e2e,Du [7],25000,0.498502
+e1_single_n_e2e,Du [7],50000,0.604465
+e1_single_n_e2e,Du [7],75000,0.683906
+e1_single_n_e2e,Du [7],100000,0.726469
+e1_single_n_e2e,Du [7],125000,0.77509
+e1_single_kq_verify,AMTP,1,4.506955
+e1_single_kq_verify,AMTP,2,0.444999
+e1_single_kq_verify,AMTP,4,0.490377
+e1_single_kq_verify,AMTP,8,0.557081
+e1_single_kq_verify,AMTP,16,0.888273
+e1_single_kq_verify,Chen [40],1,0.602438
+e1_single_kq_verify,Chen [40],2,1.12538
+e1_single_kq_verify,Chen [40],4,3.630303
+e1_single_kq_verify,Chen [40],8,5.018508
+e1_single_kq_verify,Chen [40],16,12.9189
+e1_single_kq_verify,SE-COLLAB [37],1,2.520778
+e1_single_kq_verify,SE-COLLAB [37],2,0.935869
+e1_single_kq_verify,SE-COLLAB [37],4,0.92795
+e1_single_kq_verify,SE-COLLAB [37],8,0.928326
+e1_single_kq_verify,SE-COLLAB [37],16,0.931405
+e1_single_kq_verify,Du [7],1,10.221766
+e1_single_kq_verify,Du [7],2,0.143862
+e1_single_kq_verify,Du [7],4,0.102298
+e1_single_kq_verify,Du [7],8,0.102167
+e1_single_kq_verify,Du [7],16,0.109158
+e1_single_n_verify,AMTP,10000,0.310746
+e1_single_n_verify,AMTP,25000,0.362936
+e1_single_n_verify,AMTP,50000,0.413157
+e1_single_n_verify,AMTP,75000,0.459234
+e1_single_n_verify,AMTP,100000,0.490377
+e1_single_n_verify,AMTP,125000,0.519169
+e1_single_n_verify,Chen [40],10000,0.531827
+e1_single_n_verify,Chen [40],25000,1.169995
+e1_single_n_verify,Chen [40],50000,2.097672
+e1_single_n_verify,Chen [40],75000,2.913871
+e1_single_n_verify,Chen [40],100000,3.630303
+e1_single_n_verify,Chen [40],125000,4.196441
+e1_single_n_verify,SE-COLLAB [37],10000,0.921874
+e1_single_n_verify,SE-COLLAB [37],25000,0.924946
+e1_single_n_verify,SE-COLLAB [37],50000,0.926726
+e1_single_n_verify,SE-COLLAB [37],75000,0.926252
+e1_single_n_verify,SE-COLLAB [37],100000,0.92795
+e1_single_n_verify,SE-COLLAB [37],125000,0.930372
+e1_single_n_verify,Du [7],10000,0.098454
+e1_single_n_verify,Du [7],25000,0.100435
+e1_single_n_verify,Du [7],50000,0.102204
+e1_single_n_verify,Du [7],75000,0.104191
+e1_single_n_verify,Du [7],100000,0.102298
+e1_single_n_verify,Du [7],125000,0.104042
+e1_multi_AND_search,AMTP,2,0.065957
+e1_multi_AND_search,AMTP,4,0.095177
+e1_multi_AND_search,AMTP,8,0.161182
+e1_multi_AND_search,AMTP,16,0.294802
+e1_multi_AND_search,SE-COLLAB [37],2,0.277294
+e1_multi_AND_search,SE-COLLAB [37],4,0.341948
+e1_multi_AND_search,SE-COLLAB [37],8,0.473212
+e1_multi_AND_search,SE-COLLAB [37],16,0.658516
+e1_multi_AND_e2e,AMTP,2,2.165526
+e1_multi_AND_e2e,AMTP,4,2.32243
+e1_multi_AND_e2e,AMTP,8,3.563371
+e1_multi_AND_e2e,AMTP,16,6.366979
+e1_multi_AND_e2e,SE-COLLAB [37],2,9.523748
+e1_multi_AND_e2e,SE-COLLAB [37],4,9.648518
+e1_multi_AND_e2e,SE-COLLAB [37],8,9.911231
+e1_multi_AND_e2e,SE-COLLAB [37],16,10.345259
+e1_multi_AND_query_gen,AMTP,2,0.2747
+e1_multi_AND_query_gen,AMTP,4,0.439799
+e1_multi_AND_query_gen,AMTP,8,0.672748
+e1_multi_AND_query_gen,AMTP,16,1.242928
+e1_multi_AND_query_gen,SE-COLLAB [37],2,3.516779
+e1_multi_AND_query_gen,SE-COLLAB [37],4,3.543521
+e1_multi_AND_query_gen,SE-COLLAB [37],8,3.595227
+e1_multi_AND_query_gen,SE-COLLAB [37],16,3.696902
+e1_multi_AND_server,AMTP,2,0.658566
+e1_multi_AND_server,AMTP,4,0.799831
+e1_multi_AND_server,AMTP,8,1.251336
+e1_multi_AND_server,AMTP,16,2.274529
+e1_multi_AND_server,SE-COLLAB [37],2,5.012397
+e1_multi_AND_server,SE-COLLAB [37],4,5.113838
+e1_multi_AND_server,SE-COLLAB [37],8,5.320162
+e1_multi_AND_server,SE-COLLAB [37],16,5.650818
+e1_multi_AND_verify,AMTP,2,1.23226
+e1_multi_AND_verify,AMTP,4,1.0828
+e1_multi_AND_verify,AMTP,8,1.639287
+e1_multi_AND_verify,AMTP,16,2.849522
+e1_multi_AND_verify,SE-COLLAB [37],2,0.994571
+e1_multi_AND_verify,SE-COLLAB [37],4,0.991158
+e1_multi_AND_verify,SE-COLLAB [37],8,0.995842
+e1_multi_AND_verify,SE-COLLAB [37],16,0.997538
+e1_multi_OR_search,AMTP,2,0.750212
+e1_multi_OR_search,AMTP,4,1.12934
+e1_multi_OR_search,AMTP,8,2.633658
+e1_multi_OR_search,AMTP,16,5.628105
+e1_multi_OR_search,SE-COLLAB [37],2,0.718181
+e1_multi_OR_search,SE-COLLAB [37],4,0.963642
+e1_multi_OR_search,SE-COLLAB [37],8,1.185137
+e1_multi_OR_search,SE-COLLAB [37],16,1.633
+e1_multi_OR_e2e,AMTP,2,62.11365
+e1_multi_OR_e2e,AMTP,4,99.298134
+e1_multi_OR_e2e,AMTP,8,206.632627
+e1_multi_OR_e2e,AMTP,16,392.354288
+e1_multi_OR_e2e,SE-COLLAB [37],2,32.086681
+e1_multi_OR_e2e,SE-COLLAB [37],4,43.819752
+e1_multi_OR_e2e,SE-COLLAB [37],8,85.53504
+e1_multi_OR_e2e,SE-COLLAB [37],16,168.997724
+e1_multi_OR_query_gen,AMTP,2,0.362181
+e1_multi_OR_query_gen,AMTP,4,0.582396
+e1_multi_OR_query_gen,AMTP,8,0.966112
+e1_multi_OR_query_gen,AMTP,16,1.565934
+e1_multi_OR_query_gen,SE-COLLAB [37],2,3.572749
+e1_multi_OR_query_gen,SE-COLLAB [37],4,3.639749
+e1_multi_OR_query_gen,SE-COLLAB [37],8,3.729859
+e1_multi_OR_query_gen,SE-COLLAB [37],16,3.876673
+e1_multi_OR_server,AMTP,2,19.39159
+e1_multi_OR_server,AMTP,4,31.437752
+e1_multi_OR_server,AMTP,8,65.278988
+e1_multi_OR_server,AMTP,16,121.811287
+e1_multi_OR_server,SE-COLLAB [37],2,11.081424
+e1_multi_OR_server,SE-COLLAB [37],4,14.337837
+e1_multi_OR_server,SE-COLLAB [37],8,25.488446
+e1_multi_OR_server,SE-COLLAB [37],16,47.768625
+e1_multi_OR_verify,AMTP,2,42.359879
+e1_multi_OR_verify,AMTP,4,67.277986
+e1_multi_OR_verify,AMTP,8,140.387527
+e1_multi_OR_verify,AMTP,16,268.977067
+e1_multi_OR_verify,SE-COLLAB [37],2,17.432508
+e1_multi_OR_verify,SE-COLLAB [37],4,25.842166
+e1_multi_OR_verify,SE-COLLAB [37],8,56.316735
+e1_multi_OR_verify,SE-COLLAB [37],16,117.352426
+e1_multi_AND_of_OR_search,AMTP,2,1.159025
+e1_multi_AND_of_OR_search,AMTP,4,0.36443
+e1_multi_AND_of_OR_search,AMTP,8,0.27916
+e1_multi_AND_of_OR_search,AMTP,16,0.537161
+e1_multi_AND_of_OR_search,SE-COLLAB [37],2,0.734162
+e1_multi_AND_of_OR_search,SE-COLLAB [37],4,0.564279
+e1_multi_AND_of_OR_search,SE-COLLAB [37],8,0.640053
+e1_multi_AND_of_OR_search,SE-COLLAB [37],16,0.953052
+e1_multi_AND_of_OR_e2e,AMTP,2,85.355452
+e1_multi_AND_of_OR_e2e,AMTP,4,8.419808
+e1_multi_AND_of_OR_e2e,AMTP,8,4.900932
+e1_multi_AND_of_OR_e2e,AMTP,16,8.008916
+e1_multi_AND_of_OR_e2e,SE-COLLAB [37],2,41.190072
+e1_multi_AND_of_OR_e2e,SE-COLLAB [37],4,10.197625
+e1_multi_AND_of_OR_e2e,SE-COLLAB [37],8,10.164672
+e1_multi_AND_of_OR_e2e,SE-COLLAB [37],16,10.717898
+e1_multi_AND_of_OR_query_gen,AMTP,2,0.396517
+e1_multi_AND_of_OR_query_gen,AMTP,4,0.580104
+e1_multi_AND_of_OR_query_gen,AMTP,8,0.959536
+e1_multi_AND_of_OR_query_gen,AMTP,16,1.64223
+e1_multi_AND_of_OR_query_gen,SE-COLLAB [37],2,3.581667
+e1_multi_AND_of_OR_query_gen,SE-COLLAB [37],4,3.552088
+e1_multi_AND_of_OR_query_gen,SE-COLLAB [37],8,3.626964
+e1_multi_AND_of_OR_query_gen,SE-COLLAB [37],16,3.720504
+e1_multi_AND_of_OR_server,AMTP,2,26.952587
+e1_multi_AND_of_OR_server,AMTP,4,2.618048
+e1_multi_AND_of_OR_server,AMTP,8,1.760114
+e1_multi_AND_of_OR_server,AMTP,16,2.950238
+e1_multi_AND_of_OR_server,SE-COLLAB [37],2,13.447705
+e1_multi_AND_of_OR_server,SE-COLLAB [37],4,5.423258
+e1_multi_AND_of_OR_server,SE-COLLAB [37],8,5.526067
+e1_multi_AND_of_OR_server,SE-COLLAB [37],16,5.979651
+e1_multi_AND_of_OR_verify,AMTP,2,58.006348
+e1_multi_AND_of_OR_verify,AMTP,4,5.221656
+e1_multi_AND_of_OR_verify,AMTP,8,2.181281
+e1_multi_AND_of_OR_verify,AMTP,16,3.416448
+e1_multi_AND_of_OR_verify,SE-COLLAB [37],2,24.160701
+e1_multi_AND_of_OR_verify,SE-COLLAB [37],4,1.222279
+e1_multi_AND_of_OR_verify,SE-COLLAB [37],8,1.011641
+e1_multi_AND_of_OR_verify,SE-COLLAB [37],16,1.017743
+e1_multi_OR_of_AND_search,AMTP,2,0.075425
+e1_multi_OR_of_AND_search,AMTP,4,0.165564
+e1_multi_OR_of_AND_search,AMTP,8,0.541055
+e1_multi_OR_of_AND_search,AMTP,16,0.839296
+e1_multi_OR_of_AND_search,SE-COLLAB [37],2,0.321251
+e1_multi_OR_of_AND_search,SE-COLLAB [37],4,0.546641
+e1_multi_OR_of_AND_search,SE-COLLAB [37],8,1.00334
+e1_multi_OR_of_AND_search,SE-COLLAB [37],16,1.214553
+e1_multi_OR_of_AND_e2e,AMTP,2,2.586102
+e1_multi_OR_of_AND_e2e,AMTP,4,5.376575
+e1_multi_OR_of_AND_e2e,AMTP,8,16.207441
+e1_multi_OR_of_AND_e2e,AMTP,16,29.216265
+e1_multi_OR_of_AND_e2e,SE-COLLAB [37],2,9.563115
+e1_multi_OR_of_AND_e2e,SE-COLLAB [37],4,9.926295
+e1_multi_OR_of_AND_e2e,SE-COLLAB [37],8,10.822681
+e1_multi_OR_of_AND_e2e,SE-COLLAB [37],16,11.465569
+e1_multi_OR_of_AND_query_gen,AMTP,2,0.290027
+e1_multi_OR_of_AND_query_gen,AMTP,4,0.569512
+e1_multi_OR_of_AND_query_gen,AMTP,8,0.951054
+e1_multi_OR_of_AND_query_gen,AMTP,16,1.666582
+e1_multi_OR_of_AND_query_gen,SE-COLLAB [37],2,3.51678
+e1_multi_OR_of_AND_query_gen,SE-COLLAB [37],4,3.548302
+e1_multi_OR_of_AND_query_gen,SE-COLLAB [37],8,3.618552
+e1_multi_OR_of_AND_query_gen,SE-COLLAB [37],16,3.722212
+e1_multi_OR_of_AND_server,AMTP,2,0.793661
+e1_multi_OR_of_AND_server,AMTP,4,1.731757
+e1_multi_OR_of_AND_server,AMTP,8,5.085089
+e1_multi_OR_of_AND_server,AMTP,16,9.586328
+e1_multi_OR_of_AND_server,SE-COLLAB [37],2,5.04954
+e1_multi_OR_of_AND_server,SE-COLLAB [37],4,5.332615
+e1_multi_OR_of_AND_server,SE-COLLAB [37],8,5.967421
+e1_multi_OR_of_AND_server,SE-COLLAB [37],16,6.383939
+e1_multi_OR_of_AND_verify,AMTP,2,1.502414
+e1_multi_OR_of_AND_verify,AMTP,4,3.075307
+e1_multi_OR_of_AND_verify,AMTP,8,10.171298
+e1_multi_OR_of_AND_verify,AMTP,16,17.963355
+e1_multi_OR_of_AND_verify,SE-COLLAB [37],2,0.996795
+e1_multi_OR_of_AND_verify,SE-COLLAB [37],4,1.045378
+e1_multi_OR_of_AND_verify,SE-COLLAB [37],8,1.236708
+e1_multi_OR_of_AND_verify,SE-COLLAB [37],16,1.359419
+e1_domains_search,AMTP,1,0.030463
+e1_domains_search,AMTP,2,0.051804
+e1_domains_search,AMTP,4,0.09058
+e1_domains_search,AMTP,8,0.163555
+e1_domains_search,AMTP,16,0.30398
+e1_domains_search,AMTP,32,0.580314
+e1_domains_search,SE-COLLAB [37],1,0.816697
+e1_domains_search,SE-COLLAB [37],2,0.526679
+e1_domains_search,SE-COLLAB [37],4,0.340736
+e1_domains_search,SE-COLLAB [37],8,0.220241
+e1_domains_search,SE-COLLAB [37],16,0.138623
+e1_domains_search,SE-COLLAB [37],32,0.183992
+e1_domains_e2e,AMTP,1,0.884466
+e1_domains_e2e,AMTP,2,1.3381
+e1_domains_e2e,AMTP,4,2.160597
+e1_domains_e2e,AMTP,8,3.830646
+e1_domains_e2e,AMTP,16,7.046654
+e1_domains_e2e,AMTP,32,13.414312
+e1_domains_e2e,SE-COLLAB [37],1,9.766899
+e1_domains_e2e,SE-COLLAB [37],2,9.537674
+e1_domains_e2e,SE-COLLAB [37],4,9.381252
+e1_domains_e2e,SE-COLLAB [37],8,9.447775
+e1_domains_e2e,SE-COLLAB [37],16,9.56118
+e1_domains_e2e,SE-COLLAB [37],32,10.046581
+e1_domains_verify,AMTP,1,0.45153
+e1_domains_verify,AMTP,2,0.656582
+e1_domains_verify,AMTP,4,1.011844
+e1_domains_verify,AMTP,8,1.736192
+e1_domains_verify,AMTP,16,3.120225
+e1_domains_verify,AMTP,32,5.793711
+e1_domains_verify,SE-COLLAB [37],1,0.950185
+e1_domains_verify,SE-COLLAB [37],2,0.958589
+e1_domains_verify,SE-COLLAB [37],4,0.962665
+e1_domains_verify,SE-COLLAB [37],8,0.979363
+e1_domains_verify,SE-COLLAB [37],16,0.992906
+e1_domains_verify,SE-COLLAB [37],32,1.038493
+e1_domains_server,AMTP,1,0.281879
+e1_domains_server,AMTP,2,0.439463
+e1_domains_server,AMTP,4,0.741332
+e1_domains_server,AMTP,8,1.338816
+e1_domains_server,AMTP,16,2.502194
+e1_domains_server,AMTP,32,4.821647
+e1_domains_server,SE-COLLAB [37],1,5.404935
+e1_domains_server,SE-COLLAB [37],2,5.141548
+e1_domains_server,SE-COLLAB [37],4,4.978467
+e1_domains_server,SE-COLLAB [37],8,4.961573
+e1_domains_server,SE-COLLAB [37],16,4.996564
+e1_domains_server,SE-COLLAB [37],32,5.283655
+e1_domains_query_gen,AMTP,1,0.151058
+e1_domains_query_gen,AMTP,2,0.242055
+e1_domains_query_gen,AMTP,4,0.407421
+e1_domains_query_gen,AMTP,8,0.755638
+e1_domains_query_gen,AMTP,16,1.424235
+e1_domains_query_gen,AMTP,32,2.798954
+e1_domains_query_gen,SE-COLLAB [37],1,3.411779
+e1_domains_query_gen,SE-COLLAB [37],2,3.437537
+e1_domains_query_gen,SE-COLLAB [37],4,3.44012
+e1_domains_query_gen,SE-COLLAB [37],8,3.506839
+e1_domains_query_gen,SE-COLLAB [37],16,3.57171
+e1_domains_query_gen,SE-COLLAB [37],32,3.724434
+e2_layout_clustered_proof,AMTP,10,0.068894
+e2_layout_clustered_proof,AMTP,100,0.21004
+e2_layout_clustered_proof,AMTP,1000,0.712563
+e2_layout_clustered_proof,AMTP,5000,3.279221
+e2_layout_clustered_proof,SE-COLLAB [37],10,0.180075
+e2_layout_clustered_proof,SE-COLLAB [37],100,0.441951
+e2_layout_clustered_proof,SE-COLLAB [37],1000,3.185594
+e2_layout_clustered_proof,SE-COLLAB [37],5000,15.590254
+e2_layout_dispersed_proof,AMTP,10,0.092182
+e2_layout_dispersed_proof,AMTP,100,0.761921
+e2_layout_dispersed_proof,AMTP,1000,5.693049
+e2_layout_dispersed_proof,AMTP,5000,22.731354
+e2_layout_dispersed_proof,SE-COLLAB [37],10,0.183337
+e2_layout_dispersed_proof,SE-COLLAB [37],100,0.502713
+e2_layout_dispersed_proof,SE-COLLAB [37],1000,3.907318
+e2_layout_dispersed_proof,SE-COLLAB [37],5000,17.503215
+e2_layout_partition_spread_proof,AMTP,10,0.061437
+e2_layout_partition_spread_proof,AMTP,100,0.56063
+e2_layout_partition_spread_proof,AMTP,1000,5.662716
+e2_layout_partition_spread_proof,AMTP,5000,17.685742
+e2_layout_partition_spread_proof,SE-COLLAB [37],10,0.187656
+e2_layout_partition_spread_proof,SE-COLLAB [37],100,0.504202
+e2_layout_partition_spread_proof,SE-COLLAB [37],1000,3.950938
+e2_layout_partition_spread_proof,SE-COLLAB [37],5000,17.361845
+e2_layouts_proof,AMTP (clustered),10,0.068894
+e2_layouts_proof,AMTP (clustered),100,0.21004
+e2_layouts_proof,AMTP (clustered),1000,0.712563
+e2_layouts_proof,AMTP (clustered),5000,3.279221
+e2_layouts_proof,AMTP (dispersed),10,0.092182
+e2_layouts_proof,AMTP (dispersed),100,0.761921
+e2_layouts_proof,AMTP (dispersed),1000,5.693049
+e2_layouts_proof,AMTP (dispersed),5000,22.731354
+e2_layouts_proof,AMTP (partition spread),10,0.061437
+e2_layouts_proof,AMTP (partition spread),100,0.56063
+e2_layouts_proof,AMTP (partition spread),1000,5.662716
+e2_layouts_proof,AMTP (partition spread),5000,17.685742
+e2_layouts_proof,SE-COLLAB [37] (clustered),10,0.180075
+e2_layouts_proof,SE-COLLAB [37] (clustered),100,0.441951
+e2_layouts_proof,SE-COLLAB [37] (clustered),1000,3.185594
+e2_layouts_proof,SE-COLLAB [37] (clustered),5000,15.590254
+e2_layouts_proof,SE-COLLAB [37] (dispersed),10,0.183337
+e2_layouts_proof,SE-COLLAB [37] (dispersed),100,0.502713
+e2_layouts_proof,SE-COLLAB [37] (dispersed),1000,3.907318
+e2_layouts_proof,SE-COLLAB [37] (dispersed),5000,17.503215
+e2_layouts_proof,SE-COLLAB [37] (partition spread),10,0.187656
+e2_layouts_proof,SE-COLLAB [37] (partition spread),100,0.504202
+e2_layouts_proof,SE-COLLAB [37] (partition spread),1000,3.950938
+e2_layouts_proof,SE-COLLAB [37] (partition spread),5000,17.361845
+e2_layout_clustered_verify,AMTP,10,0.46731
+e2_layout_clustered_verify,AMTP,100,2.204678
+e2_layout_clustered_verify,AMTP,1000,16.708404
+e2_layout_clustered_verify,AMTP,5000,84.435056
+e2_layout_clustered_verify,Chen [40],10,0.139318
+e2_layout_clustered_verify,Chen [40],100,0.391243
+e2_layout_clustered_verify,Chen [40],1000,2.945956
+e2_layout_clustered_verify,Chen [40],5000,14.465913
+e2_layout_clustered_verify,SE-COLLAB [37],10,1.094252
+e2_layout_clustered_verify,SE-COLLAB [37],100,2.087808
+e2_layout_clustered_verify,SE-COLLAB [37],1000,11.85587
+e2_layout_clustered_verify,SE-COLLAB [37],5000,55.363905
+e2_layout_clustered_verify,Du [7],10,0.775803
+e2_layout_clustered_verify,Du [7],100,7.313319
+e2_layout_clustered_verify,Du [7],1000,71.141155
+e2_layout_clustered_verify,Du [7],5000,361.347616
+e2_layout_dispersed_verify,AMTP,10,0.554352
+e2_layout_dispersed_verify,AMTP,100,3.959221
+e2_layout_dispersed_verify,AMTP,1000,32.484936
+e2_layout_dispersed_verify,AMTP,5000,129.231729
+e2_layout_dispersed_verify,Chen [40],10,0.310749
+e2_layout_dispersed_verify,Chen [40],100,0.606006
+e2_layout_dispersed_verify,Chen [40],1000,3.390682
+e2_layout_dispersed_verify,Chen [40],5000,15.513823
+e2_layout_dispersed_verify,SE-COLLAB [37],10,1.092035
+e2_layout_dispersed_verify,SE-COLLAB [37],100,2.118665
+e2_layout_dispersed_verify,SE-COLLAB [37],1000,12.565175
+e2_layout_dispersed_verify,SE-COLLAB [37],5000,57.680142
+e2_layout_dispersed_verify,Du [7],10,0.784823
+e2_layout_dispersed_verify,Du [7],100,7.320901
+e2_layout_dispersed_verify,Du [7],1000,73.690722
+e2_layout_dispersed_verify,Du [7],5000,368.522483
+e2_layout_partition_spread_verify,AMTP,10,0.469852
+e2_layout_partition_spread_verify,AMTP,100,3.501717
+e2_layout_partition_spread_verify,AMTP,1000,32.748707
+e2_layout_partition_spread_verify,AMTP,5000,121.390894
+e2_layout_partition_spread_verify,Chen [40],10,0.305353
+e2_layout_partition_spread_verify,Chen [40],100,0.614387
+e2_layout_partition_spread_verify,Chen [40],1000,3.393481
+e2_layout_partition_spread_verify,Chen [40],5000,15.391355
+e2_layout_partition_spread_verify,SE-COLLAB [37],10,1.103677
+e2_layout_partition_spread_verify,SE-COLLAB [37],100,2.112875
+e2_layout_partition_spread_verify,SE-COLLAB [37],1000,12.551465
+e2_layout_partition_spread_verify,SE-COLLAB [37],5000,57.510625
+e2_layout_partition_spread_verify,Du [7],10,0.800814
+e2_layout_partition_spread_verify,Du [7],100,7.279512
+e2_layout_partition_spread_verify,Du [7],1000,73.756814
+e2_layout_partition_spread_verify,Du [7],5000,370.105547
+e2_layouts_verify,AMTP (clustered),10,0.46731
+e2_layouts_verify,AMTP (clustered),100,2.204678
+e2_layouts_verify,AMTP (clustered),1000,16.708404
+e2_layouts_verify,AMTP (clustered),5000,84.435056
+e2_layouts_verify,AMTP (dispersed),10,0.554352
+e2_layouts_verify,AMTP (dispersed),100,3.959221
+e2_layouts_verify,AMTP (dispersed),1000,32.484936
+e2_layouts_verify,AMTP (dispersed),5000,129.231729
+e2_layouts_verify,AMTP (partition spread),10,0.469852
+e2_layouts_verify,AMTP (partition spread),100,3.501717
+e2_layouts_verify,AMTP (partition spread),1000,32.748707
+e2_layouts_verify,AMTP (partition spread),5000,121.390894
+e2_layouts_verify,SE-COLLAB [37] (clustered),10,1.094252
+e2_layouts_verify,SE-COLLAB [37] (clustered),100,2.087808
+e2_layouts_verify,SE-COLLAB [37] (clustered),1000,11.85587
+e2_layouts_verify,SE-COLLAB [37] (clustered),5000,55.363905
+e2_layouts_verify,SE-COLLAB [37] (dispersed),10,1.092035
+e2_layouts_verify,SE-COLLAB [37] (dispersed),100,2.118665
+e2_layouts_verify,SE-COLLAB [37] (dispersed),1000,12.565175
+e2_layouts_verify,SE-COLLAB [37] (dispersed),5000,57.680142
+e2_layouts_verify,SE-COLLAB [37] (partition spread),10,1.103677
+e2_layouts_verify,SE-COLLAB [37] (partition spread),100,2.112875
+e2_layouts_verify,SE-COLLAB [37] (partition spread),1000,12.551465
+e2_layouts_verify,SE-COLLAB [37] (partition spread),5000,57.510625
+e2_layout_clustered_proof_kb,AMTP,10,4.544
+e2_layout_clustered_proof_kb,AMTP,100,12.672
+e2_layout_clustered_proof_kb,AMTP,1000,55.232
+e2_layout_clustered_proof_kb,AMTP,5000,238.784
+e2_layout_clustered_proof_kb,Chen [40],10,0.032
+e2_layout_clustered_proof_kb,Chen [40],100,0.032
+e2_layout_clustered_proof_kb,Chen [40],1000,0.032
+e2_layout_clustered_proof_kb,Chen [40],5000,0.032
+e2_layout_clustered_proof_kb,SE-COLLAB [37],10,5.61
+e2_layout_clustered_proof_kb,SE-COLLAB [37],100,56.1
+e2_layout_clustered_proof_kb,SE-COLLAB [37],1000,561.0
+e2_layout_clustered_proof_kb,SE-COLLAB [37],5000,2805.0
+e2_layout_clustered_proof_kb,Du [7],10,38.4
+e2_layout_clustered_proof_kb,Du [7],100,367.74
+e2_layout_clustered_proof_kb,Du [7],1000,3528.02
+e2_layout_clustered_proof_kb,Du [7],5000,16978.18
+e2_layout_dispersed_proof_kb,AMTP,10,6.208
+e2_layout_dispersed_proof_kb,AMTP,100,43.664
+e2_layout_dispersed_proof_kb,AMTP,1000,320.112
+e2_layout_dispersed_proof_kb,AMTP,5000,1011.6
+e2_layout_dispersed_proof_kb,Chen [40],10,0.032
+e2_layout_dispersed_proof_kb,Chen [40],100,0.032
+e2_layout_dispersed_proof_kb,Chen [40],1000,0.032
+e2_layout_dispersed_proof_kb,Chen [40],5000,0.032
+e2_layout_dispersed_proof_kb,SE-COLLAB [37],10,5.61
+e2_layout_dispersed_proof_kb,SE-COLLAB [37],100,56.1
+e2_layout_dispersed_proof_kb,SE-COLLAB [37],1000,561.0
+e2_layout_dispersed_proof_kb,SE-COLLAB [37],5000,2805.0
+e2_layout_dispersed_proof_kb,Du [7],10,35.78
+e2_layout_dispersed_proof_kb,Du [7],100,380.9
+e2_layout_dispersed_proof_kb,Du [7],1000,3676.08
+e2_layout_dispersed_proof_kb,Du [7],5000,17688.6
+e2_layout_partition_spread_proof_kb,AMTP,10,4.192
+e2_layout_partition_spread_proof_kb,AMTP,100,32.144
+e2_layout_partition_spread_proof_kb,AMTP,1000,312.016
+e2_layout_partition_spread_proof_kb,AMTP,5000,736.688
+e2_layout_partition_spread_proof_kb,Chen [40],10,0.032
+e2_layout_partition_spread_proof_kb,Chen [40],100,0.032
+e2_layout_partition_spread_proof_kb,Chen [40],1000,0.032
+e2_layout_partition_spread_proof_kb,Chen [40],5000,0.032
+e2_layout_partition_spread_proof_kb,SE-COLLAB [37],10,5.61
+e2_layout_partition_spread_proof_kb,SE-COLLAB [37],100,56.1
+e2_layout_partition_spread_proof_kb,SE-COLLAB [37],1000,561.0
+e2_layout_partition_spread_proof_kb,SE-COLLAB [37],5000,2805.0
+e2_layout_partition_spread_proof_kb,Du [7],10,40.56
+e2_layout_partition_spread_proof_kb,Du [7],100,386.62
+e2_layout_partition_spread_proof_kb,Du [7],1000,3685.5
+e2_layout_partition_spread_proof_kb,Du [7],5000,17701.04
+e2_layouts_proof_kb,AMTP (clustered),10,4.544
+e2_layouts_proof_kb,AMTP (clustered),100,12.672
+e2_layouts_proof_kb,AMTP (clustered),1000,55.232
+e2_layouts_proof_kb,AMTP (clustered),5000,238.784
+e2_layouts_proof_kb,AMTP (dispersed),10,6.208
+e2_layouts_proof_kb,AMTP (dispersed),100,43.664
+e2_layouts_proof_kb,AMTP (dispersed),1000,320.112
+e2_layouts_proof_kb,AMTP (dispersed),5000,1011.6
+e2_layouts_proof_kb,AMTP (partition spread),10,4.192
+e2_layouts_proof_kb,AMTP (partition spread),100,32.144
+e2_layouts_proof_kb,AMTP (partition spread),1000,312.016
+e2_layouts_proof_kb,AMTP (partition spread),5000,736.688
+e2_layouts_proof_kb,SE-COLLAB [37] (clustered),10,5.61
+e2_layouts_proof_kb,SE-COLLAB [37] (clustered),100,56.1
+e2_layouts_proof_kb,SE-COLLAB [37] (clustered),1000,561.0
+e2_layouts_proof_kb,SE-COLLAB [37] (clustered),5000,2805.0
+e2_layouts_proof_kb,SE-COLLAB [37] (dispersed),10,5.61
+e2_layouts_proof_kb,SE-COLLAB [37] (dispersed),100,56.1
+e2_layouts_proof_kb,SE-COLLAB [37] (dispersed),1000,561.0
+e2_layouts_proof_kb,SE-COLLAB [37] (dispersed),5000,2805.0
+e2_layouts_proof_kb,SE-COLLAB [37] (partition spread),10,5.61
+e2_layouts_proof_kb,SE-COLLAB [37] (partition spread),100,56.1
+e2_layouts_proof_kb,SE-COLLAB [37] (partition spread),1000,561.0
+e2_layouts_proof_kb,SE-COLLAB [37] (partition spread),5000,2805.0
+e2_layout_clustered_server,AMTP,10,0.182632
+e2_layout_clustered_server,AMTP,100,0.855409
+e2_layout_clustered_server,AMTP,1000,6.697759
+e2_layout_clustered_server,AMTP,5000,33.693844
+e2_layout_clustered_server,Chen [40],10,0.008763
+e2_layout_clustered_server,Chen [40],100,0.008881
+e2_layout_clustered_server,Chen [40],1000,0.010338
+e2_layout_clustered_server,Chen [40],5000,0.013634
+e2_layout_clustered_server,SE-COLLAB [37],10,5.007197
+e2_layout_clustered_server,SE-COLLAB [37],100,5.300076
+e2_layout_clustered_server,SE-COLLAB [37],1000,8.201215
+e2_layout_clustered_server,SE-COLLAB [37],5000,21.123352
+e2_layout_clustered_server,Du [7],10,0.170497
+e2_layout_clustered_server,Du [7],100,0.982279
+e2_layout_clustered_server,Du [7],1000,8.60724
+e2_layout_clustered_server,Du [7],5000,44.175553
+e2_layout_dispersed_server,AMTP,10,0.213201
+e2_layout_dispersed_server,AMTP,100,1.505047
+e2_layout_dispersed_server,AMTP,1000,12.535921
+e2_layout_dispersed_server,AMTP,5000,56.752001
+e2_layout_dispersed_server,Chen [40],10,0.008955
+e2_layout_dispersed_server,Chen [40],100,0.009338
+e2_layout_dispersed_server,Chen [40],1000,0.011076
+e2_layout_dispersed_server,Chen [40],5000,0.015823
+e2_layout_dispersed_server,SE-COLLAB [37],10,5.018849
+e2_layout_dispersed_server,SE-COLLAB [37],100,5.346398
+e2_layout_dispersed_server,SE-COLLAB [37],1000,8.971136
+e2_layout_dispersed_server,SE-COLLAB [37],5000,23.271662
+e2_layout_dispersed_server,Du [7],10,0.899214
+e2_layout_dispersed_server,Du [7],100,6.390458
+e2_layout_dispersed_server,Du [7],1000,50.674454
+e2_layout_dispersed_server,Du [7],5000,186.635385
+e2_layout_partition_spread_server,AMTP,10,0.18919
+e2_layout_partition_spread_server,AMTP,100,1.273809
+e2_layout_partition_spread_server,AMTP,1000,12.562138
+e2_layout_partition_spread_server,AMTP,5000,51.636628
+e2_layout_partition_spread_server,Chen [40],10,0.008781
+e2_layout_partition_spread_server,Chen [40],100,0.009141
+e2_layout_partition_spread_server,Chen [40],1000,0.011048
+e2_layout_partition_spread_server,Chen [40],5000,0.017462
+e2_layout_partition_spread_server,SE-COLLAB [37],10,4.996246
+e2_layout_partition_spread_server,SE-COLLAB [37],100,5.342376
+e2_layout_partition_spread_server,SE-COLLAB [37],1000,9.078916
+e2_layout_partition_spread_server,SE-COLLAB [37],5000,23.167892
+e2_layout_partition_spread_server,Du [7],10,0.793733
+e2_layout_partition_spread_server,Du [7],100,5.776378
+e2_layout_partition_spread_server,Du [7],1000,46.801541
+e2_layout_partition_spread_server,Du [7],5000,148.588719
+e2_layouts_server,AMTP (clustered),10,0.182632
+e2_layouts_server,AMTP (clustered),100,0.855409
+e2_layouts_server,AMTP (clustered),1000,6.697759
+e2_layouts_server,AMTP (clustered),5000,33.693844
+e2_layouts_server,AMTP (dispersed),10,0.213201
+e2_layouts_server,AMTP (dispersed),100,1.505047
+e2_layouts_server,AMTP (dispersed),1000,12.535921
+e2_layouts_server,AMTP (dispersed),5000,56.752001
+e2_layouts_server,AMTP (partition spread),10,0.18919
+e2_layouts_server,AMTP (partition spread),100,1.273809
+e2_layouts_server,AMTP (partition spread),1000,12.562138
+e2_layouts_server,AMTP (partition spread),5000,51.636628
+e2_layouts_server,SE-COLLAB [37] (clustered),10,5.007197
+e2_layouts_server,SE-COLLAB [37] (clustered),100,5.300076
+e2_layouts_server,SE-COLLAB [37] (clustered),1000,8.201215
+e2_layouts_server,SE-COLLAB [37] (clustered),5000,21.123352
+e2_layouts_server,SE-COLLAB [37] (dispersed),10,5.018849
+e2_layouts_server,SE-COLLAB [37] (dispersed),100,5.346398
+e2_layouts_server,SE-COLLAB [37] (dispersed),1000,8.971136
+e2_layouts_server,SE-COLLAB [37] (dispersed),5000,23.271662
+e2_layouts_server,SE-COLLAB [37] (partition spread),10,4.996246
+e2_layouts_server,SE-COLLAB [37] (partition spread),100,5.342376
+e2_layouts_server,SE-COLLAB [37] (partition spread),1000,9.078916
+e2_layouts_server,SE-COLLAB [37] (partition spread),5000,23.167892
+e2_layout_clustered_e2e,AMTP,10,0.687224
+e2_layout_clustered_e2e,AMTP,100,3.110096
+e2_layout_clustered_e2e,AMTP,1000,23.484751
+e2_layout_clustered_e2e,AMTP,5000,118.246772
+e2_layout_clustered_e2e,Chen [40],10,0.30579
+e2_layout_clustered_e2e,Chen [40],100,0.565154
+e2_layout_clustered_e2e,Chen [40],1000,3.177289
+e2_layout_clustered_e2e,Chen [40],5000,14.944362
+e2_layout_clustered_e2e,SE-COLLAB [37],10,9.631147
+e2_layout_clustered_e2e,SE-COLLAB [37],100,10.935757
+e2_layout_clustered_e2e,SE-COLLAB [37],1000,23.612384
+e2_layout_clustered_e2e,SE-COLLAB [37],5000,80.113493
+e2_layout_clustered_e2e,Du [7],10,0.964321
+e2_layout_clustered_e2e,Du [7],100,8.32023
+e2_layout_clustered_e2e,Du [7],1000,79.779784
+e2_layout_clustered_e2e,Du [7],5000,405.563615
+e2_layout_dispersed_e2e,AMTP,10,0.80352
+e2_layout_dispersed_e2e,AMTP,100,5.515491
+e2_layout_dispersed_e2e,AMTP,1000,45.099642
+e2_layout_dispersed_e2e,AMTP,5000,186.113397
+e2_layout_dispersed_e2e,Chen [40],10,0.654187
+e2_layout_dispersed_e2e,Chen [40],100,0.993344
+e2_layout_dispersed_e2e,Chen [40],1000,4.044121
+e2_layout_dispersed_e2e,Chen [40],5000,17.109706
+e2_layout_dispersed_e2e,SE-COLLAB [37],10,9.623034
+e2_layout_dispersed_e2e,SE-COLLAB [37],100,10.99896
+e2_layout_dispersed_e2e,SE-COLLAB [37],1000,25.138723
+e2_layout_dispersed_e2e,SE-COLLAB [37],5000,84.583976
+e2_layout_dispersed_e2e,Du [7],10,1.706072
+e2_layout_dispersed_e2e,Du [7],100,13.737357
+e2_layout_dispersed_e2e,Du [7],1000,124.402947
+e2_layout_dispersed_e2e,Du [7],5000,555.202103
+e2_layout_partition_spread_e2e,AMTP,10,0.694686
+e2_layout_partition_spread_e2e,AMTP,100,4.826207
+e2_layout_partition_spread_e2e,AMTP,1000,45.389971
+e2_layout_partition_spread_e2e,AMTP,5000,173.158971
+e2_layout_partition_spread_e2e,Chen [40],10,0.643397
+e2_layout_partition_spread_e2e,Chen [40],100,1.003365
+e2_layout_partition_spread_e2e,Chen [40],1000,4.051088
+e2_layout_partition_spread_e2e,Chen [40],5000,16.867331
+e2_layout_partition_spread_e2e,SE-COLLAB [37],10,9.598579
+e2_layout_partition_spread_e2e,SE-COLLAB [37],100,10.99225
+e2_layout_partition_spread_e2e,SE-COLLAB [37],1000,25.269547
+e2_layout_partition_spread_e2e,SE-COLLAB [37],5000,84.327013
+e2_layout_partition_spread_e2e,Du [7],10,1.616327
+e2_layout_partition_spread_e2e,Du [7],100,13.081934
+e2_layout_partition_spread_e2e,Du [7],1000,120.597433
+e2_layout_partition_spread_e2e,Du [7],5000,518.739449
+e2_layouts_e2e,AMTP (clustered),10,0.687224
+e2_layouts_e2e,AMTP (clustered),100,3.110096
+e2_layouts_e2e,AMTP (clustered),1000,23.484751
+e2_layouts_e2e,AMTP (clustered),5000,118.246772
+e2_layouts_e2e,AMTP (dispersed),10,0.80352
+e2_layouts_e2e,AMTP (dispersed),100,5.515491
+e2_layouts_e2e,AMTP (dispersed),1000,45.099642
+e2_layouts_e2e,AMTP (dispersed),5000,186.113397
+e2_layouts_e2e,AMTP (partition spread),10,0.694686
+e2_layouts_e2e,AMTP (partition spread),100,4.826207
+e2_layouts_e2e,AMTP (partition spread),1000,45.389971
+e2_layouts_e2e,AMTP (partition spread),5000,173.158971
+e2_layouts_e2e,SE-COLLAB [37] (clustered),10,9.631147
+e2_layouts_e2e,SE-COLLAB [37] (clustered),100,10.935757
+e2_layouts_e2e,SE-COLLAB [37] (clustered),1000,23.612384
+e2_layouts_e2e,SE-COLLAB [37] (clustered),5000,80.113493
+e2_layouts_e2e,SE-COLLAB [37] (dispersed),10,9.623034
+e2_layouts_e2e,SE-COLLAB [37] (dispersed),100,10.99896
+e2_layouts_e2e,SE-COLLAB [37] (dispersed),1000,25.138723
+e2_layouts_e2e,SE-COLLAB [37] (dispersed),5000,84.583976
+e2_layouts_e2e,SE-COLLAB [37] (partition spread),10,9.598579
+e2_layouts_e2e,SE-COLLAB [37] (partition spread),100,10.99225
+e2_layouts_e2e,SE-COLLAB [37] (partition spread),1000,25.269547
+e2_layouts_e2e,SE-COLLAB [37] (partition spread),5000,84.327013
+e2_single_verify_verify,AMTP,10,0.519784
+e2_single_verify_verify,AMTP,100,3.726648
+e2_single_verify_verify,AMTP,1000,29.319195
+e2_single_verify_verify,AMTP,10000,90.599594
+e2_single_verify_verify,Chen [40],10,0.268765
+e2_single_verify_verify,Chen [40],100,0.56722
+e2_single_verify_verify,Chen [40],1000,3.180929
+e2_single_verify_verify,Chen [40],10000,11.075202
+e2_single_verify_verify,SE-COLLAB [37],10,1.036932
+e2_single_verify_verify,SE-COLLAB [37],100,2.023708
+e2_single_verify_verify,SE-COLLAB [37],1000,11.850111
+e2_single_verify_verify,SE-COLLAB [37],10000,40.809961
+e2_single_verify_verify,Du [7],10,0.755741
+e2_single_verify_verify,Du [7],100,6.925725
+e2_single_verify_verify,Du [7],1000,69.326214
+e2_single_verify_verify,Du [7],10000,263.254782
+e2_single_verify_proof_kb,AMTP,10,6.108
+e2_single_verify_proof_kb,AMTP,100,42.3904
+e2_single_verify_proof_kb,AMTP,1000,287.766
+e2_single_verify_proof_kb,AMTP,10000,715.8968
+e2_single_verify_proof_kb,Chen [40],10,0.032
+e2_single_verify_proof_kb,Chen [40],100,0.032
+e2_single_verify_proof_kb,Chen [40],1000,0.032
+e2_single_verify_proof_kb,Chen [40],10000,0.032
+e2_single_verify_proof_kb,SE-COLLAB [37],10,5.61
+e2_single_verify_proof_kb,SE-COLLAB [37],100,56.1
+e2_single_verify_proof_kb,SE-COLLAB [37],1000,556.82055
+e2_single_verify_proof_kb,SE-COLLAB [37],10000,2098.8693
+e2_single_verify_proof_kb,Du [7],10,34.329
+e2_single_verify_proof_kb,Du [7],100,343.175
+e2_single_verify_proof_kb,Du [7],1000,3390.751
+e2_single_verify_proof_kb,Du [7],10000,12367.179
+e2_single_verify_e2e,AMTP,10,0.760981
+e2_single_verify_e2e,AMTP,100,5.215878
+e2_single_verify_e2e,AMTP,1000,42.034464
+e2_single_verify_e2e,AMTP,10000,131.245287
+e2_single_verify_e2e,Chen [40],10,0.563977
+e2_single_verify_e2e,Chen [40],100,0.930642
+e2_single_verify_e2e,Chen [40],1000,3.805308
+e2_single_verify_e2e,Chen [40],10000,12.315545
+e2_single_verify_e2e,SE-COLLAB [37],10,9.111728
+e2_single_verify_e2e,SE-COLLAB [37],100,10.457665
+e2_single_verify_e2e,SE-COLLAB [37],1000,23.70954
+e2_single_verify_e2e,SE-COLLAB [37],10000,61.937338
+e2_single_verify_e2e,Du [7],10,1.509169
+e2_single_verify_e2e,Du [7],100,12.50323
+e2_single_verify_e2e,Du [7],1000,114.550424
+e2_single_verify_e2e,Du [7],10000,387.120759
+e2_single_verify_search,AMTP,10,0.009847
+e2_single_verify_search,AMTP,100,0.036206
+e2_single_verify_search,AMTP,1000,0.373277
+e2_single_verify_search,AMTP,10000,1.703065
+e2_single_verify_search,Chen [40],10,0.008612
+e2_single_verify_search,Chen [40],100,0.008855
+e2_single_verify_search,Chen [40],1000,0.01048
+e2_single_verify_search,Chen [40],10000,0.014182
+e2_single_verify_search,SE-COLLAB [37],10,0.201179
+e2_single_verify_search,SE-COLLAB [37],100,0.219557
+e2_single_verify_search,SE-COLLAB [37],1000,0.238164
+e2_single_verify_search,SE-COLLAB [37],10000,0.23821
+e2_single_verify_search,Du [7],10,0.725534
+e2_single_verify_search,Du [7],100,5.448291
+e2_single_verify_search,Du [7],1000,44.653703
+e2_single_verify_search,Du [7],10000,119.65899
+e2_single_verify_server,AMTP,10,0.205441
+e2_single_verify_server,AMTP,100,1.43657
+e2_single_verify_server,AMTP,1000,12.625266
+e2_single_verify_server,AMTP,10000,40.513775
+e2_single_verify_server,Chen [40],10,0.008612
+e2_single_verify_server,Chen [40],100,0.008855
+e2_single_verify_server,Chen [40],1000,0.01048
+e2_single_verify_server,Chen [40],10000,0.014182
+e2_single_verify_server,SE-COLLAB [37],10,4.73258
+e2_single_verify_server,SE-COLLAB [37],100,5.069123
+e2_single_verify_server,SE-COLLAB [37],1000,8.432033
+e2_single_verify_server,SE-COLLAB [37],10000,17.661538
+e2_single_verify_server,Du [7],10,0.732586
+e2_single_verify_server,Du [7],100,5.551894
+e2_single_verify_server,Du [7],1000,45.180686
+e2_single_verify_server,Du [7],10000,123.816646
+e2_tamper_modify_detection,AMTP,5,100.0
+e2_tamper_modify_detection,AMTP,10,100.0
+e2_tamper_modify_detection,AMTP,20,100.0
+e2_tamper_modify_detection,AMTP,40,100.0
+e2_tamper_modify_detection,AMTP,100,100.0
+e2_tamper_modify_detection,AMTP,1000,100.0
+e2_tamper_modify_detection,SE-COLLAB [37],5,100.0
+e2_tamper_modify_detection,SE-COLLAB [37],10,100.0
+e2_tamper_modify_detection,SE-COLLAB [37],20,100.0
+e2_tamper_modify_detection,SE-COLLAB [37],40,100.0
+e2_tamper_modify_detection,SE-COLLAB [37],100,100.0
+e2_tamper_modify_detection,SE-COLLAB [37],1000,100.0
+e2_tamper_modify_detection,Du [7],5,100.0
+e2_tamper_modify_detection,Du [7],10,100.0
+e2_tamper_modify_detection,Du [7],20,100.0
+e2_tamper_modify_detection,Du [7],40,100.0
+e2_tamper_modify_detection,Du [7],100,100.0
+e2_tamper_modify_detection,Du [7],1000,100.0
+e2_tamper_modify_verify,AMTP,5,36.23943
+e2_tamper_modify_verify,AMTP,10,34.44719
+e2_tamper_modify_verify,AMTP,20,32.691604
+e2_tamper_modify_verify,AMTP,40,32.552077
+e2_tamper_modify_verify,AMTP,100,31.876159
+e2_tamper_modify_verify,AMTP,1000,31.597215
+e2_tamper_modify_verify,SE-COLLAB [37],5,23.725555
+e2_tamper_modify_verify,SE-COLLAB [37],10,23.698219
+e2_tamper_modify_verify,SE-COLLAB [37],20,23.726963
+e2_tamper_modify_verify,SE-COLLAB [37],40,23.732549
+e2_tamper_modify_verify,SE-COLLAB [37],100,23.718341
+e2_tamper_modify_verify,SE-COLLAB [37],1000,23.70464
+e2_tamper_modify_verify,Du [7],5,144.795158
+e2_tamper_modify_verify,Du [7],10,145.575283
+e2_tamper_modify_verify,Du [7],20,145.62661
+e2_tamper_modify_verify,Du [7],40,145.229667
+e2_tamper_modify_verify,Du [7],100,145.429368
+e2_tamper_modify_verify,Du [7],1000,145.160864
+e2_tamper_hide_detection,AMTP,5,100.0
+e2_tamper_hide_detection,AMTP,10,100.0
+e2_tamper_hide_detection,AMTP,20,100.0
+e2_tamper_hide_detection,AMTP,40,100.0
+e2_tamper_hide_detection,AMTP,100,100.0
+e2_tamper_hide_detection,AMTP,1000,100.0
+e2_tamper_hide_detection,Chen [40],5,100.0
+e2_tamper_hide_detection,Chen [40],10,100.0
+e2_tamper_hide_detection,Chen [40],20,100.0
+e2_tamper_hide_detection,Chen [40],40,100.0
+e2_tamper_hide_detection,Chen [40],100,100.0
+e2_tamper_hide_detection,Chen [40],1000,100.0
+e2_tamper_hide_detection,SE-COLLAB [37],5,0.0
+e2_tamper_hide_detection,SE-COLLAB [37],10,0.0
+e2_tamper_hide_detection,SE-COLLAB [37],20,0.0
+e2_tamper_hide_detection,SE-COLLAB [37],40,0.0
+e2_tamper_hide_detection,SE-COLLAB [37],100,0.0
+e2_tamper_hide_detection,SE-COLLAB [37],1000,0.0
+e2_tamper_hide_detection,Du [7],5,100.0
+e2_tamper_hide_detection,Du [7],10,100.0
+e2_tamper_hide_detection,Du [7],20,100.0
+e2_tamper_hide_detection,Du [7],40,100.0
+e2_tamper_hide_detection,Du [7],100,100.0
+e2_tamper_hide_detection,Du [7],1000,100.0
+e2_tamper_hide_verify,AMTP,5,31.085684
+e2_tamper_hide_verify,AMTP,10,31.149673
+e2_tamper_hide_verify,AMTP,20,31.072016
+e2_tamper_hide_verify,AMTP,40,31.122431
+e2_tamper_hide_verify,AMTP,100,31.101941
+e2_tamper_hide_verify,AMTP,1000,30.551898
+e2_tamper_hide_verify,Chen [40],5,6.333965
+e2_tamper_hide_verify,Chen [40],10,6.31831
+e2_tamper_hide_verify,Chen [40],20,6.293428
+e2_tamper_hide_verify,Chen [40],40,6.240325
+e2_tamper_hide_verify,Chen [40],100,6.065667
+e2_tamper_hide_verify,Chen [40],1000,3.478242
+e2_tamper_hide_verify,SE-COLLAB [37],5,23.806112
+e2_tamper_hide_verify,SE-COLLAB [37],10,23.676903
+e2_tamper_hide_verify,SE-COLLAB [37],20,23.567574
+e2_tamper_hide_verify,SE-COLLAB [37],40,23.363485
+e2_tamper_hide_verify,SE-COLLAB [37],100,22.852391
+e2_tamper_hide_verify,SE-COLLAB [37],1000,12.855962
+e2_tamper_hide_verify,Du [7],5,146.350541
+e2_tamper_hide_verify,Du [7],10,146.002968
+e2_tamper_hide_verify,Du [7],20,145.116704
+e2_tamper_hide_verify,Du [7],40,145.855866
+e2_tamper_hide_verify,Du [7],100,144.490134
+e2_tamper_hide_verify,Du [7],1000,132.084821
+e2_tamper_inject_detection,AMTP,5,100.0
+e2_tamper_inject_detection,AMTP,10,100.0
+e2_tamper_inject_detection,AMTP,20,100.0
+e2_tamper_inject_detection,AMTP,40,100.0
+e2_tamper_inject_detection,AMTP,100,100.0
+e2_tamper_inject_detection,AMTP,1000,100.0
+e2_tamper_inject_detection,Chen [40],5,100.0
+e2_tamper_inject_detection,Chen [40],10,100.0
+e2_tamper_inject_detection,Chen [40],20,100.0
+e2_tamper_inject_detection,Chen [40],40,100.0
+e2_tamper_inject_detection,Chen [40],100,100.0
+e2_tamper_inject_detection,Chen [40],1000,100.0
+e2_tamper_inject_detection,SE-COLLAB [37],5,0.0
+e2_tamper_inject_detection,SE-COLLAB [37],10,0.0
+e2_tamper_inject_detection,SE-COLLAB [37],20,0.0
+e2_tamper_inject_detection,SE-COLLAB [37],40,0.0
+e2_tamper_inject_detection,SE-COLLAB [37],100,0.0
+e2_tamper_inject_detection,SE-COLLAB [37],1000,0.0
+e2_tamper_inject_detection,Du [7],5,0.0
+e2_tamper_inject_detection,Du [7],10,0.0
+e2_tamper_inject_detection,Du [7],20,0.0
+e2_tamper_inject_detection,Du [7],40,0.0
+e2_tamper_inject_detection,Du [7],100,0.0
+e2_tamper_inject_detection,Du [7],1000,0.0
+e2_tamper_inject_verify,AMTP,5,31.142994
+e2_tamper_inject_verify,AMTP,10,31.097797
+e2_tamper_inject_verify,AMTP,20,31.198454
+e2_tamper_inject_verify,AMTP,40,30.972854
+e2_tamper_inject_verify,AMTP,100,31.030326
+e2_tamper_inject_verify,AMTP,1000,31.611594
+e2_tamper_inject_verify,Chen [40],5,6.362753
+e2_tamper_inject_verify,Chen [40],10,6.384261
+e2_tamper_inject_verify,Chen [40],20,6.415455
+e2_tamper_inject_verify,Chen [40],40,6.464662
+e2_tamper_inject_verify,Chen [40],100,6.638171
+e2_tamper_inject_verify,Chen [40],1000,9.287507
+e2_tamper_inject_verify,SE-COLLAB [37],5,23.905344
+e2_tamper_inject_verify,SE-COLLAB [37],10,23.956297
+e2_tamper_inject_verify,SE-COLLAB [37],20,24.046071
+e2_tamper_inject_verify,SE-COLLAB [37],40,24.287103
+e2_tamper_inject_verify,SE-COLLAB [37],100,24.966528
+e2_tamper_inject_verify,SE-COLLAB [37],1000,34.977617
+e2_tamper_inject_verify,Du [7],5,145.987124
+e2_tamper_inject_verify,Du [7],10,145.923087
+e2_tamper_inject_verify,Du [7],20,146.064357
+e2_tamper_inject_verify,Du [7],40,145.774146
+e2_tamper_inject_verify,Du [7],100,146.421517
+e2_tamper_inject_verify,Du [7],1000,152.819185
+e2_tamper_old_version_detection,AMTP,5,100.0
+e2_tamper_old_version_detection,AMTP,10,100.0
+e2_tamper_old_version_detection,AMTP,20,100.0
+e2_tamper_old_version_detection,AMTP,40,100.0
+e2_tamper_old_version_detection,AMTP,100,100.0
+e2_tamper_old_version_detection,AMTP,1000,100.0
+e2_tamper_old_version_detection,SE-COLLAB [37],5,100.0
+e2_tamper_old_version_detection,SE-COLLAB [37],10,100.0
+e2_tamper_old_version_detection,SE-COLLAB [37],20,100.0
+e2_tamper_old_version_detection,SE-COLLAB [37],40,100.0
+e2_tamper_old_version_detection,SE-COLLAB [37],100,100.0
+e2_tamper_old_version_detection,SE-COLLAB [37],1000,100.0
+e2_tamper_old_version_detection,Du [7],5,100.0
+e2_tamper_old_version_detection,Du [7],10,100.0
+e2_tamper_old_version_detection,Du [7],20,100.0
+e2_tamper_old_version_detection,Du [7],40,100.0
+e2_tamper_old_version_detection,Du [7],100,100.0
+e2_tamper_old_version_detection,Du [7],1000,100.0
+e2_tamper_old_version_verify,AMTP,5,35.786026
+e2_tamper_old_version_verify,AMTP,10,34.177665
+e2_tamper_old_version_verify,AMTP,20,32.453005
+e2_tamper_old_version_verify,AMTP,40,32.043813
+e2_tamper_old_version_verify,AMTP,100,31.5821
+e2_tamper_old_version_verify,AMTP,1000,31.150176
+e2_tamper_old_version_verify,SE-COLLAB [37],5,23.793431
+e2_tamper_old_version_verify,SE-COLLAB [37],10,23.815818
+e2_tamper_old_version_verify,SE-COLLAB [37],20,23.857228
+e2_tamper_old_version_verify,SE-COLLAB [37],40,23.839259
+e2_tamper_old_version_verify,SE-COLLAB [37],100,23.837226
+e2_tamper_old_version_verify,SE-COLLAB [37],1000,23.904899
+e2_tamper_old_version_verify,Du [7],5,145.634589
+e2_tamper_old_version_verify,Du [7],10,145.062487
+e2_tamper_old_version_verify,Du [7],20,145.461239
+e2_tamper_old_version_verify,Du [7],40,145.556661
+e2_tamper_old_version_verify,Du [7],100,145.371518
+e2_tamper_old_version_verify,Du [7],1000,144.871909
+e2_tamper_false_alarms,AMTP,honest,0.0
+e2_tamper_false_alarms,Chen [40],honest,0.0
+e2_tamper_false_alarms,SE-COLLAB [37],honest,0.0
+e2_tamper_false_alarms,Du [7],honest,0.0
+e2_multi_verify_verify,AMTP,10,0.841439
+e2_multi_verify_verify,AMTP,100,4.379808
+e2_multi_verify_verify,AMTP,1000,34.068675
+e2_multi_verify_verify,AMTP,10000,252.146157
+e2_multi_verify_verify,SE-COLLAB [37],10,1.091038
+e2_multi_verify_verify,SE-COLLAB [37],100,2.179611
+e2_multi_verify_verify,SE-COLLAB [37],1000,12.814853
+e2_multi_verify_verify,SE-COLLAB [37],10000,110.838399
+e2_multi_verify_proof_kb,AMTP,10,9.1168
+e2_multi_verify_proof_kb,AMTP,100,49.536
+e2_multi_verify_proof_kb,AMTP,1000,346.7968
+e2_multi_verify_proof_kb,AMTP,10000,2086.7056
+e2_multi_verify_proof_kb,SE-COLLAB [37],10,5.61
+e2_multi_verify_proof_kb,SE-COLLAB [37],100,56.1
+e2_multi_verify_proof_kb,SE-COLLAB [37],1000,562.3464
+e2_multi_verify_proof_kb,SE-COLLAB [37],10000,5431.7142
+e2_multi_verify_e2e,AMTP,10,1.378371
+e2_multi_verify_e2e,AMTP,100,6.349318
+e2_multi_verify_e2e,AMTP,1000,48.710469
+e2_multi_verify_e2e,AMTP,10000,367.004321
+e2_multi_verify_e2e,SE-COLLAB [37],10,10.094987
+e2_multi_verify_e2e,SE-COLLAB [37],100,11.6565
+e2_multi_verify_e2e,SE-COLLAB [37],1000,26.133142
+e2_multi_verify_e2e,SE-COLLAB [37],10000,158.985308
+e2_multi_verify_search,AMTP,10,0.032262
+e2_multi_verify_search,AMTP,100,0.065804
+e2_multi_verify_search,AMTP,1000,0.402734
+e2_multi_verify_search,AMTP,10000,5.391302
+e2_multi_verify_search,SE-COLLAB [37],10,0.733088
+e2_multi_verify_search,SE-COLLAB [37],100,0.804841
+e2_multi_verify_search,SE-COLLAB [37],1000,0.843047
+e2_multi_verify_search,SE-COLLAB [37],10000,0.919234
+e3_b_update,AMTP insert,1,286.919757
+e3_b_update,AMTP insert,10,1039.147607
+e3_b_update,AMTP insert,100,5260.381918
+e3_b_update,AMTP insert,1000,35039.221629
+e3_b_update,AMTP delete,1,283.58749
+e3_b_update,AMTP delete,10,1085.160847
+e3_b_update,AMTP delete,100,5724.578861
+e3_b_update,AMTP delete,1000,41066.308492
+e3_b_update,Chen [40] insert,1,1.248671
+e3_b_update,Chen [40] insert,10,13.891442
+e3_b_update,Chen [40] insert,100,137.282022
+e3_b_update,Chen [40] insert,1000,1426.210084
+e3_b_update,Chen [40] delete,1,1.348668
+e3_b_update,Chen [40] delete,10,14.963609
+e3_b_update,Chen [40] delete,100,148.382088
+e3_b_update,Chen [40] delete,1000,1523.859589
+e3_b_per_request,AMTP insert,1,286.919757
+e3_b_per_request,AMTP insert,10,103.914761
+e3_b_per_request,AMTP insert,100,52.603819
+e3_b_per_request,AMTP insert,1000,35.039222
+e3_b_per_request,AMTP delete,1,283.58749
+e3_b_per_request,AMTP delete,10,108.516085
+e3_b_per_request,AMTP delete,100,57.245789
+e3_b_per_request,AMTP delete,1000,41.066308
+e3_b_per_request,Chen [40] insert,1,1.248671
+e3_b_per_request,Chen [40] insert,10,1.389144
+e3_b_per_request,Chen [40] insert,100,1.37282
+e3_b_per_request,Chen [40] insert,1000,1.42621
+e3_b_per_request,Chen [40] delete,1,1.348668
+e3_b_per_request,Chen [40] delete,10,1.496361
+e3_b_per_request,Chen [40] delete,100,1.483821
+e3_b_per_request,Chen [40] delete,1000,1.52386
+e3_b_throughput,AMTP insert,1,3.485295
+e3_b_throughput,AMTP insert,10,9.623272
+e3_b_throughput,AMTP insert,100,19.010027
+e3_b_throughput,AMTP insert,1000,28.539447
+e3_b_throughput,AMTP delete,1,3.526249
+e3_b_throughput,AMTP delete,10,9.215224
+e3_b_throughput,AMTP delete,100,17.468534
+e3_b_throughput,AMTP delete,1000,24.350862
+e3_b_throughput,Chen [40] insert,1,800.851273
+e3_b_throughput,Chen [40] insert,10,719.867661
+e3_b_throughput,Chen [40] insert,100,728.427501
+e3_b_throughput,Chen [40] insert,1000,701.158975
+e3_b_throughput,Chen [40] delete,1,741.472437
+e3_b_throughput,Chen [40] delete,10,668.287969
+e3_b_throughput,Chen [40] delete,100,673.935792
+e3_b_throughput,Chen [40] delete,1000,656.22844
+e3_b_breakdown_insert,protocol (no anchor),1,144.569517
+e3_b_breakdown_insert,protocol (no anchor),10,896.773765
+e3_b_breakdown_insert,protocol (no anchor),100,5117.372887
+e3_b_breakdown_insert,protocol (no anchor),1000,34896.291592
+e3_b_breakdown_insert,CS prepare,1,75.853429
+e3_b_breakdown_insert,CS prepare,10,426.629565
+e3_b_breakdown_insert,CS prepare,100,2093.346095
+e3_b_breakdown_insert,CS prepare,1000,13197.612311
+e3_b_breakdown_insert,DO validation,1,60.00918
+e3_b_breakdown_insert,DO validation,10,384.187927
+e3_b_breakdown_insert,DO validation,100,2170.974528
+e3_b_breakdown_insert,DO validation,1000,13174.110851
+e3_b_breakdown_insert,ABS sign + 2 verify,1,21.56288
+e3_b_breakdown_insert,ABS sign + 2 verify,10,212.705314
+e3_b_breakdown_insert,ABS sign + 2 verify,100,2118.746035
+e3_b_breakdown_insert,ABS sign + 2 verify,1000,21174.323302
+e3_b_breakdown_insert,posting repair,1,25.762417
+e3_b_breakdown_insert,posting repair,10,160.626567
+e3_b_breakdown_insert,posting repair,100,747.99932
+e3_b_breakdown_insert,posting repair,1000,3293.388918
+e3_b_breakdown_insert,auth-tree maintenance,1,14.220906
+e3_b_breakdown_insert,auth-tree maintenance,10,75.615693
+e3_b_breakdown_insert,auth-tree maintenance,100,288.225821
+e3_b_breakdown_insert,auth-tree maintenance,1000,1783.442161
+e3_b_breakdown_insert,anchor (local EVM),1,142.35024
+e3_b_breakdown_insert,anchor (local EVM),10,142.373842
+e3_b_breakdown_insert,anchor (local EVM),100,143.009032
+e3_b_breakdown_insert,anchor (local EVM),1000,142.930036
+e3_b_breakdown_delete,protocol (no anchor),1,140.872793
+e3_b_breakdown_delete,protocol (no anchor),10,943.350014
+e3_b_breakdown_delete,protocol (no anchor),100,5580.657078
+e3_b_breakdown_delete,protocol (no anchor),1000,40922.792426
+e3_b_breakdown_delete,CS prepare,1,72.692536
+e3_b_breakdown_delete,CS prepare,10,477.063377
+e3_b_breakdown_delete,CS prepare,100,2576.462723
+e3_b_breakdown_delete,CS prepare,1000,19442.693277
+e3_b_breakdown_delete,DO validation,1,59.557878
+e3_b_breakdown_delete,DO validation,10,382.027269
+e3_b_breakdown_delete,DO validation,100,2163.703151
+e3_b_breakdown_delete,DO validation,1000,13114.009832
+e3_b_breakdown_delete,ABS sign + 2 verify,1,21.572832
+e3_b_breakdown_delete,ABS sign + 2 verify,10,212.881698
+e3_b_breakdown_delete,ABS sign + 2 verify,100,2121.527379
+e3_b_breakdown_delete,ABS sign + 2 verify,1000,21169.136441
+e3_b_breakdown_delete,posting repair,1,23.306014
+e3_b_breakdown_delete,posting repair,10,159.90155
+e3_b_breakdown_delete,posting repair,100,740.526154
+e3_b_breakdown_delete,posting repair,1000,3251.73766
+e3_b_breakdown_delete,auth-tree maintenance,1,17.597087
+e3_b_breakdown_delete,auth-tree maintenance,10,129.044828
+e3_b_breakdown_delete,auth-tree maintenance,100,803.28942
+e3_b_breakdown_delete,auth-tree maintenance,1000,8252.804695
+e3_b_breakdown_delete,anchor (local EVM),1,142.714697
+e3_b_breakdown_delete,anchor (local EVM),10,141.810834
+e3_b_breakdown_delete,anchor (local EVM),100,143.921783
+e3_b_breakdown_delete,anchor (local EVM),1000,143.516066
+e3_n_update,AMTP insert,10000,3501.028086
+e3_n_update,AMTP insert,25000,3929.63487
+e3_n_update,AMTP insert,50000,4140.934552
+e3_n_update,AMTP insert,75000,4791.18297
+e3_n_update,AMTP insert,100000,5365.691938
+e3_n_update,AMTP insert,125000,5272.307811
+e3_n_update,AMTP delete,10000,3554.078322
+e3_n_update,AMTP delete,25000,4075.151495
+e3_n_update,AMTP delete,50000,4404.652132
+e3_n_update,AMTP delete,75000,5160.633822
+e3_n_update,AMTP delete,100000,5839.999389
+e3_n_update,AMTP delete,125000,5841.711998
+e3_n_update,Chen [40] insert,10000,54.228498
+e3_n_update,Chen [40] insert,25000,68.670163
+e3_n_update,Chen [40] insert,50000,92.325189
+e3_n_update,Chen [40] insert,75000,115.827778
+e3_n_update,Chen [40] insert,100000,138.882166
+e3_n_update,Chen [40] insert,125000,164.060207
+e3_n_update,Chen [40] delete,10000,55.150356
+e3_n_update,Chen [40] delete,25000,71.026229
+e3_n_update,Chen [40] delete,50000,96.437342
+e3_n_update,Chen [40] delete,75000,121.040055
+e3_n_update,Chen [40] delete,100000,144.83819
+e3_n_update,Chen [40] delete,125000,174.824436
+e3_n_per_request,AMTP insert,10000,35.010281
+e3_n_per_request,AMTP insert,25000,39.296349
+e3_n_per_request,AMTP insert,50000,41.409346
+e3_n_per_request,AMTP insert,75000,47.91183
+e3_n_per_request,AMTP insert,100000,53.656919
+e3_n_per_request,AMTP insert,125000,52.723078
+e3_n_per_request,AMTP delete,10000,35.540783
+e3_n_per_request,AMTP delete,25000,40.751515
+e3_n_per_request,AMTP delete,50000,44.046521
+e3_n_per_request,AMTP delete,75000,51.606338
+e3_n_per_request,AMTP delete,100000,58.399994
+e3_n_per_request,AMTP delete,125000,58.41712
+e3_n_per_request,Chen [40] insert,10000,0.542285
+e3_n_per_request,Chen [40] insert,25000,0.686702
+e3_n_per_request,Chen [40] insert,50000,0.923252
+e3_n_per_request,Chen [40] insert,75000,1.158278
+e3_n_per_request,Chen [40] insert,100000,1.388822
+e3_n_per_request,Chen [40] insert,125000,1.640602
+e3_n_per_request,Chen [40] delete,10000,0.551504
+e3_n_per_request,Chen [40] delete,25000,0.710262
+e3_n_per_request,Chen [40] delete,50000,0.964373
+e3_n_per_request,Chen [40] delete,75000,1.210401
+e3_n_per_request,Chen [40] delete,100000,1.448382
+e3_n_per_request,Chen [40] delete,125000,1.748244
+e3_n_throughput,AMTP insert,10000,28.563038
+e3_n_throughput,AMTP insert,25000,25.447657
+e3_n_throughput,AMTP insert,50000,24.149138
+e3_n_throughput,AMTP insert,75000,20.871672
+e3_n_throughput,AMTP insert,100000,18.636925
+e3_n_throughput,AMTP insert,125000,18.967026
+e3_n_throughput,AMTP delete,10000,28.13669
+e3_n_throughput,AMTP delete,25000,24.538965
+e3_n_throughput,AMTP delete,50000,22.703268
+e3_n_throughput,AMTP delete,75000,19.377465
+e3_n_throughput,AMTP delete,100000,17.123289
+e3_n_throughput,AMTP delete,125000,17.118269
+e3_n_throughput,Chen [40] insert,10000,1844.048848
+e3_n_throughput,Chen [40] insert,25000,1456.236538
+e3_n_throughput,Chen [40] insert,50000,1083.128024
+e3_n_throughput,Chen [40] insert,75000,863.350758
+e3_n_throughput,Chen [40] insert,100000,720.034855
+e3_n_throughput,Chen [40] insert,125000,609.53233
+e3_n_throughput,Chen [40] delete,10000,1813.224916
+e3_n_throughput,Chen [40] delete,25000,1407.930587
+e3_n_throughput,Chen [40] delete,50000,1036.94272
+e3_n_throughput,Chen [40] delete,75000,826.172787
+e3_n_throughput,Chen [40] delete,100000,690.42564
+e3_n_throughput,Chen [40] delete,125000,572.002416
+e3_n_breakdown_insert,protocol (no anchor),10000,3357.468287
+e3_n_breakdown_insert,protocol (no anchor),25000,3785.334495
+e3_n_breakdown_insert,protocol (no anchor),50000,3997.48382
+e3_n_breakdown_insert,protocol (no anchor),75000,4646.86235
+e3_n_breakdown_insert,protocol (no anchor),100000,5221.825121
+e3_n_breakdown_insert,protocol (no anchor),125000,5127.510742
+e3_n_breakdown_insert,CS prepare,10000,1234.438837
+e3_n_breakdown_insert,CS prepare,25000,1450.448749
+e3_n_breakdown_insert,CS prepare,50000,1558.241711
+e3_n_breakdown_insert,CS prepare,75000,1863.997879
+e3_n_breakdown_insert,CS prepare,100000,2149.224937
+e3_n_breakdown_insert,CS prepare,125000,2078.29749
+e3_n_breakdown_insert,DO validation,10000,1274.320495
+e3_n_breakdown_insert,DO validation,25000,1483.89445
+e3_n_breakdown_insert,DO validation,50000,1587.362222
+e3_n_breakdown_insert,DO validation,75000,1929.86738
+e3_n_breakdown_insert,DO validation,100000,2219.73046
+e3_n_breakdown_insert,DO validation,125000,2196.17842
+e3_n_breakdown_insert,ABS sign + 2 verify,10000,2114.42808
+e3_n_breakdown_insert,ABS sign + 2 verify,25000,2118.264596
+e3_n_breakdown_insert,ABS sign + 2 verify,50000,2120.640695
+e3_n_breakdown_insert,ABS sign + 2 verify,75000,2121.185675
+e3_n_breakdown_insert,ABS sign + 2 verify,100000,2119.740947
+e3_n_breakdown_insert,ABS sign + 2 verify,125000,2118.053945
+e3_n_breakdown_insert,posting repair,10000,300.601548
+e3_n_breakdown_insert,posting repair,25000,401.89631
+e3_n_breakdown_insert,posting repair,50000,450.883186
+e3_n_breakdown_insert,posting repair,75000,620.5068
+e3_n_breakdown_insert,posting repair,100000,769.950652
+e3_n_breakdown_insert,posting repair,125000,739.137403
+e3_n_breakdown_insert,auth-tree maintenance,10000,123.041646
+e3_n_breakdown_insert,auth-tree maintenance,25000,176.077199
+e3_n_breakdown_insert,auth-tree maintenance,50000,199.140131
+e3_n_breakdown_insert,auth-tree maintenance,75000,252.552313
+e3_n_breakdown_insert,auth-tree maintenance,100000,304.043499
+e3_n_breakdown_insert,auth-tree maintenance,125000,291.837894
+e3_n_breakdown_insert,anchor (local EVM),10000,143.559799
+e3_n_breakdown_insert,anchor (local EVM),25000,144.300375
+e3_n_breakdown_insert,anchor (local EVM),50000,143.450731
+e3_n_breakdown_insert,anchor (local EVM),75000,144.32062
+e3_n_breakdown_insert,anchor (local EVM),100000,143.866817
+e3_n_breakdown_insert,anchor (local EVM),125000,144.79707
+e3_n_breakdown_delete,protocol (no anchor),10000,3410.814295
+e3_n_breakdown_delete,protocol (no anchor),25000,3931.11762
+e3_n_breakdown_delete,protocol (no anchor),50000,4260.609589
+e3_n_breakdown_delete,protocol (no anchor),75000,5015.97461
+e3_n_breakdown_delete,protocol (no anchor),100000,5695.898265
+e3_n_breakdown_delete,protocol (no anchor),125000,5698.315713
+e3_n_breakdown_delete,CS prepare,10000,1310.902813
+e3_n_breakdown_delete,CS prepare,25000,1612.76998
+e3_n_breakdown_delete,CS prepare,50000,1842.748917
+e3_n_breakdown_delete,CS prepare,75000,2253.265018
+e3_n_breakdown_delete,CS prepare,100000,2639.428721
+e3_n_breakdown_delete,CS prepare,125000,2663.594948
+e3_n_breakdown_delete,DO validation,10000,1264.81297
+e3_n_breakdown_delete,DO validation,25000,1482.682182
+e3_n_breakdown_delete,DO validation,50000,1581.444653
+e3_n_breakdown_delete,DO validation,75000,1925.042704
+e3_n_breakdown_delete,DO validation,100000,2218.700025
+e3_n_breakdown_delete,DO validation,125000,2196.478032
+e3_n_breakdown_delete,ABS sign + 2 verify,10000,2114.076397
+e3_n_breakdown_delete,ABS sign + 2 verify,25000,2117.39097
+e3_n_breakdown_delete,ABS sign + 2 verify,50000,2119.101036
+e3_n_breakdown_delete,ABS sign + 2 verify,75000,2122.026955
+e3_n_breakdown_delete,ABS sign + 2 verify,100000,2119.80244
+e3_n_breakdown_delete,ABS sign + 2 verify,125000,2120.014009
+e3_n_breakdown_delete,posting repair,10000,296.688461
+e3_n_breakdown_delete,posting repair,25000,395.530178
+e3_n_breakdown_delete,posting repair,50000,446.515564
+e3_n_breakdown_delete,posting repair,75000,616.276585
+e3_n_breakdown_delete,posting repair,100000,768.046143
+e3_n_breakdown_delete,posting repair,125000,742.811234
+e3_n_breakdown_delete,auth-tree maintenance,10000,219.351558
+e3_n_breakdown_delete,auth-tree maintenance,25000,359.989248
+e3_n_breakdown_delete,auth-tree maintenance,50000,506.587208
+e3_n_breakdown_delete,auth-tree maintenance,75000,667.637033
+e3_n_breakdown_delete,auth-tree maintenance,100000,817.66476
+e3_n_breakdown_delete,auth-tree maintenance,125000,895.402236
+e3_n_breakdown_delete,anchor (local EVM),10000,143.264027
+e3_n_breakdown_delete,anchor (local EVM),25000,144.033876
+e3_n_breakdown_delete,anchor (local EVM),50000,144.042544
+e3_n_breakdown_delete,anchor (local EVM),75000,144.659212
+e3_n_breakdown_delete,anchor (local EVM),100000,144.101124
+e3_n_breakdown_delete,anchor (local EVM),125000,143.396285
+e4_update_insert,AMTP,0.0,682.858385
+e4_update_insert,AMTP,0.25,650.558655
+e4_update_insert,AMTP,0.5,694.355022
+e4_update_insert,AMTP,0.75,614.7678
+e4_update_insert,AMTP,0.95,442.570467
+e4_update_insert,Static-MT,0.0,2485.618511
+e4_update_insert,Static-MT,0.25,2492.500287
+e4_update_insert,Static-MT,0.5,2826.994384
+e4_update_insert,Static-MT,0.75,2875.81332
+e4_update_insert,Static-MT,0.95,3054.160257
+e4_update_insert,Global-MT(v),0.0,6780.406575
+e4_update_insert,Global-MT(v),0.25,6587.989098
+e4_update_insert,Global-MT(v),0.5,7011.182455
+e4_update_insert,Global-MT(v),0.75,6819.793457
+e4_update_insert,Global-MT(v),0.95,7006.779425
+e4_update_insert,AMTP (full protocol),0.0,4194.213158
+e4_update_insert,AMTP (full protocol),0.25,4067.722012
+e4_update_insert,AMTP (full protocol),0.5,4208.461751
+e4_update_insert,AMTP (full protocol),0.75,4002.187578
+e4_update_insert,AMTP (full protocol),0.95,3690.795806
+e4_update_delete,AMTP,0.0,1318.991247
+e4_update_delete,AMTP,0.25,1753.927948
+e4_update_delete,AMTP,0.5,1998.43626
+e4_update_delete,AMTP,0.75,1998.791868
+e4_update_delete,AMTP,0.95,2064.924488
+e4_update_delete,Static-MT,0.0,1263.227078
+e4_update_delete,Static-MT,0.25,2160.059174
+e4_update_delete,Static-MT,0.5,3233.32332
+e4_update_delete,Static-MT,0.75,3906.232523
+e4_update_delete,Static-MT,0.95,4530.713686
+e4_update_delete,Global-MT(v),0.0,9224.75269
+e4_update_delete,Global-MT(v),0.25,8703.738336
+e4_update_delete,Global-MT(v),0.5,8879.026995
+e4_update_delete,Global-MT(v),0.75,8416.181251
+e4_update_delete,Global-MT(v),0.95,8322.637479
+e4_update_delete,AMTP (full protocol),0.0,5347.877062
+e4_update_delete,AMTP (full protocol),0.25,6649.552704
+e4_update_delete,AMTP (full protocol),0.5,7391.288031
+e4_update_delete,AMTP (full protocol),0.75,7437.595464
+e4_update_delete,AMTP (full protocol),0.95,7928.037469
+e4_restructure,AMTP,0.0,8.240551
+e4_restructure,AMTP,0.25,7.321952
+e4_restructure,AMTP,0.5,8.673613
+e4_restructure,AMTP,0.75,8.431082
+e4_restructure,AMTP,0.95,8.278537
+e4_restructure,AMTP (full protocol),0.0,12.677026
+e4_restructure,AMTP (full protocol),0.25,11.737026
+e4_restructure,AMTP (full protocol),0.5,13.582776
+e4_restructure,AMTP (full protocol),0.75,14.493722
+e4_restructure,AMTP (full protocol),0.95,14.305279
+e4_splits_merges,AMTP,0.0,281.6
+e4_splits_merges,AMTP,0.25,287.2
+e4_splits_merges,AMTP,0.5,302.7
+e4_splits_merges,AMTP,0.75,334.4
+e4_splits_merges,AMTP,0.95,375.8
+e4_max_partition,AMTP,0.0,64.0
+e4_max_partition,AMTP,0.25,64.0
+e4_max_partition,AMTP,0.5,64.0
+e4_max_partition,AMTP,0.75,64.0
+e4_max_partition,AMTP,0.95,64.0
+e4_max_partition,Static-MT,0.0,3209.0
+e4_max_partition,Static-MT,0.25,2491.8
+e4_max_partition,Static-MT,0.5,4546.7
+e4_max_partition,Static-MT,0.75,6587.5
+e4_max_partition,Static-MT,0.95,8205.7
+e4_max_partition,Global-MT(v),0.0,47861.0
+e4_max_partition,Global-MT(v),0.25,44081.3
+e4_max_partition,Global-MT(v),0.5,40268.8
+e4_max_partition,Global-MT(v),0.75,36462.9
+e4_max_partition,Global-MT(v),0.95,33466.4
+e4_max_partition,AMTP (full protocol),0.0,64.0
+e4_max_partition,AMTP (full protocol),0.25,64.0
+e4_max_partition,AMTP (full protocol),0.5,64.0
+e4_max_partition,AMTP (full protocol),0.75,64.0
+e4_max_partition,AMTP (full protocol),0.95,64.0
+e4_query_server,AMTP,0.0,2.7968
+e4_query_server,AMTP,0.25,2.499546
+e4_query_server,AMTP,0.5,2.491205
+e4_query_server,AMTP,0.75,2.209244
+e4_query_server,AMTP,0.95,2.101922
+e4_query_server,Static-MT,0.0,2.566198
+e4_query_server,Static-MT,0.25,2.312851
+e4_query_server,Static-MT,0.5,2.374979
+e4_query_server,Static-MT,0.75,2.064682
+e4_query_server,Static-MT,0.95,1.947457
+e4_query_server,Global-MT(v),0.0,1.838712
+e4_query_server,Global-MT(v),0.25,1.673245
+e4_query_server,Global-MT(v),0.5,1.68161
+e4_query_server,Global-MT(v),0.75,1.489842
+e4_query_server,Global-MT(v),0.95,1.40163
+e4_query_verify,AMTP,0.0,6.02362
+e4_query_verify,AMTP,0.25,5.45846
+e4_query_verify,AMTP,0.5,5.19696
+e4_query_verify,AMTP,0.75,4.74458
+e4_query_verify,AMTP,0.95,4.83824
+e4_query_verify,Static-MT,0.0,5.21362
+e4_query_verify,Static-MT,0.25,4.85084
+e4_query_verify,Static-MT,0.5,4.71686
+e4_query_verify,Static-MT,0.75,4.30932
+e4_query_verify,Static-MT,0.95,4.25282
+e4_query_verify,Global-MT(v),0.0,3.2515
+e4_query_verify,Global-MT(v),0.25,2.99214
+e4_query_verify,Global-MT(v),0.5,2.84276
+e4_query_verify,Global-MT(v),0.75,2.62386
+e4_query_verify,Global-MT(v),0.95,2.62264
+e4_proof_kb,AMTP,0.0,78.662112
+e4_proof_kb,AMTP,0.25,73.56104
+e4_proof_kb,AMTP,0.5,68.369712
+e4_proof_kb,AMTP,0.75,63.43608
+e4_proof_kb,AMTP,0.95,59.732608
+e4_proof_kb,Static-MT,0.0,73.990528
+e4_proof_kb,Static-MT,0.25,69.711408
+e4_proof_kb,Static-MT,0.5,65.003696
+e4_proof_kb,Static-MT,0.75,60.402928
+e4_proof_kb,Static-MT,0.95,56.466496
+e4_proof_kb,Global-MT(v),0.0,63.990848
+e4_proof_kb,Global-MT(v),0.25,59.874416
+e4_proof_kb,Global-MT(v),0.5,55.474496
+e4_proof_kb,Global-MT(v),0.75,51.060304
+e4_proof_kb,Global-MT(v),0.95,47.412096
+e4_batches_skew0.95,AMTP,0,403.00861
+e4_batches_skew0.95,AMTP,1,424.34892
+e4_batches_skew0.95,AMTP,2,438.75764
+e4_batches_skew0.95,AMTP,3,398.60668
+e4_batches_skew0.95,AMTP,4,418.89369
+e4_batches_skew0.95,AMTP,5,429.79016
+e4_batches_skew0.95,AMTP,6,313.19463
+e4_batches_skew0.95,AMTP,7,403.54149
+e4_batches_skew0.95,AMTP,8,311.3686
+e4_batches_skew0.95,AMTP,9,396.55602
+e4_batches_skew0.95,AMTP,10,330.54665
+e4_batches_skew0.95,AMTP,11,398.48073
+e4_batches_skew0.95,AMTP,12,334.671
+e4_batches_skew0.95,AMTP,13,374.8472
+e4_batches_skew0.95,AMTP,14,347.64937
+e4_batches_skew0.95,AMTP,15,388.53538
+e4_batches_skew0.95,AMTP,16,362.44486
+e4_batches_skew0.95,AMTP,17,361.24178
+e4_batches_skew0.95,AMTP,18,348.55004
+e4_batches_skew0.95,AMTP,19,384.91861
+e4_batches_skew0.95,AMTP,20,370.37553
+e4_batches_skew0.95,AMTP,21,368.33997
+e4_batches_skew0.95,AMTP,22,348.57113
+e4_batches_skew0.95,AMTP,23,383.47237
+e4_batches_skew0.95,AMTP,24,325.93226
+e4_batches_skew0.95,AMTP,25,1498.54884
+e4_batches_skew0.95,AMTP,26,371.73341
+e4_batches_skew0.95,AMTP,27,375.24535
+e4_batches_skew0.95,AMTP,28,381.79193
+e4_batches_skew0.95,AMTP,29,386.38291
+e4_batches_skew0.95,AMTP,30,381.79597
+e4_batches_skew0.95,AMTP,31,387.1972
+e4_batches_skew0.95,AMTP,32,379.11728
+e4_batches_skew0.95,AMTP,33,367.45553
+e4_batches_skew0.95,AMTP,34,386.60479
+e4_batches_skew0.95,AMTP,35,380.01666
+e4_batches_skew0.95,AMTP,36,406.05563
+e4_batches_skew0.95,AMTP,37,376.48175
+e4_batches_skew0.95,AMTP,38,405.35003
+e4_batches_skew0.95,AMTP,39,390.42203
+e4_batches_skew0.95,AMTP,40,402.94661
+e4_batches_skew0.95,AMTP,41,360.67066
+e4_batches_skew0.95,AMTP,42,420.28675
+e4_batches_skew0.95,AMTP,43,347.43631
+e4_batches_skew0.95,AMTP,44,424.45528
+e4_batches_skew0.95,AMTP,45,353.39081
+e4_batches_skew0.95,AMTP,46,415.26422
+e4_batches_skew0.95,AMTP,47,359.6175
+e4_batches_skew0.95,AMTP,48,389.6657
+e4_batches_skew0.95,AMTP,49,393.62714
+e4_batches_skew0.95,AMTP,50,429.96145
+e4_batches_skew0.95,AMTP,51,367.94292
+e4_batches_skew0.95,AMTP,52,411.94873
+e4_batches_skew0.95,AMTP,53,355.9042
+e4_batches_skew0.95,AMTP,54,391.72262
+e4_batches_skew0.95,AMTP,55,380.30416
+e4_batches_skew0.95,AMTP,56,425.92916
+e4_batches_skew0.95,AMTP,57,381.52719
+e4_batches_skew0.95,AMTP,58,380.99215
+e4_batches_skew0.95,AMTP,59,383.41436
+e4_batches_skew0.95,AMTP,60,412.24111
+e4_batches_skew0.95,AMTP,61,393.98878
+e4_batches_skew0.95,AMTP,62,409.66611
+e4_batches_skew0.95,AMTP,63,386.15806
+e4_batches_skew0.95,AMTP,64,418.95184
+e4_batches_skew0.95,AMTP,65,396.04963
+e4_batches_skew0.95,AMTP,66,413.31194
+e4_batches_skew0.95,AMTP,67,408.24004
+e4_batches_skew0.95,AMTP,68,398.13386
+e4_batches_skew0.95,AMTP,69,379.04963
+e4_batches_skew0.95,AMTP,70,403.88426
+e4_batches_skew0.95,AMTP,71,424.57008
+e4_batches_skew0.95,AMTP,72,394.74674
+e4_batches_skew0.95,AMTP,73,391.449
+e4_batches_skew0.95,AMTP,74,416.16854
+e4_batches_skew0.95,AMTP,75,392.49122
+e4_batches_skew0.95,AMTP,76,390.81034
+e4_batches_skew0.95,AMTP,77,409.89338
+e4_batches_skew0.95,AMTP,78,392.39618
+e4_batches_skew0.95,AMTP,79,438.19207
+e4_batches_skew0.95,AMTP,80,393.85905
+e4_batches_skew0.95,AMTP,81,444.38814
+e4_batches_skew0.95,AMTP,82,384.02264
+e4_batches_skew0.95,AMTP,83,433.59206
+e4_batches_skew0.95,AMTP,84,404.00759
+e4_batches_skew0.95,AMTP,85,423.72401
+e4_batches_skew0.95,AMTP,86,395.2827
+e4_batches_skew0.95,AMTP,87,415.09884
+e4_batches_skew0.95,AMTP,88,384.65647
+e4_batches_skew0.95,AMTP,89,438.44655
+e4_batches_skew0.95,AMTP,90,415.0429
+e4_batches_skew0.95,AMTP,91,433.22657
+e4_batches_skew0.95,AMTP,92,384.40452
+e4_batches_skew0.95,AMTP,93,461.82483
+e4_batches_skew0.95,AMTP,94,355.52862
+e4_batches_skew0.95,AMTP,95,441.58251
+e4_batches_skew0.95,AMTP,96,397.70033
+e4_batches_skew0.95,AMTP,97,451.63405
+e4_batches_skew0.95,AMTP,98,360.78596
+e4_batches_skew0.95,AMTP,99,471.23837
+e4_batches_skew0.95,AMTP,100,387.73469
+e4_batches_skew0.95,AMTP,101,461.9155
+e4_batches_skew0.95,AMTP,102,393.69618
+e4_batches_skew0.95,AMTP,103,457.99168
+e4_batches_skew0.95,AMTP,104,385.79511
+e4_batches_skew0.95,AMTP,105,436.23511
+e4_batches_skew0.95,AMTP,106,403.60714
+e4_batches_skew0.95,AMTP,107,460.00728
+e4_batches_skew0.95,AMTP,108,410.05636
+e4_batches_skew0.95,AMTP,109,462.73292
+e4_batches_skew0.95,AMTP,110,400.45868
+e4_batches_skew0.95,AMTP,111,451.25379
+e4_batches_skew0.95,AMTP,112,407.53373
+e4_batches_skew0.95,AMTP,113,435.54695
+e4_batches_skew0.95,AMTP,114,397.78578
+e4_batches_skew0.95,AMTP,115,472.21382
+e4_batches_skew0.95,AMTP,116,408.86286
+e4_batches_skew0.95,AMTP,117,449.75727
+e4_batches_skew0.95,AMTP,118,414.80377
+e4_batches_skew0.95,AMTP,119,448.07718
+e4_batches_skew0.95,AMTP,120,404.23813
+e4_batches_skew0.95,AMTP,121,455.24875
+e4_batches_skew0.95,AMTP,122,406.22884
+e4_batches_skew0.95,AMTP,123,441.49757
+e4_batches_skew0.95,AMTP,124,420.90221
+e4_batches_skew0.95,AMTP,125,449.15161
+e4_batches_skew0.95,AMTP,126,432.67963
+e4_batches_skew0.95,AMTP,127,457.34117
+e4_batches_skew0.95,AMTP,128,396.84909
+e4_batches_skew0.95,AMTP,129,490.86474
+e4_batches_skew0.95,AMTP,130,432.14659
+e4_batches_skew0.95,AMTP,131,467.89459
+e4_batches_skew0.95,AMTP,132,433.02179
+e4_batches_skew0.95,AMTP,133,437.12774
+e4_batches_skew0.95,AMTP,134,407.40588
+e4_batches_skew0.95,AMTP,135,437.83673
+e4_batches_skew0.95,AMTP,136,434.8515
+e4_batches_skew0.95,AMTP,137,457.5992
+e4_batches_skew0.95,AMTP,138,473.44392
+e4_batches_skew0.95,AMTP,139,429.92956
+e4_batches_skew0.95,AMTP,140,483.76411
+e4_batches_skew0.95,AMTP,141,414.55114
+e4_batches_skew0.95,AMTP,142,471.44868
+e4_batches_skew0.95,AMTP,143,429.50008
+e4_batches_skew0.95,AMTP,144,489.38292
+e4_batches_skew0.95,AMTP,145,425.51504
+e4_batches_skew0.95,AMTP,146,477.46119
+e4_batches_skew0.95,AMTP,147,421.74829
+e4_batches_skew0.95,AMTP,148,445.61852
+e4_batches_skew0.95,AMTP,149,410.65137
+e4_batches_skew0.95,AMTP,150,446.04869
+e4_batches_skew0.95,AMTP,151,419.74494
+e4_batches_skew0.95,AMTP,152,463.9605
+e4_batches_skew0.95,AMTP,153,431.53285
+e4_batches_skew0.95,AMTP,154,440.39581
+e4_batches_skew0.95,AMTP,155,440.19524
+e4_batches_skew0.95,AMTP,156,470.67581
+e4_batches_skew0.95,AMTP,157,480.62946
+e4_batches_skew0.95,AMTP,158,471.03801
+e4_batches_skew0.95,AMTP,159,445.47136
+e4_batches_skew0.95,AMTP,160,422.93228
+e4_batches_skew0.95,AMTP,161,466.73228
+e4_batches_skew0.95,AMTP,162,472.21425
+e4_batches_skew0.95,AMTP,163,445.09436
+e4_batches_skew0.95,AMTP,164,464.01801
+e4_batches_skew0.95,AMTP,165,447.11001
+e4_batches_skew0.95,AMTP,166,460.16489
+e4_batches_skew0.95,AMTP,167,480.03442
+e4_batches_skew0.95,AMTP,168,447.68997
+e4_batches_skew0.95,AMTP,169,429.48672
+e4_batches_skew0.95,AMTP,170,452.36455
+e4_batches_skew0.95,AMTP,171,485.09418
+e4_batches_skew0.95,AMTP,172,437.25769
+e4_batches_skew0.95,AMTP,173,452.91686
+e4_batches_skew0.95,AMTP,174,439.00089
+e4_batches_skew0.95,AMTP,175,477.62981
+e4_batches_skew0.95,AMTP,176,476.55865
+e4_batches_skew0.95,AMTP,177,472.71677
+e4_batches_skew0.95,AMTP,178,474.74115
+e4_batches_skew0.95,AMTP,179,495.15325
+e4_batches_skew0.95,AMTP,180,437.33451
+e4_batches_skew0.95,AMTP,181,467.57499
+e4_batches_skew0.95,AMTP,182,446.10415
+e4_batches_skew0.95,AMTP,183,501.57229
+e4_batches_skew0.95,AMTP,184,433.2216
+e4_batches_skew0.95,AMTP,185,495.64665
+e4_batches_skew0.95,AMTP,186,453.9753
+e4_batches_skew0.95,AMTP,187,505.28095
+e4_batches_skew0.95,AMTP,188,443.15767
+e4_batches_skew0.95,AMTP,189,512.79368
+e4_batches_skew0.95,AMTP,190,456.20192
+e4_batches_skew0.95,AMTP,191,477.95026
+e4_batches_skew0.95,AMTP,192,484.28861
+e4_batches_skew0.95,AMTP,193,486.36801
+e4_batches_skew0.95,AMTP,194,507.41589
+e4_batches_skew0.95,AMTP,195,460.43558
+e4_batches_skew0.95,AMTP,196,511.08162
+e4_batches_skew0.95,AMTP,197,466.21191
+e4_batches_skew0.95,AMTP,198,503.05366
+e4_batches_skew0.95,AMTP,199,439.34679
+e4_batches_skew0.95,AMTP,200,506.23324
+e4_batches_skew0.95,AMTP,201,437.97995
+e4_batches_skew0.95,AMTP,202,491.33556
+e4_batches_skew0.95,AMTP,203,486.03407
+e4_batches_skew0.95,AMTP,204,483.11569
+e4_batches_skew0.95,AMTP,205,476.94787
+e4_batches_skew0.95,AMTP,206,488.75723
+e4_batches_skew0.95,AMTP,207,464.49166
+e4_batches_skew0.95,AMTP,208,484.7575
+e4_batches_skew0.95,AMTP,209,488.80877
+e4_batches_skew0.95,AMTP,210,482.86117
+e4_batches_skew0.95,AMTP,211,474.34887
+e4_batches_skew0.95,AMTP,212,503.45335
+e4_batches_skew0.95,AMTP,213,471.24074
+e4_batches_skew0.95,AMTP,214,506.97549
+e4_batches_skew0.95,AMTP,215,460.13581
+e4_batches_skew0.95,AMTP,216,502.04086
+e4_batches_skew0.95,AMTP,217,462.4693
+e4_batches_skew0.95,AMTP,218,530.73408
+e4_batches_skew0.95,AMTP,219,469.54076
+e4_batches_skew0.95,AMTP,220,519.05904
+e4_batches_skew0.95,AMTP,221,510.59621
+e4_batches_skew0.95,AMTP,222,512.92186
+e4_batches_skew0.95,AMTP,223,464.20474
+e4_batches_skew0.95,AMTP,224,481.50102
+e4_batches_skew0.95,AMTP,225,492.73561
+e4_batches_skew0.95,AMTP,226,484.32642
+e4_batches_skew0.95,AMTP,227,468.87829
+e4_batches_skew0.95,AMTP,228,510.31863
+e4_batches_skew0.95,AMTP,229,457.37921
+e4_batches_skew0.95,AMTP,230,527.58129
+e4_batches_skew0.95,AMTP,231,513.18091
+e4_batches_skew0.95,AMTP,232,481.42184
+e4_batches_skew0.95,AMTP,233,482.98549
+e4_batches_skew0.95,AMTP,234,501.25991
+e4_batches_skew0.95,AMTP,235,487.76222
+e4_batches_skew0.95,AMTP,236,521.55363
+e4_batches_skew0.95,AMTP,237,519.31396
+e4_batches_skew0.95,AMTP,238,486.08013
+e4_batches_skew0.95,AMTP,239,505.67871
+e4_batches_skew0.95,AMTP,240,498.9499
+e4_batches_skew0.95,AMTP,241,513.0723
+e4_batches_skew0.95,AMTP,242,487.78477
+e4_batches_skew0.95,AMTP,243,534.90245
+e4_batches_skew0.95,AMTP,244,478.20656
+e4_batches_skew0.95,AMTP,245,517.65044
+e4_batches_skew0.95,AMTP,246,509.2386
+e4_batches_skew0.95,AMTP,247,1180.13852
+e4_batches_skew0.95,AMTP,248,466.23933
+e4_batches_skew0.95,AMTP,249,497.5566
+e4_batches_skew0.95,AMTP,250,2704.59611
+e4_batches_skew0.95,AMTP,251,2694.01454
+e4_batches_skew0.95,AMTP,252,2745.63813
+e4_batches_skew0.95,AMTP,253,2696.68704
+e4_batches_skew0.95,AMTP,254,2717.12172
+e4_batches_skew0.95,AMTP,255,2702.09355
+e4_batches_skew0.95,AMTP,256,2728.5823
+e4_batches_skew0.95,AMTP,257,2713.88055
+e4_batches_skew0.95,AMTP,258,2683.46119
+e4_batches_skew0.95,AMTP,259,2690.54542
+e4_batches_skew0.95,AMTP,260,2634.08369
+e4_batches_skew0.95,AMTP,261,2690.23954
+e4_batches_skew0.95,AMTP,262,2637.78207
+e4_batches_skew0.95,AMTP,263,2604.61813
+e4_batches_skew0.95,AMTP,264,2656.54593
+e4_batches_skew0.95,AMTP,265,2613.74881
+e4_batches_skew0.95,AMTP,266,2633.69277
+e4_batches_skew0.95,AMTP,267,2617.30081
+e4_batches_skew0.95,AMTP,268,2587.40068
+e4_batches_skew0.95,AMTP,269,2621.0591
+e4_batches_skew0.95,AMTP,270,2563.45185
+e4_batches_skew0.95,AMTP,271,2577.6259
+e4_batches_skew0.95,AMTP,272,2598.9341
+e4_batches_skew0.95,AMTP,273,2612.39195
+e4_batches_skew0.95,AMTP,274,2529.55254
+e4_batches_skew0.95,AMTP,275,2546.80155
+e4_batches_skew0.95,AMTP,276,2514.637
+e4_batches_skew0.95,AMTP,277,2523.10996
+e4_batches_skew0.95,AMTP,278,2515.61217
+e4_batches_skew0.95,AMTP,279,2505.46415
+e4_batches_skew0.95,AMTP,280,2477.34546
+e4_batches_skew0.95,AMTP,281,2503.32338
+e4_batches_skew0.95,AMTP,282,2498.36412
+e4_batches_skew0.95,AMTP,283,2493.13188
+e4_batches_skew0.95,AMTP,284,2475.1477
+e4_batches_skew0.95,AMTP,285,2457.59958
+e4_batches_skew0.95,AMTP,286,2462.48842
+e4_batches_skew0.95,AMTP,287,2452.70519
+e4_batches_skew0.95,AMTP,288,2470.02297
+e4_batches_skew0.95,AMTP,289,2433.53284
+e4_batches_skew0.95,AMTP,290,2439.68816
+e4_batches_skew0.95,AMTP,291,2441.25241
+e4_batches_skew0.95,AMTP,292,2423.99389
+e4_batches_skew0.95,AMTP,293,2405.13033
+e4_batches_skew0.95,AMTP,294,2414.36517
+e4_batches_skew0.95,AMTP,295,2365.81595
+e4_batches_skew0.95,AMTP,296,2380.90649
+e4_batches_skew0.95,AMTP,297,2353.56981
+e4_batches_skew0.95,AMTP,298,2400.44521
+e4_batches_skew0.95,AMTP,299,2363.02175
+e4_batches_skew0.95,AMTP,300,2321.73193
+e4_batches_skew0.95,AMTP,301,2350.21435
+e4_batches_skew0.95,AMTP,302,2333.60074
+e4_batches_skew0.95,AMTP,303,2346.01229
+e4_batches_skew0.95,AMTP,304,2280.05722
+e4_batches_skew0.95,AMTP,305,2332.64117
+e4_batches_skew0.95,AMTP,306,2301.20158
+e4_batches_skew0.95,AMTP,307,2278.73952
+e4_batches_skew0.95,AMTP,308,2322.86864
+e4_batches_skew0.95,AMTP,309,2267.97561
+e4_batches_skew0.95,AMTP,310,2257.2447
+e4_batches_skew0.95,AMTP,311,2262.78791
+e4_batches_skew0.95,AMTP,312,2271.02304
+e4_batches_skew0.95,AMTP,313,2262.50399
+e4_batches_skew0.95,AMTP,314,2252.9334
+e4_batches_skew0.95,AMTP,315,2214.73263
+e4_batches_skew0.95,AMTP,316,2204.98586
+e4_batches_skew0.95,AMTP,317,2209.52361
+e4_batches_skew0.95,AMTP,318,2178.64841
+e4_batches_skew0.95,AMTP,319,2186.89232
+e4_batches_skew0.95,AMTP,320,2169.30374
+e4_batches_skew0.95,AMTP,321,2180.67785
+e4_batches_skew0.95,AMTP,322,2160.75425
+e4_batches_skew0.95,AMTP,323,2174.4705
+e4_batches_skew0.95,AMTP,324,2118.34169
+e4_batches_skew0.95,AMTP,325,2134.74703
+e4_batches_skew0.95,AMTP,326,2145.95713
+e4_batches_skew0.95,AMTP,327,2155.02259
+e4_batches_skew0.95,AMTP,328,2106.40457
+e4_batches_skew0.95,AMTP,329,2114.04804
+e4_batches_skew0.95,AMTP,330,2127.80003
+e4_batches_skew0.95,AMTP,331,2086.66268
+e4_batches_skew0.95,AMTP,332,2135.14576
+e4_batches_skew0.95,AMTP,333,2085.32562
+e4_batches_skew0.95,AMTP,334,2067.56557
+e4_batches_skew0.95,AMTP,335,2055.77941
+e4_batches_skew0.95,AMTP,336,2066.1162
+e4_batches_skew0.95,AMTP,337,2056.22298
+e4_batches_skew0.95,AMTP,338,2033.56077
+e4_batches_skew0.95,AMTP,339,2018.89936
+e4_batches_skew0.95,AMTP,340,1991.40903
+e4_batches_skew0.95,AMTP,341,1996.41593
+e4_batches_skew0.95,AMTP,342,1961.54713
+e4_batches_skew0.95,AMTP,343,2000.39191
+e4_batches_skew0.95,AMTP,344,1969.74787
+e4_batches_skew0.95,AMTP,345,1954.96106
+e4_batches_skew0.95,AMTP,346,1930.49123
+e4_batches_skew0.95,AMTP,347,1984.41739
+e4_batches_skew0.95,AMTP,348,1945.55804
+e4_batches_skew0.95,AMTP,349,1931.85105
+e4_batches_skew0.95,AMTP,350,1919.2133
+e4_batches_skew0.95,AMTP,351,1893.16212
+e4_batches_skew0.95,AMTP,352,1907.41753
+e4_batches_skew0.95,AMTP,353,1904.54285
+e4_batches_skew0.95,AMTP,354,1892.853
+e4_batches_skew0.95,AMTP,355,1889.3154
+e4_batches_skew0.95,AMTP,356,1843.93818
+e4_batches_skew0.95,AMTP,357,1871.33764
+e4_batches_skew0.95,AMTP,358,1864.90298
+e4_batches_skew0.95,AMTP,359,1834.27302
+e4_batches_skew0.95,AMTP,360,1854.3613
+e4_batches_skew0.95,AMTP,361,1828.88679
+e4_batches_skew0.95,AMTP,362,1811.60139
+e4_batches_skew0.95,AMTP,363,1816.62135
+e4_batches_skew0.95,AMTP,364,1789.25148
+e4_batches_skew0.95,AMTP,365,1788.65111
+e4_batches_skew0.95,AMTP,366,1766.13023
+e4_batches_skew0.95,AMTP,367,1782.86289
+e4_batches_skew0.95,AMTP,368,1748.70722
+e4_batches_skew0.95,AMTP,369,1785.59985
+e4_batches_skew0.95,AMTP,370,1741.60954
+e4_batches_skew0.95,AMTP,371,1710.91082
+e4_batches_skew0.95,AMTP,372,1745.50215
+e4_batches_skew0.95,AMTP,373,1725.49827
+e4_batches_skew0.95,AMTP,374,1687.84742
+e4_batches_skew0.95,AMTP,375,1730.64331
+e4_batches_skew0.95,AMTP,376,1696.1995
+e4_batches_skew0.95,AMTP,377,1685.53869
+e4_batches_skew0.95,AMTP,378,1683.12314
+e4_batches_skew0.95,AMTP,379,1691.15996
+e4_batches_skew0.95,AMTP,380,1645.12975
+e4_batches_skew0.95,AMTP,381,1657.78087
+e4_batches_skew0.95,AMTP,382,1668.16207
+e4_batches_skew0.95,AMTP,383,1631.68249
+e4_batches_skew0.95,AMTP,384,1617.91003
+e4_batches_skew0.95,AMTP,385,1623.13157
+e4_batches_skew0.95,AMTP,386,1636.02134
+e4_batches_skew0.95,AMTP,387,1631.01647
+e4_batches_skew0.95,AMTP,388,1592.76451
+e4_batches_skew0.95,AMTP,389,1585.92782
+e4_batches_skew0.95,AMTP,390,1571.6611
+e4_batches_skew0.95,AMTP,391,1572.35248
+e4_batches_skew0.95,AMTP,392,1547.46641
+e4_batches_skew0.95,AMTP,393,1559.00489
+e4_batches_skew0.95,AMTP,394,1551.86313
+e4_batches_skew0.95,AMTP,395,1527.57534
+e4_batches_skew0.95,AMTP,396,1524.17074
+e4_batches_skew0.95,AMTP,397,1505.13076
+e4_batches_skew0.95,AMTP,398,1516.79283
+e4_batches_skew0.95,AMTP,399,1511.76593
+e4_batches_skew0.95,AMTP,400,1500.72107
+e4_batches_skew0.95,AMTP,401,1476.29838
+e4_batches_skew0.95,AMTP,402,1492.99592
+e4_batches_skew0.95,AMTP,403,1493.5246
+e4_batches_skew0.95,AMTP,404,1437.66787
+e4_batches_skew0.95,AMTP,405,1461.14454
+e4_batches_skew0.95,AMTP,406,1448.85828
+e4_batches_skew0.95,AMTP,407,1452.6944
+e4_batches_skew0.95,AMTP,408,1430.51709
+e4_batches_skew0.95,AMTP,409,1416.28412
+e4_batches_skew0.95,AMTP,410,1402.04482
+e4_batches_skew0.95,AMTP,411,1384.66676
+e4_batches_skew0.95,AMTP,412,1388.85062
+e4_batches_skew0.95,AMTP,413,1394.34505
+e4_batches_skew0.95,AMTP,414,1373.03043
+e4_batches_skew0.95,AMTP,415,644.351456
+e4_batches_skew0.95,Static-MT,0,407.91906
+e4_batches_skew0.95,Static-MT,1,428.03324
+e4_batches_skew0.95,Static-MT,2,446.64932
+e4_batches_skew0.95,Static-MT,3,409.21979
+e4_batches_skew0.95,Static-MT,4,372.06671
+e4_batches_skew0.95,Static-MT,5,309.9805
+e4_batches_skew0.95,Static-MT,6,299.61308
+e4_batches_skew0.95,Static-MT,7,341.83454
+e4_batches_skew0.95,Static-MT,8,351.22241
+e4_batches_skew0.95,Static-MT,9,400.87372
+e4_batches_skew0.95,Static-MT,10,421.81509
+e4_batches_skew0.95,Static-MT,11,460.29637
+e4_batches_skew0.95,Static-MT,12,489.17039
+e4_batches_skew0.95,Static-MT,13,500.71165
+e4_batches_skew0.95,Static-MT,14,547.05667
+e4_batches_skew0.95,Static-MT,15,571.18287
+e4_batches_skew0.95,Static-MT,16,627.20627
+e4_batches_skew0.95,Static-MT,17,619.19567
+e4_batches_skew0.95,Static-MT,18,680.38999
+e4_batches_skew0.95,Static-MT,19,700.65173
+e4_batches_skew0.95,Static-MT,20,739.73667
+e4_batches_skew0.95,Static-MT,21,731.44561
+e4_batches_skew0.95,Static-MT,22,767.17177
+e4_batches_skew0.95,Static-MT,23,801.11922
+e4_batches_skew0.95,Static-MT,24,822.39412
+e4_batches_skew0.95,Static-MT,25,1858.8902
+e4_batches_skew0.95,Static-MT,26,889.23377
+e4_batches_skew0.95,Static-MT,27,900.25777
+e4_batches_skew0.95,Static-MT,28,938.00213
+e4_batches_skew0.95,Static-MT,29,970.80905
+e4_batches_skew0.95,Static-MT,30,985.21771
+e4_batches_skew0.95,Static-MT,31,1028.08856
+e4_batches_skew0.95,Static-MT,32,1030.05259
+e4_batches_skew0.95,Static-MT,33,1050.77062
+e4_batches_skew0.95,Static-MT,34,1092.98472
+e4_batches_skew0.95,Static-MT,35,1117.97046
+e4_batches_skew0.95,Static-MT,36,1156.83907
+e4_batches_skew0.95,Static-MT,37,1150.35763
+e4_batches_skew0.95,Static-MT,38,1196.18847
+e4_batches_skew0.95,Static-MT,39,1227.64867
+e4_batches_skew0.95,Static-MT,40,1225.44292
+e4_batches_skew0.95,Static-MT,41,1257.20166
+e4_batches_skew0.95,Static-MT,42,1284.51699
+e4_batches_skew0.95,Static-MT,43,1296.84846
+e4_batches_skew0.95,Static-MT,44,1338.08402
+e4_batches_skew0.95,Static-MT,45,1356.89183
+e4_batches_skew0.95,Static-MT,46,1392.58225
+e4_batches_skew0.95,Static-MT,47,1406.14308
+e4_batches_skew0.95,Static-MT,48,1417.13112
+e4_batches_skew0.95,Static-MT,49,1475.34854
+e4_batches_skew0.95,Static-MT,50,1473.96912
+e4_batches_skew0.95,Static-MT,51,1505.93381
+e4_batches_skew0.95,Static-MT,52,1508.55828
+e4_batches_skew0.95,Static-MT,53,1537.51101
+e4_batches_skew0.95,Static-MT,54,1542.07773
+e4_batches_skew0.95,Static-MT,55,1591.77599
+e4_batches_skew0.95,Static-MT,56,1627.24268
+e4_batches_skew0.95,Static-MT,57,1639.11778
+e4_batches_skew0.95,Static-MT,58,1630.06798
+e4_batches_skew0.95,Static-MT,59,1669.3908
+e4_batches_skew0.95,Static-MT,60,1694.45041
+e4_batches_skew0.95,Static-MT,61,1728.16234
+e4_batches_skew0.95,Static-MT,62,1737.01937
+e4_batches_skew0.95,Static-MT,63,1757.36404
+e4_batches_skew0.95,Static-MT,64,1796.05966
+e4_batches_skew0.95,Static-MT,65,1825.77618
+e4_batches_skew0.95,Static-MT,66,1843.88752
+e4_batches_skew0.95,Static-MT,67,1880.52751
+e4_batches_skew0.95,Static-MT,68,1896.78841
+e4_batches_skew0.95,Static-MT,69,1923.393
+e4_batches_skew0.95,Static-MT,70,1947.29217
+e4_batches_skew0.95,Static-MT,71,1985.43393
+e4_batches_skew0.95,Static-MT,72,1996.88434
+e4_batches_skew0.95,Static-MT,73,1990.83565
+e4_batches_skew0.95,Static-MT,74,2032.94829
+e4_batches_skew0.95,Static-MT,75,2051.12987
+e4_batches_skew0.95,Static-MT,76,2074.52072
+e4_batches_skew0.95,Static-MT,77,2115.45268
+e4_batches_skew0.95,Static-MT,78,2126.29354
+e4_batches_skew0.95,Static-MT,79,2162.70635
+e4_batches_skew0.95,Static-MT,80,2169.28113
+e4_batches_skew0.95,Static-MT,81,2218.34516
+e4_batches_skew0.95,Static-MT,82,2211.32788
+e4_batches_skew0.95,Static-MT,83,2224.11331
+e4_batches_skew0.95,Static-MT,84,2251.0154
+e4_batches_skew0.95,Static-MT,85,2263.40788
+e4_batches_skew0.95,Static-MT,86,2287.58508
+e4_batches_skew0.95,Static-MT,87,2300.24262
+e4_batches_skew0.95,Static-MT,88,2325.95591
+e4_batches_skew0.95,Static-MT,89,2381.22846
+e4_batches_skew0.95,Static-MT,90,2383.61385
+e4_batches_skew0.95,Static-MT,91,2387.92372
+e4_batches_skew0.95,Static-MT,92,2413.75586
+e4_batches_skew0.95,Static-MT,93,2450.50999
+e4_batches_skew0.95,Static-MT,94,2436.85159
+e4_batches_skew0.95,Static-MT,95,2474.1189
+e4_batches_skew0.95,Static-MT,96,2503.68646
+e4_batches_skew0.95,Static-MT,97,2522.82921
+e4_batches_skew0.95,Static-MT,98,2548.91156
+e4_batches_skew0.95,Static-MT,99,2579.68241
+e4_batches_skew0.95,Static-MT,100,2608.72465
+e4_batches_skew0.95,Static-MT,101,2619.78174
+e4_batches_skew0.95,Static-MT,102,2649.69369
+e4_batches_skew0.95,Static-MT,103,2659.12299
+e4_batches_skew0.95,Static-MT,104,2643.43835
+e4_batches_skew0.95,Static-MT,105,2679.94108
+e4_batches_skew0.95,Static-MT,106,2704.99698
+e4_batches_skew0.95,Static-MT,107,2737.86381
+e4_batches_skew0.95,Static-MT,108,2756.58487
+e4_batches_skew0.95,Static-MT,109,2785.3893
+e4_batches_skew0.95,Static-MT,110,2785.64446
+e4_batches_skew0.95,Static-MT,111,2818.38053
+e4_batches_skew0.95,Static-MT,112,2839.39559
+e4_batches_skew0.95,Static-MT,113,2843.11636
+e4_batches_skew0.95,Static-MT,114,2895.67457
+e4_batches_skew0.95,Static-MT,115,2913.61924
+e4_batches_skew0.95,Static-MT,116,2914.4733
+e4_batches_skew0.95,Static-MT,117,2947.25876
+e4_batches_skew0.95,Static-MT,118,2967.87843
+e4_batches_skew0.95,Static-MT,119,2976.07624
+e4_batches_skew0.95,Static-MT,120,2996.78752
+e4_batches_skew0.95,Static-MT,121,3012.51929
+e4_batches_skew0.95,Static-MT,122,3031.83251
+e4_batches_skew0.95,Static-MT,123,3057.33298
+e4_batches_skew0.95,Static-MT,124,3070.17659
+e4_batches_skew0.95,Static-MT,125,3095.29164
+e4_batches_skew0.95,Static-MT,126,3105.46797
+e4_batches_skew0.95,Static-MT,127,3119.46944
+e4_batches_skew0.95,Static-MT,128,3128.95551
+e4_batches_skew0.95,Static-MT,129,3231.47913
+e4_batches_skew0.95,Static-MT,130,3215.41141
+e4_batches_skew0.95,Static-MT,131,3252.33146
+e4_batches_skew0.95,Static-MT,132,3266.85582
+e4_batches_skew0.95,Static-MT,133,3256.16727
+e4_batches_skew0.95,Static-MT,134,3290.86671
+e4_batches_skew0.95,Static-MT,135,3302.87853
+e4_batches_skew0.95,Static-MT,136,3318.15062
+e4_batches_skew0.95,Static-MT,137,3360.34394
+e4_batches_skew0.95,Static-MT,138,3367.60141
+e4_batches_skew0.95,Static-MT,139,3393.36925
+e4_batches_skew0.95,Static-MT,140,3417.45877
+e4_batches_skew0.95,Static-MT,141,3424.41183
+e4_batches_skew0.95,Static-MT,142,3457.98326
+e4_batches_skew0.95,Static-MT,143,3463.75239
+e4_batches_skew0.95,Static-MT,144,3509.74136
+e4_batches_skew0.95,Static-MT,145,3509.69178
+e4_batches_skew0.95,Static-MT,146,3530.69169
+e4_batches_skew0.95,Static-MT,147,3572.59973
+e4_batches_skew0.95,Static-MT,148,3598.04381
+e4_batches_skew0.95,Static-MT,149,3630.10092
+e4_batches_skew0.95,Static-MT,150,3643.19092
+e4_batches_skew0.95,Static-MT,151,3691.18636
+e4_batches_skew0.95,Static-MT,152,3697.65218
+e4_batches_skew0.95,Static-MT,153,3715.46992
+e4_batches_skew0.95,Static-MT,154,3716.03924
+e4_batches_skew0.95,Static-MT,155,3769.55519
+e4_batches_skew0.95,Static-MT,156,3795.46323
+e4_batches_skew0.95,Static-MT,157,3823.76821
+e4_batches_skew0.95,Static-MT,158,3841.98745
+e4_batches_skew0.95,Static-MT,159,3834.60196
+e4_batches_skew0.95,Static-MT,160,3857.47207
+e4_batches_skew0.95,Static-MT,161,3879.48334
+e4_batches_skew0.95,Static-MT,162,3907.20081
+e4_batches_skew0.95,Static-MT,163,3930.50797
+e4_batches_skew0.95,Static-MT,164,3966.28326
+e4_batches_skew0.95,Static-MT,165,3977.55144
+e4_batches_skew0.95,Static-MT,166,4002.29903
+e4_batches_skew0.95,Static-MT,167,4016.38059
+e4_batches_skew0.95,Static-MT,168,4024.31907
+e4_batches_skew0.95,Static-MT,169,4032.30876
+e4_batches_skew0.95,Static-MT,170,4063.70396
+e4_batches_skew0.95,Static-MT,171,4101.99835
+e4_batches_skew0.95,Static-MT,172,4113.30188
+e4_batches_skew0.95,Static-MT,173,4125.50855
+e4_batches_skew0.95,Static-MT,174,4169.28963
+e4_batches_skew0.95,Static-MT,175,4206.00706
+e4_batches_skew0.95,Static-MT,176,4213.07929
+e4_batches_skew0.95,Static-MT,177,4196.1228
+e4_batches_skew0.95,Static-MT,178,4239.0695
+e4_batches_skew0.95,Static-MT,179,4236.82968
+e4_batches_skew0.95,Static-MT,180,4253.10322
+e4_batches_skew0.95,Static-MT,181,4287.80884
+e4_batches_skew0.95,Static-MT,182,4312.89133
+e4_batches_skew0.95,Static-MT,183,4329.24799
+e4_batches_skew0.95,Static-MT,184,4379.73271
+e4_batches_skew0.95,Static-MT,185,4350.58996
+e4_batches_skew0.95,Static-MT,186,4397.42918
+e4_batches_skew0.95,Static-MT,187,4396.60931
+e4_batches_skew0.95,Static-MT,188,4397.48943
+e4_batches_skew0.95,Static-MT,189,4469.63308
+e4_batches_skew0.95,Static-MT,190,4450.22367
+e4_batches_skew0.95,Static-MT,191,4489.13923
+e4_batches_skew0.95,Static-MT,192,4508.65061
+e4_batches_skew0.95,Static-MT,193,4530.26165
+e4_batches_skew0.95,Static-MT,194,4595.20791
+e4_batches_skew0.95,Static-MT,195,4581.58609
+e4_batches_skew0.95,Static-MT,196,4639.22386
+e4_batches_skew0.95,Static-MT,197,4618.35166
+e4_batches_skew0.95,Static-MT,198,4644.51393
+e4_batches_skew0.95,Static-MT,199,4629.59376
+e4_batches_skew0.95,Static-MT,200,4687.82704
+e4_batches_skew0.95,Static-MT,201,4672.20507
+e4_batches_skew0.95,Static-MT,202,4713.93137
+e4_batches_skew0.95,Static-MT,203,4744.1955
+e4_batches_skew0.95,Static-MT,204,4743.65101
+e4_batches_skew0.95,Static-MT,205,4774.47777
+e4_batches_skew0.95,Static-MT,206,4815.52448
+e4_batches_skew0.95,Static-MT,207,4815.3988
+e4_batches_skew0.95,Static-MT,208,4838.02742
+e4_batches_skew0.95,Static-MT,209,4848.32492
+e4_batches_skew0.95,Static-MT,210,4840.58303
+e4_batches_skew0.95,Static-MT,211,4881.34469
+e4_batches_skew0.95,Static-MT,212,4940.06131
+e4_batches_skew0.95,Static-MT,213,4937.19111
+e4_batches_skew0.95,Static-MT,214,4902.15393
+e4_batches_skew0.95,Static-MT,215,4939.72532
+e4_batches_skew0.95,Static-MT,216,4954.22272
+e4_batches_skew0.95,Static-MT,217,4956.0648
+e4_batches_skew0.95,Static-MT,218,5012.21019
+e4_batches_skew0.95,Static-MT,219,5031.27046
+e4_batches_skew0.95,Static-MT,220,5046.53821
+e4_batches_skew0.95,Static-MT,221,5082.72463
+e4_batches_skew0.95,Static-MT,222,5067.41779
+e4_batches_skew0.95,Static-MT,223,5054.13041
+e4_batches_skew0.95,Static-MT,224,5071.47673
+e4_batches_skew0.95,Static-MT,225,5122.16944
+e4_batches_skew0.95,Static-MT,226,5106.96717
+e4_batches_skew0.95,Static-MT,227,5128.04956
+e4_batches_skew0.95,Static-MT,228,5159.79816
+e4_batches_skew0.95,Static-MT,229,5181.81494
+e4_batches_skew0.95,Static-MT,230,5232.48818
+e4_batches_skew0.95,Static-MT,231,5205.43798
+e4_batches_skew0.95,Static-MT,232,5218.75639
+e4_batches_skew0.95,Static-MT,233,5217.08213
+e4_batches_skew0.95,Static-MT,234,5256.24856
+e4_batches_skew0.95,Static-MT,235,5246.72489
+e4_batches_skew0.95,Static-MT,236,5300.34896
+e4_batches_skew0.95,Static-MT,237,5306.60199
+e4_batches_skew0.95,Static-MT,238,5310.71131
+e4_batches_skew0.95,Static-MT,239,5336.08313
+e4_batches_skew0.95,Static-MT,240,5394.11559
+e4_batches_skew0.95,Static-MT,241,5377.51609
+e4_batches_skew0.95,Static-MT,242,5405.38262
+e4_batches_skew0.95,Static-MT,243,5419.29179
+e4_batches_skew0.95,Static-MT,244,5456.3602
+e4_batches_skew0.95,Static-MT,245,5451.09728
+e4_batches_skew0.95,Static-MT,246,5471.38093
+e4_batches_skew0.95,Static-MT,247,6141.60937
+e4_batches_skew0.95,Static-MT,248,5506.50607
+e4_batches_skew0.95,Static-MT,249,5515.68788
+e4_batches_skew0.95,Static-MT,250,5996.13603
+e4_batches_skew0.95,Static-MT,251,6028.607
+e4_batches_skew0.95,Static-MT,252,6003.73259
+e4_batches_skew0.95,Static-MT,253,5974.20636
+e4_batches_skew0.95,Static-MT,254,5923.3847
+e4_batches_skew0.95,Static-MT,255,5942.80818
+e4_batches_skew0.95,Static-MT,256,5882.74944
+e4_batches_skew0.95,Static-MT,257,5907.60659
+e4_batches_skew0.95,Static-MT,258,5890.05973
+e4_batches_skew0.95,Static-MT,259,5892.19523
+e4_batches_skew0.95,Static-MT,260,5836.61162
+e4_batches_skew0.95,Static-MT,261,5849.12863
+e4_batches_skew0.95,Static-MT,262,5844.31385
+e4_batches_skew0.95,Static-MT,263,5778.8509
+e4_batches_skew0.95,Static-MT,264,5769.516
+e4_batches_skew0.95,Static-MT,265,5803.8367
+e4_batches_skew0.95,Static-MT,266,5764.38695
+e4_batches_skew0.95,Static-MT,267,5768.12906
+e4_batches_skew0.95,Static-MT,268,5748.95971
+e4_batches_skew0.95,Static-MT,269,5734.98577
+e4_batches_skew0.95,Static-MT,270,5706.10535
+e4_batches_skew0.95,Static-MT,271,5698.60311
+e4_batches_skew0.95,Static-MT,272,5673.54058
+e4_batches_skew0.95,Static-MT,273,5653.89481
+e4_batches_skew0.95,Static-MT,274,5627.55887
+e4_batches_skew0.95,Static-MT,275,5648.78737
+e4_batches_skew0.95,Static-MT,276,5604.28624
+e4_batches_skew0.95,Static-MT,277,5600.55875
+e4_batches_skew0.95,Static-MT,278,5577.05991
+e4_batches_skew0.95,Static-MT,279,5543.64711
+e4_batches_skew0.95,Static-MT,280,5532.0513
+e4_batches_skew0.95,Static-MT,281,5492.6602
+e4_batches_skew0.95,Static-MT,282,5479.84115
+e4_batches_skew0.95,Static-MT,283,5496.78569
+e4_batches_skew0.95,Static-MT,284,5435.96656
+e4_batches_skew0.95,Static-MT,285,5514.30657
+e4_batches_skew0.95,Static-MT,286,5416.10678
+e4_batches_skew0.95,Static-MT,287,5419.62742
+e4_batches_skew0.95,Static-MT,288,5394.63551
+e4_batches_skew0.95,Static-MT,289,5377.96986
+e4_batches_skew0.95,Static-MT,290,5398.31071
+e4_batches_skew0.95,Static-MT,291,5356.48235
+e4_batches_skew0.95,Static-MT,292,5391.33866
+e4_batches_skew0.95,Static-MT,293,5342.9828
+e4_batches_skew0.95,Static-MT,294,5309.87866
+e4_batches_skew0.95,Static-MT,295,5278.38057
+e4_batches_skew0.95,Static-MT,296,5244.11221
+e4_batches_skew0.95,Static-MT,297,5251.49522
+e4_batches_skew0.95,Static-MT,298,5225.40249
+e4_batches_skew0.95,Static-MT,299,5230.44922
+e4_batches_skew0.95,Static-MT,300,5141.18082
+e4_batches_skew0.95,Static-MT,301,5162.76314
+e4_batches_skew0.95,Static-MT,302,5156.63298
+e4_batches_skew0.95,Static-MT,303,5133.44802
+e4_batches_skew0.95,Static-MT,304,5126.26598
+e4_batches_skew0.95,Static-MT,305,5103.72849
+e4_batches_skew0.95,Static-MT,306,5075.76175
+e4_batches_skew0.95,Static-MT,307,5069.82952
+e4_batches_skew0.95,Static-MT,308,5107.42871
+e4_batches_skew0.95,Static-MT,309,5069.73946
+e4_batches_skew0.95,Static-MT,310,5057.25093
+e4_batches_skew0.95,Static-MT,311,5035.47317
+e4_batches_skew0.95,Static-MT,312,4988.69582
+e4_batches_skew0.95,Static-MT,313,4993.04576
+e4_batches_skew0.95,Static-MT,314,4952.28627
+e4_batches_skew0.95,Static-MT,315,4927.59871
+e4_batches_skew0.95,Static-MT,316,4937.32476
+e4_batches_skew0.95,Static-MT,317,4891.78229
+e4_batches_skew0.95,Static-MT,318,4854.40512
+e4_batches_skew0.95,Static-MT,319,4862.17293
+e4_batches_skew0.95,Static-MT,320,4852.52343
+e4_batches_skew0.95,Static-MT,321,4847.59493
+e4_batches_skew0.95,Static-MT,322,4786.45324
+e4_batches_skew0.95,Static-MT,323,4796.5028
+e4_batches_skew0.95,Static-MT,324,4796.14471
+e4_batches_skew0.95,Static-MT,325,4776.18319
+e4_batches_skew0.95,Static-MT,326,4731.78747
+e4_batches_skew0.95,Static-MT,327,4714.1645
+e4_batches_skew0.95,Static-MT,328,4715.76599
+e4_batches_skew0.95,Static-MT,329,4708.98195
+e4_batches_skew0.95,Static-MT,330,4677.46651
+e4_batches_skew0.95,Static-MT,331,4661.52814
+e4_batches_skew0.95,Static-MT,332,4675.31967
+e4_batches_skew0.95,Static-MT,333,4587.08467
+e4_batches_skew0.95,Static-MT,334,4560.24663
+e4_batches_skew0.95,Static-MT,335,4521.64692
+e4_batches_skew0.95,Static-MT,336,4547.41266
+e4_batches_skew0.95,Static-MT,337,4536.2603
+e4_batches_skew0.95,Static-MT,338,4483.85762
+e4_batches_skew0.95,Static-MT,339,4435.20115
+e4_batches_skew0.95,Static-MT,340,4466.64113
+e4_batches_skew0.95,Static-MT,341,4430.95025
+e4_batches_skew0.95,Static-MT,342,4385.21023
+e4_batches_skew0.95,Static-MT,343,4362.72389
+e4_batches_skew0.95,Static-MT,344,4335.57388
+e4_batches_skew0.95,Static-MT,345,4312.6118
+e4_batches_skew0.95,Static-MT,346,4304.79875
+e4_batches_skew0.95,Static-MT,347,4300.37534
+e4_batches_skew0.95,Static-MT,348,4258.75479
+e4_batches_skew0.95,Static-MT,349,4241.10377
+e4_batches_skew0.95,Static-MT,350,4220.1802
+e4_batches_skew0.95,Static-MT,351,4183.65661
+e4_batches_skew0.95,Static-MT,352,4209.80027
+e4_batches_skew0.95,Static-MT,353,4161.87595
+e4_batches_skew0.95,Static-MT,354,4156.1858
+e4_batches_skew0.95,Static-MT,355,4146.20927
+e4_batches_skew0.95,Static-MT,356,4080.3755
+e4_batches_skew0.95,Static-MT,357,4074.84683
+e4_batches_skew0.95,Static-MT,358,4054.09344
+e4_batches_skew0.95,Static-MT,359,4028.46813
+e4_batches_skew0.95,Static-MT,360,3999.22385
+e4_batches_skew0.95,Static-MT,361,4008.92511
+e4_batches_skew0.95,Static-MT,362,3948.61509
+e4_batches_skew0.95,Static-MT,363,3943.79503
+e4_batches_skew0.95,Static-MT,364,3914.61363
+e4_batches_skew0.95,Static-MT,365,3910.73548
+e4_batches_skew0.95,Static-MT,366,3886.51835
+e4_batches_skew0.95,Static-MT,367,3860.26099
+e4_batches_skew0.95,Static-MT,368,3849.20896
+e4_batches_skew0.95,Static-MT,369,3816.97734
+e4_batches_skew0.95,Static-MT,370,3805.08854
+e4_batches_skew0.95,Static-MT,371,3759.47559
+e4_batches_skew0.95,Static-MT,372,3737.73661
+e4_batches_skew0.95,Static-MT,373,3719.30463
+e4_batches_skew0.95,Static-MT,374,3694.37954
+e4_batches_skew0.95,Static-MT,375,3709.55532
+e4_batches_skew0.95,Static-MT,376,3679.31817
+e4_batches_skew0.95,Static-MT,377,3634.68439
+e4_batches_skew0.95,Static-MT,378,3628.76535
+e4_batches_skew0.95,Static-MT,379,3603.22902
+e4_batches_skew0.95,Static-MT,380,3575.4223
+e4_batches_skew0.95,Static-MT,381,3574.4385
+e4_batches_skew0.95,Static-MT,382,3535.86832
+e4_batches_skew0.95,Static-MT,383,3540.5938
+e4_batches_skew0.95,Static-MT,384,3507.78948
+e4_batches_skew0.95,Static-MT,385,3499.91624
+e4_batches_skew0.95,Static-MT,386,3480.24205
+e4_batches_skew0.95,Static-MT,387,3456.01932
+e4_batches_skew0.95,Static-MT,388,3423.20064
+e4_batches_skew0.95,Static-MT,389,3399.25528
+e4_batches_skew0.95,Static-MT,390,3378.65959
+e4_batches_skew0.95,Static-MT,391,3389.71016
+e4_batches_skew0.95,Static-MT,392,3349.50582
+e4_batches_skew0.95,Static-MT,393,3333.91188
+e4_batches_skew0.95,Static-MT,394,3308.83409
+e4_batches_skew0.95,Static-MT,395,3287.16872
+e4_batches_skew0.95,Static-MT,396,3265.83635
+e4_batches_skew0.95,Static-MT,397,3262.38997
+e4_batches_skew0.95,Static-MT,398,3251.27365
+e4_batches_skew0.95,Static-MT,399,3213.97989
+e4_batches_skew0.95,Static-MT,400,3188.58316
+e4_batches_skew0.95,Static-MT,401,3154.07926
+e4_batches_skew0.95,Static-MT,402,3125.98021
+e4_batches_skew0.95,Static-MT,403,3107.85703
+e4_batches_skew0.95,Static-MT,404,3080.89853
+e4_batches_skew0.95,Static-MT,405,3075.76147
+e4_batches_skew0.95,Static-MT,406,3060.38172
+e4_batches_skew0.95,Static-MT,407,2994.90504
+e4_batches_skew0.95,Static-MT,408,2966.67653
+e4_batches_skew0.95,Static-MT,409,2968.98854
+e4_batches_skew0.95,Static-MT,410,2926.24946
+e4_batches_skew0.95,Static-MT,411,2896.71526
+e4_batches_skew0.95,Static-MT,412,2874.944
+e4_batches_skew0.95,Static-MT,413,2862.06152
+e4_batches_skew0.95,Static-MT,414,2848.67928
+e4_batches_skew0.95,Static-MT,415,2590.893889
+e4_batches_skew0.95,Global-MT(v),0,4590.30164
+e4_batches_skew0.95,Global-MT(v),1,4632.17418
+e4_batches_skew0.95,Global-MT(v),2,4647.96445
+e4_batches_skew0.95,Global-MT(v),3,4658.59923
+e4_batches_skew0.95,Global-MT(v),4,4689.89218
+e4_batches_skew0.95,Global-MT(v),5,4690.77067
+e4_batches_skew0.95,Global-MT(v),6,4716.78544
+e4_batches_skew0.95,Global-MT(v),7,4725.6749
+e4_batches_skew0.95,Global-MT(v),8,4748.14055
+e4_batches_skew0.95,Global-MT(v),9,4754.44101
+e4_batches_skew0.95,Global-MT(v),10,4797.64435
+e4_batches_skew0.95,Global-MT(v),11,4795.73251
+e4_batches_skew0.95,Global-MT(v),12,4819.37968
+e4_batches_skew0.95,Global-MT(v),13,4846.22857
+e4_batches_skew0.95,Global-MT(v),14,4836.65238
+e4_batches_skew0.95,Global-MT(v),15,4878.98189
+e4_batches_skew0.95,Global-MT(v),16,4905.39929
+e4_batches_skew0.95,Global-MT(v),17,4931.1838
+e4_batches_skew0.95,Global-MT(v),18,4927.065
+e4_batches_skew0.95,Global-MT(v),19,4966.10067
+e4_batches_skew0.95,Global-MT(v),20,4957.50872
+e4_batches_skew0.95,Global-MT(v),21,4987.71582
+e4_batches_skew0.95,Global-MT(v),22,5001.55491
+e4_batches_skew0.95,Global-MT(v),23,5020.96212
+e4_batches_skew0.95,Global-MT(v),24,5061.18124
+e4_batches_skew0.95,Global-MT(v),25,5248.78039
+e4_batches_skew0.95,Global-MT(v),26,5094.18986
+e4_batches_skew0.95,Global-MT(v),27,5105.54373
+e4_batches_skew0.95,Global-MT(v),28,5140.16097
+e4_batches_skew0.95,Global-MT(v),29,5161.42067
+e4_batches_skew0.95,Global-MT(v),30,5170.14614
+e4_batches_skew0.95,Global-MT(v),31,5196.96045
+e4_batches_skew0.95,Global-MT(v),32,5213.48099
+e4_batches_skew0.95,Global-MT(v),33,5229.94099
+e4_batches_skew0.95,Global-MT(v),34,5267.43174
+e4_batches_skew0.95,Global-MT(v),35,5280.44743
+e4_batches_skew0.95,Global-MT(v),36,5276.60263
+e4_batches_skew0.95,Global-MT(v),37,5307.32483
+e4_batches_skew0.95,Global-MT(v),38,5325.98875
+e4_batches_skew0.95,Global-MT(v),39,5326.09402
+e4_batches_skew0.95,Global-MT(v),40,5378.89841
+e4_batches_skew0.95,Global-MT(v),41,5417.15519
+e4_batches_skew0.95,Global-MT(v),42,5398.93001
+e4_batches_skew0.95,Global-MT(v),43,5436.36902
+e4_batches_skew0.95,Global-MT(v),44,5453.39995
+e4_batches_skew0.95,Global-MT(v),45,5440.39397
+e4_batches_skew0.95,Global-MT(v),46,5493.72881
+e4_batches_skew0.95,Global-MT(v),47,5500.8691
+e4_batches_skew0.95,Global-MT(v),48,5561.47376
+e4_batches_skew0.95,Global-MT(v),49,5570.76789
+e4_batches_skew0.95,Global-MT(v),50,5604.47093
+e4_batches_skew0.95,Global-MT(v),51,5596.2354
+e4_batches_skew0.95,Global-MT(v),52,5603.73543
+e4_batches_skew0.95,Global-MT(v),53,5607.60918
+e4_batches_skew0.95,Global-MT(v),54,5651.25734
+e4_batches_skew0.95,Global-MT(v),55,5650.73005
+e4_batches_skew0.95,Global-MT(v),56,5673.76978
+e4_batches_skew0.95,Global-MT(v),57,5714.42417
+e4_batches_skew0.95,Global-MT(v),58,5718.83384
+e4_batches_skew0.95,Global-MT(v),59,5730.13713
+e4_batches_skew0.95,Global-MT(v),60,5753.43048
+e4_batches_skew0.95,Global-MT(v),61,5765.62784
+e4_batches_skew0.95,Global-MT(v),62,5788.5872
+e4_batches_skew0.95,Global-MT(v),63,5807.37097
+e4_batches_skew0.95,Global-MT(v),64,5825.41812
+e4_batches_skew0.95,Global-MT(v),65,5868.45877
+e4_batches_skew0.95,Global-MT(v),66,5866.7532
+e4_batches_skew0.95,Global-MT(v),67,5890.37562
+e4_batches_skew0.95,Global-MT(v),68,5911.79488
+e4_batches_skew0.95,Global-MT(v),69,5949.43333
+e4_batches_skew0.95,Global-MT(v),70,5956.31493
+e4_batches_skew0.95,Global-MT(v),71,5957.92493
+e4_batches_skew0.95,Global-MT(v),72,5987.68129
+e4_batches_skew0.95,Global-MT(v),73,5981.2541
+e4_batches_skew0.95,Global-MT(v),74,6018.04341
+e4_batches_skew0.95,Global-MT(v),75,6020.86407
+e4_batches_skew0.95,Global-MT(v),76,6025.6362
+e4_batches_skew0.95,Global-MT(v),77,6204.83833
+e4_batches_skew0.95,Global-MT(v),78,6129.57796
+e4_batches_skew0.95,Global-MT(v),79,6138.54462
+e4_batches_skew0.95,Global-MT(v),80,6160.88887
+e4_batches_skew0.95,Global-MT(v),81,6178.22994
+e4_batches_skew0.95,Global-MT(v),82,6154.28011
+e4_batches_skew0.95,Global-MT(v),83,6181.66605
+e4_batches_skew0.95,Global-MT(v),84,6189.09083
+e4_batches_skew0.95,Global-MT(v),85,6229.11277
+e4_batches_skew0.95,Global-MT(v),86,6390.90234
+e4_batches_skew0.95,Global-MT(v),87,6394.60289
+e4_batches_skew0.95,Global-MT(v),88,6435.14137
+e4_batches_skew0.95,Global-MT(v),89,6437.47284
+e4_batches_skew0.95,Global-MT(v),90,6448.49502
+e4_batches_skew0.95,Global-MT(v),91,6469.75157
+e4_batches_skew0.95,Global-MT(v),92,6485.69684
+e4_batches_skew0.95,Global-MT(v),93,6505.29375
+e4_batches_skew0.95,Global-MT(v),94,6559.79979
+e4_batches_skew0.95,Global-MT(v),95,6536.57863
+e4_batches_skew0.95,Global-MT(v),96,6573.02061
+e4_batches_skew0.95,Global-MT(v),97,6612.75604
+e4_batches_skew0.95,Global-MT(v),98,6625.00844
+e4_batches_skew0.95,Global-MT(v),99,6622.78078
+e4_batches_skew0.95,Global-MT(v),100,6688.49108
+e4_batches_skew0.95,Global-MT(v),101,6685.90573
+e4_batches_skew0.95,Global-MT(v),102,6726.76214
+e4_batches_skew0.95,Global-MT(v),103,6711.66764
+e4_batches_skew0.95,Global-MT(v),104,6741.30337
+e4_batches_skew0.95,Global-MT(v),105,6765.89365
+e4_batches_skew0.95,Global-MT(v),106,6783.06614
+e4_batches_skew0.95,Global-MT(v),107,6804.48077
+e4_batches_skew0.95,Global-MT(v),108,6809.36149
+e4_batches_skew0.95,Global-MT(v),109,6836.28754
+e4_batches_skew0.95,Global-MT(v),110,6832.34531
+e4_batches_skew0.95,Global-MT(v),111,6847.33575
+e4_batches_skew0.95,Global-MT(v),112,6839.52262
+e4_batches_skew0.95,Global-MT(v),113,6899.49979
+e4_batches_skew0.95,Global-MT(v),114,6906.69838
+e4_batches_skew0.95,Global-MT(v),115,6942.01371
+e4_batches_skew0.95,Global-MT(v),116,6922.76815
+e4_batches_skew0.95,Global-MT(v),117,6955.7164
+e4_batches_skew0.95,Global-MT(v),118,6986.81546
+e4_batches_skew0.95,Global-MT(v),119,6971.95815
+e4_batches_skew0.95,Global-MT(v),120,6996.35977
+e4_batches_skew0.95,Global-MT(v),121,6994.59398
+e4_batches_skew0.95,Global-MT(v),122,7026.35837
+e4_batches_skew0.95,Global-MT(v),123,7055.26353
+e4_batches_skew0.95,Global-MT(v),124,7056.54592
+e4_batches_skew0.95,Global-MT(v),125,7084.51186
+e4_batches_skew0.95,Global-MT(v),126,7093.76591
+e4_batches_skew0.95,Global-MT(v),127,7118.50176
+e4_batches_skew0.95,Global-MT(v),128,7127.84773
+e4_batches_skew0.95,Global-MT(v),129,7161.09246
+e4_batches_skew0.95,Global-MT(v),130,7095.17023
+e4_batches_skew0.95,Global-MT(v),131,7147.16355
+e4_batches_skew0.95,Global-MT(v),132,7145.84775
+e4_batches_skew0.95,Global-MT(v),133,7133.14156
+e4_batches_skew0.95,Global-MT(v),134,7155.17949
+e4_batches_skew0.95,Global-MT(v),135,7206.47159
+e4_batches_skew0.95,Global-MT(v),136,7208.96906
+e4_batches_skew0.95,Global-MT(v),137,7215.55068
+e4_batches_skew0.95,Global-MT(v),138,7238.8168
+e4_batches_skew0.95,Global-MT(v),139,7266.17391
+e4_batches_skew0.95,Global-MT(v),140,7287.937
+e4_batches_skew0.95,Global-MT(v),141,7288.83562
+e4_batches_skew0.95,Global-MT(v),142,7307.87476
+e4_batches_skew0.95,Global-MT(v),143,7362.97345
+e4_batches_skew0.95,Global-MT(v),144,7358.30098
+e4_batches_skew0.95,Global-MT(v),145,7380.4976
+e4_batches_skew0.95,Global-MT(v),146,7396.25124
+e4_batches_skew0.95,Global-MT(v),147,7453.35818
+e4_batches_skew0.95,Global-MT(v),148,7479.20456
+e4_batches_skew0.95,Global-MT(v),149,7485.2331
+e4_batches_skew0.95,Global-MT(v),150,7559.79617
+e4_batches_skew0.95,Global-MT(v),151,7574.79399
+e4_batches_skew0.95,Global-MT(v),152,7565.07666
+e4_batches_skew0.95,Global-MT(v),153,7601.65691
+e4_batches_skew0.95,Global-MT(v),154,7760.4106
+e4_batches_skew0.95,Global-MT(v),155,7788.01924
+e4_batches_skew0.95,Global-MT(v),156,7776.52848
+e4_batches_skew0.95,Global-MT(v),157,7804.43449
+e4_batches_skew0.95,Global-MT(v),158,7805.92997
+e4_batches_skew0.95,Global-MT(v),159,7849.85996
+e4_batches_skew0.95,Global-MT(v),160,7851.67314
+e4_batches_skew0.95,Global-MT(v),161,7873.11449
+e4_batches_skew0.95,Global-MT(v),162,7873.99291
+e4_batches_skew0.95,Global-MT(v),163,7898.96638
+e4_batches_skew0.95,Global-MT(v),164,7921.2149
+e4_batches_skew0.95,Global-MT(v),165,7956.18567
+e4_batches_skew0.95,Global-MT(v),166,7936.82932
+e4_batches_skew0.95,Global-MT(v),167,7961.86699
+e4_batches_skew0.95,Global-MT(v),168,7978.72685
+e4_batches_skew0.95,Global-MT(v),169,7972.98508
+e4_batches_skew0.95,Global-MT(v),170,7988.74528
+e4_batches_skew0.95,Global-MT(v),171,7950.27696
+e4_batches_skew0.95,Global-MT(v),172,8035.79072
+e4_batches_skew0.95,Global-MT(v),173,7940.54151
+e4_batches_skew0.95,Global-MT(v),174,7904.73891
+e4_batches_skew0.95,Global-MT(v),175,7955.89119
+e4_batches_skew0.95,Global-MT(v),176,7974.19653
+e4_batches_skew0.95,Global-MT(v),177,8038.8086
+e4_batches_skew0.95,Global-MT(v),178,8019.37064
+e4_batches_skew0.95,Global-MT(v),179,8121.8517
+e4_batches_skew0.95,Global-MT(v),180,8109.51051
+e4_batches_skew0.95,Global-MT(v),181,8038.42276
+e4_batches_skew0.95,Global-MT(v),182,8062.18235
+e4_batches_skew0.95,Global-MT(v),183,8128.83711
+e4_batches_skew0.95,Global-MT(v),184,8124.23495
+e4_batches_skew0.95,Global-MT(v),185,8148.94281
+e4_batches_skew0.95,Global-MT(v),186,8108.42904
+e4_batches_skew0.95,Global-MT(v),187,8137.95089
+e4_batches_skew0.95,Global-MT(v),188,8114.25105
+e4_batches_skew0.95,Global-MT(v),189,8171.42446
+e4_batches_skew0.95,Global-MT(v),190,8149.79751
+e4_batches_skew0.95,Global-MT(v),191,8193.31161
+e4_batches_skew0.95,Global-MT(v),192,8205.01198
+e4_batches_skew0.95,Global-MT(v),193,8212.30184
+e4_batches_skew0.95,Global-MT(v),194,8245.94084
+e4_batches_skew0.95,Global-MT(v),195,8302.18936
+e4_batches_skew0.95,Global-MT(v),196,8294.38495
+e4_batches_skew0.95,Global-MT(v),197,8318.44986
+e4_batches_skew0.95,Global-MT(v),198,8318.73499
+e4_batches_skew0.95,Global-MT(v),199,8311.65475
+e4_batches_skew0.95,Global-MT(v),200,8369.63708
+e4_batches_skew0.95,Global-MT(v),201,8390.53973
+e4_batches_skew0.95,Global-MT(v),202,8380.45837
+e4_batches_skew0.95,Global-MT(v),203,8408.25686
+e4_batches_skew0.95,Global-MT(v),204,8431.84365
+e4_batches_skew0.95,Global-MT(v),205,8449.49069
+e4_batches_skew0.95,Global-MT(v),206,8462.43498
+e4_batches_skew0.95,Global-MT(v),207,8495.89992
+e4_batches_skew0.95,Global-MT(v),208,8484.56821
+e4_batches_skew0.95,Global-MT(v),209,8501.83279
+e4_batches_skew0.95,Global-MT(v),210,8520.61218
+e4_batches_skew0.95,Global-MT(v),211,8590.62564
+e4_batches_skew0.95,Global-MT(v),212,8617.53415
+e4_batches_skew0.95,Global-MT(v),213,8618.22267
+e4_batches_skew0.95,Global-MT(v),214,8632.72344
+e4_batches_skew0.95,Global-MT(v),215,8596.17516
+e4_batches_skew0.95,Global-MT(v),216,8629.3454
+e4_batches_skew0.95,Global-MT(v),217,8642.86047
+e4_batches_skew0.95,Global-MT(v),218,8668.00691
+e4_batches_skew0.95,Global-MT(v),219,8692.99482
+e4_batches_skew0.95,Global-MT(v),220,8715.83987
+e4_batches_skew0.95,Global-MT(v),221,8732.24586
+e4_batches_skew0.95,Global-MT(v),222,8736.68971
+e4_batches_skew0.95,Global-MT(v),223,8771.36313
+e4_batches_skew0.95,Global-MT(v),224,8801.34048
+e4_batches_skew0.95,Global-MT(v),225,8861.49875
+e4_batches_skew0.95,Global-MT(v),226,8816.33614
+e4_batches_skew0.95,Global-MT(v),227,8858.04133
+e4_batches_skew0.95,Global-MT(v),228,8890.61579
+e4_batches_skew0.95,Global-MT(v),229,8898.6344
+e4_batches_skew0.95,Global-MT(v),230,8973.42065
+e4_batches_skew0.95,Global-MT(v),231,8925.49996
+e4_batches_skew0.95,Global-MT(v),232,8957.1869
+e4_batches_skew0.95,Global-MT(v),233,8974.99433
+e4_batches_skew0.95,Global-MT(v),234,9009.28922
+e4_batches_skew0.95,Global-MT(v),235,9062.95141
+e4_batches_skew0.95,Global-MT(v),236,9089.28047
+e4_batches_skew0.95,Global-MT(v),237,9059.00002
+e4_batches_skew0.95,Global-MT(v),238,9133.93666
+e4_batches_skew0.95,Global-MT(v),239,9116.86326
+e4_batches_skew0.95,Global-MT(v),240,9159.94251
+e4_batches_skew0.95,Global-MT(v),241,9111.40174
+e4_batches_skew0.95,Global-MT(v),242,9186.25927
+e4_batches_skew0.95,Global-MT(v),243,9208.6687
+e4_batches_skew0.95,Global-MT(v),244,9213.13151
+e4_batches_skew0.95,Global-MT(v),245,9176.42223
+e4_batches_skew0.95,Global-MT(v),246,9190.87941
+e4_batches_skew0.95,Global-MT(v),247,9878.93955
+e4_batches_skew0.95,Global-MT(v),248,9231.42238
+e4_batches_skew0.95,Global-MT(v),249,9270.53607
+e4_batches_skew0.95,Global-MT(v),250,9690.57066
+e4_batches_skew0.95,Global-MT(v),251,9739.4358
+e4_batches_skew0.95,Global-MT(v),252,9701.99512
+e4_batches_skew0.95,Global-MT(v),253,9655.15632
+e4_batches_skew0.95,Global-MT(v),254,9656.76173
+e4_batches_skew0.95,Global-MT(v),255,9616.39327
+e4_batches_skew0.95,Global-MT(v),256,9598.05847
+e4_batches_skew0.95,Global-MT(v),257,9594.93911
+e4_batches_skew0.95,Global-MT(v),258,9567.89218
+e4_batches_skew0.95,Global-MT(v),259,9568.27788
+e4_batches_skew0.95,Global-MT(v),260,9542.3696
+e4_batches_skew0.95,Global-MT(v),261,9534.15877
+e4_batches_skew0.95,Global-MT(v),262,9521.55357
+e4_batches_skew0.95,Global-MT(v),263,9496.92357
+e4_batches_skew0.95,Global-MT(v),264,9486.39718
+e4_batches_skew0.95,Global-MT(v),265,9507.16104
+e4_batches_skew0.95,Global-MT(v),266,9429.89644
+e4_batches_skew0.95,Global-MT(v),267,9427.2862
+e4_batches_skew0.95,Global-MT(v),268,9393.63163
+e4_batches_skew0.95,Global-MT(v),269,9385.27083
+e4_batches_skew0.95,Global-MT(v),270,9389.3163
+e4_batches_skew0.95,Global-MT(v),271,9385.30336
+e4_batches_skew0.95,Global-MT(v),272,9346.86537
+e4_batches_skew0.95,Global-MT(v),273,9368.04361
+e4_batches_skew0.95,Global-MT(v),274,9331.70688
+e4_batches_skew0.95,Global-MT(v),275,9301.48851
+e4_batches_skew0.95,Global-MT(v),276,9254.5286
+e4_batches_skew0.95,Global-MT(v),277,9285.86684
+e4_batches_skew0.95,Global-MT(v),278,9243.71456
+e4_batches_skew0.95,Global-MT(v),279,9252.63624
+e4_batches_skew0.95,Global-MT(v),280,9218.24389
+e4_batches_skew0.95,Global-MT(v),281,9187.86844
+e4_batches_skew0.95,Global-MT(v),282,9167.068
+e4_batches_skew0.95,Global-MT(v),283,9174.89746
+e4_batches_skew0.95,Global-MT(v),284,9147.14277
+e4_batches_skew0.95,Global-MT(v),285,9147.04438
+e4_batches_skew0.95,Global-MT(v),286,9107.03479
+e4_batches_skew0.95,Global-MT(v),287,9081.6494
+e4_batches_skew0.95,Global-MT(v),288,9086.76448
+e4_batches_skew0.95,Global-MT(v),289,9053.4365
+e4_batches_skew0.95,Global-MT(v),290,9055.20029
+e4_batches_skew0.95,Global-MT(v),291,9046.60532
+e4_batches_skew0.95,Global-MT(v),292,9032.80404
+e4_batches_skew0.95,Global-MT(v),293,9010.12922
+e4_batches_skew0.95,Global-MT(v),294,8990.45121
+e4_batches_skew0.95,Global-MT(v),295,8959.68795
+e4_batches_skew0.95,Global-MT(v),296,8937.22672
+e4_batches_skew0.95,Global-MT(v),297,8914.74369
+e4_batches_skew0.95,Global-MT(v),298,8898.21467
+e4_batches_skew0.95,Global-MT(v),299,8885.29885
+e4_batches_skew0.95,Global-MT(v),300,8843.07566
+e4_batches_skew0.95,Global-MT(v),301,8865.87205
+e4_batches_skew0.95,Global-MT(v),302,8838.51204
+e4_batches_skew0.95,Global-MT(v),303,8850.04222
+e4_batches_skew0.95,Global-MT(v),304,8821.82567
+e4_batches_skew0.95,Global-MT(v),305,8817.20701
+e4_batches_skew0.95,Global-MT(v),306,8800.94961
+e4_batches_skew0.95,Global-MT(v),307,8792.54245
+e4_batches_skew0.95,Global-MT(v),308,8766.39024
+e4_batches_skew0.95,Global-MT(v),309,8758.31979
+e4_batches_skew0.95,Global-MT(v),310,8732.41726
+e4_batches_skew0.95,Global-MT(v),311,8706.63963
+e4_batches_skew0.95,Global-MT(v),312,8672.56637
+e4_batches_skew0.95,Global-MT(v),313,8648.48933
+e4_batches_skew0.95,Global-MT(v),314,8634.38537
+e4_batches_skew0.95,Global-MT(v),315,8616.65453
+e4_batches_skew0.95,Global-MT(v),316,8611.24512
+e4_batches_skew0.95,Global-MT(v),317,8590.46175
+e4_batches_skew0.95,Global-MT(v),318,8570.55582
+e4_batches_skew0.95,Global-MT(v),319,8607.76256
+e4_batches_skew0.95,Global-MT(v),320,8563.2139
+e4_batches_skew0.95,Global-MT(v),321,8561.96994
+e4_batches_skew0.95,Global-MT(v),322,8483.40327
+e4_batches_skew0.95,Global-MT(v),323,8484.39336
+e4_batches_skew0.95,Global-MT(v),324,8488.93351
+e4_batches_skew0.95,Global-MT(v),325,8488.35878
+e4_batches_skew0.95,Global-MT(v),326,8462.09917
+e4_batches_skew0.95,Global-MT(v),327,8422.55353
+e4_batches_skew0.95,Global-MT(v),328,8404.43635
+e4_batches_skew0.95,Global-MT(v),329,8385.91043
+e4_batches_skew0.95,Global-MT(v),330,8375.7174
+e4_batches_skew0.95,Global-MT(v),331,8356.90828
+e4_batches_skew0.95,Global-MT(v),332,8336.13206
+e4_batches_skew0.95,Global-MT(v),333,8335.21646
+e4_batches_skew0.95,Global-MT(v),334,8299.60016
+e4_batches_skew0.95,Global-MT(v),335,8272.73133
+e4_batches_skew0.95,Global-MT(v),336,8297.94959
+e4_batches_skew0.95,Global-MT(v),337,8250.76528
+e4_batches_skew0.95,Global-MT(v),338,8237.32493
+e4_batches_skew0.95,Global-MT(v),339,8222.70541
+e4_batches_skew0.95,Global-MT(v),340,8194.97322
+e4_batches_skew0.95,Global-MT(v),341,8183.83535
+e4_batches_skew0.95,Global-MT(v),342,8158.5209
+e4_batches_skew0.95,Global-MT(v),343,8127.51857
+e4_batches_skew0.95,Global-MT(v),344,8124.87684
+e4_batches_skew0.95,Global-MT(v),345,8124.1998
+e4_batches_skew0.95,Global-MT(v),346,8083.85782
+e4_batches_skew0.95,Global-MT(v),347,8082.8865
+e4_batches_skew0.95,Global-MT(v),348,8051.95194
+e4_batches_skew0.95,Global-MT(v),349,8047.06689
+e4_batches_skew0.95,Global-MT(v),350,8024.11803
+e4_batches_skew0.95,Global-MT(v),351,8019.90462
+e4_batches_skew0.95,Global-MT(v),352,8014.94736
+e4_batches_skew0.95,Global-MT(v),353,7971.98554
+e4_batches_skew0.95,Global-MT(v),354,7965.98899
+e4_batches_skew0.95,Global-MT(v),355,7967.1435
+e4_batches_skew0.95,Global-MT(v),356,7937.73299
+e4_batches_skew0.95,Global-MT(v),357,7944.75371
+e4_batches_skew0.95,Global-MT(v),358,7938.92123
+e4_batches_skew0.95,Global-MT(v),359,7903.57296
+e4_batches_skew0.95,Global-MT(v),360,7880.10807
+e4_batches_skew0.95,Global-MT(v),361,7883.89526
+e4_batches_skew0.95,Global-MT(v),362,7847.64025
+e4_batches_skew0.95,Global-MT(v),363,7811.21603
+e4_batches_skew0.95,Global-MT(v),364,7798.78597
+e4_batches_skew0.95,Global-MT(v),365,7771.09077
+e4_batches_skew0.95,Global-MT(v),366,7738.86333
+e4_batches_skew0.95,Global-MT(v),367,7742.57242
+e4_batches_skew0.95,Global-MT(v),368,7739.07251
+e4_batches_skew0.95,Global-MT(v),369,7726.68392
+e4_batches_skew0.95,Global-MT(v),370,7696.25904
+e4_batches_skew0.95,Global-MT(v),371,7662.37447
+e4_batches_skew0.95,Global-MT(v),372,7699.07718
+e4_batches_skew0.95,Global-MT(v),373,7645.33614
+e4_batches_skew0.95,Global-MT(v),374,7623.59015
+e4_batches_skew0.95,Global-MT(v),375,7648.82267
+e4_batches_skew0.95,Global-MT(v),376,7576.1174
+e4_batches_skew0.95,Global-MT(v),377,7576.19247
+e4_batches_skew0.95,Global-MT(v),378,7543.42396
+e4_batches_skew0.95,Global-MT(v),379,7528.90542
+e4_batches_skew0.95,Global-MT(v),380,7523.58833
+e4_batches_skew0.95,Global-MT(v),381,7522.24712
+e4_batches_skew0.95,Global-MT(v),382,7496.56029
+e4_batches_skew0.95,Global-MT(v),383,7508.78495
+e4_batches_skew0.95,Global-MT(v),384,7469.74094
+e4_batches_skew0.95,Global-MT(v),385,7467.42635
+e4_batches_skew0.95,Global-MT(v),386,7437.08278
+e4_batches_skew0.95,Global-MT(v),387,7395.9644
+e4_batches_skew0.95,Global-MT(v),388,7387.69739
+e4_batches_skew0.95,Global-MT(v),389,7353.05261
+e4_batches_skew0.95,Global-MT(v),390,7336.79897
+e4_batches_skew0.95,Global-MT(v),391,7327.00998
+e4_batches_skew0.95,Global-MT(v),392,7297.13511
+e4_batches_skew0.95,Global-MT(v),393,7292.60377
+e4_batches_skew0.95,Global-MT(v),394,7273.72243
+e4_batches_skew0.95,Global-MT(v),395,7225.34173
+e4_batches_skew0.95,Global-MT(v),396,7238.45247
+e4_batches_skew0.95,Global-MT(v),397,7184.40812
+e4_batches_skew0.95,Global-MT(v),398,7184.21949
+e4_batches_skew0.95,Global-MT(v),399,7187.27652
+e4_batches_skew0.95,Global-MT(v),400,7165.48874
+e4_batches_skew0.95,Global-MT(v),401,7116.82831
+e4_batches_skew0.95,Global-MT(v),402,7091.48552
+e4_batches_skew0.95,Global-MT(v),403,7097.70259
+e4_batches_skew0.95,Global-MT(v),404,7044.48467
+e4_batches_skew0.95,Global-MT(v),405,7038.19924
+e4_batches_skew0.95,Global-MT(v),406,7028.57285
+e4_batches_skew0.95,Global-MT(v),407,7009.26412
+e4_batches_skew0.95,Global-MT(v),408,6971.55454
+e4_batches_skew0.95,Global-MT(v),409,6958.40595
+e4_batches_skew0.95,Global-MT(v),410,6935.50892
+e4_batches_skew0.95,Global-MT(v),411,6909.17634
+e4_batches_skew0.95,Global-MT(v),412,6884.90266
+e4_batches_skew0.95,Global-MT(v),413,6865.15697
+e4_batches_skew0.95,Global-MT(v),414,6849.0974
+e4_batches_skew0.95,Global-MT(v),415,6656.090711
+e4_batches_skew0.95,AMTP (full protocol),0,3550.983709
+e4_batches_skew0.95,AMTP (full protocol),1,3643.061971
+e4_batches_skew0.95,AMTP (full protocol),2,3700.194646
+e4_batches_skew0.95,AMTP (full protocol),3,3573.417086
+e4_batches_skew0.95,AMTP (full protocol),4,3637.007028
+e4_batches_skew0.95,AMTP (full protocol),5,3646.798291
+e4_batches_skew0.95,AMTP (full protocol),6,3332.153033
+e4_batches_skew0.95,AMTP (full protocol),7,3573.28259
+e4_batches_skew0.95,AMTP (full protocol),8,3319.768318
+e4_batches_skew0.95,AMTP (full protocol),9,3556.007285
+e4_batches_skew0.95,AMTP (full protocol),10,3379.491703
+e4_batches_skew0.95,AMTP (full protocol),11,3554.007446
+e4_batches_skew0.95,AMTP (full protocol),12,3380.556823
+e4_batches_skew0.95,AMTP (full protocol),13,3496.980935
+e4_batches_skew0.95,AMTP (full protocol),14,3439.867051
+e4_batches_skew0.95,AMTP (full protocol),15,3520.537593
+e4_batches_skew0.95,AMTP (full protocol),16,3465.036884
+e4_batches_skew0.95,AMTP (full protocol),17,3466.596358
+e4_batches_skew0.95,AMTP (full protocol),18,3439.411568
+e4_batches_skew0.95,AMTP (full protocol),19,3538.852347
+e4_batches_skew0.95,AMTP (full protocol),20,3496.469219
+e4_batches_skew0.95,AMTP (full protocol),21,3471.93144
+e4_batches_skew0.95,AMTP (full protocol),22,3441.916624
+e4_batches_skew0.95,AMTP (full protocol),23,3523.198344
+e4_batches_skew0.95,AMTP (full protocol),24,3366.590423
+e4_batches_skew0.95,AMTP (full protocol),25,4618.802169
+e4_batches_skew0.95,AMTP (full protocol),26,3470.286785
+e4_batches_skew0.95,AMTP (full protocol),27,3496.346579
+e4_batches_skew0.95,AMTP (full protocol),28,3526.460616
+e4_batches_skew0.95,AMTP (full protocol),29,3531.51422
+e4_batches_skew0.95,AMTP (full protocol),30,3537.800346
+e4_batches_skew0.95,AMTP (full protocol),31,3538.772224
+e4_batches_skew0.95,AMTP (full protocol),32,3527.912528
+e4_batches_skew0.95,AMTP (full protocol),33,3485.854635
+e4_batches_skew0.95,AMTP (full protocol),34,3526.880208
+e4_batches_skew0.95,AMTP (full protocol),35,3525.625272
+e4_batches_skew0.95,AMTP (full protocol),36,3606.021357
+e4_batches_skew0.95,AMTP (full protocol),37,3528.731994
+e4_batches_skew0.95,AMTP (full protocol),38,3606.633768
+e4_batches_skew0.95,AMTP (full protocol),39,3565.361431
+e4_batches_skew0.95,AMTP (full protocol),40,3586.610798
+e4_batches_skew0.95,AMTP (full protocol),41,3472.829434
+e4_batches_skew0.95,AMTP (full protocol),42,3639.854
+e4_batches_skew0.95,AMTP (full protocol),43,3429.99656
+e4_batches_skew0.95,AMTP (full protocol),44,3650.382824
+e4_batches_skew0.95,AMTP (full protocol),45,3459.927148
+e4_batches_skew0.95,AMTP (full protocol),46,3619.34741
+e4_batches_skew0.95,AMTP (full protocol),47,3470.737714
+e4_batches_skew0.95,AMTP (full protocol),48,3547.265654
+e4_batches_skew0.95,AMTP (full protocol),49,3578.740031
+e4_batches_skew0.95,AMTP (full protocol),50,3634.63434
+e4_batches_skew0.95,AMTP (full protocol),51,3502.457487
+e4_batches_skew0.95,AMTP (full protocol),52,3618.480213
+e4_batches_skew0.95,AMTP (full protocol),53,3458.361503
+e4_batches_skew0.95,AMTP (full protocol),54,3536.574918
+e4_batches_skew0.95,AMTP (full protocol),55,3533.084376
+e4_batches_skew0.95,AMTP (full protocol),56,3648.857489
+e4_batches_skew0.95,AMTP (full protocol),57,3538.377878
+e4_batches_skew0.95,AMTP (full protocol),58,3515.641864
+e4_batches_skew0.95,AMTP (full protocol),59,3525.808732
+e4_batches_skew0.95,AMTP (full protocol),60,3632.97535
+e4_batches_skew0.95,AMTP (full protocol),61,3574.482321
+e4_batches_skew0.95,AMTP (full protocol),62,3617.219192
+e4_batches_skew0.95,AMTP (full protocol),63,3554.401911
+e4_batches_skew0.95,AMTP (full protocol),64,3634.641353
+e4_batches_skew0.95,AMTP (full protocol),65,3550.991971
+e4_batches_skew0.95,AMTP (full protocol),66,3613.31695
+e4_batches_skew0.95,AMTP (full protocol),67,3598.214279
+e4_batches_skew0.95,AMTP (full protocol),68,3570.526186
+e4_batches_skew0.95,AMTP (full protocol),69,3509.616978
+e4_batches_skew0.95,AMTP (full protocol),70,3596.723205
+e4_batches_skew0.95,AMTP (full protocol),71,3663.242085
+e4_batches_skew0.95,AMTP (full protocol),72,3556.91733
+e4_batches_skew0.95,AMTP (full protocol),73,3551.61138
+e4_batches_skew0.95,AMTP (full protocol),74,3637.3251
+e4_batches_skew0.95,AMTP (full protocol),75,3544.736212
+e4_batches_skew0.95,AMTP (full protocol),76,3558.496019
+e4_batches_skew0.95,AMTP (full protocol),77,3605.248837
+e4_batches_skew0.95,AMTP (full protocol),78,3568.688929
+e4_batches_skew0.95,AMTP (full protocol),79,3693.155751
+e4_batches_skew0.95,AMTP (full protocol),80,3569.396393
+e4_batches_skew0.95,AMTP (full protocol),81,3708.317163
+e4_batches_skew0.95,AMTP (full protocol),82,3538.989098
+e4_batches_skew0.95,AMTP (full protocol),83,3674.557733
+e4_batches_skew0.95,AMTP (full protocol),84,3602.346204
+e4_batches_skew0.95,AMTP (full protocol),85,3648.789119
+e4_batches_skew0.95,AMTP (full protocol),86,3591.658373
+e4_batches_skew0.95,AMTP (full protocol),87,3610.362999
+e4_batches_skew0.95,AMTP (full protocol),88,3541.856353
+e4_batches_skew0.95,AMTP (full protocol),89,3697.429088
+e4_batches_skew0.95,AMTP (full protocol),90,3637.60223
+e4_batches_skew0.95,AMTP (full protocol),91,3675.37819
+e4_batches_skew0.95,AMTP (full protocol),92,3545.589591
+e4_batches_skew0.95,AMTP (full protocol),93,3763.953517
+e4_batches_skew0.95,AMTP (full protocol),94,3440.430477
+e4_batches_skew0.95,AMTP (full protocol),95,3685.666667
+e4_batches_skew0.95,AMTP (full protocol),96,3581.727966
+e4_batches_skew0.95,AMTP (full protocol),97,3711.116606
+e4_batches_skew0.95,AMTP (full protocol),98,3466.321392
+e4_batches_skew0.95,AMTP (full protocol),99,3776.581037
+e4_batches_skew0.95,AMTP (full protocol),100,3533.852388
+e4_batches_skew0.95,AMTP (full protocol),101,3731.924722
+e4_batches_skew0.95,AMTP (full protocol),102,3560.7186
+e4_batches_skew0.95,AMTP (full protocol),103,3708.212062
+e4_batches_skew0.95,AMTP (full protocol),104,3533.800363
+e4_batches_skew0.95,AMTP (full protocol),105,3663.324524
+e4_batches_skew0.95,AMTP (full protocol),106,3595.596811
+e4_batches_skew0.95,AMTP (full protocol),107,3748.450076
+e4_batches_skew0.95,AMTP (full protocol),108,3611.014726
+e4_batches_skew0.95,AMTP (full protocol),109,3750.54806
+e4_batches_skew0.95,AMTP (full protocol),110,3578.33452
+e4_batches_skew0.95,AMTP (full protocol),111,3727.62362
+e4_batches_skew0.95,AMTP (full protocol),112,3617.007226
+e4_batches_skew0.95,AMTP (full protocol),113,3668.84711
+e4_batches_skew0.95,AMTP (full protocol),114,3567.709342
+e4_batches_skew0.95,AMTP (full protocol),115,3776.796702
+e4_batches_skew0.95,AMTP (full protocol),116,3629.226812
+e4_batches_skew0.95,AMTP (full protocol),117,3733.075381
+e4_batches_skew0.95,AMTP (full protocol),118,3630.095529
+e4_batches_skew0.95,AMTP (full protocol),119,3720.370739
+e4_batches_skew0.95,AMTP (full protocol),120,3601.805989
+e4_batches_skew0.95,AMTP (full protocol),121,3736.257273
+e4_batches_skew0.95,AMTP (full protocol),122,3602.657993
+e4_batches_skew0.95,AMTP (full protocol),123,3695.808868
+e4_batches_skew0.95,AMTP (full protocol),124,3631.543209
+e4_batches_skew0.95,AMTP (full protocol),125,3720.654506
+e4_batches_skew0.95,AMTP (full protocol),126,3686.404845
+e4_batches_skew0.95,AMTP (full protocol),127,3744.318014
+e4_batches_skew0.95,AMTP (full protocol),128,3557.857062
+e4_batches_skew0.95,AMTP (full protocol),129,3781.907651
+e4_batches_skew0.95,AMTP (full protocol),130,3653.143217
+e4_batches_skew0.95,AMTP (full protocol),131,3760.517778
+e4_batches_skew0.95,AMTP (full protocol),132,3676.615511
+e4_batches_skew0.95,AMTP (full protocol),133,3677.439429
+e4_batches_skew0.95,AMTP (full protocol),134,3587.98232
+e4_batches_skew0.95,AMTP (full protocol),135,3694.970242
+e4_batches_skew0.95,AMTP (full protocol),136,3689.691316
+e4_batches_skew0.95,AMTP (full protocol),137,3752.256477
+e4_batches_skew0.95,AMTP (full protocol),138,3812.702074
+e4_batches_skew0.95,AMTP (full protocol),139,3691.015152
+e4_batches_skew0.95,AMTP (full protocol),140,3820.332084
+e4_batches_skew0.95,AMTP (full protocol),141,3627.402308
+e4_batches_skew0.95,AMTP (full protocol),142,3782.453807
+e4_batches_skew0.95,AMTP (full protocol),143,3672.800424
+e4_batches_skew0.95,AMTP (full protocol),144,3850.671921
+e4_batches_skew0.95,AMTP (full protocol),145,3653.063959
+e4_batches_skew0.95,AMTP (full protocol),146,3794.378168
+e4_batches_skew0.95,AMTP (full protocol),147,3635.505916
+e4_batches_skew0.95,AMTP (full protocol),148,3714.829945
+e4_batches_skew0.95,AMTP (full protocol),149,3610.628333
+e4_batches_skew0.95,AMTP (full protocol),150,3699.494528
+e4_batches_skew0.95,AMTP (full protocol),151,3628.678657
+e4_batches_skew0.95,AMTP (full protocol),152,3770.64624
+e4_batches_skew0.95,AMTP (full protocol),153,3643.061175
+e4_batches_skew0.95,AMTP (full protocol),154,3700.865417
+e4_batches_skew0.95,AMTP (full protocol),155,3680.837476
+e4_batches_skew0.95,AMTP (full protocol),156,3795.764088
+e4_batches_skew0.95,AMTP (full protocol),157,3807.759495
+e4_batches_skew0.95,AMTP (full protocol),158,3786.612406
+e4_batches_skew0.95,AMTP (full protocol),159,3722.114552
+e4_batches_skew0.95,AMTP (full protocol),160,3648.302806
+e4_batches_skew0.95,AMTP (full protocol),161,3786.124006
+e4_batches_skew0.95,AMTP (full protocol),162,3759.652077
+e4_batches_skew0.95,AMTP (full protocol),163,3722.755741
+e4_batches_skew0.95,AMTP (full protocol),164,3780.155671
+e4_batches_skew0.95,AMTP (full protocol),165,3719.027021
+e4_batches_skew0.95,AMTP (full protocol),166,3742.022802
+e4_batches_skew0.95,AMTP (full protocol),167,3819.825993
+e4_batches_skew0.95,AMTP (full protocol),168,3710.935746
+e4_batches_skew0.95,AMTP (full protocol),169,3661.287244
+e4_batches_skew0.95,AMTP (full protocol),170,3733.067678
+e4_batches_skew0.95,AMTP (full protocol),171,3859.375215
+e4_batches_skew0.95,AMTP (full protocol),172,3683.973094
+e4_batches_skew0.95,AMTP (full protocol),173,3744.741964
+e4_batches_skew0.95,AMTP (full protocol),174,3705.471731
+e4_batches_skew0.95,AMTP (full protocol),175,3820.996577
+e4_batches_skew0.95,AMTP (full protocol),176,3838.613009
+e4_batches_skew0.95,AMTP (full protocol),177,3791.623885
+e4_batches_skew0.95,AMTP (full protocol),178,3811.408859
+e4_batches_skew0.95,AMTP (full protocol),179,3853.752605
+e4_batches_skew0.95,AMTP (full protocol),180,3715.12455
+e4_batches_skew0.95,AMTP (full protocol),181,3780.811767
+e4_batches_skew0.95,AMTP (full protocol),182,3728.074366
+e4_batches_skew0.95,AMTP (full protocol),183,3899.685569
+e4_batches_skew0.95,AMTP (full protocol),184,3694.604602
+e4_batches_skew0.95,AMTP (full protocol),185,3855.046502
+e4_batches_skew0.95,AMTP (full protocol),186,3750.393975
+e4_batches_skew0.95,AMTP (full protocol),187,3888.912985
+e4_batches_skew0.95,AMTP (full protocol),188,3724.096921
+e4_batches_skew0.95,AMTP (full protocol),189,3905.89431
+e4_batches_skew0.95,AMTP (full protocol),190,3761.103755
+e4_batches_skew0.95,AMTP (full protocol),191,3813.219726
+e4_batches_skew0.95,AMTP (full protocol),192,3842.884765
+e4_batches_skew0.95,AMTP (full protocol),193,3854.533304
+e4_batches_skew0.95,AMTP (full protocol),194,3923.186692
+e4_batches_skew0.95,AMTP (full protocol),195,3757.865017
+e4_batches_skew0.95,AMTP (full protocol),196,3907.706441
+e4_batches_skew0.95,AMTP (full protocol),197,3774.139787
+e4_batches_skew0.95,AMTP (full protocol),198,3903.233425
+e4_batches_skew0.95,AMTP (full protocol),199,3712.527644
+e4_batches_skew0.95,AMTP (full protocol),200,3903.643115
+e4_batches_skew0.95,AMTP (full protocol),201,3693.598415
+e4_batches_skew0.95,AMTP (full protocol),202,3883.853673
+e4_batches_skew0.95,AMTP (full protocol),203,3830.510544
+e4_batches_skew0.95,AMTP (full protocol),204,3820.237282
+e4_batches_skew0.95,AMTP (full protocol),205,3799.380497
+e4_batches_skew0.95,AMTP (full protocol),206,3856.973222
+e4_batches_skew0.95,AMTP (full protocol),207,3777.281717
+e4_batches_skew0.95,AMTP (full protocol),208,3845.032961
+e4_batches_skew0.95,AMTP (full protocol),209,3880.713302
+e4_batches_skew0.95,AMTP (full protocol),210,3824.319982
+e4_batches_skew0.95,AMTP (full protocol),211,3811.379344
+e4_batches_skew0.95,AMTP (full protocol),212,3871.690609
+e4_batches_skew0.95,AMTP (full protocol),213,3817.667474
+e4_batches_skew0.95,AMTP (full protocol),214,3911.116676
+e4_batches_skew0.95,AMTP (full protocol),215,3779.601825
+e4_batches_skew0.95,AMTP (full protocol),216,3881.158028
+e4_batches_skew0.95,AMTP (full protocol),217,3759.969204
+e4_batches_skew0.95,AMTP (full protocol),218,3944.385836
+e4_batches_skew0.95,AMTP (full protocol),219,3785.508054
+e4_batches_skew0.95,AMTP (full protocol),220,3938.109896
+e4_batches_skew0.95,AMTP (full protocol),221,3909.918078
+e4_batches_skew0.95,AMTP (full protocol),222,3916.608822
+e4_batches_skew0.95,AMTP (full protocol),223,3781.652981
+e4_batches_skew0.95,AMTP (full protocol),224,3840.207413
+e4_batches_skew0.95,AMTP (full protocol),225,3854.174195
+e4_batches_skew0.95,AMTP (full protocol),226,3844.112579
+e4_batches_skew0.95,AMTP (full protocol),227,3789.002928
+e4_batches_skew0.95,AMTP (full protocol),228,3903.700937
+e4_batches_skew0.95,AMTP (full protocol),229,3748.953961
+e4_batches_skew0.95,AMTP (full protocol),230,3946.337035
+e4_batches_skew0.95,AMTP (full protocol),231,3917.155939
+e4_batches_skew0.95,AMTP (full protocol),232,3784.461328
+e4_batches_skew0.95,AMTP (full protocol),233,3811.184617
+e4_batches_skew0.95,AMTP (full protocol),234,3877.676494
+e4_batches_skew0.95,AMTP (full protocol),235,3841.229796
+e4_batches_skew0.95,AMTP (full protocol),236,3943.492086
+e4_batches_skew0.95,AMTP (full protocol),237,3919.983424
+e4_batches_skew0.95,AMTP (full protocol),238,3846.581299
+e4_batches_skew0.95,AMTP (full protocol),239,3890.09945
+e4_batches_skew0.95,AMTP (full protocol),240,3853.530846
+e4_batches_skew0.95,AMTP (full protocol),241,3898.195111
+e4_batches_skew0.95,AMTP (full protocol),242,3834.288746
+e4_batches_skew0.95,AMTP (full protocol),243,3963.04285
+e4_batches_skew0.95,AMTP (full protocol),244,3789.518196
+e4_batches_skew0.95,AMTP (full protocol),245,3895.118401
+e4_batches_skew0.95,AMTP (full protocol),246,3875.796018
+e4_batches_skew0.95,AMTP (full protocol),247,4516.384837
+e4_batches_skew0.95,AMTP (full protocol),248,3751.582621
+e4_batches_skew0.95,AMTP (full protocol),249,3836.995065
+e4_batches_skew0.95,AMTP (full protocol),250,9715.25348
+e4_batches_skew0.95,AMTP (full protocol),251,9600.262015
+e4_batches_skew0.95,AMTP (full protocol),252,9766.249961
+e4_batches_skew0.95,AMTP (full protocol),253,9651.861394
+e4_batches_skew0.95,AMTP (full protocol),254,9692.187869
+e4_batches_skew0.95,AMTP (full protocol),255,9664.032378
+e4_batches_skew0.95,AMTP (full protocol),256,9695.300061
+e4_batches_skew0.95,AMTP (full protocol),257,9653.080323
+e4_batches_skew0.95,AMTP (full protocol),258,9640.468729
+e4_batches_skew0.95,AMTP (full protocol),259,9631.33272
+e4_batches_skew0.95,AMTP (full protocol),260,9546.628508
+e4_batches_skew0.95,AMTP (full protocol),261,9701.381411
+e4_batches_skew0.95,AMTP (full protocol),262,9566.204808
+e4_batches_skew0.95,AMTP (full protocol),263,9545.767298
+e4_batches_skew0.95,AMTP (full protocol),264,9690.642716
+e4_batches_skew0.95,AMTP (full protocol),265,9562.719383
+e4_batches_skew0.95,AMTP (full protocol),266,9574.87946
+e4_batches_skew0.95,AMTP (full protocol),267,9568.589867
+e4_batches_skew0.95,AMTP (full protocol),268,9479.812851
+e4_batches_skew0.95,AMTP (full protocol),269,9562.808372
+e4_batches_skew0.95,AMTP (full protocol),270,9438.748816
+e4_batches_skew0.95,AMTP (full protocol),271,9459.386459
+e4_batches_skew0.95,AMTP (full protocol),272,9520.422949
+e4_batches_skew0.95,AMTP (full protocol),273,9545.385068
+e4_batches_skew0.95,AMTP (full protocol),274,9290.311114
+e4_batches_skew0.95,AMTP (full protocol),275,9338.141241
+e4_batches_skew0.95,AMTP (full protocol),276,9255.290476
+e4_batches_skew0.95,AMTP (full protocol),277,9238.318008
+e4_batches_skew0.95,AMTP (full protocol),278,9227.464912
+e4_batches_skew0.95,AMTP (full protocol),279,9152.202702
+e4_batches_skew0.95,AMTP (full protocol),280,9056.892768
+e4_batches_skew0.95,AMTP (full protocol),281,9191.903428
+e4_batches_skew0.95,AMTP (full protocol),282,9133.082859
+e4_batches_skew0.95,AMTP (full protocol),283,9090.661661
+e4_batches_skew0.95,AMTP (full protocol),284,9103.06485
+e4_batches_skew0.95,AMTP (full protocol),285,8998.5481
+e4_batches_skew0.95,AMTP (full protocol),286,9016.512006
+e4_batches_skew0.95,AMTP (full protocol),287,8990.915411
+e4_batches_skew0.95,AMTP (full protocol),288,9031.193532
+e4_batches_skew0.95,AMTP (full protocol),289,8925.572302
+e4_batches_skew0.95,AMTP (full protocol),290,8947.276929
+e4_batches_skew0.95,AMTP (full protocol),291,8950.05274
+e4_batches_skew0.95,AMTP (full protocol),292,8921.145443
+e4_batches_skew0.95,AMTP (full protocol),293,8847.911963
+e4_batches_skew0.95,AMTP (full protocol),294,8875.521859
+e4_batches_skew0.95,AMTP (full protocol),295,8774.826196
+e4_batches_skew0.95,AMTP (full protocol),296,8821.643138
+e4_batches_skew0.95,AMTP (full protocol),297,8721.120742
+e4_batches_skew0.95,AMTP (full protocol),298,8844.662946
+e4_batches_skew0.95,AMTP (full protocol),299,8733.988599
+e4_batches_skew0.95,AMTP (full protocol),300,8707.315503
+e4_batches_skew0.95,AMTP (full protocol),301,8757.391967
+e4_batches_skew0.95,AMTP (full protocol),302,8644.215557
+e4_batches_skew0.95,AMTP (full protocol),303,8688.500372
+e4_batches_skew0.95,AMTP (full protocol),304,8563.974824
+e4_batches_skew0.95,AMTP (full protocol),305,8659.108938
+e4_batches_skew0.95,AMTP (full protocol),306,8594.47271
+e4_batches_skew0.95,AMTP (full protocol),307,8543.875526
+e4_batches_skew0.95,AMTP (full protocol),308,8631.019137
+e4_batches_skew0.95,AMTP (full protocol),309,8460.011384
+e4_batches_skew0.95,AMTP (full protocol),310,8487.717896
+e4_batches_skew0.95,AMTP (full protocol),311,8526.327399
+e4_batches_skew0.95,AMTP (full protocol),312,8493.452397
+e4_batches_skew0.95,AMTP (full protocol),313,8439.749978
+e4_batches_skew0.95,AMTP (full protocol),314,8440.501708
+e4_batches_skew0.95,AMTP (full protocol),315,8367.492235
+e4_batches_skew0.95,AMTP (full protocol),316,8359.922301
+e4_batches_skew0.95,AMTP (full protocol),317,8341.031961
+e4_batches_skew0.95,AMTP (full protocol),318,8277.322318
+e4_batches_skew0.95,AMTP (full protocol),319,8295.70645
+e4_batches_skew0.95,AMTP (full protocol),320,8263.309436
+e4_batches_skew0.95,AMTP (full protocol),321,8285.248771
+e4_batches_skew0.95,AMTP (full protocol),322,8233.651188
+e4_batches_skew0.95,AMTP (full protocol),323,8283.002227
+e4_batches_skew0.95,AMTP (full protocol),324,8102.854236
+e4_batches_skew0.95,AMTP (full protocol),325,8126.636649
+e4_batches_skew0.95,AMTP (full protocol),326,8181.902768
+e4_batches_skew0.95,AMTP (full protocol),327,8226.528202
+e4_batches_skew0.95,AMTP (full protocol),328,8059.83223
+e4_batches_skew0.95,AMTP (full protocol),329,8076.282908
+e4_batches_skew0.95,AMTP (full protocol),330,8094.431722
+e4_batches_skew0.95,AMTP (full protocol),331,8001.400133
+e4_batches_skew0.95,AMTP (full protocol),332,8122.863311
+e4_batches_skew0.95,AMTP (full protocol),333,7983.349618
+e4_batches_skew0.95,AMTP (full protocol),334,7918.353977
+e4_batches_skew0.95,AMTP (full protocol),335,7862.219032
+e4_batches_skew0.95,AMTP (full protocol),336,7873.998371
+e4_batches_skew0.95,AMTP (full protocol),337,7899.243774
+e4_batches_skew0.95,AMTP (full protocol),338,7833.257475
+e4_batches_skew0.95,AMTP (full protocol),339,7808.548727
+e4_batches_skew0.95,AMTP (full protocol),340,7781.276745
+e4_batches_skew0.95,AMTP (full protocol),341,7745.511718
+e4_batches_skew0.95,AMTP (full protocol),342,7660.801666
+e4_batches_skew0.95,AMTP (full protocol),343,7806.09279
+e4_batches_skew0.95,AMTP (full protocol),344,7735.301624
+e4_batches_skew0.95,AMTP (full protocol),345,7695.224587
+e4_batches_skew0.95,AMTP (full protocol),346,7639.266943
+e4_batches_skew0.95,AMTP (full protocol),347,7704.205118
+e4_batches_skew0.95,AMTP (full protocol),348,7655.221121
+e4_batches_skew0.95,AMTP (full protocol),349,7594.704741
+e4_batches_skew0.95,AMTP (full protocol),350,7612.423792
+e4_batches_skew0.95,AMTP (full protocol),351,7511.676573
+e4_batches_skew0.95,AMTP (full protocol),352,7493.293584
+e4_batches_skew0.95,AMTP (full protocol),353,7517.182152
+e4_batches_skew0.95,AMTP (full protocol),354,7464.88158
+e4_batches_skew0.95,AMTP (full protocol),355,7420.299414
+e4_batches_skew0.95,AMTP (full protocol),356,7327.553998
+e4_batches_skew0.95,AMTP (full protocol),357,7411.244063
+e4_batches_skew0.95,AMTP (full protocol),358,7381.493782
+e4_batches_skew0.95,AMTP (full protocol),359,7303.61188
+e4_batches_skew0.95,AMTP (full protocol),360,7333.840266
+e4_batches_skew0.95,AMTP (full protocol),361,7246.264445
+e4_batches_skew0.95,AMTP (full protocol),362,7210.802936
+e4_batches_skew0.95,AMTP (full protocol),363,7209.401331
+e4_batches_skew0.95,AMTP (full protocol),364,7158.904544
+e4_batches_skew0.95,AMTP (full protocol),365,7151.604042
+e4_batches_skew0.95,AMTP (full protocol),366,7123.941544
+e4_batches_skew0.95,AMTP (full protocol),367,7177.958442
+e4_batches_skew0.95,AMTP (full protocol),368,7098.23597
+e4_batches_skew0.95,AMTP (full protocol),369,7148.370323
+e4_batches_skew0.95,AMTP (full protocol),370,7036.075303
+e4_batches_skew0.95,AMTP (full protocol),371,6933.111909
+e4_batches_skew0.95,AMTP (full protocol),372,7054.309786
+e4_batches_skew0.95,AMTP (full protocol),373,7001.574486
+e4_batches_skew0.95,AMTP (full protocol),374,6935.905555
+e4_batches_skew0.95,AMTP (full protocol),375,6991.736087
+e4_batches_skew0.95,AMTP (full protocol),376,6919.751699
+e4_batches_skew0.95,AMTP (full protocol),377,6904.786947
+e4_batches_skew0.95,AMTP (full protocol),378,6918.23415
+e4_batches_skew0.95,AMTP (full protocol),379,6909.936385
+e4_batches_skew0.95,AMTP (full protocol),380,6756.143626
+e4_batches_skew0.95,AMTP (full protocol),381,6777.351596
+e4_batches_skew0.95,AMTP (full protocol),382,6837.476214
+e4_batches_skew0.95,AMTP (full protocol),383,6715.063399
+e4_batches_skew0.95,AMTP (full protocol),384,6700.906719
+e4_batches_skew0.95,AMTP (full protocol),385,6717.666598
+e4_batches_skew0.95,AMTP (full protocol),386,6740.526696
+e4_batches_skew0.95,AMTP (full protocol),387,6686.613561
+e4_batches_skew0.95,AMTP (full protocol),388,6577.589045
+e4_batches_skew0.95,AMTP (full protocol),389,6567.652856
+e4_batches_skew0.95,AMTP (full protocol),390,6558.791388
+e4_batches_skew0.95,AMTP (full protocol),391,6538.184782
+e4_batches_skew0.95,AMTP (full protocol),392,6472.229625
+e4_batches_skew0.95,AMTP (full protocol),393,6470.594948
+e4_batches_skew0.95,AMTP (full protocol),394,6447.606363
+e4_batches_skew0.95,AMTP (full protocol),395,6408.256807
+e4_batches_skew0.95,AMTP (full protocol),396,6412.850599
+e4_batches_skew0.95,AMTP (full protocol),397,6340.129785
+e4_batches_skew0.95,AMTP (full protocol),398,6367.11465
+e4_batches_skew0.95,AMTP (full protocol),399,6331.670528
+e4_batches_skew0.95,AMTP (full protocol),400,6325.529446
+e4_batches_skew0.95,AMTP (full protocol),401,6278.666262
+e4_batches_skew0.95,AMTP (full protocol),402,6295.428864
+e4_batches_skew0.95,AMTP (full protocol),403,6295.963684
+e4_batches_skew0.95,AMTP (full protocol),404,6155.058565
+e4_batches_skew0.95,AMTP (full protocol),405,6206.197136
+e4_batches_skew0.95,AMTP (full protocol),406,6155.908397
+e4_batches_skew0.95,AMTP (full protocol),407,6177.134752
+e4_batches_skew0.95,AMTP (full protocol),408,6108.328674
+e4_batches_skew0.95,AMTP (full protocol),409,6059.708718
+e4_batches_skew0.95,AMTP (full protocol),410,6016.017471
+e4_batches_skew0.95,AMTP (full protocol),411,5973.801773
+e4_batches_skew0.95,AMTP (full protocol),412,6016.443493
+e4_batches_skew0.95,AMTP (full protocol),413,6024.133064
+e4_batches_skew0.95,AMTP (full protocol),414,5886.762438
+e4_batches_skew0.95,AMTP (full protocol),415,2742.490476
+e5_query_search,AMTP,1,0.04531
+e5_query_search,AMTP,2,0.046442
+e5_query_search,AMTP,4,0.046419
+e5_query_search,AMTP,8,0.046231
+e5_query_search,AMTP,16,0.046065
+e5_query_search,AMTP,32,0.046254
+e5_query_search,SE-COLLAB [37],1,0.068982
+e5_query_search,SE-COLLAB [37],2,0.069479
+e5_query_search,SE-COLLAB [37],4,0.069703
+e5_query_search,SE-COLLAB [37],8,0.068533
+e5_query_search,SE-COLLAB [37],16,0.070014
+e5_query_search,SE-COLLAB [37],32,0.069996
+e5_query_proof,AMTP,1,0.221847
+e5_query_proof,AMTP,2,0.230516
+e5_query_proof,AMTP,4,0.231277
+e5_query_proof,AMTP,8,0.231893
+e5_query_proof,AMTP,16,0.23019
+e5_query_proof,AMTP,32,0.231744
+e5_query_proof,SE-COLLAB [37],1,0.311906
+e5_query_proof,SE-COLLAB [37],2,0.313519
+e5_query_proof,SE-COLLAB [37],4,0.314597
+e5_query_proof,SE-COLLAB [37],8,0.31033
+e5_query_proof,SE-COLLAB [37],16,0.314554
+e5_query_proof,SE-COLLAB [37],32,0.315756
+e5_query_verify,AMTP,1,2.08739
+e5_query_verify,AMTP,2,2.107947
+e5_query_verify,AMTP,4,2.115369
+e5_query_verify,AMTP,8,2.120336
+e5_query_verify,AMTP,16,2.092905
+e5_query_verify,AMTP,32,2.097272
+e5_query_verify,SE-COLLAB [37],1,1.526368
+e5_query_verify,SE-COLLAB [37],2,1.525634
+e5_query_verify,SE-COLLAB [37],4,1.526628
+e5_query_verify,SE-COLLAB [37],8,1.524332
+e5_query_verify,SE-COLLAB [37],16,1.532056
+e5_query_verify,SE-COLLAB [37],32,1.532226
+e5_query_e2e,AMTP,1,3.061494
+e5_query_e2e,AMTP,2,3.100014
+e5_query_e2e,AMTP,4,3.110174
+e5_query_e2e,AMTP,8,3.11623
+e5_query_e2e,AMTP,16,3.085275
+e5_query_e2e,AMTP,32,3.094525
+e5_query_e2e,SE-COLLAB [37],1,10.066096
+e5_query_e2e,SE-COLLAB [37],2,10.073184
+e5_query_e2e,SE-COLLAB [37],4,10.073595
+e5_query_e2e,SE-COLLAB [37],8,10.064951
+e5_query_e2e,SE-COLLAB [37],16,10.084536
+e5_query_e2e,SE-COLLAB [37],32,10.083654
+e5_query_query_gen,AMTP,1,0.114774
+e5_query_query_gen,AMTP,2,0.116467
+e5_query_query_gen,AMTP,4,0.117165
+e5_query_query_gen,AMTP,8,0.118442
+e5_query_query_gen,AMTP,16,0.118053
+e5_query_query_gen,AMTP,32,0.120385
+e5_query_query_gen,SE-COLLAB [37],1,3.55375
+e5_query_query_gen,SE-COLLAB [37],2,3.557293
+e5_query_query_gen,SE-COLLAB [37],4,3.555878
+e5_query_query_gen,SE-COLLAB [37],8,3.556431
+e5_query_query_gen,SE-COLLAB [37],16,3.560436
+e5_query_query_gen,SE-COLLAB [37],32,3.556047
+e5_query_server,AMTP,1,0.85933
+e5_query_server,AMTP,2,0.875599
+e5_query_server,AMTP,4,0.87764
+e5_query_server,AMTP,8,0.877453
+e5_query_server,AMTP,16,0.874318
+e5_query_server,AMTP,32,0.876868
+e5_query_server,SE-COLLAB [37],1,4.985978
+e5_query_server,SE-COLLAB [37],2,4.990258
+e5_query_server,SE-COLLAB [37],4,4.991089
+e5_query_server,SE-COLLAB [37],8,4.984188
+e5_query_server,SE-COLLAB [37],16,4.992044
+e5_query_server,SE-COLLAB [37],32,4.995381
+e5_isolation_update,AMTP insert,1,237.734653
+e5_isolation_update,AMTP insert,2,247.28351
+e5_isolation_update,AMTP insert,4,258.154511
+e5_isolation_update,AMTP insert,8,270.515353
+e5_isolation_update,AMTP insert,16,282.770688
+e5_isolation_update,AMTP insert,32,294.853684
+e5_isolation_update,AMTP delete,1,238.209199
+e5_isolation_update,AMTP delete,2,247.610548
+e5_isolation_update,AMTP delete,4,257.889654
+e5_isolation_update,AMTP delete,8,273.79581
+e5_isolation_update,AMTP delete,16,282.778572
+e5_isolation_update,AMTP delete,32,294.200624
+e5_isolation_protocol,AMTP insert,1,96.110779
+e5_isolation_protocol,AMTP insert,2,95.870256
+e5_isolation_protocol,AMTP insert,4,98.90026
+e5_isolation_protocol,AMTP insert,8,98.585642
+e5_isolation_protocol,AMTP insert,16,100.854419
+e5_isolation_protocol,AMTP insert,32,102.734198
+e5_isolation_protocol,AMTP delete,1,96.392586
+e5_isolation_protocol,AMTP delete,2,95.986098
+e5_isolation_protocol,AMTP delete,4,98.692959
+e5_isolation_protocol,AMTP delete,8,100.317358
+e5_isolation_protocol,AMTP delete,16,100.41976
+e5_isolation_protocol,AMTP delete,32,102.781217
+e5_root_anchor_ms,AMTP insert,1,141.623874
+e5_root_anchor_ms,AMTP insert,2,151.413254
+e5_root_anchor_ms,AMTP insert,4,159.254251
+e5_root_anchor_ms,AMTP insert,8,171.929711
+e5_root_anchor_ms,AMTP insert,16,181.91627
+e5_root_anchor_ms,AMTP insert,32,192.119485
+e5_root_anchor_ms,AMTP delete,1,141.816613
+e5_root_anchor_ms,AMTP delete,2,151.62445
+e5_root_anchor_ms,AMTP delete,4,159.196696
+e5_root_anchor_ms,AMTP delete,8,173.478452
+e5_root_anchor_ms,AMTP delete,16,182.358811
+e5_root_anchor_ms,AMTP delete,32,191.419408
+e5_root_gas_localevm,AMTP insert,1,64451.6
+e5_root_gas_localevm,AMTP insert,2,73307.7
+e5_root_gas_localevm,AMTP insert,4,82167.1
+e5_root_gas_localevm,AMTP insert,8,91030.8
+e5_root_gas_localevm,AMTP insert,16,99893.6
+e5_root_gas_localevm,AMTP insert,32,108751.0
+e5_root_gas_localevm,AMTP delete,1,64458.4
+e5_root_gas_localevm,AMTP delete,2,73310.1
+e5_root_gas_localevm,AMTP delete,4,82159.9
+e5_root_gas_localevm,AMTP delete,8,91027.4
+e5_root_gas_localevm,AMTP delete,16,99894.6
+e5_root_gas_localevm,AMTP delete,32,108742.8
+e5_sepolia_gas,AMTP (Sepolia),1,86656.0
+e5_sepolia_gas,AMTP (Sepolia),2,102631.0
+e5_sepolia_gas,AMTP (Sepolia),3,118553.0
+e5_sepolia_gas,AMTP (Sepolia),4,118548.0
+e5_sepolia_gas,AMTP (Sepolia),5,134550.0
+e5_sepolia_gas,AMTP (Sepolia),6,134521.0
+e5_sepolia_gas,AMTP (Sepolia),7,134509.0
+e5_sepolia_gas,AMTP (Sepolia),8,134521.0
+e5_sepolia_gas,AMTP (Sepolia),9,150491.0
+e5_sepolia_gas,AMTP (Sepolia),10,150508.0
+e5_sepolia_gas,AMTP (Sepolia),11,150508.0
+e5_sepolia_gas,AMTP (Sepolia),12,150508.0
+e5_sepolia_gas,AMTP (Sepolia),13,150491.0
+e5_sepolia_gas,AMTP (Sepolia),14,150508.0
+e5_sepolia_gas,AMTP (Sepolia),15,150491.0
+e5_sepolia_gas,AMTP (Sepolia),16,150508.0
+e5_sepolia_gas,AMTP (Sepolia),17,166452.0
+e5_sepolia_gas,AMTP (Sepolia),18,166469.0
+e5_sepolia_gas,AMTP (Sepolia),19,166469.0
+e5_sepolia_gas,AMTP (Sepolia),20,166469.0
+e5_sepolia_gas,AMTP (Sepolia),21,166457.0
+e5_sepolia_gas,AMTP (Sepolia),22,166440.0
+e5_sepolia_gas,AMTP (Sepolia),23,166457.0
+e5_sepolia_gas,AMTP (Sepolia),24,166457.0
+e5_sepolia_gas,AMTP (Sepolia),25,166469.0
+e5_sepolia_gas,AMTP (Sepolia),26,166457.0
+e5_sepolia_gas,AMTP (Sepolia),27,166440.0
+e5_sepolia_gas,AMTP (Sepolia),28,166457.0
+e5_sepolia_gas,AMTP (Sepolia),29,166452.0
+e5_sepolia_gas,AMTP (Sepolia),30,166452.0
+e5_sepolia_gas,AMTP (Sepolia),31,166452.0
+e5_sepolia_gas,AMTP (Sepolia),32,166452.0
+e5_sepolia_time,AMTP (Sepolia),1,11086.0
+e5_sepolia_time,AMTP (Sepolia),2,11974.0
+e5_sepolia_time,AMTP (Sepolia),3,9267.0
+e5_sepolia_time,AMTP (Sepolia),4,10879.0
+e5_sepolia_time,AMTP (Sepolia),5,11984.0
+e5_sepolia_time,AMTP (Sepolia),6,23134.0
+e5_sepolia_time,AMTP (Sepolia),7,13242.0
+e5_sepolia_time,AMTP (Sepolia),8,13419.0
+e5_sepolia_time,AMTP (Sepolia),9,11748.0
+e5_sepolia_time,AMTP (Sepolia),10,11204.0
+e5_sepolia_time,AMTP (Sepolia),11,12679.0
+e5_sepolia_time,AMTP (Sepolia),12,12029.0
+e5_sepolia_time,AMTP (Sepolia),13,11137.0
+e5_sepolia_time,AMTP (Sepolia),14,11989.0
+e5_sepolia_time,AMTP (Sepolia),15,11827.0
+e5_sepolia_time,AMTP (Sepolia),16,11870.0
+e5_sepolia_time,AMTP (Sepolia),17,12848.0
+e5_sepolia_time,AMTP (Sepolia),18,22378.0
+e5_sepolia_time,AMTP (Sepolia),19,12772.0
+e5_sepolia_time,AMTP (Sepolia),20,12382.0
+e5_sepolia_time,AMTP (Sepolia),21,23471.0
+e5_sepolia_time,AMTP (Sepolia),22,11838.0
+e5_sepolia_time,AMTP (Sepolia),23,14366.0
+e5_sepolia_time,AMTP (Sepolia),24,13163.0
+e5_sepolia_time,AMTP (Sepolia),25,10551.0
+e5_sepolia_time,AMTP (Sepolia),26,12324.0
+e5_sepolia_time,AMTP (Sepolia),27,11148.0
+e5_sepolia_time,AMTP (Sepolia),28,11962.0
+e5_sepolia_time,AMTP (Sepolia),29,12780.0
+e5_sepolia_time,AMTP (Sepolia),30,11792.0
+e5_sepolia_time,AMTP (Sepolia),31,12174.0
+e5_sepolia_time,AMTP (Sepolia),32,10753.0

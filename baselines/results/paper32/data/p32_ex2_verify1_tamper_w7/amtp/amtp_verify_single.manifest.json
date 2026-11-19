@@ -1,0 +1,29 @@
+{
+ "result": "amtp_verify_single.csv",
+ "command": "/home/ubuntu/NewAMTP/amtp_code/bench_split/run.py verify1 --reps 10 --warmup 3 --out /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex2_verify1_tamper/amtp",
+ "written": "2026-11-18 20:56:20 +0000",
+ "git_commit": "74379b71e92353a0029762d309c73b2284030e0b",
+ "git_dirty": false,
+ "dataset": "amtp_file_db dataset-v4 (arXiv Kaggle, 4 x 125,000 + 10% insert pool, seed 42, AMTP Phase 1 keywords kappa=20)",
+ "machine": {
+  "cpu": "Intel(R) Xeon(R) Platinum 8488C",
+  "machine": "x86_64",
+  "cores": 16,
+  "memory_bytes": 132914745344,
+  "os": "Linux-7.0.0-1014-aws-x86_64-with-glibc2.39",
+  "platform": "Linux-7.0.0-1014-aws-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "python_impl": "CPython"
+ },
+ "amtp_gamma_v": true,
+ "amtp_placement": "fill",
+ "amtp_and_prune": true,
+ "amtp_part_results": true,
+ "amtp_and_greedy": true,
+ "amtp_part_leaf": true,
+ "amtp_anchor": "chain-local",
+ "amtp_abs": "mpr",
+ "amtp_abs_curve": "SS512",
+ "amtp_cpabe": "bsw07",
+ "query_set": "p32"
+}
