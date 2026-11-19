@@ -87,8 +87,8 @@ Every timing = mean of 10 runs after 3 warm-up runs (#46). Query-level points (E
 | e3_n_throughput | <data>/p32_ex3_w10/update_n exp3_dynamic_update | AMTP: signed requests (ABS) + CS prepare + DO validation + anchor (local EVM); Chen: token generation + CS apply, no update verification |
 | e3_n_breakdown_insert | <data>/p32_ex3_w10/update_n exp3_dynamic_update | ABS is part of request / CS prepare / DO validation; posting repair + auth tree are inside CS prepare |
 | e3_n_breakdown_delete | <data>/p32_ex3_w10/update_n exp3_dynamic_update | ABS is part of request / CS prepare / DO validation; posting repair + auth tree are inside CS prepare |
-| e4_update_insert | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; AMTP (full protocol) = signed requests, DO validation and anchor (local EVM) around the same index work |
-| e4_update_delete | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; AMTP (full protocol) = signed requests, DO validation and anchor (local EVM) around the same index work |
+| e4_update_insert | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; index level (the full-protocol run of the same workload is in skewproto, reported in the text only) |
+| e4_update_delete | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | mean over every batch of the phase and the 10 runs; index level (the full-protocol run of the same workload is in skewproto, reported in the text only) |
 | e4_restructure | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | restructure_ms inside the commit |
 | e4_splits_merges | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 |  |
 | e4_max_partition | ex4_*skew*/<job>/amtp/{splitmerge,skewproto}_n25000_t64 | after the last batch (insert + hot delete) |

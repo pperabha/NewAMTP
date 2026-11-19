@@ -17,3 +17,8 @@
   เฉพาะระดับ index (AMTP, Static-MT, Global-MT(v)); ไม่มีเส้น AMTP full protocol (owner ไม่เอา); ค่า = mean ของ 10 run ต่อ batch
 - จุดพุ่งครั้งเดียวที่ batch 25 และ 247 (AMTP และ Static-MT): IMT ขยายความจุเป็นสองเท่า (imt_ms ~10×, hash calls ~7× ใน batch นั้น)
   เป็นงานจริงของโครงสร้าง ไม่ใช่ noise ของการวัด (เกิดทุก seed, ทุก variant ที่มี IMT)
+
+## เพิ่ม: Exp 4 ไม่มีเส้น AMTP full protocol (owner)
+- `VARIANTS` เหลือ AMTP, Static-MT, Global-MT(v) (ระดับ index ทั้งหมด): `e4_update_insert`, `e4_update_delete`, `e4_max_partition`,
+  `e4_restructure` ไม่มีเส้น full protocol แล้ว · ผลของ full protocol (skewproto) ยังอยู่ใน data และพูดถึงในข้อความเท่านั้น
+- Fig. 8 ที่แนะนำ: (a) `e4_batches_skew0.95` (b) `e4_update_insert` (c) `e4_update_delete` (d) `e4_max_partition`; ฝั่ง query (verify / proof) ใส่เป็นตัวเลขในข้อความ

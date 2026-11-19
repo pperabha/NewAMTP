@@ -66,7 +66,7 @@ KINDS = {"modify": "Modified records", "hide": "Hidden records", "inject": "Inje
          "old_version": "Old versions"}
 LAYOUT_LS = {"clustered": "-", "dispersed": "--", "partition_spread": ":"}
 OP_LS = {"insert": "-", "delete": "--", "hot_delete": "--"}
-VARIANTS = ("AMTP", "Static-MT", "Global-MT(v)", "AMTP (full protocol)")
+VARIANTS = ("AMTP", "Static-MT", "Global-MT(v)")       # index level only (owner: no full-protocol line in Exp. 4)
 V_STYLE = {**EXP4_STYLE, "AMTP (full protocol)": ("#173f73", "D", "-.")}
 
 POINTS, INDEX = [], []
@@ -494,8 +494,8 @@ def exp4():
 
     for phase, tag in (("insert", "insert"), ("hot_delete", "delete")):
         figure(f"e4_update_{tag}", by_var(allr, "update_ms", phase), "Skew level", "Update time per batch (ms)", src,
-               "mean over every batch of the phase and the 10 runs; AMTP (full protocol) = signed requests, DO "
-               "validation and anchor (local EVM) around the same index work", logy=True, xticks=skews)
+               "mean over every batch of the phase and the 10 runs; index level (the full-protocol run of the same "
+               "workload is in skewproto, reported in the text only)", logy=True, xticks=skews)
     figure("e4_restructure", [s for s in by_var(allr, "restructure_ms") if s["label"].startswith("AMTP")],
            "Skew level", "Split / merge time per batch (ms)", src, "restructure_ms inside the commit", xticks=skews)
     sm = {}
