@@ -1,0 +1,50 @@
+[
+ {
+  "domain": "D00",
+  "epoch": 1,
+  "keywords_indexed": 3702,
+  "keywords_total": 68044,
+  "build_ms": 987.483,
+  "approx_mb": 2.97
+ },
+ {
+  "domain": "D00",
+  "epoch": 1,
+  "keywords_indexed": 3702,
+  "keywords_total": 68044,
+  "build_ms": 1499.345,
+  "approx_mb": 2.97
+ },
+ {
+  "domain": "D00",
+  "epoch": 1,
+  "keywords_indexed": 3702,
+  "keywords_total": 68044,
+  "build_ms": 2280.859,
+  "approx_mb": 2.97
+ },
+ {
+  "domain": "D00",
+  "epoch": 1,
+  "keywords_indexed": 3702,
+  "keywords_total": 68044,
+  "build_ms": 3829.535,
+  "approx_mb": 2.97
+ },
+ {
+  "domain": "D00",
+  "epoch": 1,
+  "keywords_indexed": 3702,
+  "keywords_total": 68044,
+  "build_ms": 603.8,
+  "approx_mb": 2.97
+ },
+ {
+  "domain": "D00",
+  "epoch": 1,
+  "keywords_indexed": 3702,
+  "keywords_total": 68044,
+  "build_ms": 529.272,
+  "approx_mb": 2.97
+ }
+]

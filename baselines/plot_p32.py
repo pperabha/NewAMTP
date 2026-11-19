@@ -20,7 +20,9 @@ Runs (folder <data>/<name>, or the first <data>/<name>_w* copy made by the Mac w
   ex4_*skew*              splitmerge, skewproto  Exp. 4 (one folder per skew level, six jobs each)
 
 Values: every timing is the MEAN of the run's 10 repetitions after 3 warm-up runs (column <metric>_ms, decision #46);
-a point = the mean over the queries / keywords / domains of that x. No error bars. Every plotted number goes to
+a query-level point (Exp. 1, 2, 5 queries, tamper verification) = the MEDIAN over the queries / keywords of that x,
+with interquartile-range error bars (decision #66, issue #72); update-level points (Exp. 3, Exp. 4, update isolation,
+Sepolia) = the mean over runs / batches / updates (#46), no bars. Every plotted number (and q1 / q3) goes to
 <out>/figure_points.csv and every figure is listed with its data and fairness note in <out>/README.md.
 
 Fair comparison (checked in each scheme's code, figure plan "ความยุติธรรม"):
@@ -121,13 +123,33 @@ def mean_by(rs, key, col, scale=1.0):
     return {x: statistics.mean(v) for x, v in g.items()}
 
 
+class Pts(dict):
+    """{x: median}; .err = {x: (q1, q3)} drawn as IQR error bars"""
+    err = None
+
+
+def median_by(rs, key, col, scale=1.0):
+    """{x: median of col over the rows (queries) of x = key(row)} with the interquartile range in .err (#66)"""
+    g = {}
+    for r in rs:
+        v = num(r.get(col))
+        if v is not None:
+            g.setdefault(key(r), []).append(v * scale)
+    out = Pts({x: statistics.median(v) for x, v in g.items()})
+    out.err = {}
+    for x, v in g.items():
+        q1, _, q3 = statistics.quantiles(v, n=4, method="inclusive") if len(v) > 1 else (v[0], v[0], v[0])
+        out.err[x] = (q1, q3)
+    return out
+
+
 def metric_pts(rs, scheme, metric, key):
     col = COL[metric].get(scheme)
     if col is None:
         return {}
     if metric == "proof_kb":
-        return mean_by(rs, key, col, 1 / KB)
-    return mean_by(rs, key, col + "_ms")
+        return median_by(rs, key, col, 1 / KB)
+    return median_by(rs, key, col + "_ms")
 
 
 # ---------------------------------------------------------------- drawing
@@ -172,10 +194,20 @@ def figure(fig_id, series, xlabel, ylabel, source, note="", logx=False, logy=Tru
         ys = [s["pts"][x] for x in xs]
         # detection rates sit on the same 0 / 100 % lines: earlier series drawn wider so every scheme stays visible
         lw, ms = (3.2 - 0.6 * i, 9 - 1.5 * i) if pct else (1.8, 5)
-        ax.plot(xs, ys, color=s["color"], marker=s["marker"], linestyle=s["ls"], linewidth=lw, markersize=ms,
-                label=s["label"])
+        err = getattr(s["pts"], "err", None)
+        if err:
+            lo = [max(0.0, y - err[x][0]) for x, y in zip(xs, ys)]
+            hi = [max(0.0, err[x][1] - y) for x, y in zip(xs, ys)]
+            ax.errorbar(xs, ys, yerr=[lo, hi], color=s["color"], marker=s["marker"], linestyle=s["ls"], linewidth=lw,
+                        markersize=ms, label=s["label"], capsize=3, elinewidth=1.0, capthick=1.0)
+        else:
+            ax.plot(xs, ys, color=s["color"], marker=s["marker"], linestyle=s["ls"], linewidth=lw, markersize=ms,
+                    label=s["label"])
         for x, y in zip(xs, ys):
-            POINTS.append({"figure": fig_id, "series": s["label"], "x": x, "y": round(y, 6)})
+            row = {"figure": fig_id, "series": s["label"], "x": x, "y": round(y, 6)}
+            if err:
+                row.update(q1=round(err[x][0], 6), q3=round(err[x][1], 6))
+            POINTS.append(row)
     allx = sorted({x for s in series for x in s["pts"]})
     if logx:
         ax.set_xscale("log")
@@ -292,7 +324,7 @@ def exp2():
             for r in rs:
                 det.setdefault(int(r["tampered"]), []).append(100 * float(r["detected_runs"]) / max(1, float(r["runs"])))
             ser.append(scheme_series(s, {t: statistics.mean(v) for t, v in det.items()}))
-            ser_t.append(scheme_series(s, mean_by(rs, lambda r: int(r["tampered"]), "verify_total_ms")))
+            ser_t.append(scheme_series(s, median_by(rs, lambda r: int(r["tampered"]), "verify_total_ms")))
         figure(f"e2_tamper_{kind}_detection", ser, f"{title} $t$", "Detection rate (%)", f"{run} tamper_detection",
                "a scheme without this attack model has no line (Chen: modify / old version N/A)", logx=True,
                logy=False, pct=True)
@@ -459,12 +491,14 @@ def exp5(with_du):
 
 def write_index():
     with open(os.path.join(OUT, "figure_points.csv"), "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["figure", "series", "x", "y"])
+        w = csv.DictWriter(f, fieldnames=["figure", "series", "x", "y", "q1", "q3"])
         w.writeheader()
         w.writerows(POINTS)
     with open(os.path.join(OUT, "README.md"), "w", encoding="utf-8") as f:
-        f.write("# Paper (32) figures (baselines/plot_p32.py)\n\nEvery value = mean of 10 runs after 3 warm-up runs; "
-                "numbers in figure_points.csv.\n\n| figure | data | note |\n|---|---|---|\n")
+        f.write("# Paper (32) figures (baselines/plot_p32.py)\n\nEvery timing = mean of 10 runs after 3 warm-up runs (#46). "
+                "Query-level points (Exp. 1, 2, 5 queries, tamper verification) = median over the queries of that x, "
+                "error bars = interquartile range (#66); Exp. 3, Exp. 4, update isolation and Sepolia = mean over "
+                "runs / batches / updates, no bars. Numbers (and q1 / q3) in figure_points.csv.\n\n| figure | data | note |\n|---|---|---|\n")
         for fid, src, note in INDEX:
             f.write(f"| {fid} | {src.replace(DATA, '<data>').replace(REPO + os.sep, '')} | {note} |\n")
     print(f"-> {os.path.relpath(OUT)}/figure_points.csv, README.md ({len(INDEX)} figures)")
