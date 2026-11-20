@@ -472,7 +472,7 @@ Data: `data/p32_exp2_exp5_w10 exp2_selective_proof layout=partition_spread`
 - **vs Du [7]:** AMTP better at rQ = 10, 100, 1,000, 5,000 (9.68–24.03×)
 - AMTP: 4.19–737 KB over rQ = 10…5,000
 
-### `e2_layouts_proof_kb` (extra, on hold (owner asks the advisor))
+### `e2_layouts_proof_kb` (extra candidate, in neither version yet)
 
 <img src="figures/e2_layouts_proof_kb.png" width="520" alt="e2_layouts_proof_kb">
 
@@ -805,7 +805,7 @@ Data: `data/p32_ex3_w10/. exp3_dynamic_update`. AMTP: signed requests (ABS) + CS
 - AMTP insert: 3.49–28.5 requests/s over b = 1…1,000
 - AMTP delete: 3.53–24.4 requests/s over b = 1…1,000
 
-### `e3_b_breakdown_insert` (extra, on hold (owner asks the advisor))
+### `e3_b_breakdown_insert` (extra candidate, in neither version yet)
 
 <img src="figures/e3_b_breakdown_insert.png" width="520" alt="e3_b_breakdown_insert">
 

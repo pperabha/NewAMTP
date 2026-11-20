@@ -30,8 +30,8 @@ IN_PAPER = {
     "e2_tamper_attack_types": "24 p.: Fig. 5(c) · 6 p.: Table III (as a table)",
     "e4_batches_skew0.95": "24 p.: Fig. 6 · 6 p.: Fig. 6",
     "e5_query_e2e": "24 p.: Fig. 7",
-    "e2_layouts_proof_kb": "extra, on hold (owner asks the advisor)",
-    "e3_b_breakdown_insert": "extra, on hold (owner asks the advisor)",
+    "e2_layouts_proof_kb": "extra candidate, in neither version yet",
+    "e3_b_breakdown_insert": "extra candidate, in neither version yet",
 }
 
 EXPERIMENTS = [
