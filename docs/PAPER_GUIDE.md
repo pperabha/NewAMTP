@@ -128,26 +128,7 @@ Update isolation:
 
 Sepolia: a root update costs 86.7k gas at D = 1 and about +16k per doubling of D, and takes 11–12 s to be mined.
 
-## 3. Where the code differs from paper (32) as first written
-
-Each item was decided by the team. Numbers such as #43 refer to the decision issues in the team's working
-repository. A search of the text of AMTP (36) finds each one stated.
-
-| Item | What the code does | Why |
-|---|---|---|
-| Root-transition signature σ_root | ECDSA over secp256k1, verified by the RootAnchor contract | an ABS pairing cannot be verified on-chain at practical gas |
-| Request signatures σ_d = σ_op | real ABS (Maji–Prabhakaran–Rosulek) on SS512, policy `domain:Di ∧ role:owner`, verified by the CS and by the validating DO | decisions #43, #54 |
-| Query speed-ups (always on) | AND pruning with greedy H_full, result-only partition proofs, Search Tree leaf by partition (Aux_i(h_w)) | same accept decision, much smaller proofs (stated in the construction of (36)) |
-| Placement | fill-first: the fullest partition of the group below θ_max | decided 16 Nov (insert cost) |
-| Epoch | one batch of ≤ b operations (b = 1 is (32) as written) | #50: one operation per epoch makes Exp. 4 infeasible |
-| IMT | indexed Merkle tree with next pointers (absence proofs) | #51 |
-| AAD and update request | `aad_d = Encode(i, id_d)`; `U_d` without the placement hint g_d (g_d is a CS-side hint outside the signature) | #48, #49: follow (32) |
-| Timing network | protocol times measured against the same contract on a local EVM; Sepolia latency and gas measured apart | #42 |
-| Dataset | the existing arXiv v4 only: 4 domains × 125,000 (+12,500 insertion pool); Exp. 4 starts at 25,000 | advisor (no 10⁶, no new data) |
-| Statistics | mean of 10 runs after 3 warm-up runs; with several queries per point, the median over queries with IQR bars | #46, #66 |
-| Exp. 4 | index level (AMTP / Static-MT / Global-MT(v)), 10 runs per point; the full-protocol AMTP run is reported in the text | #44, #45 |
-
-## 4. What a reviewer is likely to ask
+## 3. What a reviewer is likely to ask
 
 | # | Point | 24 pages | 6 pages |
 |---|---|---|---|
@@ -158,7 +139,7 @@ repository. A search of the text of AMTP (36) finds each one stated.
 | 5 | Updates are 25–230× slower than Chen's, and ABS is 41–61% of the protocol time: why ABS and not a plain signature (Ed25519: 0.03 / 0.09 ms)? | numbers stated, no reason given | numbers stated, no reason given |
 | 6 | "Finalized" snapshot: 11.0 s is block inclusion, while finality on Sepolia is about 17 minutes (median 1,015 s) | stated | only 11.0 s |
 | 7 | "Indexing invariant" | defined (Prop. 1) | used, not defined |
-| 8 | The tamper table has 4 generic attacks, while the threat model lists AMTP-specific ones (the test suite covers them, Section 5) | not mentioned | not mentioned |
+| 8 | The tamper table has 4 generic attacks, while the threat model lists AMTP-specific ones (the test suite covers them, Section 4) | not mentioned | not mentioned |
 | 9 | Related work lacks classic verifiable SSE (Kurosawa–Ohtaki; Bost et al.), authenticated set operations (Papamanthou et al.) and vChain | not cited | not cited |
 | 10 | Exp. 5: a flat query cost in D is expected, because each query is domain-bound; the informative part is isolation and the cost of root maintenance | partly | partly |
 | 11 | Scale (10⁵ per domain), a Python prototype, baselines re-implemented by the authors | stated; no code link | stated; no code link (double-blind: needs an anonymous link) |
@@ -166,7 +147,7 @@ repository. A search of the text of AMTP (36) finds each one stated.
 
 Bibliographic details for row 9 must be checked before citing.
 
-## 5. Security tests (functional, not timed)
+## 4. Security tests (functional, not timed)
 
 These run in `amtp_code/tests/` on a small synthetic world. At `8ed08b7`: 111 passed, 1 skipped in about 25 s.
 
@@ -192,7 +173,7 @@ cd amtp_code
 
 Every conjunct of Accept_Q has an attack that fails exactly there.
 
-## 6. Paper ↔ code
+## 5. Paper ↔ code
 
 | Paper | Code (`amtp_code/amtp/`) |
 |---|---|

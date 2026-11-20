@@ -23,7 +23,6 @@ The three baselines of the paper (Chen et al. [40], Du et al. [7], SE-COLLAB [37
 **Reading the results:** [`docs/PAPER_GUIDE.md`](docs/PAPER_GUIDE.md) covers:
 - which figure is in which version of the paper;
 - every result with where AMTP wins and loses;
-- where the code differs from the paper as first written;
 - likely reviewer questions;
 - the security tests.
 
@@ -96,7 +95,7 @@ The tests cover:
 - the ablation variants.
 
 They also include a malicious server (`amtp/adversary.py`) whose every attack must be rejected by the check it
-targets. The list is in [`docs/PAPER_GUIDE.md`](docs/PAPER_GUIDE.md#5-security-tests-functional-not-timed).
+targets. The list is in [`docs/PAPER_GUIDE.md`](docs/PAPER_GUIDE.md#4-security-tests-functional-not-timed).
 
 ## 3. Run the demo
 
