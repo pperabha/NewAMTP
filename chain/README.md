@@ -9,7 +9,7 @@ client: a drop-in for the in-process `amtp/anchor.py` (`register_domain`, `submi
 |---|---|---|
 | checks | Python (`anchor.py`) | the contract |
 | σ_root (ABS stand-in) | Ed25519 | secp256k1 ECDSA, bound to the chain id and the contract address |
-| σ_op (requests) | Ed25519, checked by the owner's validator | same |
+| σ_op (requests) | Ed25519 stand-in by default; real ABS with `AMTP_ABS=mpr` (paper configuration); checked by the CS and the owner's validator | same |
 | R_G | Python | the contract (byte-identical, tested) |
 
 The hashes in the contract match `core/hashing.py` and `core/merkle.py` byte for byte, and `tests/test_chain_anchor.py`
