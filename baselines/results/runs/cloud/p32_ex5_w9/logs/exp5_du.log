@@ -1,0 +1,23 @@
+[queries] replay results/exp1_queries.json (1360 queries)
+[clouds] multi-cloud sensitivity  N=5000 clouds=[4, 8, 16, 32] queries=4
+ N=5000 n_c=4: d=2992405 bits, m=19, setup=5.4s, cloud storage=46.4 MB
+  N=5000  n_clouds=4  kQ=1  shape=single  status=ok  rQ=122  bloom_fp=0  query_gen_ms=0.027  server_total_ms=3.723  verify_total_ms=6.741  end_to_end_ms=10.490
+  N=5000  n_clouds=4  kQ=2  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.029  server_total_ms=0.631  verify_total_ms=0.094  end_to_end_ms=0.754
+  N=5000  n_clouds=4  kQ=4  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.052  server_total_ms=0.318  verify_total_ms=0.081  end_to_end_ms=0.451
+  N=5000  n_clouds=4  kQ=8  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.100  server_total_ms=0.636  verify_total_ms=0.090  end_to_end_ms=0.826
+ N=5000 n_c=8: d=2992405 bits, m=19, setup=5.9s, cloud storage=92.9 MB
+  N=5000  n_clouds=8  kQ=1  shape=single  status=ok  rQ=122  bloom_fp=0  query_gen_ms=0.025  server_total_ms=3.745  verify_total_ms=13.520  end_to_end_ms=17.290
+  N=5000  n_clouds=8  kQ=2  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.032  server_total_ms=0.654  verify_total_ms=0.168  end_to_end_ms=0.854
+  N=5000  n_clouds=8  kQ=4  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.053  server_total_ms=0.332  verify_total_ms=0.147  end_to_end_ms=0.532
+  N=5000  n_clouds=8  kQ=8  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.099  server_total_ms=0.670  verify_total_ms=0.154  end_to_end_ms=0.923
+ N=5000 n_c=16: d=2992405 bits, m=19, setup=8.5s, cloud storage=185.7 MB
+  N=5000  n_clouds=16  kQ=1  shape=single  status=ok  rQ=122  bloom_fp=0  query_gen_ms=0.029  server_total_ms=4.057  verify_total_ms=26.899  end_to_end_ms=30.984
+  N=5000  n_clouds=16  kQ=2  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.032  server_total_ms=0.686  verify_total_ms=0.288  end_to_end_ms=1.007
+  N=5000  n_clouds=16  kQ=4  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.052  server_total_ms=0.337  verify_total_ms=0.270  end_to_end_ms=0.659
+  N=5000  n_clouds=16  kQ=8  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.101  server_total_ms=0.695  verify_total_ms=0.290  end_to_end_ms=1.086
+ N=5000 n_c=32: d=2992405 bits, m=19, setup=14.6s, cloud storage=371.5 MB
+  N=5000  n_clouds=32  kQ=1  shape=single  status=ok  rQ=122  bloom_fp=0  query_gen_ms=0.036  server_total_ms=4.768  verify_total_ms=53.696  end_to_end_ms=58.500
+  N=5000  n_clouds=32  kQ=2  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.034  server_total_ms=0.700  verify_total_ms=0.524  end_to_end_ms=1.258
+  N=5000  n_clouds=32  kQ=4  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.059  server_total_ms=0.353  verify_total_ms=0.511  end_to_end_ms=0.923
+  N=5000  n_clouds=32  kQ=8  shape=conjunctive  status=ok  rQ=1  bloom_fp=0  query_gen_ms=0.102  server_total_ms=0.681  verify_total_ms=0.514  end_to_end_ms=1.297
+-> results/runs/p32_ex5/du/exp5_clouds/du_clouds_sensitivity.csv

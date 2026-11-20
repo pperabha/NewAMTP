@@ -1,0 +1,19 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex2_verify1_tamper
+commit 74379b7, uncommitted changes: 0
+[2026-11-18 19:58:28] start verify1_amtp
+[2026-11-18 20:56:24] done  verify1_amtp (3476 s)
+[2026-11-18 20:56:24] start verify1_chen
+[2026-11-18 21:01:29] done  verify1_chen (305 s)
+[2026-11-18 21:01:29] start verify1_du
+[2026-11-18 21:22:18] done  verify1_du (1249 s)
+[2026-11-18 21:22:18] start verify1_secollab
+[2026-11-18 21:23:37] done  verify1_secollab (79 s)
+[2026-11-18 21:23:37] start tamper_amtp
+[2026-11-18 22:15:04] done  tamper_amtp (3087 s)
+[2026-11-18 22:15:04] start tamper_chen
+[2026-11-18 22:20:12] done  tamper_chen (308 s)
+[2026-11-18 22:20:12] start tamper_du
+[2026-11-18 22:41:52] done  tamper_du (1300 s)
+[2026-11-18 22:41:52] start tamper_secollab
+[2026-11-18 22:43:36] done  tamper_secollab (104 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex2_verify1_tamper

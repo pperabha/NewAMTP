@@ -1,0 +1,5 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/ex4_skew0.25/gmtv_b
+commit c79b2a0, uncommitted changes: 0
+[2026-11-18 17:53:28] start splitmerge_t64
+[2026-11-18 19:45:19] done  splitmerge_t64 (6711 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/ex4_skew0.25/gmtv_b

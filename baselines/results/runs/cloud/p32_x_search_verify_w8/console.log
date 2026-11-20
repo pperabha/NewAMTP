@@ -1,0 +1,11 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/p32_x_search_verify
+commit 74379b7, uncommitted changes: 0
+[2026-11-18 19:58:32] start xsearch_amtp
+[2026-11-18 21:18:51] done  xsearch_amtp (4819 s)
+[2026-11-18 21:18:51] start xsearch_secollab
+[2026-11-18 21:21:55] done  xsearch_secollab (184 s)
+[2026-11-18 21:21:55] start xverify_amtp
+[2026-11-18 22:15:12] done  xverify_amtp (3197 s)
+[2026-11-18 22:15:12] start xverify_secollab
+[2026-11-18 22:16:16] done  xverify_secollab (64 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/p32_x_search_verify

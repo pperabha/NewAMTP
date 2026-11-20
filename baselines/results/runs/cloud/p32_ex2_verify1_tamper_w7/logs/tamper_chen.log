@@ -1,0 +1,105 @@
+ N=100000: scope=full outsource=83.5s keywords=1082038 full EDB=13.61 GB (memory)
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=none  tampered=0  status=ok  detected_runs=0  runs=10  localized=0  verify_total_ms=6.1844
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=modify  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=modify  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=modify  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=modify  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=modify  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=modify  tampered=1000  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=hide  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2050
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=hide  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.1533
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=hide  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.1419
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=hide  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.0703
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=hide  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=5.9011
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=hide  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=3.3092
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=inject  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2104
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=inject  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2106
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=inject  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2478
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=inject  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2747
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=inject  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4867
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=inject  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=9.1260
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=old_version  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=old_version  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=old_version  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=old_version  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=old_version  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D1  N=100000  keyword=machine learning  rQ=2021  tamper=old_version  tampered=1000  status=N/A
+ N=100000: scope=full outsource=51.3s keywords=621808 full EDB=7.82 GB (memory)
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=none  tampered=0  status=ok  detected_runs=0  runs=10  localized=0  verify_total_ms=6.4613
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=modify  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=modify  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=modify  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=modify  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=modify  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=modify  tampered=1000  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=hide  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4225
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=hide  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4533
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=hide  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4404
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=hide  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.3584
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=hide  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.1885
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=hide  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=3.5719
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=inject  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4784
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=inject  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4971
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=inject  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.5473
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=inject  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.5783
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=inject  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.7322
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=inject  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=9.3964
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=old_version  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=old_version  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=old_version  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=old_version  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=old_version  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D2  N=100000  keyword=apply  rQ=2096  tamper=old_version  tampered=1000  status=N/A
+ N=100000: scope=full outsource=62.9s keywords=782941 full EDB=9.85 GB (memory)
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=none  tampered=0  status=ok  detected_runs=0  runs=10  localized=0  verify_total_ms=6.5085
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=modify  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=modify  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=modify  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=modify  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=modify  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=modify  tampered=1000  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=hide  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4643
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=hide  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4324
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=hide  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.3830
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=hide  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.3925
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=hide  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.1968
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=hide  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=3.6497
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=inject  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.4801
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=inject  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.5309
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=inject  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.5461
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=inject  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.6275
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=inject  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.7812
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=inject  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=9.4236
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=old_version  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=old_version  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=old_version  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=old_version  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=old_version  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D3  N=100000  keyword=dark matter  rQ=2122  tamper=old_version  tampered=1000  status=N/A
+ N=100000: scope=full outsource=71.4s keywords=906657 full EDB=11.41 GB (memory)
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=none  tampered=0  status=ok  detected_runs=0  runs=10  localized=0  verify_total_ms=6.2433
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=modify  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=modify  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=modify  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=modify  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=modify  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=modify  tampered=1000  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=hide  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2441
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=hide  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2342
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=hide  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2084
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=hide  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.1402
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=hide  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=5.9763
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=hide  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=3.3822
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=inject  tampered=5  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2821
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=inject  tampered=10  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.2985
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=inject  tampered=20  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.3207
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=inject  tampered=40  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.3782
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=inject  tampered=100  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=6.5525
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=inject  tampered=1000  status=ok  detected_runs=10  runs=10  localized=0  verify_total_ms=9.2040
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=old_version  tampered=5  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=old_version  tampered=10  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=old_version  tampered=20  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=old_version  tampered=40  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=old_version  tampered=100  status=N/A
+  scheme=Chen[40]  domain=D4  N=100000  keyword=effect  rQ=2028  tamper=old_version  tampered=1000  status=N/A
+-> results/runs/p32_ex2_verify1_tamper/chen/chen_tamper_detection.csv

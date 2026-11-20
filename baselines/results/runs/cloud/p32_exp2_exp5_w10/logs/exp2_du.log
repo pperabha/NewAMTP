@@ -1,0 +1,15 @@
+[exp2] verification vs r_Q  N=100000 n_clouds=5 layouts=['clustered', 'dispersed', 'partition_spread']
+ N=100000 n_c=5: d=43130489 bits, m=19, setup=123.6s, cloud storage=1357.8 MB
+  N=100000  rQ=10  n_clouds=5  bloom_fp=0  query_gen_ms=0.018  server_total_ms=0.170  verify_total_ms=0.776  end_to_end_ms=0.964
+  N=100000  rQ=10  n_clouds=5  bloom_fp=0  query_gen_ms=0.022  server_total_ms=0.899  verify_total_ms=0.785  end_to_end_ms=1.706
+  N=100000  rQ=10  n_clouds=5  bloom_fp=0  query_gen_ms=0.022  server_total_ms=0.794  verify_total_ms=0.801  end_to_end_ms=1.616
+  N=100000  rQ=100  n_clouds=5  bloom_fp=0  query_gen_ms=0.025  server_total_ms=0.982  verify_total_ms=7.313  end_to_end_ms=8.320
+  N=100000  rQ=100  n_clouds=5  bloom_fp=0  query_gen_ms=0.026  server_total_ms=6.390  verify_total_ms=7.321  end_to_end_ms=13.737
+  N=100000  rQ=100  n_clouds=5  bloom_fp=0  query_gen_ms=0.026  server_total_ms=5.776  verify_total_ms=7.280  end_to_end_ms=13.082
+  N=100000  rQ=1000  n_clouds=5  bloom_fp=0  query_gen_ms=0.031  server_total_ms=8.607  verify_total_ms=71.141  end_to_end_ms=79.780
+  N=100000  rQ=1000  n_clouds=5  bloom_fp=0  query_gen_ms=0.038  server_total_ms=50.674  verify_total_ms=73.691  end_to_end_ms=124.403
+  N=100000  rQ=1000  n_clouds=5  bloom_fp=0  query_gen_ms=0.039  server_total_ms=46.802  verify_total_ms=73.757  end_to_end_ms=120.597
+  N=100000  rQ=5000  n_clouds=5  bloom_fp=0  query_gen_ms=0.040  server_total_ms=44.176  verify_total_ms=361.348  end_to_end_ms=405.564
+  N=100000  rQ=5000  n_clouds=5  bloom_fp=0  query_gen_ms=0.044  server_total_ms=186.635  verify_total_ms=368.522  end_to_end_ms=555.202
+  N=100000  rQ=5000  n_clouds=5  bloom_fp=0  query_gen_ms=0.045  server_total_ms=148.589  verify_total_ms=370.106  end_to_end_ms=518.739
+-> results/runs/p32_exp2_exp5/du/du_exp2_selective_proof.csv

@@ -1,0 +1,20 @@
+[exp3] dynamic update  sizes=[10000, 25000, 50000, 75000, 100000, 125000] batches=[100] users=1 mode=per-doc
+ N=10000: scope=queried outsource=- keywords=106930 full EDB=0.14 GB (memory)
+  N=10000  batch=100  op=insert  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=2642957.1000  update_ms=54.2285  per_doc_ms=0.5423  throughput_docs_s=1844.0488  throughput_pairs_s=34546.4111  prf=7536  hash=5652  enc=1884  xor=5652
+  N=10000  batch=100  op=delete  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=2642957.1000  update_ms=55.1504  per_doc_ms=0.5515  throughput_docs_s=1813.2249  throughput_pairs_s=33968.9556  prf=7536  hash=5652  enc=1884  xor=5652
+ N=25000: scope=queried outsource=- keywords=240905 full EDB=0.78 GB (memory)
+  N=25000  batch=100  op=insert  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=6155582.1000  update_ms=68.6702  per_doc_ms=0.6867  throughput_docs_s=1456.2365  throughput_pairs_s=27281.1353  prf=7536  hash=5652  enc=1884  xor=5652
+  N=25000  batch=100  op=delete  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=6155582.1000  update_ms=71.0262  per_doc_ms=0.7103  throughput_docs_s=1407.9306  throughput_pairs_s=26376.1716  prf=7536  hash=5652  enc=1884  xor=5652
+ N=50000: scope=queried outsource=- keywords=447667 full EDB=2.84 GB (memory)
+  N=50000  batch=100  op=insert  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=12009957.1000  update_ms=92.3252  per_doc_ms=0.9233  throughput_docs_s=1083.1280  throughput_pairs_s=20291.3204  prf=7536  hash=5652  enc=1884  xor=5652
+  N=50000  batch=100  op=delete  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=12009957.1000  update_ms=96.4373  per_doc_ms=0.9644  throughput_docs_s=1036.9427  throughput_pairs_s=19426.0849  prf=7536  hash=5652  enc=1884  xor=5652
+ N=75000: scope=queried outsource=- keywords=646429 full EDB=6.12 GB (memory)
+  N=75000  batch=100  op=insert  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=17864332.1000  update_ms=115.8278  per_doc_ms=1.1583  throughput_docs_s=863.3508  throughput_pairs_s=16174.0131  prf=7536  hash=5652  enc=1884  xor=5652
+  N=75000  batch=100  op=delete  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=17864332.1000  update_ms=121.0401  per_doc_ms=1.2104  throughput_docs_s=826.1728  throughput_pairs_s=15477.5210  prf=7536  hash=5652  enc=1884  xor=5652
+ N=100000: scope=queried outsource=- keywords=837964 full EDB=10.55 GB (memory)
+  N=100000  batch=100  op=insert  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=23718707.1000  update_ms=138.8822  per_doc_ms=1.3888  throughput_docs_s=720.0349  throughput_pairs_s=13489.1330  prf=7536  hash=5652  enc=1884  xor=5652
+  N=100000  batch=100  op=delete  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=23718707.1000  update_ms=144.8382  per_doc_ms=1.4484  throughput_docs_s=690.4256  throughput_pairs_s=12934.4339  prf=7536  hash=5652  enc=1884  xor=5652
+ N=125000: scope=queried outsource=- keywords=1026121 full EDB=16.13 GB (memory)
+  N=125000  batch=100  op=insert  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=29573082.1000  update_ms=164.0602  per_doc_ms=1.6406  throughput_docs_s=609.5323  throughput_pairs_s=11418.9787  prf=7536  hash=5652  enc=1884  xor=5652
+  N=125000  batch=100  op=delete  users=1  update_mode=per-doc  index_scope=queried  edb_backend=memory  pairs=1873.4000  message_bytes=29573082.1000  update_ms=174.8244  per_doc_ms=1.7482  throughput_docs_s=572.0024  throughput_pairs_s=10715.8933  prf=7536  hash=5652  enc=1884  xor=5652
+-> results/runs/p32_ex3/chen/update_n/chen_exp3_dynamic_update.csv

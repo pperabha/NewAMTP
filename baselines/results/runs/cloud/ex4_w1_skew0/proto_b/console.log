@@ -1,0 +1,5 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/ex4_skew0/proto_b
+commit c79b2a0, uncommitted changes: 0
+[2026-11-18 17:57:39] start skewproto_t64
+[2026-11-18 19:55:25] done  skewproto_t64 (7066 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/ex4_skew0/proto_b
