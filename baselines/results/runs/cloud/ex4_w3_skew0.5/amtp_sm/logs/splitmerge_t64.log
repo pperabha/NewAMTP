@@ -1,0 +1,25 @@
+run 0 skew 0.5  AMTP         partitions=805   max=64     splits=297 merges=4
+run 0 skew 0.5  Static-MT    partitions=512   max=4556   splits=0 merges=0
+run 1 skew 0.5  AMTP         partitions=806   max=64     splits=298 merges=4
+run 1 skew 0.5  Static-MT    partitions=512   max=4530   splits=0 merges=0
+run 2 skew 0.5  AMTP         partitions=805   max=64     splits=297 merges=4
+run 2 skew 0.5  Static-MT    partitions=512   max=4552   splits=0 merges=0
+run 3 skew 0.5  AMTP         partitions=802   max=64     splits=297 merges=7
+run 3 skew 0.5  Static-MT    partitions=512   max=4545   splits=0 merges=0
+run 4 skew 0.5  AMTP         partitions=805   max=64     splits=297 merges=4
+run 4 skew 0.5  Static-MT    partitions=512   max=4552   splits=0 merges=0
+run 5 skew 0.5  AMTP         partitions=808   max=64     splits=301 merges=5
+run 5 skew 0.5  Static-MT    partitions=512   max=4602   splits=0 merges=0
+run 6 skew 0.5  AMTP         partitions=807   max=64     splits=299 merges=4
+run 6 skew 0.5  Static-MT    partitions=512   max=4551   splits=0 merges=0
+run 7 skew 0.5  AMTP         partitions=806   max=64     splits=298 merges=4
+run 7 skew 0.5  Static-MT    partitions=512   max=4523   splits=0 merges=0
+run 8 skew 0.5  AMTP         partitions=808   max=64     splits=300 merges=4
+run 8 skew 0.5  Static-MT    partitions=512   max=4522   splits=0 merges=0
+run 9 skew 0.5  AMTP         partitions=809   max=64     splits=300 merges=3
+run 9 skew 0.5  Static-MT    partitions=512   max=4534   splits=0 merges=0
+
+| skew | variant | mean update_ms | mean restructure_ms | mean hash_calls | mean hash_bytes | mean server_ms | mean verify_ms | mean proof_bytes | mean max_partition |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.5 | AMTP | 1061.058 | 8.674 | 445271 | 30564364 | 2.491 | 5.197 | 68370 | 64 |
+| 0.5 | Static-MT | 2941.252 | 0.012 | 1023087 | 74263351 | 2.375 | 4.717 | 65004 | 4547 |

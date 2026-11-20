@@ -1,0 +1,11 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex3
+commit c79b2a0, uncommitted changes: 0
+[2026-11-18 18:10:46] start update_amtp
+[2026-11-18 18:47:08] done  update_amtp (2182 s)
+[2026-11-18 18:47:08] start update_chen
+[2026-11-18 18:48:11] done  update_chen (63 s)
+[2026-11-18 18:48:11] start update_n_amtp
+[2026-11-18 19:26:48] done  update_n_amtp (2317 s)
+[2026-11-18 19:26:48] start update_n_chen
+[2026-11-18 19:27:24] done  update_n_chen (36 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex3

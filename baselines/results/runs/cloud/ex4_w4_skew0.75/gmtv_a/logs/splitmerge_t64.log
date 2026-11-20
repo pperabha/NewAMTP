@@ -1,0 +1,8 @@
+run 0 skew 0.75 Global-MT(v) partitions=1     max=36510  splits=0 merges=0
+run 1 skew 0.75 Global-MT(v) partitions=1     max=36451  splits=0 merges=0
+run 2 skew 0.75 Global-MT(v) partitions=1     max=36352  splits=0 merges=0
+run 3 skew 0.75 Global-MT(v) partitions=1     max=36437  splits=0 merges=0
+
+| skew | variant | mean update_ms | mean restructure_ms | mean hash_calls | mean hash_bytes | mean server_ms | mean verify_ms | mean proof_bytes | mean max_partition |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.75 | Global-MT(v) | 7413.680 | 0.008 | 2557150 | 193020777 | 1.497 | 2.602 | 51015 | 36438 |

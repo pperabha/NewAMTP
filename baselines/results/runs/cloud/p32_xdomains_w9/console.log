@@ -1,0 +1,7 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/p32_xdomains
+commit 74379b7, uncommitted changes: 0
+[2026-11-18 19:58:29] start xdomains_amtp
+[2026-11-19 00:48:33] done  xdomains_amtp (17404 s)
+[2026-11-19 00:48:33] start xdomains_secollab
+[2026-11-19 00:53:19] done  xdomains_secollab (286 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/p32_xdomains

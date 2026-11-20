@@ -1,0 +1,11 @@
+results -> /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex1_search1
+commit 74379b7, uncommitted changes: 0
+[2026-11-18 19:58:28] start search1_amtp
+[2026-11-18 21:39:27] done  search1_amtp (6059 s)
+[2026-11-18 21:39:27] start search1_chen
+[2026-11-18 21:58:26] done  search1_chen (1139 s)
+[2026-11-18 21:58:26] start search1_du
+[2026-11-18 22:32:44] done  search1_du (2058 s)
+[2026-11-18 22:32:44] start search1_secollab
+[2026-11-18 22:37:57] done  search1_secollab (313 s)
+all steps finished, results in /home/ubuntu/NewAMTP/baselines/results/runs/p32_ex1_search1
